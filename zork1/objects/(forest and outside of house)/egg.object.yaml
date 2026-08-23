@@ -11,4 +11,5 @@ synonyms:
   - jeweled egg
   - jeweled treasure
 portable: true
-start: offstage
+contains: true
+start: in:nest

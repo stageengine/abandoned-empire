@@ -3,4 +3,5 @@ name: glass bottle
 
 synonyms: [bottle, container, clear bottle, clear container, glass container]
 portable: true
-start: offstage
+contains: true
+start: in:kitchen-table

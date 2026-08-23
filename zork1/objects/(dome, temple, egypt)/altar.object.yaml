@@ -1,4 +1,5 @@
 id: altar
+contains: true
 start: south-temple
 
 actions:
@@ -8,7 +9,7 @@ actions:
       - type: object-in
         data:
           object: book
-          location: south-temple
+          location: in:altar
     triggers:
       - type: response
         data:

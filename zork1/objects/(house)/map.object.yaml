@@ -10,7 +10,7 @@ synonyms:
   - old map
   - ancient parchment
 portable: true
-start: offstage
+start: in:trophy-case
 
 actions:
   - id: look

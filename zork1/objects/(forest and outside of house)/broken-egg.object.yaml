@@ -13,4 +13,5 @@ synonyms:
   - jewel egg
   - jewel treasure
 portable: true
+contains: true
 start: offstage

@@ -1,4 +1,5 @@
 id: pedestal
 
 synonyms: [white pedestal, marble pedestal]
+contains: true
 start: torch-room

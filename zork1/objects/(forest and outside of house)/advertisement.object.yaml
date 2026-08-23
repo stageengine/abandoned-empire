@@ -10,7 +10,7 @@ synonyms:
   - small booklet
   - small mail
 portable: true
-start: offstage
+start: in:mailbox
 
 actions:
   - id: look

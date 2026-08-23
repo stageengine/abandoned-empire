@@ -3,4 +3,5 @@ name: red buoy
 
 synonyms: [buoy]
 portable: true
+contains: true
 start: river-4

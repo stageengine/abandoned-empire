@@ -12,4 +12,5 @@ synonyms:
   - seaworthy boat
   - seaworthy raft
 portable: true
+contains: true
 start: offstage

@@ -1,3 +1,4 @@
 id: attic-table
 name: table
+contains: true
 start: attic

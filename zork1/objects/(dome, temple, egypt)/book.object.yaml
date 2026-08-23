@@ -14,7 +14,7 @@ synonyms:
   - black page
   - black books
 portable: true
-start: south-temple
+start: in:altar
 
 actions:
   # Read at the gate with the candles burning and the spirits cowering, this is

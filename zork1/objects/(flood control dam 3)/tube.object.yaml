@@ -2,6 +2,7 @@ id: tube
 
 synonyms: [tooth, paste, tube of toothpaste]
 portable: true
+contains: true
 start: maintenance-room
 
 actions:

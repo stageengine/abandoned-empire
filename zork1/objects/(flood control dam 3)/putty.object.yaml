@@ -3,7 +3,7 @@ name: viscous material
 
 synonyms: [material, gunk, viscous gunk, all-purpose gunk]
 portable: true
-start: offstage
+start: in:tube
 
 actions:
   - id: oil

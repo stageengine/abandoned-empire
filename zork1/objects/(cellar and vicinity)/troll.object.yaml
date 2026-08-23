@@ -1,6 +1,7 @@
 id: troll
 
 synonyms: [nasty troll]
+contains: true
 start: troll-room
 
 # Zork gives the troll a strength of two and settles each blow against a table

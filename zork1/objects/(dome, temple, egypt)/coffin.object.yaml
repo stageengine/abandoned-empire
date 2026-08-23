@@ -11,4 +11,5 @@ synonyms:
   - gold casket
   - gold treasure
 portable: true
+contains: true
 start: egypt-room

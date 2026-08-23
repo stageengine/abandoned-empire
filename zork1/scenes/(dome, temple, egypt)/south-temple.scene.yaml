@@ -9,7 +9,7 @@ actions:
       - type: object-in
         data:
           object: book
-          location: south-temple
+          location: in:altar
     triggers:
       - type: response
         data:

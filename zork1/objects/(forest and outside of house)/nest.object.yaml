@@ -3,4 +3,5 @@ name: bird's nest
 
 synonyms: [nest, birds nest]
 portable: true
+contains: true
 start: up-a-tree

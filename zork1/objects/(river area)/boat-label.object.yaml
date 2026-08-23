@@ -11,7 +11,7 @@ synonyms:
   - fine fineprint
   - fine print
 portable: true
-start: offstage
+start: in:inflated-boat
 
 actions:
   - id: look

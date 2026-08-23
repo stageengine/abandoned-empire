@@ -10,4 +10,5 @@ synonyms:
   - smelly bag
   - smelly sack
 portable: true
-start: offstage
+contains: true
+start: in:kitchen-table

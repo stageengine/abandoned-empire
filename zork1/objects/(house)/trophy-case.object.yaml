@@ -2,6 +2,7 @@ id: trophy-case
 name: trophy case
 
 synonyms: [case, trophy case]
+contains: true
 start: living-room
 
 actions:
