@@ -18,6 +18,10 @@ messages:
   get.done: Taken.
   get.already: You already have that!
   get.fixed: You can't be serious.
+  # Zork adds ", especially in light of your condition" when a wound has taken
+  # the allowance below its maximum. Stage has one wording per key, so the port
+  # says the half that is always true.
+  get.laden: Your load is too heavy.
   gained.done: Taken.
   drop.done: Dropped.
   drop.empty-handed: You're not carrying <thing>.

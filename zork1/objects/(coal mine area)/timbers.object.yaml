@@ -9,5 +9,6 @@ synonyms:
   - broken timbers
   - broken pile
 portable: true
+size: 50
 here: There is a broken timber here.
 start: timber-room

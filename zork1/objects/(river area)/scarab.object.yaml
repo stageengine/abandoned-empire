@@ -19,5 +19,6 @@ synonyms:
   - jeweled beetle
   - jeweled treasure
 portable: true
+size: 8
 here: There is a beautiful jeweled scarab here.
 start: sandy-cave

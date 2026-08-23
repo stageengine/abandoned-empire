@@ -3,5 +3,6 @@ name: small pile of coal
 
 synonyms: [coal, pile, heap, small coal, small pile, small heap]
 portable: true
+size: 20
 here: There is a small pile of coal here.
 start: dead-end-5

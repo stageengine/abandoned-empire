@@ -11,7 +11,19 @@ metadata:
   genres: [Adventure, Fantasy, Puzzle]
 
 player:
+  # How much you can hold at once. Zork keeps this apart from the strength that
+  # settles a fight, and moves it separately: a wound takes it down and does not
+  # come back on its own until you have had time to heal. It is a measure here
+  # because that is what a number about the player that moves during play is.
+  carries: allowance
+
   measures:
+    - id: allowance
+      max: 100
+      start: 100
+      # Zork's floor: however badly the fight goes, you can always carry fifty.
+      min: 50
+
     # What a blow takes. Zork settles a fight against a strength that grows with
     # the score; the port keeps a smaller number that only goes down, because
     # nothing here can read one measure into another.

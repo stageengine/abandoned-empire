@@ -30,6 +30,14 @@ every-turn:
           subject: player
           measure: health
           by: -1
+      # A wound costs you what you can carry as well as what you can take. Zork
+      # takes twenty off for a serious one and ten for a light one, and stops at
+      # fifty however badly the fight goes.
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: allowance
+          by: -20
 
   - requires:
       - type: object-here
@@ -51,3 +59,8 @@ every-turn:
           subject: player
           measure: health
           by: -1
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: allowance
+          by: -10

@@ -33,9 +33,14 @@ navigation:
           scene: machine-room
   - id: east
     requires:
-      - type: flag
-        data:
-          flag: empty-handed
+      # ZIL asks whether every single thing you are carrying weighs four or less,
+      # which is not a question Stage can put: `carrying` reads the total. This
+      # asks that the total is four or less, which is stricter - two small things
+      # pass in Zork and are refused here - and it is the nearest true thing.
+      # Before there was a limit at all this was a flag nothing ever set, so the
+      # passage was shut for good and the Drafty Room could not be reached.
+      - type: carrying
+        data: { max: 4 }
         failure:
           triggers:
             - type: response

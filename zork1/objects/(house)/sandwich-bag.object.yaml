@@ -10,6 +10,7 @@ synonyms:
   - smelly bag
   - smelly sack
 portable: true
+size: 9
 contains: true
 first: On the table is an elongated brown sack, smelling of hot peppers.
 here: There is a brown sack here.

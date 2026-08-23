@@ -15,5 +15,6 @@ synonyms:
   - hand-held tool
   - hand-held tools
 portable: true
+size: 5
 here: There is a hand-held air pump here.
 start: reservoir-north

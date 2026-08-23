@@ -9,5 +9,6 @@ synonyms:
   - screw tools
   - screw driver
 portable: true
+size: 5
 here: There is a screwdriver here.
 start: maintenance-room

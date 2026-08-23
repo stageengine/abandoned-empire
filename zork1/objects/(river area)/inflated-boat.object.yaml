@@ -12,6 +12,7 @@ synonyms:
   - seaworthy boat
   - seaworthy raft
 portable: true
+size: 20
 contains: true
 here: There is a magic boat here.
 start: offstage

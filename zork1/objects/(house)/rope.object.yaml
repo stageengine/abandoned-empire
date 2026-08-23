@@ -2,6 +2,7 @@ id: rope
 
 synonyms: [hemp, coil, large rope, large hemp, large coil]
 portable: true
+size: 10
 first: A large coil of rope is lying in the corner.
 here: There is a rope here.
 start: attic

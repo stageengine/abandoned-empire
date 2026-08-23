@@ -3,6 +3,7 @@ name: brass bell
 
 synonyms: [bell, small bell, brass bell, hot bell, red hot bell]
 portable: true
+size: 5
 here: There is a brass bell here.
 start: north-temple
 

@@ -11,6 +11,7 @@ synonyms:
   - gold casket
   - gold treasure
 portable: true
+size: 55
 contains: true
 here: The solid-gold coffin used for the burial of Ramses II is here.
 start: egypt-room

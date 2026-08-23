@@ -5,7 +5,7 @@ Generated from `../source/zork1`: 110 rooms, 101 things,
 
 Everything below is a person's job. Delete a line when it is done.
 
-## Things Stage cannot yet say (1)
+## Things Stage cannot yet say (2)
 
 - A room says nothing about what is inside a container standing in it, so the
   kitchen does not mention the brown sack or the bottle on the table, and the
@@ -13,6 +13,15 @@ Everything below is a person's job. Delete a line when it is done.
   underneath it, indented. The engine's roadmap calls this *nested description*
   and defers it; South Temple works around it with an `object-in` on `in:altar`,
   which is the one room where the sentence was worth writing by hand.
+
+- Nothing asks how *many* things the player is holding, or how big the biggest of
+  them is. `carrying` reads a total. Two of Zork's ways out want the other
+  question: the chimney out of the Studio takes the lamp and one thing more,
+  counted rather than weighed, and the crawl into the Drafty Room passes when
+  every single thing carried weighs four or less. The crawl is approximated with
+  a total of four, which is stricter than Zork; the chimney asks only that the
+  lamp is in hand. Zork's own fumble above seven held items is the same shape and
+  is not ported either.
 
 ## Rooms that describe themselves differently as the world changes (10)
 

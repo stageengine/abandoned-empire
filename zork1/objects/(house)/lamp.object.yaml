@@ -3,6 +3,7 @@ name: brass lantern
 
 synonyms: [lamp, lantern, light, brass lamp, brass light]
 portable: true
+size: 15
 first: A battery-powered brass lantern is on the trophy case.
 here: There is a brass lantern (battery-powered) here.
 start: living-room

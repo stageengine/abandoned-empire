@@ -11,5 +11,6 @@ synonyms:
   - sapphire sapphire
   - sapphire treasure
 portable: true
+size: 10
 here: There is a sapphire-encrusted bracelet here.
 start: gas-room

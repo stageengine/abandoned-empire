@@ -3,6 +3,7 @@ name: rusty knife
 
 synonyms: [knives, knife, rusty knives]
 portable: true
+size: 20
 first: Beside the skeleton is a rusty knife.
 here: There is a rusty knife here.
 start: maze-5

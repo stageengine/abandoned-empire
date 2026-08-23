@@ -13,6 +13,7 @@ synonyms:
   - useless lantern
   - useless lamp
 portable: true
+size: 20
 first: The deceased adventurer's useless lantern is here.
 here: There is a burned-out lantern here.
 start: maze-5

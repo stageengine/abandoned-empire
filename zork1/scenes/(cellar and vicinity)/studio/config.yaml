@@ -37,9 +37,12 @@ navigation:
       - type: change-scene
         data:
           scene: gallery
-  # The chimney. ZIL counts what you are carrying and lets you up with the lamp
-  # and one other thing at most; without a carrying limit the port asks the half
-  # of that it can - that you have the lamp - and says so when you have not.
+  # The chimney. ZIL lets you up with the lamp and one other thing at most, and
+  # that is a count of things rather than a weight of them: the lamp and the
+  # coffin are two things and go up together, though they weigh seventy between
+  # them. `carrying` reads a total, so it cannot ask this, and a size bound put
+  # here would block the coffin that Zork allows. The port asks the half it can -
+  # that you have the lamp - and lets the rest through.
   - id: up
     requires:
       - type: has-item

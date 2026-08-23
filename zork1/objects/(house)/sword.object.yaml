@@ -17,6 +17,7 @@ synonyms:
   - antique glamdring
   - antique blade
 portable: true
+size: 30
 first: Above the trophy case hangs an elvish sword of great antiquity.
 here: There is a sword here.
 start: living-room

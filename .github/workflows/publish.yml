@@ -1,0 +1,159 @@
+name: Publish
+
+on:
+  push:
+    tags: ['v*']
+
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: The tag to build and release.
+        required: true
+      engine:
+        description: Which Stage to build with.
+        required: false
+
+permissions:
+  contents: write
+
+env:
+  STAGE: ${{ inputs.engine || '0.7.0' }}
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag || github.ref }}
+
+      - name: Fetch Stage
+        run: |
+          set -euo pipefail
+
+          curl -fsSL -o stage \
+            "https://github.com/stageengine/releases/releases/download/v${STAGE}/stage-linux-x86_64"
+
+          chmod +x stage
+
+          ./stage --version
+
+      - name: Build the game
+        run: |
+          set -euo pipefail
+
+          ./stage build . --output game.stg --strict
+
+      - name: Read what was built
+        id: built
+        run: |
+          set -euo pipefail
+
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+
+          import gzip, hashlib, json, os
+
+          raw = open('game.stg', 'rb').read()
+
+          if raw[:4] != b'STG\x00':
+              raise SystemExit('game.stg does not begin like a Stage game')
+
+          built = json.loads(gzip.decompress(raw[5:]))
+          about = built['game'].get('metadata') or {}
+
+          for name, value in (
+              ('id', built['game']['id']),
+              ('title', about.get('title', '')),
+              ('version', about.get('version', '')),
+              ('engine', built.get('engine', '')),
+              ('bytes', len(raw)),
+              ('hash', hashlib.sha256(raw).hexdigest()),
+          ):
+              print(f'{name}={value}')
+          PY
+
+      - name: Check the tag against the game
+        env:
+          TAG: ${{ inputs.tag || github.ref_name }}
+          VERSION: ${{ steps.built.outputs.version }}
+        run: |
+          set -euo pipefail
+
+          if [ "${TAG#v}" != "$VERSION" ]; then
+            echo "::error::tag $TAG does not match the version in the game ($VERSION)."
+            echo "Set metadata.version in config.yaml, or tag v$VERSION."
+            exit 1
+          fi
+
+      - name: Name it for the release
+        env:
+          ID: ${{ steps.built.outputs.id }}
+          VERSION: ${{ steps.built.outputs.version }}
+        run: |
+          set -euo pipefail
+
+          mv game.stg "${ID}-${VERSION}.stg"
+
+          sha256sum "${ID}-${VERSION}.stg" > checksums.txt
+
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag || github.ref_name }}
+          ID: ${{ steps.built.outputs.id }}
+          TITLE: ${{ steps.built.outputs.title }}
+          VERSION: ${{ steps.built.outputs.version }}
+          ENGINE: ${{ steps.built.outputs.engine }}
+          BYTES: ${{ steps.built.outputs.bytes }}
+          HASH: ${{ steps.built.outputs.hash }}
+        run: |
+          set -euo pipefail
+
+          file="${ID}-${VERSION}.stg"
+
+          {
+            echo "\`$TITLE\` $VERSION, built by Stage $ENGINE."
+            echo
+            echo '| | |'
+            echo '| --- | --- |'
+            echo "| game | \`$ID\` |"
+            echo "| version | \`$VERSION\` |"
+            echo "| engine | \`$ENGINE\` |"
+            echo "| bytes | \`$BYTES\` |"
+            echo "| sha256 | \`$HASH\` |"
+            echo
+            echo "Download: \`https://github.com/${GITHUB_REPOSITORY}/releases/download/${TAG}/${file}\`"
+            echo
+            echo 'The versioned address above is the one to point anything at. A build is'
+            echo 'reproducible for a given engine, so that file and that hash go together'
+            echo 'for good; the `latest` address does not.'
+          } > notes.md
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "$file" checksums.txt --clobber
+            gh release edit "$TAG" --notes-file notes.md
+          else
+            gh release create "$TAG" "$file" checksums.txt \
+              --title "$TITLE $VERSION" \
+              --notes-file notes.md \
+              --verify-tag
+          fi
+
+      - name: Summary
+        env:
+          HASH: ${{ steps.built.outputs.hash }}
+          BYTES: ${{ steps.built.outputs.bytes }}
+          TAG: ${{ inputs.tag || github.ref_name }}
+          ID: ${{ steps.built.outputs.id }}
+          VERSION: ${{ steps.built.outputs.version }}
+        run: |
+          {
+            echo "### Published"
+            echo
+            echo "| | |"
+            echo "| --- | --- |"
+            echo "| url | \`https://github.com/${GITHUB_REPOSITORY}/releases/download/${TAG}/${ID}-${VERSION}.stg\` |"
+            echo "| hash | \`${HASH}\` |"
+            echo "| bytes | \`${BYTES}\` |"
+          } >> "$GITHUB_STEP_SUMMARY"

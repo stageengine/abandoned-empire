@@ -31,6 +31,9 @@ const { rooms, things } = dungeon(source);
 const roomsById = new Map(rooms.map((room) => [room.id, room]));
 const thingsById = new Map(things.map((thing) => [thing.id, thing]));
 
+/** What an object weighs in ZIL when it does not say: `<PROPDEF SIZE 5>`. */
+const ZIL_SIZE = 5;
+
 /** What the port calls a thing ZIL called `WEST-OF-HOUSE`. */
 const id = (name: string): string => name.toLowerCase();
 
@@ -177,6 +180,13 @@ const thingYaml = (thing: Thing): Record<string, Value> => {
 
   if (thing.flags.includes('TAKEBIT')) {
     out.portable = true;
+
+    // What it costs to carry. ZIL's `<PROPDEF SIZE 5>` means an object saying
+    // nothing weighs five, which is why this is written for every takeable
+    // thing rather than only for the forty-two that declare one: Stage's own
+    // default is one, and a game where most things weigh five and the format
+    // assumes one is a game that has to say so.
+    out.size = thing.size ?? ZIL_SIZE;
   }
 
   // What the room says about it lying there. ZIL decides this in

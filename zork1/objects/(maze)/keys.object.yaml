@@ -3,5 +3,6 @@ name: skeleton key
 
 synonyms: [key]
 portable: true
+size: 10
 here: There is a skeleton key here.
 start: maze-5
