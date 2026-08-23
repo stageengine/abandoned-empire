@@ -1,0 +1,15 @@
+id: bag-of-coins
+name: leather bag of coins
+
+synonyms:
+  - bag
+  - coins
+  - treasure
+  - old bag
+  - old coins
+  - old treasure
+  - leather bag
+  - leather coins
+  - leather treasure
+portable: true
+start: maze-5

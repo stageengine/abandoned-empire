@@ -1,0 +1,83 @@
+id: trap-door
+name: trap door
+
+synonyms:
+  - door
+  - trapdoor
+  - trap-door
+  - cover
+  - trap trapdoor
+  - trap trap-door
+  - trap cover
+  - dusty door
+  - dusty trapdoor
+  - dusty trap-door
+  - dusty cover
+start: living-room
+
+# Under the rug until the rug is moved. ZIL says this with an INVISIBLE flag it
+# clears; here it is a condition asked afresh every turn, which comes to the
+# same thing and needs nothing written on the rug to remember it.
+requires:
+  - type: flag
+    data:
+      flag: rug-moved
+
+actions:
+  - id: open
+    requires:
+      - type: flag
+        negate: true
+        data:
+          flag: trap-door-open
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: It is already open.
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The door reluctantly opens to reveal a rickety staircase descending into darkness.
+      - type: set-flag
+        data:
+          flag: trap-door-open
+          value: true
+
+  - id: close
+    requires:
+      - type: flag
+        data:
+          flag: trap-door-open
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: It is already closed.
+    triggers:
+      - type: response
+        data:
+          text: The door swings shut and closes.
+      - type: set-flag
+        data:
+          flag: trap-door-open
+          value: false
+
+  - id: look
+    preposition: under
+    requires:
+      - type: flag
+        data:
+          flag: trap-door-open
+    triggers:
+      - type: response
+        data:
+          text: You see a rickety staircase descending into darkness.
+
+  - id: look
+    preposition: under
+    triggers:
+      - type: response
+        data:
+          text: It's closed.

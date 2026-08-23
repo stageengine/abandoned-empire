@@ -1,0 +1,80 @@
+id: river-4
+tags: [dark]
+
+meta:
+  title: Frigid River
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+      - type: object-in
+        data:
+          object: buoy
+          location: river-4
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The river is running faster here and the sound ahead appears to be that of rushing
+            water. On the east shore is a sandy beach. A small area of beach can also be seen
+            below the cliffs on the west shore.
+      - type: response
+        data:
+          text: There is a red buoy here (probably a warning).
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The river is running faster here and the sound ahead appears to be that of rushing
+            water. On the east shore is a sandy beach. A small area of beach can also be seen
+            below the cliffs on the west shore.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+objects:
+  - emerald
+  - buoy
+  - id: river-4.global-water
+    name: water
+    synonyms: [quantity]
+  - id: river-4.river
+    name: river
+    synonyms: [frigid river]
+
+navigation:
+  - id: east
+    triggers:
+      - type: change-scene
+        data:
+          scene: sandy-beach
+  - id: west
+    triggers:
+      - type: change-scene
+        data:
+          scene: white-cliffs-south
+  - id: up
+    triggers:
+      - type: response
+        data:
+          text: You cannot go upstream due to strong currents.
+  - id: down
+    triggers:
+      - type: change-scene
+        data:
+          scene: river-5
+  - id: land
+    triggers:
+      - type: response
+        data:
+          text: You can land either to the east or the west.

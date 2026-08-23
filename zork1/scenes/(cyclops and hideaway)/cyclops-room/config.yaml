@@ -1,0 +1,59 @@
+id: cyclops-room
+tags: [dark]
+
+meta:
+  title: Cyclops Room
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This room has an exit on the northwest, and a staircase leading up.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+objects: [cyclops]
+
+navigation:
+  - id: east
+    requires:
+      - type: flag
+        data:
+          flag: magic-flag
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: The east wall is solid rock.
+    triggers:
+      - type: change-scene
+        data:
+          scene: strange-passage
+  - id: northwest
+    triggers:
+      - type: change-scene
+        data:
+          scene: maze-15
+  - id: up
+    requires:
+      - type: flag
+        data:
+          flag: cyclops-flag
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: The cyclops doesn't look like he'll let you past.
+    triggers:
+      - type: change-scene
+        data:
+          scene: treasure-room

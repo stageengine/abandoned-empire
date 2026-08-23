@@ -1,0 +1,6 @@
+id: bottle
+name: glass bottle
+
+synonyms: [bottle, container, clear bottle, clear container, glass container]
+portable: true
+start: offstage

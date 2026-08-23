@@ -1,0 +1,38 @@
+id: maze-15
+tags: [dark]
+
+meta:
+  title: Maze
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: This is part of a maze of twisty little passages, all alike.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+navigation:
+  - id: south
+    triggers:
+      - type: change-scene
+        data:
+          scene: maze-7
+  - id: west
+    triggers:
+      - type: change-scene
+        data:
+          scene: maze-14
+  - id: southeast
+    triggers:
+      - type: change-scene
+        data:
+          scene: cyclops-room

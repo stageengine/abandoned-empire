@@ -1,0 +1,9 @@
+id: hot-bell
+name: red hot brass bell
+
+# Nothing reaches this. Zork swaps the brass bell for it once the bell is red
+# hot; the port keeps one bell and a `bell-hot` flag instead, because two things
+# answering to "bell" is two things the parser cannot choose between. It is left
+# here so that the map of what ZIL had is complete, with no words of its own.
+synonyms: [red hot brass bell]
+start: offstage

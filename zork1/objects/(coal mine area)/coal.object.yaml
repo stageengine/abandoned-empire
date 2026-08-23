@@ -1,0 +1,6 @@
+id: coal
+name: small pile of coal
+
+synonyms: [coal, pile, heap, small coal, small pile, small heap]
+portable: true
+start: dead-end-5

@@ -1,0 +1,45 @@
+id: ew-passage
+tags: [dark]
+
+meta:
+  title: East-West Passage
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is a narrow east-west passageway. There is a narrow stairway leading down at
+            the north end of the room.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+navigation:
+  - id: north
+    triggers:
+      - type: change-scene
+        data:
+          scene: chasm-room
+  - id: east
+    triggers:
+      - type: change-scene
+        data:
+          scene: round-room
+  - id: west
+    triggers:
+      - type: change-scene
+        data:
+          scene: troll-room
+  - id: down
+    triggers:
+      - type: change-scene
+        data:
+          scene: chasm-room

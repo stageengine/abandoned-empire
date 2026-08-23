@@ -1,0 +1,31 @@
+id: yellow-button
+name: yellow button
+
+# Not `button` or `switch` on their own: all four answer to those and the parser
+# picks by declaration order rather than by asking which one was meant.
+synonyms: [yellow switch]
+start: maintenance-room
+
+actions:
+  - id: move
+    triggers:
+      - type: response
+        data:
+          text: Click.
+      - type: set-flag
+        data:
+          flag: gate-flag
+          value: true
+
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: A yellow button, set into the wall beside three others.
+
+  - id: get
+    triggers:
+      - type: response
+        data:
+          text: The button is set into the wall.

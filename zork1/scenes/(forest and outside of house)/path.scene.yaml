@@ -1,0 +1,54 @@
+id: path
+
+meta:
+  title: Forest Path
+
+actions:
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is a path winding through a dimly lit forest. The path heads north-south here.
+            One particularly large tree with some low branches stands at the edge of the path.
+
+objects:
+  - id: path.tree
+    name: tree
+    synonyms: [branch, large tree, large branch, storm tree, storm branch]
+  - id: path.songbird
+    name: songbird
+    synonyms: [bird, song bird, song songbird]
+  - id: path.white-house
+    name: white house
+    synonyms: [house, beauti house, coloni house]
+  - id: path.forest
+    name: forest
+    synonyms: [trees, pines, hemlocks]
+
+navigation:
+  - id: north
+    triggers:
+      - type: change-scene
+        data:
+          scene: grating-clearing
+  - id: south
+    triggers:
+      - type: change-scene
+        data:
+          scene: north-of-house
+  - id: east
+    triggers:
+      - type: change-scene
+        data:
+          scene: forest-2
+  - id: west
+    triggers:
+      - type: change-scene
+        data:
+          scene: forest-1
+  - id: up
+    triggers:
+      - type: change-scene
+        data:
+          scene: up-a-tree

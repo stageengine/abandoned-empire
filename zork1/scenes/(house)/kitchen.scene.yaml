@@ -1,0 +1,141 @@
+id: kitchen
+
+meta:
+  title: Kitchen
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: kitchen-window-open
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the kitchen of the white house. A table seems to have been used recently
+            for the preparation of food. A passage leads to the west and a dark staircase can be
+            seen leading upward. A dark chimney leads down and to the east is a small window
+            which is open.
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the kitchen of the white house. A table seems to have been used recently
+            for the preparation of food. A passage leads to the west and a dark staircase can be
+            seen leading upward. A dark chimney leads down and to the east is a small window
+            which is slightly ajar.
+
+objects:
+  - water
+  - lunch
+  - kitchen-table
+  - sandwich-bag
+  - garlic
+  - bottle
+  - id: kitchen.kitchen-window
+    name: kitchen window
+    synonyms: [window, small window]
+    actions:
+      - id: open
+        requires:
+          - type: flag
+            negate: true
+            data:
+              flag: kitchen-window-open
+            failure:
+              triggers:
+                - type: response
+                  data:
+                    text: It is already open.
+        triggers:
+          - type: response
+            data:
+              text: With great effort, you open the window far enough to allow entry.
+          - type: set-flag
+            data:
+              flag: kitchen-window-open
+              value: true
+
+      - id: close
+        requires:
+          - type: flag
+            data:
+              flag: kitchen-window-open
+            failure:
+              triggers:
+                - type: response
+                  data:
+                    text: It is already closed.
+        triggers:
+          - type: response
+            data:
+              text: The window closes (more easily than it opened).
+          - type: set-flag
+            data:
+              flag: kitchen-window-open
+              value: false
+
+      - id: look
+        requires:
+          - type: flag
+            data:
+              flag: kitchen-window-open
+        triggers:
+          - type: response
+            data:
+              text: The window is open, far enough to allow entry.
+
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: The window is slightly ajar, but not enough to allow entry.
+
+      - id: look
+        preposition: in
+        triggers:
+          - type: response
+            data:
+              text: You can see a clear area leading towards a forest..
+
+  - id: kitchen.chimney
+    name: chimney
+    synonyms: [dark chimney, narrow chimney]
+
+navigation:
+  - id: east
+    requires:
+      - type: flag
+        data:
+          flag: kitchen-window-open
+    triggers:
+      - type: change-scene
+        data:
+          scene: east-of-house
+  - id: west
+    triggers:
+      - type: change-scene
+        data:
+          scene: living-room
+  - id: up
+    triggers:
+      - type: change-scene
+        data:
+          scene: attic
+  - id: down
+    requires:
+      - type: flag
+        data:
+          flag: false-flag
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: Only Santa Claus climbs down chimneys.
+    triggers:
+      - type: change-scene
+        data:
+          scene: studio

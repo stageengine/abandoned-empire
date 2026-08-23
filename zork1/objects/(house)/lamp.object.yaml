@@ -1,0 +1,196 @@
+id: lamp
+name: brass lantern
+
+synonyms: [lamp, lantern, light, brass lamp, brass light]
+portable: true
+start: living-room
+
+# How long it burns, in turns. ZIL keeps the same number in a table of four
+# entries counted down by an interrupt: a word at a hundred turns, another at a
+# hundred and seventy, a third at a hundred and eighty-five, and then dark.
+#
+# The top range says nothing and is the one the lamp starts in, which is what
+# gives the range below it something to be entered from.
+measures:
+  - id: life
+    max: 185
+    start: 185
+    thresholds:
+      - from: 0
+        triggers:
+          - type: response
+            data:
+              text: The lamp has burned out.
+          - type: set-flag
+            data:
+              flag: lamp-on
+              value: false
+          - type: set-flag
+            data:
+              flag: lamp-burned-out
+              value: true
+          - type: set-flag
+            data:
+              flag: light
+              value: false
+      - from: 1
+        triggers:
+          - type: response
+            data:
+              text: The lamp is nearly out.
+      - from: 6
+        triggers:
+          - type: response
+            data:
+              text: The lamp is definitely dimmer now.
+      - from: 16
+        triggers:
+          - type: response
+            data:
+              text: The lamp appears a bit dimmer.
+      - from: 86
+
+actions:
+  # Turning it on. `light` is set here as well as in `every-turn.yaml`, because
+  # the pass that keeps that flag runs after the turn and a player who lights
+  # the lamp and looks in the same breath should not be told it is pitch black.
+  - id: turn
+    preposition: 'on'
+    requires:
+      - type: flag
+        negate: true
+        data:
+          flag: lamp-burned-out
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: A burned-out lamp won't light.
+      - type: flag
+        negate: true
+        data:
+          flag: lamp-on
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: It is already on.
+    triggers:
+      - type: response
+        data:
+          text: The brass lantern is now on.
+      - type: set-flag
+        data:
+          flag: lamp-on
+          value: true
+      - type: set-flag
+        data:
+          flag: light
+          value: true
+
+  - id: turn
+    preposition: 'off'
+    requires:
+      - type: flag
+        data:
+          flag: lamp-on
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: It is already off.
+    triggers:
+      - type: response
+        data:
+          text: The brass lantern is now off.
+      - type: set-flag
+        data:
+          flag: lamp-on
+          value: false
+      - type: set-flag
+        data:
+          flag: light
+          value: false
+
+  # `light the lamp` is the same act said another way, and Zork answers to both.
+  - id: burn
+    requires:
+      - type: flag
+        negate: true
+        data:
+          flag: lamp-burned-out
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: A burned-out lamp won't light.
+      - type: flag
+        negate: true
+        data:
+          flag: lamp-on
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: It is already on.
+    triggers:
+      - type: response
+        data:
+          text: The brass lantern is now on.
+      - type: set-flag
+        data:
+          flag: lamp-on
+          value: true
+      - type: set-flag
+        data:
+          flag: light
+          value: true
+
+  - id: extinguish
+    requires:
+      - type: flag
+        data:
+          flag: lamp-on
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: It is already off.
+    triggers:
+      - type: response
+        data:
+          text: The brass lantern is now off.
+      - type: set-flag
+        data:
+          flag: lamp-on
+          value: false
+      - type: set-flag
+        data:
+          flag: light
+          value: false
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: lamp-burned-out
+    triggers:
+      - type: response
+        data:
+          text: The lamp has burned out.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: lamp-on
+    triggers:
+      - type: response
+        data:
+          text: The lamp is on.
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: The lamp is turned off.

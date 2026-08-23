@@ -1,0 +1,47 @@
+id: timber-room
+tags: [dark]
+
+meta:
+  title: Timber Room
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is a long and narrow passage, which is cluttered with broken timbers. A wide
+            passage comes from the east and turns at the west end of the room into a very narrow
+            passageway. From the west comes a strong draft.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+objects: [timbers]
+
+navigation:
+  - id: east
+    triggers:
+      - type: change-scene
+        data:
+          scene: ladder-bottom
+  - id: west
+    requires:
+      - type: flag
+        data:
+          flag: empty-handed
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You cannot fit through this passage with that load.
+    triggers:
+      - type: change-scene
+        data:
+          scene: lower-shaft

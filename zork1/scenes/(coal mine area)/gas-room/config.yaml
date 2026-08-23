@@ -1,0 +1,37 @@
+id: gas-room
+tags: [dark]
+
+meta:
+  title: Gas Room
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is a small room which smells strongly of coal gas. There is a short climb up
+            some stairs and a narrow tunnel leading east.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+objects: [bracelet]
+
+navigation:
+  - id: east
+    triggers:
+      - type: change-scene
+        data:
+          scene: mine-1
+  - id: up
+    triggers:
+      - type: change-scene
+        data:
+          scene: smelly-room

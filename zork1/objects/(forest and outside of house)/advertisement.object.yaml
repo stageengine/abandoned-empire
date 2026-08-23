@@ -1,0 +1,23 @@
+id: advertisement
+name: leaflet
+
+synonyms:
+  - advertisement
+  - booklet
+  - mail
+  - small advertisement
+  - small leaflet
+  - small booklet
+  - small mail
+portable: true
+start: offstage
+
+actions:
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: |-
+            "WELCOME TO ZORK!
+
+            ZORK is a game of adventure, danger, and low cunning. In it you will explore some of the most amazing territory ever seen by mortals. No computer should be without one!"

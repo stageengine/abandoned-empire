@@ -1,0 +1,43 @@
+id: mirror-room-1
+tags: [dark]
+
+meta:
+  title: Mirror Room
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in a large square room with tall ceilings. On the south wall is an enormous
+            mirror which fills the entire wall. There are exits on the other three sides of the
+            room.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+objects: [mirror-1]
+
+navigation:
+  - id: north
+    triggers:
+      - type: change-scene
+        data:
+          scene: cold-passage
+  - id: east
+    triggers:
+      - type: change-scene
+        data:
+          scene: small-cave
+  - id: west
+    triggers:
+      - type: change-scene
+        data:
+          scene: twisting-passage

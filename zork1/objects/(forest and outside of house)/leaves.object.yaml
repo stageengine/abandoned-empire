@@ -1,0 +1,6 @@
+id: leaves
+name: pile of leaves
+
+synonyms: [leaves, leaf, pile]
+portable: true
+start: grating-clearing

@@ -1,0 +1,29 @@
+id: on-rainbow
+
+meta:
+  title: On the Rainbow
+
+actions:
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are on top of a rainbow (I bet you never thought you would walk on a rainbow),
+            with a magnificent view of the Falls. The rainbow travels east-west here.
+
+objects:
+  - id: on-rainbow.rainbow
+    name: rainbow
+
+navigation:
+  - id: east
+    triggers:
+      - type: change-scene
+        data:
+          scene: aragain-falls
+  - id: west
+    triggers:
+      - type: change-scene
+        data:
+          scene: end-of-rainbow

@@ -1,0 +1,4 @@
+id: machine
+
+synonyms: [pdp10, dryer, lid]
+start: machine-room

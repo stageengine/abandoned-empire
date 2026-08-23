@@ -1,0 +1,14 @@
+id: egg
+name: jewel-encrusted egg
+
+synonyms:
+  - egg
+  - treasure
+  - birds egg
+  - birds treasure
+  - encrusted egg
+  - encrusted treasure
+  - jeweled egg
+  - jeweled treasure
+portable: true
+start: offstage

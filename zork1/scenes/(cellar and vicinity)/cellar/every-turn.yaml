@@ -1,0 +1,27 @@
+# What this room does, and only this room.
+
+every-turn:
+
+  # The way you came in, shutting behind you. ZIL hangs this on entering the
+  # room rather than on the way down, so that it happens however you arrive
+  # while the door is still open above.
+  - requires:
+      - type: flag
+        data:
+          flag: trap-door-open
+      - type: flag
+        negate: true
+        data:
+          flag: trap-door-barred
+    triggers:
+      - type: response
+        data:
+          text: The trap door crashes shut, and you hear someone barring it.
+      - type: set-flag
+        data:
+          flag: trap-door-open
+          value: false
+      - type: set-flag
+        data:
+          flag: trap-door-barred
+          value: true

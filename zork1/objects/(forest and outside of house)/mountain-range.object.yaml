@@ -1,0 +1,11 @@
+id: mountain-range
+name: mountain range
+
+synonyms:
+  - mountain
+  - range
+  - impassable mountain
+  - impassable range
+  - flathead mountain
+  - flathead range
+start: mountains

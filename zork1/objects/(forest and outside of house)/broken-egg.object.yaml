@@ -1,0 +1,16 @@
+id: broken-egg
+name: broken jewel-encrusted egg
+
+synonyms:
+  - egg
+  - treasure
+  - broken egg
+  - broken treasure
+  - birds egg
+  - birds treasure
+  - encrusted egg
+  - encrusted treasure
+  - jewel egg
+  - jewel treasure
+portable: true
+start: offstage

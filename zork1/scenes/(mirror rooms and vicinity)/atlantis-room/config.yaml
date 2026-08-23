@@ -1,0 +1,55 @@
+id: atlantis-room
+tags: [dark]
+
+meta:
+  title: Atlantis Room
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+      - type: object-in
+        data:
+          object: trident
+          location: atlantis-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is an ancient room, long under water. There is an exit to the south and a
+            staircase leading up.
+      - type: response
+        data:
+          text: On the shore lies Poseidon's own crystal trident.
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is an ancient room, long under water. There is an exit to the south and a
+            staircase leading up.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+objects: [trident]
+
+navigation:
+  - id: south
+    triggers:
+      - type: change-scene
+        data:
+          scene: reservoir-north
+  - id: up
+    triggers:
+      - type: change-scene
+        data:
+          scene: small-cave

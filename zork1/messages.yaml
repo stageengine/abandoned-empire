@@ -1,0 +1,50 @@
+# What the game says where Stage would otherwise use its own words.
+#
+# All of these are Zork's, taken from `gverbs.zil` and `gparser.zil`. Getting
+# them right here is worth a great deal: it is the difference between a port
+# that reads like Zork and one that reads like Zork narrated by something else,
+# and it saves writing an action on all hundred things just to change "You take
+# the tube" into "Taken."
+#
+# Where a key has no Zork equivalent it is left out, and Stage says its own
+# thing. Where Zork's line needs a word Stage does not offer the placeholder
+# for, the line is written the general way round rather than made up.
+#
+# `<thing>` carries its own article - it is "the sword", not "sword" - so Zork's
+# "the " in front of it is dropped rather than doubled.
+
+messages:
+  # Picking up and putting down.
+  get.done: Taken.
+  get.already: You already have that!
+  get.fixed: You can't be serious.
+  gained.done: Taken.
+  drop.done: Dropped.
+  drop.empty-handed: You're not carrying <thing>.
+
+  # Looking.
+  look.nothing: There's nothing special about <thing>.
+
+  # Not finding it. Stage can only offer the word that was typed, which is what
+  # Zork answers with here too.
+  thing.absent: You can't see any <named> here.
+
+  # Not reading it.
+  input.unknown: I don't know that word.
+  input.unknown-part: I don't know the word "<words>".
+  input.leftover: I don't know the word "<words>".
+  input.pronoun: I don't know what you're referring to.
+  input.verb-alone: What do you want to <verb>?
+
+  # Being told no.
+  action.refused: You can't do that.
+  action.blocked: You can't do that yet.
+  action.exhausted: You've already done that.
+
+  # Getting about.
+  exit.missing: You can't go that way.
+  exit.blocked: You can't go that way.
+
+  # The screen.
+  screen.carrying: 'You are carrying: <words>'
+  screen.empty-handed: You are empty-handed.

@@ -1,0 +1,71 @@
+id: reservoir
+tags: [dark]
+
+meta:
+  title: Reservoir
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+      - type: flag
+        data:
+          flag: low-tide
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are on what used to be a large lake, but which is now a large mud pile. There
+            are "shores" to the north and south.
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are on the lake. Beaches can be seen north and south. Upstream a small stream
+            enters the lake through a narrow cleft in the rocks. The dam can be seen downstream.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            It is pitch black. You are likely to be eaten by a grue.
+
+objects:
+  - trunk
+  - id: reservoir.global-water
+    name: water
+    synonyms: [quantity]
+
+navigation:
+  - id: north
+    triggers:
+      - type: change-scene
+        data:
+          scene: reservoir-north
+  - id: south
+    triggers:
+      - type: change-scene
+        data:
+          scene: reservoir-south
+  - id: west
+    triggers:
+      - type: change-scene
+        data:
+          scene: in-stream
+  - id: up
+    triggers:
+      - type: change-scene
+        data:
+          scene: in-stream
+  - id: down
+    triggers:
+      - type: response
+        data:
+          text: The dam blocks your way.

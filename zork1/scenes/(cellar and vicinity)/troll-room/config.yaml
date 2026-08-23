@@ -1,0 +1,80 @@
+id: troll-room
+tags: [dark]
+
+meta:
+  title: The Troll Room
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+      - type: object-in
+        data:
+          object: troll
+          location: troll-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is a small room with passages to the east and south and a forbidding hole
+            leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.
+      - type: response
+        data:
+          text: >-
+            A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the
+            room.
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is a small room with passages to the east and south and a forbidding hole
+            leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+objects: [axe, troll]
+
+navigation:
+  - id: south
+    triggers:
+      - type: change-scene
+        data:
+          scene: cellar
+  - id: east
+    requires:
+      - type: flag
+        data:
+          flag: troll-flag
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: The troll fends you off with a menacing gesture.
+    triggers:
+      - type: change-scene
+        data:
+          scene: ew-passage
+  - id: west
+    requires:
+      - type: flag
+        data:
+          flag: troll-flag
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: The troll fends you off with a menacing gesture.
+    triggers:
+      - type: change-scene
+        data:
+          scene: maze-1

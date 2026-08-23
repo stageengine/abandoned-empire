@@ -1,0 +1,59 @@
+id: north-of-house
+
+meta:
+  title: North of House
+
+actions:
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are facing the north side of a white house. There is no door here, and all the
+            windows are boarded up. To the north a narrow path winds through the trees.
+
+objects:
+  - id: north-of-house.boarded-window
+    name: boarded window
+    synonyms: [window]
+  - id: north-of-house.board
+    name: board
+    synonyms: [boards]
+  - id: north-of-house.white-house
+    name: white house
+    synonyms: [house, beauti house, coloni house]
+  - id: north-of-house.forest
+    name: forest
+    synonyms: [trees, pines, hemlocks]
+
+navigation:
+  - id: north
+    triggers:
+      - type: change-scene
+        data:
+          scene: path
+  - id: south
+    triggers:
+      - type: response
+        data:
+          text: The windows are all boarded.
+  - id: east
+    triggers:
+      - type: change-scene
+        data:
+          scene: east-of-house
+  - id: west
+    triggers:
+      - type: change-scene
+        data:
+          scene: west-of-house
+  - id: southeast
+    triggers:
+      - type: change-scene
+        data:
+          scene: east-of-house
+  - id: southwest
+    triggers:
+      - type: change-scene
+        data:
+          scene: west-of-house

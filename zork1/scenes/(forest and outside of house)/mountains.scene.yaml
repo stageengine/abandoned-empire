@@ -1,0 +1,47 @@
+id: mountains
+
+meta:
+  title: Forest
+
+actions:
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: The forest thins out, revealing impassable mountains.
+
+objects:
+  - mountain-range
+  - id: mountains.tree
+    name: tree
+    synonyms: [branch, large tree, large branch, storm tree, storm branch]
+  - id: mountains.white-house
+    name: white house
+    synonyms: [house, beauti house, coloni house]
+
+navigation:
+  - id: north
+    triggers:
+      - type: change-scene
+        data:
+          scene: forest-2
+  - id: south
+    triggers:
+      - type: change-scene
+        data:
+          scene: forest-2
+  - id: east
+    triggers:
+      - type: response
+        data:
+          text: The mountains are impassable.
+  - id: west
+    triggers:
+      - type: change-scene
+        data:
+          scene: forest-2
+  - id: up
+    triggers:
+      - type: response
+        data:
+          text: The mountains are impassable.

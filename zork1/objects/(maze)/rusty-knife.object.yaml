@@ -1,0 +1,6 @@
+id: rusty-knife
+name: rusty knife
+
+synonyms: [knives, knife, rusty knives]
+portable: true
+start: maze-5

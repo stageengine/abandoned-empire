@@ -1,0 +1,63 @@
+id: maintenance-room
+tags: [dark]
+
+meta:
+  title: Maintenance Room
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: maintenance-lights
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is what appears to have been the maintenance room for Flood Control Dam #3.
+            Apparently, this room has been ransacked recently, for most of the valuable
+            equipment is gone. On the wall in front of you is a group of buttons colored blue,
+            yellow, brown, and red. There are doorways to the west and south.
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is what appears to have been the maintenance room for Flood Control Dam #3.
+            Apparently, this room has been ransacked recently, for most of the valuable
+            equipment is gone. On the wall in front of you is a group of buttons colored blue,
+            yellow, brown, and red. There are doorways to the west and south.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            It is pitch black. You are likely to be eaten by a grue.
+
+objects:
+  - tool-chest
+  - yellow-button
+  - brown-button
+  - red-button
+  - blue-button
+  - leak
+  - screwdriver
+  - tube
+  - putty
+  - wrench
+
+navigation:
+  - id: south
+    triggers:
+      - type: change-scene
+        data:
+          scene: dam-lobby
+  - id: west
+    triggers:
+      - type: change-scene
+        data:
+          scene: dam-lobby

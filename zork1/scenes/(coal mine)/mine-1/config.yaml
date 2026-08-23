@@ -1,0 +1,38 @@
+id: mine-1
+tags: [dark]
+
+meta:
+  title: Coal Mine
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: This is a nondescript part of a coal mine.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+navigation:
+  - id: north
+    triggers:
+      - type: change-scene
+        data:
+          scene: gas-room
+  - id: east
+    triggers:
+      - type: change-scene
+        data:
+          scene: mine-1
+  - id: northeast
+    triggers:
+      - type: change-scene
+        data:
+          scene: mine-2

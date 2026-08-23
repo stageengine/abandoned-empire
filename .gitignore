@@ -1,0 +1,5 @@
+# Stage files.
+*.stg
+
+# The source the port is generated from, cloned by tools/fetch.sh.
+source/

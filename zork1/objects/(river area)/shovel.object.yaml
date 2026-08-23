@@ -1,0 +1,5 @@
+id: shovel
+
+synonyms: [tool, tools]
+portable: true
+start: sandy-beach

@@ -1,0 +1,16 @@
+id: chalice
+
+synonyms:
+  - cup
+  - silver
+  - treasure
+  - silver chalice
+  - silver cup
+  - silver silver
+  - silver treasure
+  - engravings chalice
+  - engravings cup
+  - engravings silver
+  - engravings treasure
+portable: true
+start: treasure-room

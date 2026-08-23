@@ -1,0 +1,28 @@
+id: owners-manual
+name: ZORK owner's manual
+
+synonyms:
+  - manual
+  - piece
+  - paper
+  - zork manual
+  - zork piece
+  - zork paper
+  - owners manual
+  - owners piece
+  - owners paper
+  - small manual
+  - small piece
+  - small paper
+portable: true
+start: studio
+
+actions:
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: |-
+            Congratulations!
+
+            You are the privileged owner of ZORK I: The Great Underground Empire, a self-contained and self-maintaining universe. If used and maintained in accordance with normal operating practices for small universes, ZORK will provide many months of trouble-free operation.

@@ -1,0 +1,57 @@
+id: forest-3
+
+meta:
+  title: Forest
+
+actions:
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: This is a dimly lit forest, with large trees all around.
+
+objects:
+  - id: forest-3.tree
+    name: tree
+    synonyms: [branch, large tree, large branch, storm tree, storm branch]
+  - id: forest-3.songbird
+    name: songbird
+    synonyms: [bird, song bird, song songbird]
+  - id: forest-3.white-house
+    name: white house
+    synonyms: [house, beauti house, coloni house]
+  - id: forest-3.forest
+    name: forest
+    synonyms: [trees, pines, hemlocks]
+
+navigation:
+  - id: north
+    triggers:
+      - type: change-scene
+        data:
+          scene: clearing
+  - id: south
+    triggers:
+      - type: response
+        data:
+          text: Storm-tossed trees block your way.
+  - id: east
+    triggers:
+      - type: response
+        data:
+          text: The rank undergrowth prevents eastward movement.
+  - id: west
+    triggers:
+      - type: change-scene
+        data:
+          scene: forest-1
+  - id: northwest
+    triggers:
+      - type: change-scene
+        data:
+          scene: south-of-house
+  - id: up
+    triggers:
+      - type: response
+        data:
+          text: There is no tree here suitable for climbing.

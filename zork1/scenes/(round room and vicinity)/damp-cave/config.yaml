@@ -1,0 +1,45 @@
+id: damp-cave
+tags: [dark]
+
+meta:
+  title: Damp Cave
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This cave has exits to the west and east, and narrows to a crack toward the south.
+            The earth is particularly damp here.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+objects:
+  - id: damp-cave.crack
+    name: crack
+    synonyms: [narrow crack]
+
+navigation:
+  - id: south
+    triggers:
+      - type: response
+        data:
+          text: It is too narrow for most insects.
+  - id: east
+    triggers:
+      - type: change-scene
+        data:
+          scene: white-cliffs-north
+  - id: west
+    triggers:
+      - type: change-scene
+        data:
+          scene: loud-room

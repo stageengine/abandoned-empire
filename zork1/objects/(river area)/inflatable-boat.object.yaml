@@ -1,0 +1,18 @@
+id: inflatable-boat
+name: pile of plastic
+
+synonyms:
+  - boat
+  - pile
+  - plastic
+  - valve
+  - plastic boat
+  - plastic pile
+  - plastic plastic
+  - plastic valve
+  - inflat boat
+  - inflat pile
+  - inflat plastic
+  - inflat valve
+portable: true
+start: dam-base

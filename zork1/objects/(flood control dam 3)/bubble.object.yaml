@@ -1,0 +1,28 @@
+id: bubble
+name: green bubble
+
+synonyms: [bubble, small bubble, plastic bubble]
+start: dam-room
+
+actions:
+  - id: get
+    triggers:
+      - type: response
+        data:
+          text: It is an integral part of the control panel.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: gate-flag
+    triggers:
+      - type: response
+        data:
+          text: A small green plastic bubble, glowing serenely.
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: A small green plastic bubble, dark and inert.

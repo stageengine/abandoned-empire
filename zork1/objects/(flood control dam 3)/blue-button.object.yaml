@@ -1,0 +1,39 @@
+id: blue-button
+name: blue button
+
+# Not `button` or `switch` on their own: all four answer to those and the parser
+# picks by declaration order rather than by asking which one was meant.
+synonyms: [blue switch]
+start: maintenance-room
+
+actions:
+  - id: move
+    once:
+      failure:
+        triggers:
+          - type: response
+            data:
+              text: The blue button appears to be jammed.
+    triggers:
+      - type: response
+        data:
+          text: >-
+            There is a rumbling sound and a stream of water appears to burst from the east wall
+            of the room (apparently, a leak has occurred in a pipe).
+      - type: set-flag
+        data:
+          flag: leak-open
+          value: true
+
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: A blue button, set into the wall beside three others.
+
+  - id: get
+    triggers:
+      - type: response
+        data:
+          text: The button is set into the wall.

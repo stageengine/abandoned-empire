@@ -1,0 +1,27 @@
+id: wooden-door
+name: wooden door
+
+synonyms:
+  - door
+  - lettering
+  - writing
+  - wooden lettering
+  - wooden writing
+  - gothic door
+  - gothic lettering
+  - gothic writing
+  - strange door
+  - strange lettering
+  - strange writing
+  - west door
+  - west lettering
+  - west writing
+start: living-room
+
+actions:
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The engravings translate to "This space intentionally left blank."

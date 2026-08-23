@@ -1,0 +1,17 @@
+id: trident
+name: crystal trident
+
+synonyms:
+  - trident
+  - fork
+  - treasure
+  - poseidon trident
+  - poseidon fork
+  - poseidon treasure
+  - own trident
+  - own fork
+  - own treasure
+  - crystal fork
+  - crystal treasure
+portable: true
+start: atlantis-room

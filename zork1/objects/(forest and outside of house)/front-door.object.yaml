@@ -1,0 +1,5 @@
+id: front-door
+name: door
+
+synonyms: [front door, boarded door]
+start: west-of-house

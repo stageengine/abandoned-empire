@@ -1,0 +1,218 @@
+# What the world does while the player is doing something else.
+#
+# Two of the three things here are bookkeeping for something the engine does not
+# have a word for yet, and both work the same way: a flag is cleared at the top
+# of the pass and set again by whatever ought to set it. Every rule is tested
+# against the world as the turn ended and only then fires, in the order written,
+# so a rule cannot see what a rule above it did and the clearing cannot undo the
+# setting.
+
+every-turn:
+  # Is anything lighting the way? One question now that `any-of` exists, asked
+  # once a turn into a flag so that every dark room can ask one thing rather
+  # than the whole list. It is an or of ands - a lamp is not a light unless it
+  # is lit - which is why the alternatives are `all-of` blocks.
+  #
+  # An action that lights or douses something sets `light` itself as well, since
+  # this pass runs after the turn and a player who lights the lamp should not be
+  # told it is pitch black in the same breath.
+  - triggers:
+      - type: set-flag
+        data:
+          flag: light
+          value: false
+
+  - requires:
+      - type: any-of
+        data:
+          conditions:
+            - type: all-of
+              data:
+                conditions:
+                  - type: has-item
+                    data:
+                      object: lamp
+                  - type: flag
+                    data:
+                      flag: lamp-on
+
+            - type: all-of
+              data:
+                conditions:
+                  - type: has-item
+                    data:
+                      object: candles
+                  - type: flag
+                    data:
+                      flag: candles-on
+
+            - type: all-of
+              data:
+                conditions:
+                  - type: has-item
+                    data:
+                      object: match
+                  - type: flag
+                    data:
+                      flag: match-on
+
+            - type: has-item
+              data:
+                object: torch
+    triggers:
+      - type: set-flag
+        data:
+          flag: light
+          value: true
+
+  # The lamp burning down. Its own thresholds do the talking, and the last of
+  # them puts the light out.
+  - requires:
+      - type: flag
+        data:
+          flag: lamp-on
+      - type: flag
+        negate: true
+        data:
+          flag: lamp-burned-out
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: lamp
+          measure: life
+          by: -1
+
+  # Whether the last turn was spent in the dark, which is what tells a grue it
+  # has had time to find you. Cleared here and set again below if the room the
+  # player is standing in is still a dark one.
+  - triggers:
+      - type: set-flag
+        data:
+          flag: was-dark
+          value: false
+
+  # The grue. One rule for all seventy-seven dark rooms, because a room says
+  # what kind of room it is and a condition can ask. This used to be the same
+  # thirty lines in seventy-seven folders, written by a tool.
+  - requires:
+      - type: scene
+        data:
+          tag: dark
+      - type: flag
+        negate: true
+        data:
+          flag: light
+      - type: flag
+        data:
+          flag: was-dark
+    chance:
+      percent: 80
+    triggers:
+      - type: response
+        data:
+          text: Oh, no! A lurking grue slithered into the room and devoured you!
+      - type: end-game
+        data:
+          journal: eaten by a grue
+
+  - requires:
+      - type: scene
+        data:
+          tag: dark
+      - type: flag
+        negate: true
+        data:
+          flag: light
+    triggers:
+      - type: set-flag
+        data:
+          flag: was-dark
+          value: true
+
+  # Flood Control Dam #3. The gates decide which way the reservoir walks, and
+  # the dam's own thresholds set `low-tide` when it reaches either end. Eight
+  # turns each way, which is what ZIL queues.
+  - requires:
+      - type: flag
+        data:
+          flag: gates-open
+      - type: measure
+        data:
+          subject: dam
+          measure: water
+          min: 1
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: dam
+          measure: water
+          by: -1
+
+  - requires:
+      - type: flag
+        negate: true
+        data:
+          flag: gates-open
+      - type: measure
+        data:
+          subject: dam
+          measure: water
+          max: 7
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: dam
+          measure: water
+          by: 1
+
+  # The leak the blue button opens, rising a notch a turn until it is stopped.
+  - requires:
+      - type: flag
+        data:
+          flag: leak-open
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: leak
+          measure: flood
+          by: 1
+
+  # The candles burning down, and the match with them. Both say their own piece
+  # through their thresholds.
+  - requires:
+      - type: flag
+        data:
+          flag: candles-on
+      - type: flag
+        negate: true
+        data:
+          flag: candles-gone
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: candles
+          measure: life
+          by: -1
+
+  - requires:
+      - type: flag
+        data:
+          flag: match-on
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: match
+          measure: flame
+          by: -1
+
+  # The bell cooling, twenty turns after it was rung.
+  - requires:
+      - type: flag
+        data:
+          flag: bell-hot
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: bell
+          measure: heat
+          by: -1

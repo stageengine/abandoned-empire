@@ -1,0 +1,40 @@
+id: east-of-chasm
+tags: [dark]
+
+meta:
+  title: East of Chasm
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are on the east edge of a chasm, the bottom of which cannot be seen. A narrow
+            passage goes north, and the path you are on continues to the east.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+navigation:
+  - id: north
+    triggers:
+      - type: change-scene
+        data:
+          scene: cellar
+  - id: east
+    triggers:
+      - type: change-scene
+        data:
+          scene: gallery
+  - id: down
+    triggers:
+      - type: response
+        data:
+          text: The chasm probably leads straight to the infernal regions.

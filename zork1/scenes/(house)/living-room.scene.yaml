@@ -1,0 +1,745 @@
+id: living-room
+
+meta:
+  title: Living Room
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: magic-flag
+      - type: flag
+        data:
+          flag: rug-moved
+      - type: flag
+        data:
+          flag: trap-door-open
+      - type: object-in
+        data:
+          object: lamp
+          location: living-room
+      - type: object-in
+        data:
+          object: sword
+          location: living-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east. To the west is a
+            cyclops-shaped opening in an old wooden door, above which is some strange gothic
+            lettering, a trophy case, and a rug lying beside an open trap door.
+      - type: response
+        data:
+          text: A battery-powered brass lantern is on the trophy case.
+      - type: response
+        data:
+          text: Above the trophy case hangs an elvish sword of great antiquity.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: magic-flag
+      - type: flag
+        data:
+          flag: rug-moved
+      - type: object-in
+        data:
+          object: lamp
+          location: living-room
+      - type: object-in
+        data:
+          object: sword
+          location: living-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east. To the west is a
+            cyclops-shaped opening in an old wooden door, above which is some strange gothic
+            lettering, a trophy case, and a closed trap door at your feet.
+      - type: response
+        data:
+          text: A battery-powered brass lantern is on the trophy case.
+      - type: response
+        data:
+          text: Above the trophy case hangs an elvish sword of great antiquity.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: magic-flag
+      - type: flag
+        data:
+          flag: trap-door-open
+      - type: object-in
+        data:
+          object: lamp
+          location: living-room
+      - type: object-in
+        data:
+          object: sword
+          location: living-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east. To the west is a
+            cyclops-shaped opening in an old wooden door, above which is some strange gothic
+            lettering, a trophy case, and an open trap door at your feet.
+      - type: response
+        data:
+          text: A battery-powered brass lantern is on the trophy case.
+      - type: response
+        data:
+          text: Above the trophy case hangs an elvish sword of great antiquity.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: magic-flag
+      - type: object-in
+        data:
+          object: lamp
+          location: living-room
+      - type: object-in
+        data:
+          object: sword
+          location: living-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east. To the west is a
+            cyclops-shaped opening in an old wooden door, above which is some strange gothic
+            lettering, a trophy case, and a large oriental rug in the center of the room.
+      - type: response
+        data:
+          text: A battery-powered brass lantern is on the trophy case.
+      - type: response
+        data:
+          text: Above the trophy case hangs an elvish sword of great antiquity.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: rug-moved
+      - type: flag
+        data:
+          flag: trap-door-open
+      - type: object-in
+        data:
+          object: lamp
+          location: living-room
+      - type: object-in
+        data:
+          object: sword
+          location: living-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east, a wooden door with strange
+            gothic lettering to the west, which appears to be nailed shut, a trophy case, and a
+            rug lying beside an open trap door.
+      - type: response
+        data:
+          text: A battery-powered brass lantern is on the trophy case.
+      - type: response
+        data:
+          text: Above the trophy case hangs an elvish sword of great antiquity.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: rug-moved
+      - type: object-in
+        data:
+          object: lamp
+          location: living-room
+      - type: object-in
+        data:
+          object: sword
+          location: living-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east, a wooden door with strange
+            gothic lettering to the west, which appears to be nailed shut, a trophy case, and a
+            closed trap door at your feet.
+      - type: response
+        data:
+          text: A battery-powered brass lantern is on the trophy case.
+      - type: response
+        data:
+          text: Above the trophy case hangs an elvish sword of great antiquity.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: trap-door-open
+      - type: object-in
+        data:
+          object: lamp
+          location: living-room
+      - type: object-in
+        data:
+          object: sword
+          location: living-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east, a wooden door with strange
+            gothic lettering to the west, which appears to be nailed shut, a trophy case, and an
+            open trap door at your feet.
+      - type: response
+        data:
+          text: A battery-powered brass lantern is on the trophy case.
+      - type: response
+        data:
+          text: Above the trophy case hangs an elvish sword of great antiquity.
+
+  - id: look
+    requires:
+      - type: object-in
+        data:
+          object: lamp
+          location: living-room
+      - type: object-in
+        data:
+          object: sword
+          location: living-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east, a wooden door with strange
+            gothic lettering to the west, which appears to be nailed shut, a trophy case, and a
+            large oriental rug in the center of the room.
+      - type: response
+        data:
+          text: A battery-powered brass lantern is on the trophy case.
+      - type: response
+        data:
+          text: Above the trophy case hangs an elvish sword of great antiquity.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: magic-flag
+      - type: flag
+        data:
+          flag: rug-moved
+      - type: flag
+        data:
+          flag: trap-door-open
+      - type: object-in
+        data:
+          object: lamp
+          location: living-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east. To the west is a
+            cyclops-shaped opening in an old wooden door, above which is some strange gothic
+            lettering, a trophy case, and a rug lying beside an open trap door.
+      - type: response
+        data:
+          text: A battery-powered brass lantern is on the trophy case.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: magic-flag
+      - type: flag
+        data:
+          flag: rug-moved
+      - type: object-in
+        data:
+          object: lamp
+          location: living-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east. To the west is a
+            cyclops-shaped opening in an old wooden door, above which is some strange gothic
+            lettering, a trophy case, and a closed trap door at your feet.
+      - type: response
+        data:
+          text: A battery-powered brass lantern is on the trophy case.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: magic-flag
+      - type: flag
+        data:
+          flag: trap-door-open
+      - type: object-in
+        data:
+          object: lamp
+          location: living-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east. To the west is a
+            cyclops-shaped opening in an old wooden door, above which is some strange gothic
+            lettering, a trophy case, and an open trap door at your feet.
+      - type: response
+        data:
+          text: A battery-powered brass lantern is on the trophy case.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: magic-flag
+      - type: object-in
+        data:
+          object: lamp
+          location: living-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east. To the west is a
+            cyclops-shaped opening in an old wooden door, above which is some strange gothic
+            lettering, a trophy case, and a large oriental rug in the center of the room.
+      - type: response
+        data:
+          text: A battery-powered brass lantern is on the trophy case.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: rug-moved
+      - type: flag
+        data:
+          flag: trap-door-open
+      - type: object-in
+        data:
+          object: lamp
+          location: living-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east, a wooden door with strange
+            gothic lettering to the west, which appears to be nailed shut, a trophy case, and a
+            rug lying beside an open trap door.
+      - type: response
+        data:
+          text: A battery-powered brass lantern is on the trophy case.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: rug-moved
+      - type: object-in
+        data:
+          object: lamp
+          location: living-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east, a wooden door with strange
+            gothic lettering to the west, which appears to be nailed shut, a trophy case, and a
+            closed trap door at your feet.
+      - type: response
+        data:
+          text: A battery-powered brass lantern is on the trophy case.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: trap-door-open
+      - type: object-in
+        data:
+          object: lamp
+          location: living-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east, a wooden door with strange
+            gothic lettering to the west, which appears to be nailed shut, a trophy case, and an
+            open trap door at your feet.
+      - type: response
+        data:
+          text: A battery-powered brass lantern is on the trophy case.
+
+  - id: look
+    requires:
+      - type: object-in
+        data:
+          object: lamp
+          location: living-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east, a wooden door with strange
+            gothic lettering to the west, which appears to be nailed shut, a trophy case, and a
+            large oriental rug in the center of the room.
+      - type: response
+        data:
+          text: A battery-powered brass lantern is on the trophy case.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: magic-flag
+      - type: flag
+        data:
+          flag: rug-moved
+      - type: flag
+        data:
+          flag: trap-door-open
+      - type: object-in
+        data:
+          object: sword
+          location: living-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east. To the west is a
+            cyclops-shaped opening in an old wooden door, above which is some strange gothic
+            lettering, a trophy case, and a rug lying beside an open trap door.
+      - type: response
+        data:
+          text: Above the trophy case hangs an elvish sword of great antiquity.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: magic-flag
+      - type: flag
+        data:
+          flag: rug-moved
+      - type: object-in
+        data:
+          object: sword
+          location: living-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east. To the west is a
+            cyclops-shaped opening in an old wooden door, above which is some strange gothic
+            lettering, a trophy case, and a closed trap door at your feet.
+      - type: response
+        data:
+          text: Above the trophy case hangs an elvish sword of great antiquity.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: magic-flag
+      - type: flag
+        data:
+          flag: trap-door-open
+      - type: object-in
+        data:
+          object: sword
+          location: living-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east. To the west is a
+            cyclops-shaped opening in an old wooden door, above which is some strange gothic
+            lettering, a trophy case, and an open trap door at your feet.
+      - type: response
+        data:
+          text: Above the trophy case hangs an elvish sword of great antiquity.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: magic-flag
+      - type: object-in
+        data:
+          object: sword
+          location: living-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east. To the west is a
+            cyclops-shaped opening in an old wooden door, above which is some strange gothic
+            lettering, a trophy case, and a large oriental rug in the center of the room.
+      - type: response
+        data:
+          text: Above the trophy case hangs an elvish sword of great antiquity.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: rug-moved
+      - type: flag
+        data:
+          flag: trap-door-open
+      - type: object-in
+        data:
+          object: sword
+          location: living-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east, a wooden door with strange
+            gothic lettering to the west, which appears to be nailed shut, a trophy case, and a
+            rug lying beside an open trap door.
+      - type: response
+        data:
+          text: Above the trophy case hangs an elvish sword of great antiquity.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: rug-moved
+      - type: object-in
+        data:
+          object: sword
+          location: living-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east, a wooden door with strange
+            gothic lettering to the west, which appears to be nailed shut, a trophy case, and a
+            closed trap door at your feet.
+      - type: response
+        data:
+          text: Above the trophy case hangs an elvish sword of great antiquity.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: trap-door-open
+      - type: object-in
+        data:
+          object: sword
+          location: living-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east, a wooden door with strange
+            gothic lettering to the west, which appears to be nailed shut, a trophy case, and an
+            open trap door at your feet.
+      - type: response
+        data:
+          text: Above the trophy case hangs an elvish sword of great antiquity.
+
+  - id: look
+    requires:
+      - type: object-in
+        data:
+          object: sword
+          location: living-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east, a wooden door with strange
+            gothic lettering to the west, which appears to be nailed shut, a trophy case, and a
+            large oriental rug in the center of the room.
+      - type: response
+        data:
+          text: Above the trophy case hangs an elvish sword of great antiquity.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: magic-flag
+      - type: flag
+        data:
+          flag: rug-moved
+      - type: flag
+        data:
+          flag: trap-door-open
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east. To the west is a
+            cyclops-shaped opening in an old wooden door, above which is some strange gothic
+            lettering, a trophy case, and a rug lying beside an open trap door.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: magic-flag
+      - type: flag
+        data:
+          flag: rug-moved
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east. To the west is a
+            cyclops-shaped opening in an old wooden door, above which is some strange gothic
+            lettering, a trophy case, and a closed trap door at your feet.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: magic-flag
+      - type: flag
+        data:
+          flag: trap-door-open
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east. To the west is a
+            cyclops-shaped opening in an old wooden door, above which is some strange gothic
+            lettering, a trophy case, and an open trap door at your feet.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: magic-flag
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east. To the west is a
+            cyclops-shaped opening in an old wooden door, above which is some strange gothic
+            lettering, a trophy case, and a large oriental rug in the center of the room.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: rug-moved
+      - type: flag
+        data:
+          flag: trap-door-open
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east, a wooden door with strange
+            gothic lettering to the west, which appears to be nailed shut, a trophy case, and a
+            rug lying beside an open trap door.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: rug-moved
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east, a wooden door with strange
+            gothic lettering to the west, which appears to be nailed shut, a trophy case, and a
+            closed trap door at your feet.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: trap-door-open
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east, a wooden door with strange
+            gothic lettering to the west, which appears to be nailed shut, a trophy case, and an
+            open trap door at your feet.
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in the living room. There is a doorway to the east, a wooden door with strange
+            gothic lettering to the west, which appears to be nailed shut, a trophy case, and a
+            large oriental rug in the center of the room.
+
+objects:
+  - broken-lamp
+  - trophy-case
+  - rug
+  - trap-door
+  - lamp
+  - wooden-door
+  - sword
+  - map
+
+navigation:
+  - id: east
+    triggers:
+      - type: change-scene
+        data:
+          scene: kitchen
+  - id: west
+    requires:
+      - type: flag
+        data:
+          flag: magic-flag
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: The door is nailed shut.
+    triggers:
+      - type: change-scene
+        data:
+          scene: strange-passage
+  - id: down
+    requires:
+      - type: flag
+        data:
+          flag: rug-moved
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You can't go that way.
+      - type: flag
+        data:
+          flag: trap-door-open
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: The trap door is closed.
+    triggers:
+      - type: change-scene
+        data:
+          scene: cellar

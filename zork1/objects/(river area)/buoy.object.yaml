@@ -1,0 +1,6 @@
+id: buoy
+name: red buoy
+
+synonyms: [buoy]
+portable: true
+start: river-4

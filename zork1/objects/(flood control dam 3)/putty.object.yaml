@@ -1,0 +1,19 @@
+id: putty
+name: viscous material
+
+synonyms: [material, gunk, viscous gunk, all-purpose gunk]
+portable: true
+start: offstage
+
+actions:
+  - id: oil
+    triggers:
+      - type: response
+        data:
+          text: The all-purpose gunk isn't a lubricant.
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: A wad of grey, viscous, all-purpose gunk, of no obvious use until it has one.

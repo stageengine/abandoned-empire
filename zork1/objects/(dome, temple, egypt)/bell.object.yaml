@@ -1,0 +1,132 @@
+id: bell
+name: brass bell
+
+synonyms: [bell, small bell, brass bell, hot bell, red hot bell]
+portable: true
+start: north-temple
+
+# Zork swaps the bell for a second object once it is red hot. The port keeps one
+# bell and a flag, because two things answering to "bell" is two things the
+# parser cannot choose between - it picks by the order they were declared rather
+# than by which one is in the room.
+measures:
+  - id: heat
+    max: 20
+    start: 0
+    thresholds:
+      - from: 0
+        triggers:
+          - type: set-flag
+            data:
+              flag: bell-hot
+              value: false
+          - type: response
+            data:
+              text: The bell appears to have cooled down.
+      - from: 1
+
+actions:
+  # Ringing it at the gate is the first act of the ceremony.
+  - id: ring
+    requires:
+      - type: object-here
+        data:
+          object: ghosts
+      - type: flag
+        negate: true
+        data:
+          flag: bell-hot
+      - type: flag
+        negate: true
+        data:
+          flag: lld-flag
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The bell suddenly becomes red hot and falls to the ground. The wraiths, as if
+            paralyzed, stop their jeering and slowly turn to face you. On their ashen faces, the
+            expression of a long-forgotten terror takes shape.
+      - type: move-object
+        data:
+          object: bell
+          to: here
+      - type: set-flag
+        data:
+          flag: bell-hot
+          value: true
+      - type: adjust-measure
+        data:
+          subject: bell
+          measure: heat
+          to: 20
+      - type: set-flag
+        data:
+          flag: ceremony
+          value: true
+      - type: adjust-measure
+        data:
+          subject: ghosts
+          measure: patience
+          to: 6
+
+  - id: ring
+    requires:
+      - type: flag
+        data:
+          flag: bell-hot
+    triggers:
+      - type: response
+        data:
+          text: The bell is too hot to reach.
+
+  - id: ring
+    triggers:
+      - type: response
+        data:
+          text: Ding, dong.
+
+  - id: get
+    requires:
+      - type: flag
+        data:
+          flag: bell-hot
+    triggers:
+      - type: response
+        data:
+          text: The bell is very hot and cannot be taken.
+
+  - id: get
+    triggers:
+      - type: response
+        data:
+          text: Taken.
+      - type: add-to-inventory
+        data:
+          object: bell
+
+  - id: touch
+    requires:
+      - type: flag
+        data:
+          flag: bell-hot
+    triggers:
+      - type: response
+        data:
+          text: The bell is too hot to touch.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: bell-hot
+    triggers:
+      - type: response
+        data:
+          text: A small brass bell, lying on the ground, and glowing a dull red.
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: A small brass bell.

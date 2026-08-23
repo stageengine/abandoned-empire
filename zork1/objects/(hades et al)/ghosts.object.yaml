@@ -1,0 +1,92 @@
+id: ghosts
+name: number of ghosts
+
+noun: plural
+synonyms:
+  - ghosts
+  - spirits
+  - fiends
+  - force
+  - invisible ghosts
+  - invisible spirits
+  - invisible fiends
+  - invisible force
+  - evil ghosts
+  - evil spirits
+  - evil fiends
+  - evil force
+start: entrance-to-hades
+
+# The ceremony's two windows. Zork queues them as interrupts: six turns from the
+# bell to the lit candles, then three from the candles to the prayer. Here they
+# are numbers that only move while their flag is set, and the room's own rules
+# move them - the ceremony is a thing that happens at this gate and nowhere else.
+measures:
+  - id: patience
+    max: 6
+    start: 6
+    thresholds:
+      - from: 0
+        triggers:
+          - type: set-flag
+            data:
+              flag: ceremony
+              value: false
+          - type: response
+            data:
+              text: >-
+                The tension of this ceremony is broken, and the wraiths, amused but shaken at
+                your clumsy attempt, resume their hideous jeering.
+      - from: 1
+
+  - id: awe
+    max: 3
+    start: 3
+    thresholds:
+      - from: 0
+        triggers:
+          - type: set-flag
+            data:
+              flag: blessing
+              value: false
+          - type: set-flag
+            data:
+              flag: ceremony
+              value: false
+          - type: response
+            data:
+              text: >-
+                The tension of this ceremony is broken, and the wraiths, amused but shaken at
+                your clumsy attempt, resume their hideous jeering.
+      - from: 1
+
+actions:
+  - id: tell
+    triggers:
+      - type: response
+        data:
+          text: The spirits jeer loudly and ignore you.
+
+  - id: exorcise
+    triggers:
+      - type: response
+        data:
+          text: Only the ceremony itself has any effect.
+
+  - id: attack
+    triggers:
+      - type: response
+        data:
+          text: How can you attack a spirit with material objects?
+
+  - id: break
+    triggers:
+      - type: response
+        data:
+          text: How can you attack a spirit with material objects?
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: You seem unable to interact with these spirits.

@@ -1,0 +1,36 @@
+id: tube
+
+synonyms: [tooth, paste, tube of toothpaste]
+portable: true
+start: maintenance-room
+
+actions:
+  - id: squeeze
+    once:
+      failure:
+        triggers:
+          - type: response
+            data:
+              text: The tube is apparently empty.
+    triggers:
+      - type: response
+        data:
+          text: The viscous material oozes into your hand.
+      - type: add-to-inventory
+        data:
+          object: putty
+
+  - id: put
+    preposition: in
+    triggers:
+      - type: response
+        data:
+          text: The tube refuses to accept anything.
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: |-
+            ---> Frobozz Magic Gunk Company <---
+            All-Purpose Gunk

@@ -1,0 +1,23 @@
+id: altar
+start: south-temple
+
+actions:
+  - id: look
+    preposition: 'on'
+    requires:
+      - type: object-in
+        data:
+          object: book
+          location: south-temple
+    triggers:
+      - type: response
+        data:
+          text: On the altar is a large black book, open to page 569.
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            A broad slab of stone, worn smooth in the middle by a great many hands and a great
+            many years.

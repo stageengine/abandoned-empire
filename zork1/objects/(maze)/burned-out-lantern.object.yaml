@@ -1,0 +1,16 @@
+id: burned-out-lantern
+name: burned-out lantern
+
+synonyms:
+  - lantern
+  - lamp
+  - rusty lantern
+  - rusty lamp
+  - burned lantern
+  - burned lamp
+  - dead lantern
+  - dead lamp
+  - useless lantern
+  - useless lamp
+portable: true
+start: maze-5

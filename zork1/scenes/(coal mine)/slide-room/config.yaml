@@ -1,0 +1,58 @@
+id: slide-room
+tags: [dark]
+
+meta:
+  title: Slide Room
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is a small chamber, which appears to have been part of a coal mine. On the
+            south wall of the chamber the letters "Granite Wall" are etched in the rock. To the
+            east is a long passage, and there is a steep metal slide twisting downward. To the
+            north is a small opening.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+objects:
+  - id: slide-room.slide
+    name: chute
+    synonyms:
+      - ramp
+      - slide
+      - steep chute
+      - steep ramp
+      - steep slide
+      - metal chute
+      - metal ramp
+      - metal slide
+      - twisting chute
+      - twisting ramp
+      - twisting slide
+
+navigation:
+  - id: north
+    triggers:
+      - type: change-scene
+        data:
+          scene: mine-entrance
+  - id: east
+    triggers:
+      - type: change-scene
+        data:
+          scene: cold-passage
+  - id: down
+    triggers:
+      - type: change-scene
+        data:
+          scene: cellar

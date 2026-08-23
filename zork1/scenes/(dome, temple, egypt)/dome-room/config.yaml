@@ -1,0 +1,69 @@
+id: dome-room
+tags: [dark]
+
+meta:
+  title: Dome Room
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+      - type: flag
+        data:
+          flag: dome-flag
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are at the periphery of a large dome, which forms the ceiling of another room
+            below. Protecting you from a precipitous drop is a wooden railing which circles the
+            dome.
+      - type: response
+        data:
+          text: >-
+            Hanging down from the railing is a rope which ends about ten feet from the floor
+            below.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are at the periphery of a large dome, which forms the ceiling of another room
+            below. Protecting you from a precipitous drop is a wooden railing which circles the
+            dome.
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+objects: [railing]
+
+navigation:
+  - id: west
+    triggers:
+      - type: change-scene
+        data:
+          scene: engravings-cave
+  - id: down
+    requires:
+      - type: flag
+        data:
+          flag: dome-flag
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You cannot go down without fracturing many bones.
+    triggers:
+      - type: change-scene
+        data:
+          scene: torch-room

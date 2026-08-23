@@ -1,0 +1,5 @@
+id: wrench
+
+synonyms: [tool, tools]
+portable: true
+start: maintenance-room

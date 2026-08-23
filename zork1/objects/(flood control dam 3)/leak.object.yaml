@@ -1,0 +1,95 @@
+id: leak
+
+synonyms: [drip, pipe]
+start: maintenance-room
+
+# Not there until the blue button has been pressed, and gone again once it has
+# been stopped.
+requires:
+  - type: flag
+    data:
+      flag: leak-open
+
+# How high the water has got, in turns. Fourteen is the top of the room. The
+# room's own rules do the talking, because a threshold speaks wherever the
+# player happens to be standing and this one should only be heard in here.
+measures:
+  - id: flood
+    max: 14
+    start: 0
+    thresholds:
+      - from: 0
+      - from: 14
+        triggers:
+          - type: set-flag
+            data:
+              flag: maintenance-flooded
+              value: true
+
+actions:
+  - id: plug
+    preposition: with
+    indirect: putty
+    requires:
+      - type: has-item
+        data:
+          object: putty
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You aren't holding the viscous material.
+    triggers:
+      - type: response
+        data:
+          text: >-
+            By some miracle of Zorkian technology, you have managed to stop the leak in the dam.
+      - type: set-flag
+        data:
+          flag: leak-open
+          value: false
+      - type: adjust-measure
+        data:
+          subject: leak
+          measure: flood
+          to: 0
+
+  - id: put
+    preposition: in
+    indirect: putty
+    requires:
+      - type: has-item
+        data:
+          object: putty
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You aren't holding the viscous material.
+    triggers:
+      - type: response
+        data:
+          text: >-
+            By some miracle of Zorkian technology, you have managed to stop the leak in the dam.
+      - type: set-flag
+        data:
+          flag: leak-open
+          value: false
+      - type: adjust-measure
+        data:
+          subject: leak
+          measure: flood
+          to: 0
+
+  - id: plug
+    preposition: with
+    triggers:
+      - type: response
+        data:
+          text: With that? You could only stop a tiny leak with that.
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: A stream of water bursting from a split in the pipework of the east wall.

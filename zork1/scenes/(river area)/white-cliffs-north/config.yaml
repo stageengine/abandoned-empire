@@ -1,0 +1,65 @@
+id: white-cliffs-north
+tags: [dark]
+
+meta:
+  title: White Cliffs Beach
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are on a narrow strip of beach which runs along the base of the White Cliffs.
+            There is a narrow path heading south along the Cliffs and a tight passage leading
+            west into the cliffs themselves.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+objects:
+  - id: white-cliffs-north.global-water
+    name: water
+    synonyms: [quantity]
+  - id: white-cliffs-north.white-cliff
+    name: white cliffs
+    synonyms: [cliff, cliffs, white cliff]
+  - id: white-cliffs-north.river
+    name: river
+    synonyms: [frigid river]
+
+navigation:
+  - id: south
+    requires:
+      - type: flag
+        data:
+          flag: deflate
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: The path is too narrow.
+    triggers:
+      - type: change-scene
+        data:
+          scene: white-cliffs-south
+  - id: west
+    requires:
+      - type: flag
+        data:
+          flag: deflate
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: The path is too narrow.
+    triggers:
+      - type: change-scene
+        data:
+          scene: damp-cave

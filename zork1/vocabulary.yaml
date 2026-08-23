@@ -1,0 +1,178 @@
+navigational: [walk, climb, board, disembark, cross, follow]
+conversational: [ask, tell, answer]
+recipient-first: [give, show]
+
+verbs:
+  - id: look
+    synonyms: [examine, read, inspect, study, watch, describe, x, l]
+  - id: get
+    synonyms: [take, pick up, grab, carry, hold, gather]
+  - id: drop
+    synonyms: [put down, discard, release, let go of]
+  - id: walk
+    synonyms: [go, head, run, travel, proceed, return, wander]
+  - id: climb
+    synonyms: [scale, ascend, clamber]
+  - id: board
+    synonyms: [embark, get in, get into, sit in]
+  - id: disembark
+    synonyms: [get out, get off]
+  - id: cross
+  - id: follow
+    synonyms: [pursue, chase]
+  - id: put
+    synonyms: [place, insert, stuff, set, lay]
+  - id: open
+  - id: close
+    synonyms: [shut]
+  - id: move
+    synonyms: [push, shove, shift]
+  - id: pull
+    synonyms: [tug, yank, drag]
+  - id: raise
+    synonyms: [lift, hoist]
+  - id: lower
+  - id: turn
+    synonyms: [rotate, twist, crank, wind]
+  - id: touch
+    synonyms: [feel, pat, rub, caress, poke, prod]
+  - id: wave
+    synonyms: [flourish]
+  - id: shake
+  - id: squeeze
+    synonyms: [pinch]
+  - id: tie
+    synonyms: [fasten, secure]
+  - id: untie
+    synonyms: [loosen]
+  - id: unlock
+  - id: lock
+  - id: dig
+    synonyms: [excavate]
+  - id: fill
+  - id: pour
+    synonyms: [empty, spill, dump]
+  - id: plug
+    synonyms: [stop up]
+  - id: inflate
+    synonyms: [pump up, blow up]
+  - id: deflate
+  - id: launch
+    synonyms: [set sail]
+  - id: oil
+    synonyms: [lubricate, grease]
+  - id: attack
+    synonyms: [kill, hit, strike, stab, slay, murder]
+  - id: break
+    synonyms: [smash, destroy, damage, mung]
+  - id: kick
+  - id: throw
+    synonyms: [hurl, chuck, toss]
+  - id: cut
+    synonyms: [slice, chop]
+  - id: melt
+    synonyms: [liquify]
+  - id: burn
+    synonyms: [light, ignite, kindle, set fire to]
+  - id: extinguish
+    synonyms: [douse, blow out, put out]
+  - id: eat
+    synonyms: [consume, taste, bite, devour, munch]
+  - id: drink
+    synonyms: [sip, imbibe, quaff, swallow]
+  - id: smell
+    synonyms: [sniff]
+  - id: listen
+    synonyms: [hear]
+  - id: knock
+    synonyms: [rap]
+  - id: wear
+    synonyms: [don, put on]
+  - id: wake
+    synonyms: [awaken]
+  - id: jump
+    synonyms: [leap, hop]
+  - id: swim
+    synonyms: [bathe, wade]
+  - id: count
+  - id: search
+    synonyms: [rummage]
+  - id: pray
+  - id: exorcise
+    synonyms: [banish, lay to rest]
+  - id: ring
+    synonyms: [toll]
+  - id: wish
+  - id: echo
+  - id: ask
+    synonyms: [question, enquire, inquire, quiz]
+  - id: tell
+    synonyms: [inform]
+  - id: answer
+    synonyms: [reply, respond, say]
+  - id: give
+    synonyms: [hand, hand over, offer, pay, donate]
+  - id: show
+    synonyms: [display, present]
+
+directions:
+  - id: north
+    synonyms: ['n']
+  - id: south
+    synonyms: [s]
+  - id: east
+    synonyms: [e]
+  - id: west
+    synonyms: [w]
+  - id: northeast
+    synonyms: [ne]
+  - id: northwest
+    synonyms: [nw]
+  - id: southeast
+    synonyms: [se]
+  - id: southwest
+    synonyms: [sw]
+  - id: up
+    synonyms: [u, upward, upwards]
+  - id: down
+    synonyms: [d, downward, downwards]
+  - id: land
+    synonyms: [ashore]
+
+articles:
+  - id: the
+  - id: a
+  - id: an
+  - id: some
+
+prepositions:
+  filler:
+    - id: to
+      synonyms: [towards, toward, at]
+    - id: from
+      synonyms: [out of]
+    - id: for
+      synonyms: []
+  significant:
+    - id: in
+      synonyms: [into, inside]
+    - id: 'on'
+      synonyms: [onto, upon]
+    - id: 'off'
+      synonyms: [off of]
+    - id: under
+      synonyms: [underneath, beneath, below]
+    - id: behind
+      synonyms: []
+    - id: with
+      synonyms: [using]
+    - id: about
+      synonyms: []
+    - id: across
+      synonyms: []
+    - id: through
+      synonyms: []
+
+conjunctions:
+  coordinating: [and, then]
+  subordinating: []

@@ -1,0 +1,14 @@
+id: bar
+name: platinum bar
+
+synonyms:
+  - bar
+  - platinum
+  - treasure
+  - platinum platinum
+  - platinum treasure
+  - large bar
+  - large platinum
+  - large treasure
+portable: true
+start: loud-room

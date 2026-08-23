@@ -1,0 +1,42 @@
+id: trunk
+name: trunk of jewels
+
+synonyms: [trunk, chest, jewels, treasure, old trunk, old chest, old jewels]
+portable: true
+start: reservoir
+
+# Half buried in the mud, and so not there at all until the mud is showing.
+requires:
+  - type: flag
+    data:
+      flag: low-tide
+
+actions:
+  - id: get
+    once:
+      failure:
+        triggers:
+          - type: response
+            data:
+              text: Taken.
+          - type: add-to-inventory
+            data:
+              object: trunk
+    triggers:
+      - type: response
+        data:
+          text: Taken.
+      - type: add-to-inventory
+        data:
+          object: trunk
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 15
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: An old trunk, bulging with assorted jewels.

@@ -1,0 +1,56 @@
+id: south-temple
+
+meta:
+  title: Altar
+
+actions:
+  - id: look
+    requires:
+      - type: object-in
+        data:
+          object: book
+          location: south-temple
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is the south end of a large temple. In front of you is what appears to be an
+            altar. In one corner is a small hole in the floor which leads into darkness. You
+            probably could not get back up it.
+      - type: response
+        data:
+          text: >-
+            On the altar is a large black book, open to page 569.
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is the south end of a large temple. In front of you is what appears to be an
+            altar. In one corner is a small hole in the floor which leads into darkness. You
+            probably could not get back up it.
+
+objects: [altar, book, candles]
+
+navigation:
+  - id: north
+    triggers:
+      - type: change-scene
+        data:
+          scene: north-temple
+  - id: down
+    requires:
+      - type: has-item
+        negate: true
+        data:
+          object: coffin
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You haven't a prayer of getting the coffin down there.
+    triggers:
+      - type: change-scene
+        data:
+          scene: tiny-cave

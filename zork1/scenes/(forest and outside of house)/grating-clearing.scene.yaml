@@ -1,0 +1,64 @@
+id: grating-clearing
+
+meta:
+  title: Clearing
+
+actions:
+  - id: look
+    requires:
+      - type: object-in
+        data:
+          object: leaves
+          location: grating-clearing
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in a clearing, with a forest surrounding you on all sides. A path leads
+            south.
+      - type: response
+        data:
+          text: On the ground is a pile of leaves.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in a clearing, with a forest surrounding you on all sides. A path leads
+            south.
+
+objects:
+  - leaves
+  - id: grating-clearing.white-house
+    name: white house
+    synonyms: [house, beauti house, coloni house]
+  - id: grating-clearing.grate
+    name: grating
+    synonyms: [grate]
+
+navigation:
+  - id: north
+    triggers:
+      - type: response
+        data:
+          text: The forest becomes impenetrable to the north.
+  - id: south
+    triggers:
+      - type: change-scene
+        data:
+          scene: path
+  - id: east
+    triggers:
+      - type: change-scene
+        data:
+          scene: forest-2
+  - id: west
+    triggers:
+      - type: change-scene
+        data:
+          scene: forest-1
+  - id: down
+    triggers:
+      - type: response
+        data:
+          text: 'TODO: GRATING-EXIT'

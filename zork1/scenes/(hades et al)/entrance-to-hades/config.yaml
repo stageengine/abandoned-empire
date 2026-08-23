@@ -1,0 +1,77 @@
+id: entrance-to-hades
+
+meta:
+  title: Entrance to Hades
+
+actions:
+  # Once the spirits are gone the gate stops saying they are in the way.
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: lld-flag
+    triggers:
+      - type: response
+        data:
+          text: |-
+            You are outside a large gateway, on which is inscribed
+
+              Abandon every hope
+            all ye who enter here!
+
+            The gate is open; through it you can see a desolation, with a pile of mangled bodies in one
+            corner. Thousands of voices, lamenting some hideous fate, can be heard.
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: |-
+            You are outside a large gateway, on which is inscribed
+
+              Abandon every hope
+            all ye who enter here!
+
+            The gate is open; through it you can see a desolation, with a pile of mangled bodies in one
+            corner. Thousands of voices, lamenting some hideous fate, can be heard.
+      - type: response
+        data:
+          text: >-
+            The way through the gate is barred by evil spirits, who jeer at your attempts to
+            pass.
+
+objects:
+  - ghosts
+  - hot-bell
+  - id: entrance-to-hades.bodies
+    name: pile of bodies
+    synonyms:
+      - bodies
+      - body
+      - remains
+      - pile
+      - mangled bodies
+      - mangled body
+      - mangled remains
+      - mangled pile
+
+navigation:
+  - id: south
+    requires:
+      - type: flag
+        data:
+          flag: lld-flag
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: Some invisible force prevents you from passing through the gate.
+    triggers:
+      - type: change-scene
+        data:
+          scene: land-of-living-dead
+  - id: up
+    triggers:
+      - type: change-scene
+        data:
+          scene: tiny-cave

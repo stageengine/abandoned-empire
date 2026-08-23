@@ -1,0 +1,6 @@
+id: water
+name: quantity of water
+
+synonyms: [water, quantity, liquid, h2o]
+portable: true
+start: offstage

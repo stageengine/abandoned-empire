@@ -1,0 +1,34 @@
+# What this room does, and only this room.
+
+every-turn:
+  # Standing on the mud when the gates have been closed again.
+  - requires:
+      - type: flag
+        negate: true
+        data:
+          flag: low-tide
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The water level here has risen over your head, and the currents take you off your
+            feet and away.
+      - type: end-game
+        data:
+          journal: drowned in the reservoir
+
+  - requires:
+      - type: flag
+        negate: true
+        data:
+          flag: gates-open
+      - type: flag
+        data:
+          flag: low-tide
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You notice that the water level here is rising rapidly. The currents are also
+            becoming stronger. Staying here seems quite perilous!
+

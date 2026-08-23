@@ -1,0 +1,16 @@
+{
+    "tasks": {
+        "fetch": "sh ./fetch.sh",
+        "survey": "deno run --allow-read survey.ts",
+        "generate": "deno run --allow-read --allow-write generate.ts"
+    },
+    "fmt": {
+        "indentWidth": 2,
+        "lineWidth": 110,
+        "singleQuote": true,
+        "exclude": ["**/*.json", "**/*.md"]
+    },
+    "imports": {
+        "@std/yaml": "jsr:@std/yaml@^1.2.0"
+    }
+}

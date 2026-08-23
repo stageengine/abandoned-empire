@@ -1,0 +1,12 @@
+id: railing
+name: wooden railing
+
+synonyms: [railing, rail, wooden rail]
+start: dome-room
+
+actions:
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: A wooden railing, circling the dome, and sturdier than it looks.

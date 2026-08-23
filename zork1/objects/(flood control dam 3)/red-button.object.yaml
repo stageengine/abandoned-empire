@@ -1,0 +1,45 @@
+id: red-button
+name: red button
+
+# Not `button` or `switch` on their own: all four answer to those and the parser
+# picks by declaration order rather than by asking which one was meant.
+synonyms: [red switch]
+start: maintenance-room
+
+actions:
+  - id: move
+    requires:
+      - type: flag
+        data:
+          flag: maintenance-lights
+    triggers:
+      - type: response
+        data:
+          text: The lights within the room shut off.
+      - type: set-flag
+        data:
+          flag: maintenance-lights
+          value: false
+
+  - id: move
+    triggers:
+      - type: response
+        data:
+          text: The lights within the room come on.
+      - type: set-flag
+        data:
+          flag: maintenance-lights
+          value: true
+
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: A red button, set into the wall beside three others.
+
+  - id: get
+    triggers:
+      - type: response
+        data:
+          text: The button is set into the wall.

@@ -1,0 +1,164 @@
+id: candles
+name: pair of candles
+
+noun: plural
+synonyms: [candles, pair, burning candles, burning pair]
+portable: true
+start: south-temple
+
+# Thirty-five turns of burning, in the three stages Zork's candle table names.
+measures:
+  - id: life
+    max: 36
+    start: 36
+    thresholds:
+      - from: 0
+        triggers:
+          - type: response
+            data:
+              text: The candles have burned out.
+          - type: set-flag
+            data:
+              flag: candles-on
+              value: false
+          - type: set-flag
+            data:
+              flag: candles-gone
+              value: true
+          - type: set-flag
+            data:
+              flag: light
+              value: false
+      - from: 1
+        triggers:
+          - type: response
+            data:
+              text: The candles won't last long now.
+      - from: 6
+        triggers:
+          - type: response
+            data:
+              text: The candles are becoming quite short.
+      - from: 16
+        triggers:
+          - type: response
+            data:
+              text: The candles grow shorter.
+      - from: 36
+
+actions:
+  - id: burn
+    preposition: with
+    indirect: match
+    requires:
+      - type: flag
+        negate: true
+        data:
+          flag: candles-gone
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: >-
+                  Alas, there's not much left of the candles. Certainly not enough to burn.
+      - type: flag
+        data:
+          flag: match-on
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You have to light them with something that's burning, you know.
+      - type: flag
+        negate: true
+        data:
+          flag: candles-on
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: The candles are already lit.
+    triggers:
+      - type: response
+        data:
+          text: The candles are lit.
+      - type: set-flag
+        data:
+          flag: candles-on
+          value: true
+      - type: set-flag
+        data:
+          flag: light
+          value: true
+
+  - id: burn
+    preposition: with
+    indirect: torch
+    requires:
+      - type: flag
+        negate: true
+        data:
+          flag: candles-on
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You realize, just in time, that the candles are already lighted.
+    triggers:
+      - type: response
+        data:
+          text: The heat from the torch is so intense that the candles are vaporized.
+      - type: remove-object
+        data:
+          object: candles
+
+  - id: burn
+    triggers:
+      - type: response
+        data:
+          text: You should say what to light them with.
+
+  - id: extinguish
+    requires:
+      - type: flag
+        data:
+          flag: candles-on
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: The candles are not lighted.
+    triggers:
+      - type: response
+        data:
+          text: The flame is extinguished.
+      - type: set-flag
+        data:
+          flag: candles-on
+          value: false
+      - type: set-flag
+        data:
+          flag: light
+          value: false
+
+  - id: count
+    triggers:
+      - type: response
+        data:
+          text: There are two candles here.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: candles-on
+    triggers:
+      - type: response
+        data:
+          text: A pair of candles, burning with a steady yellow flame.
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: A pair of candles, unlit.

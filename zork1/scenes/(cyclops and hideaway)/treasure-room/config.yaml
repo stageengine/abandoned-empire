@@ -1,0 +1,52 @@
+id: treasure-room
+tags: [dark]
+
+meta:
+  title: Treasure Room
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+      - type: object-in
+        data:
+          object: chalice
+          location: treasure-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is a large room, whose east wall is solid granite. A number of discarded bags,
+            which crumble at your touch, are scattered about on the floor. There is an exit down
+            a staircase.
+      - type: response
+        data:
+          text: There is a silver chalice, intricately engraved, here.
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is a large room, whose east wall is solid granite. A number of discarded bags,
+            which crumble at your touch, are scattered about on the floor. There is an exit down
+            a staircase.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+objects: [chalice]
+
+navigation:
+  - id: down
+    triggers:
+      - type: change-scene
+        data:
+          scene: cyclops-room

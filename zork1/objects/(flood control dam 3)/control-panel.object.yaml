@@ -1,0 +1,14 @@
+id: control-panel
+name: control panel
+
+synonyms: [panel]
+start: dam-room
+
+actions:
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            A control panel, on which a large metal bolt is mounted. Directly above the bolt is a
+            small green plastic bubble.

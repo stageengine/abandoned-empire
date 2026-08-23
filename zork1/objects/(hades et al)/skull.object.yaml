@@ -1,0 +1,37 @@
+id: skull
+name: crystal skull
+
+synonyms: [skull, head, treasure, crystal head, crystal treasure]
+portable: true
+start: land-of-living-dead
+
+actions:
+  - id: get
+    once:
+      failure:
+        triggers:
+          - type: response
+            data:
+              text: Taken.
+          - type: add-to-inventory
+            data:
+              object: skull
+    triggers:
+      - type: response
+        data:
+          text: Taken.
+      - type: add-to-inventory
+        data:
+          object: skull
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 10
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            A beautifully carved crystal skull. It appears to be grinning at you rather nastily.

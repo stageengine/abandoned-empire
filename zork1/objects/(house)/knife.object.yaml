@@ -1,0 +1,14 @@
+id: knife
+name: nasty knife
+
+synonyms:
+  - knives
+  - knife
+  - blade
+  - nasty knives
+  - nasty blade
+  - unrusty knives
+  - unrusty knife
+  - unrusty blade
+portable: true
+start: offstage

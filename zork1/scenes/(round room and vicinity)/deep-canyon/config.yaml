@@ -1,0 +1,45 @@
+id: deep-canyon
+tags: [dark]
+
+meta:
+  title: Deep Canyon
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are on the south edge of a deep canyon. Passages lead off to the east, northwest
+            and southwest. A stairway leads down.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+navigation:
+  - id: east
+    triggers:
+      - type: change-scene
+        data:
+          scene: dam-room
+  - id: northwest
+    triggers:
+      - type: change-scene
+        data:
+          scene: reservoir-south
+  - id: southwest
+    triggers:
+      - type: change-scene
+        data:
+          scene: ns-passage
+  - id: down
+    triggers:
+      - type: change-scene
+        data:
+          scene: loud-room

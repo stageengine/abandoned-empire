@@ -1,0 +1,45 @@
+id: sandy-beach
+tags: [dark]
+
+meta:
+  title: Sandy Beach
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are on a large sandy beach on the east shore of the river, which is flowing
+            quickly by. A path runs beside the river to the south here, and a passage is
+            partially buried in sand to the northeast.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+objects:
+  - shovel
+  - id: sandy-beach.global-water
+    name: water
+    synonyms: [quantity]
+  - id: sandy-beach.river
+    name: river
+    synonyms: [frigid river]
+
+navigation:
+  - id: south
+    triggers:
+      - type: change-scene
+        data:
+          scene: shore
+  - id: northeast
+    triggers:
+      - type: change-scene
+        data:
+          scene: sandy-cave

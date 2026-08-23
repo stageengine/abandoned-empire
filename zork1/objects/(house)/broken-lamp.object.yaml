@@ -1,0 +1,10 @@
+id: broken-lamp
+name: broken lantern
+
+# The same words the working lamp answers to, which is what ZIL gives both of
+# them. Safe since Stage 0.8.0: where a word matches two things and only one is
+# within reach, the one in the room is what the player meant, so `take the lamp`
+# reaches whichever of these is actually there.
+synonyms: [lamp, lantern, broken lamp, broken lantern, smashed lamp, smashed lantern]
+portable: true
+start: offstage

@@ -1,0 +1,53 @@
+id: river-3
+tags: [dark]
+
+meta:
+  title: Frigid River
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The river descends here into a valley. There is a narrow beach on the west shore
+            below the cliffs. In the distance a faint rumbling can be heard.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+objects:
+  - id: river-3.global-water
+    name: water
+    synonyms: [quantity]
+  - id: river-3.river
+    name: river
+    synonyms: [frigid river]
+
+navigation:
+  - id: west
+    triggers:
+      - type: change-scene
+        data:
+          scene: white-cliffs-north
+  - id: up
+    triggers:
+      - type: response
+        data:
+          text: You cannot go upstream due to strong currents.
+  - id: down
+    triggers:
+      - type: change-scene
+        data:
+          scene: river-4
+  - id: land
+    triggers:
+      - type: change-scene
+        data:
+          scene: white-cliffs-north

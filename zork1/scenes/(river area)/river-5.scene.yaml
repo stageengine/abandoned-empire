@@ -1,0 +1,38 @@
+id: river-5
+
+meta:
+  title: Frigid River
+
+actions:
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The sound of rushing water is nearly unbearable here. On the east shore is a large
+            landing area.
+
+objects:
+  - id: river-5.global-water
+    name: water
+    synonyms: [quantity]
+  - id: river-5.river
+    name: river
+    synonyms: [frigid river]
+
+navigation:
+  - id: east
+    triggers:
+      - type: change-scene
+        data:
+          scene: shore
+  - id: up
+    triggers:
+      - type: response
+        data:
+          text: You cannot go upstream due to strong currents.
+  - id: land
+    triggers:
+      - type: change-scene
+        data:
+          scene: shore

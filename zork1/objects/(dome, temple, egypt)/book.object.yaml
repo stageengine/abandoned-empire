@@ -1,0 +1,105 @@
+id: book
+name: black book
+
+synonyms:
+  - book
+  - prayer
+  - page
+  - books
+  - large book
+  - large prayer
+  - large page
+  - large books
+  - black prayer
+  - black page
+  - black books
+portable: true
+start: south-temple
+
+actions:
+  # Read at the gate with the candles burning and the spirits cowering, this is
+  # the whole of the exorcism. Written above the plain reading, because the
+  # first requirement that holds decides which action this is.
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: blessing
+      - type: flag
+        negate: true
+        data:
+          flag: lld-flag
+      - type: object-here
+        data:
+          object: ghosts
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Each word of the prayer reverberates through the hall in a deafening confusion. As
+            the last word fades, a voice, loud and commanding, speaks: "Begone, fiends!" A
+            heart-stopping scream fills the cavern, and the spirits, sensing a greater power,
+            flee through the walls.
+      - type: remove-object
+        data:
+          object: ghosts
+      - type: set-flag
+        data:
+          flag: lld-flag
+          value: true
+      - type: set-flag
+        data:
+          flag: ceremony
+          value: false
+      - type: set-flag
+        data:
+          flag: blessing
+          value: false
+
+  - id: open
+    triggers:
+      - type: response
+        data:
+          text: The book is already open to page 569.
+
+  - id: close
+    triggers:
+      - type: response
+        data:
+          text: As hard as you try, the book cannot be closed.
+
+  - id: turn
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Beside page 569, there is only one other page with any legible printing on it. Most
+            of it is unreadable, but the subject seems to be the banishment of evil. Apparently,
+            certain noises, lights, and prayers are efficacious in this regard.
+
+  - id: burn
+    triggers:
+      - type: response
+        data:
+          text: >-
+            A booming voice says "Wrong, cretin!" and you notice that you have turned into a pile
+            of dust. How, I can't imagine.
+      - type: end-game
+        data:
+          journal: turned to dust for burning the black book
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: |-
+            Commandment #12592
+
+            Oh ye who go about saying unto each: "Hello sailor":
+            Dost thou know the magnitude of thy sin before the gods?
+            Yea, verily, thou shalt be ground between two stones.
+            Shall the angry gods cast thy body into the whirlpool?
+            Surely, thy eye shall be put out with a sharp stick!
+            Even unto the ends of the earth shalt thou wander and
+            Unto the land of the dead shalt thou be sent at last.
+            Surely thou shalt repent of thy cunning.

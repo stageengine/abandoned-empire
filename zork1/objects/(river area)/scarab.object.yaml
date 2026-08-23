@@ -1,0 +1,22 @@
+id: scarab
+name: beautiful jeweled scarab
+
+synonyms:
+  - scarab
+  - bug
+  - beetle
+  - treasure
+  - beauti scarab
+  - beauti bug
+  - beauti beetle
+  - beauti treasure
+  - carved scarab
+  - carved bug
+  - carved beetle
+  - carved treasure
+  - jeweled scarab
+  - jeweled bug
+  - jeweled beetle
+  - jeweled treasure
+portable: true
+start: sandy-cave

@@ -1,0 +1,130 @@
+id: troll
+
+synonyms: [nasty troll]
+start: troll-room
+
+# Zork gives the troll a strength of two and settles each blow against a table
+# of nine outcomes weighted by how the fight is going. Stage has one roll per
+# action, so the port spends the variety differently: the troll's strength picks
+# which blow this is, and the roll decides whether it lands. Two strengths, two
+# actions, and the fight still reads as a fight.
+measures:
+  - id: strength
+    max: 2
+    start: 2
+    thresholds:
+      - from: 0
+        triggers:
+          - type: response
+            data:
+              text: >-
+                Almost as soon as the troll breathes his last breath, a cloud of sinister black
+                fog envelops him, and when the fog lifts, the carcass has disappeared.
+          - type: remove-object
+            data:
+              object: troll
+          # He drops what he was holding, which is the only way into this room's
+          # other exits being worth anything to you.
+          - type: move-object
+            data:
+              object: axe
+              to: here
+          - type: set-flag
+            data:
+              flag: troll-flag
+              value: true
+      - from: 1
+
+actions:
+  # The killing blow. Written above the other because the first requirement that
+  # holds decides which action this is, and a wounded troll is the particular case.
+  - id: attack
+    preposition: with
+    indirect: sword
+    requires:
+      - type: has-item
+        data:
+          object: sword
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You aren't holding the sword.
+      - type: measure
+        data:
+          subject: troll
+          measure: strength
+          max: 1
+    chance:
+      percent: 60
+      failure:
+        triggers:
+          - type: response
+            data:
+              text: Clang! Crash! The troll parries.
+    triggers:
+      - type: response
+        data:
+          text: 'The fatal blow strikes the troll square in the heart: He dies.'
+      - type: adjust-measure
+        data:
+          subject: troll
+          measure: strength
+          by: -1
+
+  - id: attack
+    preposition: with
+    indirect: sword
+    requires:
+      - type: has-item
+        data:
+          object: sword
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You aren't holding the sword.
+    chance:
+      percent: 60
+      failure:
+        triggers:
+          - type: response
+            data:
+              text: Your sword misses the troll by an inch.
+    triggers:
+      - type: response
+        data:
+          text: The troll is struck on the arm; blood begins to trickle down.
+      - type: adjust-measure
+        data:
+          subject: troll
+          measure: strength
+          by: -1
+
+  - id: attack
+    triggers:
+      - type: response
+        data:
+          text: Trying to attack the troll with your bare hands is suicidal.
+
+  - id: give
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The troll, who is not overly proud, graciously accepts the gift and, being for the
+            moment sated, throws it back. Fortunately, the troll has poor control, and the gift
+            sails over your head.
+
+  - id: tell
+    triggers:
+      - type: response
+        data:
+          text: The troll isn't much of a conversationalist.
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.

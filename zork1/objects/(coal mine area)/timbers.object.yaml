@@ -1,0 +1,12 @@
+id: timbers
+name: broken timber
+
+synonyms:
+  - timbers
+  - pile
+  - wooden timbers
+  - wooden pile
+  - broken timbers
+  - broken pile
+portable: true
+start: timber-room

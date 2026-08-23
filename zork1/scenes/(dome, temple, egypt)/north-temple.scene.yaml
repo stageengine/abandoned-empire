@@ -1,0 +1,44 @@
+id: north-temple
+
+meta:
+  title: Temple
+
+actions:
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is the north end of a large temple. On the east wall is an ancient inscription,
+            probably a prayer in a long-forgotten language. Below the prayer is a staircase
+            leading down. The west wall is solid granite. The exit to the north end of the room
+            is through huge marble pillars.
+
+objects: [bell, prayer]
+
+navigation:
+  - id: north
+    triggers:
+      - type: change-scene
+        data:
+          scene: torch-room
+  - id: south
+    triggers:
+      - type: change-scene
+        data:
+          scene: south-temple
+  - id: east
+    triggers:
+      - type: change-scene
+        data:
+          scene: egypt-room
+  - id: up
+    triggers:
+      - type: change-scene
+        data:
+          scene: torch-room
+  - id: down
+    triggers:
+      - type: change-scene
+        data:
+          scene: egypt-room

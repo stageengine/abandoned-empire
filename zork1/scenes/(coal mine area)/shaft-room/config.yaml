@@ -1,0 +1,64 @@
+id: shaft-room
+tags: [dark]
+
+meta:
+  title: Shaft Room
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+      - type: object-in
+        data:
+          object: raised-basket
+          location: shaft-room
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is a large room, in the middle of which is a small shaft descending through the
+            floor into darkness below. To the west and the north are exits from this room.
+            Constructed over the top of the shaft is a metal framework to which a heavy iron
+            chain is attached.
+      - type: response
+        data:
+          text: At the end of the chain is a basket.
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is a large room, in the middle of which is a small shaft descending through the
+            floor into darkness below. To the west and the north are exits from this room.
+            Constructed over the top of the shaft is a metal framework to which a heavy iron
+            chain is attached.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+objects: [raised-basket]
+
+navigation:
+  - id: north
+    triggers:
+      - type: change-scene
+        data:
+          scene: smelly-room
+  - id: west
+    triggers:
+      - type: change-scene
+        data:
+          scene: bat-room
+  - id: down
+    triggers:
+      - type: response
+        data:
+          text: You wouldn't fit and would die if you could.

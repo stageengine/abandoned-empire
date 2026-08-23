@@ -1,0 +1,18 @@
+id: pump
+name: hand-held air pump
+
+synonyms:
+  - pump
+  - air-pump
+  - tool
+  - tools
+  - small pump
+  - small air-pump
+  - small tool
+  - small tools
+  - hand-held pump
+  - hand-held air-pump
+  - hand-held tool
+  - hand-held tools
+portable: true
+start: reservoir-north

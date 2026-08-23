@@ -1,0 +1,94 @@
+id: zork1
+start: west-of-house
+
+metadata:
+  title: Zork I
+  version: 0.1.0
+  description: >-
+    The Great Underground Empire, ported to Stage from Infocom’s own ZIL source. A white house,
+    a trap door, and three hundred and fifty points of treasure between you and the rank of
+    Master Adventurer.
+  genres: [Adventure, Fantasy, Puzzle]
+
+player:
+  measures:
+    # What a blow takes. Zork settles a fight against a strength that grows with
+    # the score; the port keeps a smaller number that only goes down, because
+    # nothing here can read one measure into another.
+    - id: health
+      max: 4
+      start: 4
+      thresholds:
+        - from: 0
+          triggers:
+            - type: response
+              data:
+                text: >-
+                  It appears that that last blow was too much for you. I'm afraid you are dead.
+            - type: end-game
+              data:
+                journal: killed underground
+        - from: 1
+          triggers:
+            - type: response
+              data:
+                text: You are on the verge of losing consciousness.
+        - from: 2
+          triggers:
+            - type: response
+              data:
+                text: You are bleeding, and it is beginning to tell.
+        - from: 4
+
+    - id: score
+      max: 350
+      start: 0
+      thresholds:
+        - from: 0
+        - from: 26
+          triggers:
+            - type: response
+              data:
+                text: You have earned the rank of Amateur Adventurer.
+        - from: 51
+          triggers:
+            - type: response
+              data:
+                text: You have earned the rank of Novice Adventurer.
+        - from: 101
+          triggers:
+            - type: response
+              data:
+                text: You have earned the rank of Junior Adventurer.
+        - from: 201
+          triggers:
+            - type: response
+              data:
+                text: You have earned the rank of Adventurer.
+        - from: 301
+          triggers:
+            - type: response
+              data:
+                text: You have earned the rank of Master.
+        - from: 331
+          triggers:
+            - type: response
+              data:
+                text: You have earned the rank of Wizard.
+        # Three hundred and fifty is the whole of it, and Zork answers it with a
+        # whisper rather than a fanfare. The flag it sets is what opens the way
+        # southwest out of West of House.
+        - from: 350
+          triggers:
+            - type: response
+              data:
+                text: You have earned the rank of Master Adventurer.
+            - type: response
+              data:
+                text: >-
+                  An almost inaudible voice whispers in your ear, "Look to your treasures for
+                  the final secret."
+            - type: set-flag
+              data:
+                flag: won-flag
+                value: true

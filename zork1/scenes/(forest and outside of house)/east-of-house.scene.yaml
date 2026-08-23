@@ -1,0 +1,135 @@
+id: east-of-house
+
+meta:
+  title: Behind House
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: kitchen-window-open
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are behind the white house. A path leads into the forest to the east. In one
+            corner of the house there is a small window which is open.
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are behind the white house. A path leads into the forest to the east. In one
+            corner of the house there is a small window which is slightly ajar.
+
+objects:
+  - id: east-of-house.white-house
+    name: white house
+    synonyms: [house, beauti house, coloni house]
+  - id: east-of-house.kitchen-window
+    name: kitchen window
+    synonyms: [window, small window]
+    actions:
+      - id: open
+        requires:
+          - type: flag
+            negate: true
+            data:
+              flag: kitchen-window-open
+            failure:
+              triggers:
+                - type: response
+                  data:
+                    text: It is already open.
+        triggers:
+          - type: response
+            data:
+              text: With great effort, you open the window far enough to allow entry.
+          - type: set-flag
+            data:
+              flag: kitchen-window-open
+              value: true
+
+      - id: close
+        requires:
+          - type: flag
+            data:
+              flag: kitchen-window-open
+            failure:
+              triggers:
+                - type: response
+                  data:
+                    text: It is already closed.
+        triggers:
+          - type: response
+            data:
+              text: The window closes (more easily than it opened).
+          - type: set-flag
+            data:
+              flag: kitchen-window-open
+              value: false
+
+      - id: look
+        requires:
+          - type: flag
+            data:
+              flag: kitchen-window-open
+        triggers:
+          - type: response
+            data:
+              text: The window is open, far enough to allow entry.
+
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: The window is slightly ajar, but not enough to allow entry.
+
+      - id: look
+        preposition: in
+        triggers:
+          - type: response
+            data:
+              text: You can see what appears to be a kitchen..
+
+  - id: east-of-house.forest
+    name: forest
+    synonyms: [trees, pines, hemlocks]
+
+navigation:
+  - id: north
+    triggers:
+      - type: change-scene
+        data:
+          scene: north-of-house
+  - id: south
+    triggers:
+      - type: change-scene
+        data:
+          scene: south-of-house
+  - id: east
+    triggers:
+      - type: change-scene
+        data:
+          scene: clearing
+  - id: west
+    requires:
+      - type: flag
+        data:
+          flag: kitchen-window-open
+    triggers:
+      - type: change-scene
+        data:
+          scene: kitchen
+  - id: northwest
+    triggers:
+      - type: change-scene
+        data:
+          scene: north-of-house
+  - id: southwest
+    triggers:
+      - type: change-scene
+        data:
+          scene: south-of-house

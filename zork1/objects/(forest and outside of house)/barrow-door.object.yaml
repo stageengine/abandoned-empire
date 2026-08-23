@@ -1,0 +1,5 @@
+id: barrow-door
+name: stone door
+
+synonyms: [door, huge door]
+start: stone-barrow

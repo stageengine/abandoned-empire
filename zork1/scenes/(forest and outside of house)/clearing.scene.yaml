@@ -1,0 +1,54 @@
+id: clearing
+
+meta:
+  title: Clearing
+
+actions:
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in a small clearing in a well marked forest path that extends to the east
+            and west.
+
+objects:
+  - id: clearing.tree
+    name: tree
+    synonyms: [branch, large tree, large branch, storm tree, storm branch]
+  - id: clearing.songbird
+    name: songbird
+    synonyms: [bird, song bird, song songbird]
+  - id: clearing.white-house
+    name: white house
+    synonyms: [house, beauti house, coloni house]
+  - id: clearing.forest
+    name: forest
+    synonyms: [trees, pines, hemlocks]
+
+navigation:
+  - id: north
+    triggers:
+      - type: change-scene
+        data:
+          scene: forest-2
+  - id: south
+    triggers:
+      - type: change-scene
+        data:
+          scene: forest-3
+  - id: east
+    triggers:
+      - type: change-scene
+        data:
+          scene: canyon-view
+  - id: west
+    triggers:
+      - type: change-scene
+        data:
+          scene: east-of-house
+  - id: up
+    triggers:
+      - type: response
+        data:
+          text: There is no tree here suitable for climbing.

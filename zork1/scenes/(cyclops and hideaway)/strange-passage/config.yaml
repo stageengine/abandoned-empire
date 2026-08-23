@@ -1,0 +1,35 @@
+id: strange-passage
+tags: [dark]
+
+meta:
+  title: Strange Passage
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is a long passage. To the west is one entrance. On the east there is an old
+            wooden door, with a large opening in it (about cyclops sized).
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+navigation:
+  - id: east
+    triggers:
+      - type: change-scene
+        data:
+          scene: living-room
+  - id: west
+    triggers:
+      - type: change-scene
+        data:
+          scene: cyclops-room

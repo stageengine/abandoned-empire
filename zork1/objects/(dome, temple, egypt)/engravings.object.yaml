@@ -1,0 +1,26 @@
+id: engravings
+name: wall with engravings
+
+synonyms:
+  - wall
+  - engravings
+  - inscription
+  - old wall
+  - old engravings
+  - old inscription
+  - ancient wall
+  - ancient engravings
+  - ancient inscription
+start: engravings-cave
+
+actions:
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The engravings were incised in the living rock of the cave wall by an unknown hand.
+            They depict, in symbolic form, the beliefs of the ancient Zorkers. Skillfully
+            interwoven with the bas reliefs are excerpts illustrating the major religious tenets
+            of that time. Unfortunately, a later age seems to have considered them blasphemous
+            and just as skillfully excised them.

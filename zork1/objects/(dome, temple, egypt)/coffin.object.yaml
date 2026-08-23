@@ -1,0 +1,14 @@
+id: coffin
+name: gold coffin
+
+synonyms:
+  - coffin
+  - casket
+  - treasure
+  - solid coffin
+  - solid casket
+  - solid treasure
+  - gold casket
+  - gold treasure
+portable: true
+start: egypt-room

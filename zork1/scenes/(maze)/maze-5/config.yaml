@@ -1,0 +1,203 @@
+id: maze-5
+tags: [dark]
+
+meta:
+  title: Maze
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+      - type: object-in
+        data:
+          object: burned-out-lantern
+          location: maze-5
+      - type: object-in
+        data:
+          object: bag-of-coins
+          location: maze-5
+      - type: object-in
+        data:
+          object: rusty-knife
+          location: maze-5
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is part of a maze of twisty little passages, all alike. A skeleton, probably
+            the remains of a luckless adventurer, lies here.
+      - type: response
+        data:
+          text: The deceased adventurer's useless lantern is here.
+      - type: response
+        data:
+          text: An old leather bag, bulging with coins, is here.
+      - type: response
+        data:
+          text: Beside the skeleton is a rusty knife.
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+      - type: object-in
+        data:
+          object: burned-out-lantern
+          location: maze-5
+      - type: object-in
+        data:
+          object: bag-of-coins
+          location: maze-5
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is part of a maze of twisty little passages, all alike. A skeleton, probably
+            the remains of a luckless adventurer, lies here.
+      - type: response
+        data:
+          text: The deceased adventurer's useless lantern is here.
+      - type: response
+        data:
+          text: An old leather bag, bulging with coins, is here.
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+      - type: object-in
+        data:
+          object: burned-out-lantern
+          location: maze-5
+      - type: object-in
+        data:
+          object: rusty-knife
+          location: maze-5
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is part of a maze of twisty little passages, all alike. A skeleton, probably
+            the remains of a luckless adventurer, lies here.
+      - type: response
+        data:
+          text: The deceased adventurer's useless lantern is here.
+      - type: response
+        data:
+          text: Beside the skeleton is a rusty knife.
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+      - type: object-in
+        data:
+          object: bag-of-coins
+          location: maze-5
+      - type: object-in
+        data:
+          object: rusty-knife
+          location: maze-5
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is part of a maze of twisty little passages, all alike. A skeleton, probably
+            the remains of a luckless adventurer, lies here.
+      - type: response
+        data:
+          text: An old leather bag, bulging with coins, is here.
+      - type: response
+        data:
+          text: Beside the skeleton is a rusty knife.
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+      - type: object-in
+        data:
+          object: burned-out-lantern
+          location: maze-5
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is part of a maze of twisty little passages, all alike. A skeleton, probably
+            the remains of a luckless adventurer, lies here.
+      - type: response
+        data:
+          text: The deceased adventurer's useless lantern is here.
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+      - type: object-in
+        data:
+          object: bag-of-coins
+          location: maze-5
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is part of a maze of twisty little passages, all alike. A skeleton, probably
+            the remains of a luckless adventurer, lies here.
+      - type: response
+        data:
+          text: An old leather bag, bulging with coins, is here.
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+      - type: object-in
+        data:
+          object: rusty-knife
+          location: maze-5
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is part of a maze of twisty little passages, all alike. A skeleton, probably
+            the remains of a luckless adventurer, lies here.
+      - type: response
+        data:
+          text: Beside the skeleton is a rusty knife.
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is part of a maze of twisty little passages, all alike. A skeleton, probably
+            the remains of a luckless adventurer, lies here.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+objects: [bones, burned-out-lantern, bag-of-coins, rusty-knife, keys]
+
+navigation:
+  - id: north
+    triggers:
+      - type: change-scene
+        data:
+          scene: maze-3
+  - id: east
+    triggers:
+      - type: change-scene
+        data:
+          scene: dead-end-2
+  - id: southwest
+    triggers:
+      - type: change-scene
+        data:
+          scene: maze-6

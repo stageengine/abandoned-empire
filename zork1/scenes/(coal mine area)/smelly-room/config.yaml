@@ -1,0 +1,35 @@
+id: smelly-room
+tags: [dark]
+
+meta:
+  title: Smelly Room
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is a small nondescript room. However, from the direction of a small descending
+            staircase a foul odor can be detected. To the south is a narrow tunnel.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+navigation:
+  - id: south
+    triggers:
+      - type: change-scene
+        data:
+          scene: shaft-room
+  - id: down
+    triggers:
+      - type: change-scene
+        data:
+          scene: gas-room

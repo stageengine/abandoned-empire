@@ -1,0 +1,55 @@
+id: chasm-room
+tags: [dark]
+
+meta:
+  title: Chasm
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            A chasm runs southwest to northeast and the path follows it. You are on the south
+            side of the chasm, where a crack opens into a passage.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+objects:
+  - id: chasm-room.crack
+    name: crack
+    synonyms: [narrow crack]
+
+navigation:
+  - id: south
+    triggers:
+      - type: change-scene
+        data:
+          scene: ns-passage
+  - id: northeast
+    triggers:
+      - type: change-scene
+        data:
+          scene: reservoir-south
+  - id: southwest
+    triggers:
+      - type: change-scene
+        data:
+          scene: ew-passage
+  - id: up
+    triggers:
+      - type: change-scene
+        data:
+          scene: ew-passage
+  - id: down
+    triggers:
+      - type: response
+        data:
+          text: Are you out of your mind?

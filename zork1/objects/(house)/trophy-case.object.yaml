@@ -1,0 +1,120 @@
+id: trophy-case
+name: trophy case
+
+synonyms: [case, trophy case]
+start: living-room
+
+actions:
+  - id: get
+    triggers:
+      - type: response
+        data:
+          text: The trophy case is securely fastened to the wall.
+
+  # One of these per treasure, because Stage has no containers: a thing is in a
+  # room, in your hands, or offstage, and there is no third place for it to be
+  # inside. Putting a treasure in the case sends it offstage and scores it, and
+  # taking it back out is not something the port can offer yet.
+  - id: put
+    preposition: in
+    indirect: painting
+    requires:
+      - type: has-item
+        data:
+          object: painting
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You aren't holding the painting.
+      - type: flag
+        negate: true
+        data:
+          flag: painting-ruined
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: >-
+                  You put the worthless piece of canvas in the case. It does not improve the
+                  look of either.
+    triggers:
+      - type: response
+        data:
+          text: Done.
+      - type: move-object
+        data:
+          object: painting
+          to: offstage
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 6
+
+  - id: put
+    preposition: in
+    indirect: trunk
+    requires:
+      - type: has-item
+        data:
+          object: trunk
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You aren't holding the trunk of jewels.
+    triggers:
+      - type: response
+        data:
+          text: Done.
+      - type: move-object
+        data:
+          object: trunk
+          to: offstage
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 5
+
+  - id: put
+    preposition: in
+    indirect: skull
+    requires:
+      - type: has-item
+        data:
+          object: skull
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You aren't holding the crystal skull.
+    triggers:
+      - type: response
+        data:
+          text: Done.
+      - type: move-object
+        data:
+          object: skull
+          to: offstage
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 10
+
+  - id: put
+    preposition: in
+    triggers:
+      - type: response
+        data:
+          text: The trophy case is for treasures, and that is not one.
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            A glass-fronted case, securely fastened to the wall, and empty of everything but
+            dust and the promise of what might go in it.

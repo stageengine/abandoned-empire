@@ -1,0 +1,12 @@
+id: screwdriver
+
+synonyms:
+  - tool
+  - tools
+  - driver
+  - screw screwdriver
+  - screw tool
+  - screw tools
+  - screw driver
+portable: true
+start: maintenance-room

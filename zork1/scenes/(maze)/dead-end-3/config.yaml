@@ -1,0 +1,28 @@
+id: dead-end-3
+tags: [dark]
+
+meta:
+  title: Dead End
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: You have come to a dead end in the maze.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+navigation:
+  - id: north
+    triggers:
+      - type: change-scene
+        data:
+          scene: maze-8

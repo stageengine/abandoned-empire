@@ -1,0 +1,58 @@
+id: river-2
+tags: [dark]
+
+meta:
+  title: Frigid River
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The river turns a corner here making it impossible to see the Dam. The White Cliffs
+            loom on the east bank and large rocks prevent landing on the west.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+objects:
+  - id: river-2.global-water
+    name: water
+    synonyms: [quantity]
+  - id: river-2.river
+    name: river
+    synonyms: [frigid river]
+
+navigation:
+  - id: east
+    triggers:
+      - type: response
+        data:
+          text: The White Cliffs prevent your landing here.
+  - id: west
+    triggers:
+      - type: response
+        data:
+          text: Just in time you steer away from the rocks.
+  - id: up
+    triggers:
+      - type: response
+        data:
+          text: You cannot go upstream due to strong currents.
+  - id: down
+    triggers:
+      - type: change-scene
+        data:
+          scene: river-3
+  - id: land
+    triggers:
+      - type: response
+        data:
+          text: There is no safe landing spot here.

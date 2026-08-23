@@ -1,0 +1,48 @@
+id: river-1
+
+meta:
+  title: Frigid River
+
+actions:
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are on the Frigid River in the vicinity of the Dam. The river flows quietly
+            here. There is a landing on the west shore.
+
+objects:
+  - id: river-1.global-water
+    name: water
+    synonyms: [quantity]
+  - id: river-1.river
+    name: river
+    synonyms: [frigid river]
+
+navigation:
+  - id: east
+    triggers:
+      - type: response
+        data:
+          text: The White Cliffs prevent your landing here.
+  - id: west
+    triggers:
+      - type: change-scene
+        data:
+          scene: dam-base
+  - id: up
+    triggers:
+      - type: response
+        data:
+          text: You cannot go upstream due to strong currents.
+  - id: down
+    triggers:
+      - type: change-scene
+        data:
+          scene: river-2
+  - id: land
+    triggers:
+      - type: change-scene
+        data:
+          scene: dam-base

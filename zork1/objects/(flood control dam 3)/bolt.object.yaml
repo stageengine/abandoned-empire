@@ -1,0 +1,95 @@
+id: bolt
+
+synonyms: [nut, metal bolt, metal nut, large bolt, large nut]
+start: dam-room
+
+actions:
+  # Closing the gates. Written above the opening because the first requirement
+  # that holds decides which action this is.
+  - id: turn
+    preposition: with
+    indirect: wrench
+    requires:
+      - type: has-item
+        data:
+          object: wrench
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You aren't holding the wrench.
+      - type: flag
+        data:
+          flag: gate-flag
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: The bolt won't turn with your best effort.
+      - type: flag
+        data:
+          flag: gates-open
+    triggers:
+      - type: response
+        data:
+          text: The sluice gates close and water starts to collect behind the dam.
+      - type: set-flag
+        data:
+          flag: gates-open
+          value: false
+
+  - id: turn
+    preposition: with
+    indirect: wrench
+    requires:
+      - type: has-item
+        data:
+          object: wrench
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You aren't holding the wrench.
+      - type: flag
+        data:
+          flag: gate-flag
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: The bolt won't turn with your best effort.
+    triggers:
+      - type: response
+        data:
+          text: The sluice gates open and water pours through the dam.
+      - type: set-flag
+        data:
+          flag: gates-open
+          value: true
+
+  - id: turn
+    preposition: with
+    triggers:
+      - type: response
+        data:
+          text: The bolt won't turn using that.
+
+  - id: turn
+    triggers:
+      - type: response
+        data:
+          text: The bolt won't turn with your best effort.
+
+  - id: get
+    triggers:
+      - type: response
+        data:
+          text: It is an integral part of the control panel.
+
+  - id: oil
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Hmm. It appears the tube contained glue, not oil. Turning the bolt won't get any
+            easier....

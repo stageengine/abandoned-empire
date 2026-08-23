@@ -1,0 +1,113 @@
+id: match
+name: matchbook
+
+noun: as-written
+synonyms: [match, matches, matchbook, book of matches]
+portable: true
+start: dam-lobby
+
+# Six matches, and two turns of burning apiece. `left` is how many are in the
+# book; `flame` is how long the one in your hand has.
+measures:
+  - id: left
+    max: 6
+    start: 6
+    thresholds:
+      - from: 0
+      - from: 1
+
+  - id: flame
+    max: 2
+    start: 0
+    thresholds:
+      - from: 0
+        triggers:
+          - type: response
+            data:
+              text: The match has gone out.
+          - type: set-flag
+            data:
+              flag: match-on
+              value: false
+      - from: 1
+
+actions:
+  - id: burn
+    requires:
+      - type: measure
+        data:
+          subject: match
+          measure: left
+          min: 1
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: I'm afraid that you have run out of matches.
+    triggers:
+      - type: response
+        data:
+          text: One of the matches starts to burn.
+      - type: adjust-measure
+        data:
+          subject: match
+          measure: left
+          by: -1
+      - type: adjust-measure
+        data:
+          subject: match
+          measure: flame
+          to: 2
+      - type: set-flag
+        data:
+          flag: match-on
+          value: true
+
+  - id: extinguish
+    requires:
+      - type: flag
+        data:
+          flag: match-on
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: The match is not lit.
+    triggers:
+      - type: response
+        data:
+          text: The match is out.
+      - type: set-flag
+        data:
+          flag: match-on
+          value: false
+      - type: adjust-measure
+        data:
+          subject: match
+          measure: flame
+          to: 0
+
+  - id: count
+    triggers:
+      - type: response
+        data:
+          text: You have several matches left.
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: |-
+            (Close cover before striking)
+
+            YOU too can make BIG MONEY in the exciting field of PAPER SHUFFLING!
+
+            Mr. Anderson of Muddle, Mass. says: "Before I took this course I was a lowly bit
+            twiddler. Now with what I learned at GUE Tech I feel really important and can
+            obfuscate and confuse with the best."
+
+            Dr. Blank had this to say: "Ten short days ago all I could look forward to was a
+            dead-end job as a doctor. Now I have a promising future and make really big Zorkmids."
+
+            GUE Tech can't promise these fantastic results to everyone. But when you earn your
+            degree from GUE Tech, your future will be brighter.

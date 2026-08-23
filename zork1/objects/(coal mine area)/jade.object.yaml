@@ -1,0 +1,11 @@
+id: jade
+name: jade figurine
+
+synonyms:
+  - figurine
+  - treasure
+  - exquisite figurine
+  - exquisite treasure
+  - jade treasure
+portable: true
+start: bat-room

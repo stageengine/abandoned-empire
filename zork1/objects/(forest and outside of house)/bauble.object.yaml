@@ -1,0 +1,12 @@
+id: bauble
+name: beautiful brass bauble
+
+synonyms:
+  - bauble
+  - treasure
+  - brass bauble
+  - brass treasure
+  - beauti bauble
+  - beauti treasure
+portable: true
+start: offstage

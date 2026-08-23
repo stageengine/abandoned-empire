@@ -1,0 +1,35 @@
+id: machine-room
+tags: [dark]
+
+meta:
+  title: Machine Room
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is a large, cold room whose sole exit is to the north. In one corner there is a
+            machine which is reminiscent of a clothes dryer. On its face is a switch which is
+            labelled "START". The switch does not appear to be manipulable by any human hand
+            (unless the fingers are about 1/16 by 1/4 inch). On the front of the machine is a
+            large lid, which is
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+objects: [diamond, machine, gunk, machine-switch]
+
+navigation:
+  - id: north
+    triggers:
+      - type: change-scene
+        data:
+          scene: lower-shaft

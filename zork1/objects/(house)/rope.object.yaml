@@ -1,0 +1,79 @@
+id: rope
+
+synonyms: [hemp, coil, large rope, large hemp, large coil]
+portable: true
+start: attic
+
+actions:
+  # `to` is a filler preposition - it has to be, because `at` is a synonym of it
+  # and `look at the fire` would otherwise need declaring on every description in
+  # the game - and a filler throws away the second object before the action is
+  # chosen. So `tie the rope to the railing` arrives as a bare `tie the rope`,
+  # and the railing has to be found by asking whether it is in the room.
+  - id: tie
+    requires:
+      - type: object-here
+        data:
+          object: railing
+      - type: flag
+        negate: true
+        data:
+          flag: dome-flag
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: The rope is already tied to it.
+    triggers:
+      - type: response
+        data:
+          text: The rope drops over the side and comes within ten feet of the floor.
+      - type: set-flag
+        data:
+          flag: dome-flag
+          value: true
+      - type: move-object
+        data:
+          object: rope
+          to: here
+
+  - id: tie
+    triggers:
+      - type: response
+        data:
+          text: You can't tie the rope to that.
+
+  - id: untie
+    requires:
+      - type: flag
+        data:
+          flag: dome-flag
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: It is not tied to anything.
+    triggers:
+      - type: response
+        data:
+          text: The rope is now untied.
+      - type: set-flag
+        data:
+          flag: dome-flag
+          value: false
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: dome-flag
+    triggers:
+      - type: response
+        data:
+          text: A hank of rope, tied to the railing and hanging down over the side.
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: A large coil of rope.

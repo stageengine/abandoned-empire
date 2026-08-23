@@ -1,0 +1,72 @@
+id: rug
+name: carpet
+
+synonyms: [rug, carpet, large rug, large carpet, oriental rug, oriental carpet]
+start: living-room
+
+actions:
+  # Moving it is the whole of what it is for, and it only happens once.
+  - id: move
+    requires:
+      - type: flag
+        negate: true
+        data:
+          flag: rug-moved
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: >-
+                  Having moved the carpet previously, you find it impossible to move it again.
+    triggers:
+      - type: response
+        data:
+          text: >-
+            With a great effort, the rug is moved to one side of the room, revealing the dusty
+            cover of a closed trap door.
+      - type: set-flag
+        data:
+          flag: rug-moved
+          value: true
+
+  - id: raise
+    requires:
+      - type: flag
+        data:
+          flag: rug-moved
+    triggers:
+      - type: response
+        data:
+          text: The rug is too heavy to lift.
+
+  - id: raise
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The rug is too heavy to lift, but in trying to take it you have noticed an
+            irregularity beneath it.
+
+  - id: get
+    triggers:
+      - type: response
+        data:
+          text: The rug is extremely heavy and cannot be carried.
+
+  - id: look
+    preposition: under
+    requires:
+      - type: flag
+        negate: true
+        data:
+          flag: rug-moved
+      - type: flag
+        negate: true
+        data:
+          flag: trap-door-open
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Underneath the rug is a closed trap door. As you drop the corner of the rug, the trap
+            door is once again concealed from view.

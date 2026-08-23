@@ -1,0 +1,46 @@
+id: cliff-middle
+
+meta:
+  title: Rocky Ledge
+
+actions:
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are on a ledge about halfway up the wall of the river canyon. You can see from
+            here that the main flow from Aragain Falls twists along a passage which it is
+            impossible for you to enter. Below you is the canyon bottom. Above you is more
+            cliff, which appears climbable.
+
+objects:
+  - id: cliff-middle.climbable-cliff
+    name: cliff
+    synonyms:
+      - wall
+      - walls
+      - ledge
+      - rocky wall
+      - rocky cliff
+      - rocky walls
+      - rocky ledge
+      - sheer wall
+      - sheer cliff
+      - sheer walls
+      - sheer ledge
+  - id: cliff-middle.river
+    name: river
+    synonyms: [frigid river]
+
+navigation:
+  - id: up
+    triggers:
+      - type: change-scene
+        data:
+          scene: canyon-view
+  - id: down
+    triggers:
+      - type: change-scene
+        data:
+          scene: canyon-bottom

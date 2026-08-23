@@ -1,0 +1,34 @@
+id: winding-passage
+tags: [dark]
+
+meta:
+  title: Winding Passage
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is a winding passage. It seems that there are only exits on the east and north.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+navigation:
+  - id: north
+    triggers:
+      - type: change-scene
+        data:
+          scene: mirror-room-2
+  - id: east
+    triggers:
+      - type: change-scene
+        data:
+          scene: tiny-cave

@@ -1,0 +1,153 @@
+id: reservoir-south
+tags: [dark]
+
+meta:
+  title: Reservoir South
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+      - type: flag
+        data:
+          flag: gates-open
+      - type: flag
+        data:
+          flag: low-tide
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in a long room, to the north of which was formerly a lake. However, with the
+            water level lowered, there is merely a wide stream running through the center of the
+            room.
+      - type: response
+        data:
+          text: >-
+            There is a path along the stream to the east or west, a steep pathway climbing
+            southwest along the edge of a chasm, and a path leading into a canyon to the
+            southeast.
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+      - type: flag
+        data:
+          flag: gates-open
+      - type: flag
+        negate: true
+        data:
+          flag: low-tide
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in a long room. To the north is a large lake, too deep to cross. You notice,
+            however, that the water level appears to be dropping at a rapid rate. Before long,
+            it might be possible to cross to the other side from here.
+      - type: response
+        data:
+          text: >-
+            There is a path along the stream to the east or west, a steep pathway climbing
+            southwest along the edge of a chasm, and a path leading into a canyon to the
+            southeast.
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+      - type: flag
+        negate: true
+        data:
+          flag: gates-open
+      - type: flag
+        data:
+          flag: low-tide
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in a long room, to the north of which is a wide area which was formerly a
+            reservoir, but now is merely a stream. You notice, however, that the level of the
+            stream is rising quickly and that before long it will be impossible to cross here.
+      - type: response
+        data:
+          text: >-
+            There is a path along the stream to the east or west, a steep pathway climbing
+            southwest along the edge of a chasm, and a path leading into a canyon to the
+            southeast.
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+      - type: flag
+        negate: true
+        data:
+          flag: gates-open
+      - type: flag
+        negate: true
+        data:
+          flag: low-tide
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in a long room on the south shore of a large lake, far too deep and wide for
+            crossing.
+      - type: response
+        data:
+          text: >-
+            There is a path along the stream to the east or west, a steep pathway climbing
+            southwest along the edge of a chasm, and a path leading into a canyon to the
+            southeast.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            It is pitch black. You are likely to be eaten by a grue.
+
+objects:
+  - id: reservoir-south.global-water
+    name: water
+    synonyms: [quantity]
+
+navigation:
+  - id: north
+    requires:
+      - type: flag
+        data:
+          flag: low-tide
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You would drown.
+    triggers:
+      - type: change-scene
+        data:
+          scene: reservoir
+  - id: east
+    triggers:
+      - type: change-scene
+        data:
+          scene: dam-room
+  - id: west
+    triggers:
+      - type: change-scene
+        data:
+          scene: stream-view
+  - id: southeast
+    triggers:
+      - type: change-scene
+        data:
+          scene: deep-canyon
+  - id: southwest
+    triggers:
+      - type: change-scene
+        data:
+          scene: chasm-room

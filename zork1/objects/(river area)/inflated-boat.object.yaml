@@ -1,0 +1,15 @@
+id: inflated-boat
+name: magic boat
+
+synonyms:
+  - boat
+  - raft
+  - inflat boat
+  - inflat raft
+  - magic raft
+  - plastic boat
+  - plastic raft
+  - seaworthy boat
+  - seaworthy raft
+portable: true
+start: offstage

@@ -1,0 +1,59 @@
+id: south-of-house
+
+meta:
+  title: South of House
+
+actions:
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are facing the south side of a white house. There is no door here, and all the
+            windows are boarded.
+
+objects:
+  - id: south-of-house.boarded-window
+    name: boarded window
+    synonyms: [window]
+  - id: south-of-house.board
+    name: board
+    synonyms: [boards]
+  - id: south-of-house.white-house
+    name: white house
+    synonyms: [house, beauti house, coloni house]
+  - id: south-of-house.forest
+    name: forest
+    synonyms: [trees, pines, hemlocks]
+
+navigation:
+  - id: north
+    triggers:
+      - type: response
+        data:
+          text: The windows are all boarded.
+  - id: south
+    triggers:
+      - type: change-scene
+        data:
+          scene: forest-3
+  - id: east
+    triggers:
+      - type: change-scene
+        data:
+          scene: east-of-house
+  - id: west
+    triggers:
+      - type: change-scene
+        data:
+          scene: west-of-house
+  - id: northeast
+    triggers:
+      - type: change-scene
+        data:
+          scene: east-of-house
+  - id: northwest
+    triggers:
+      - type: change-scene
+        data:
+          scene: west-of-house

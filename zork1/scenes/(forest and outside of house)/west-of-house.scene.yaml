@@ -1,0 +1,79 @@
+id: west-of-house
+
+meta:
+  title: West of House
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: won-flag
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are standing in an open field west of a white house, with a boarded front door. A
+            secret path leads southwest into the forest.
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are standing in an open field west of a white house, with a boarded front door.
+
+objects:
+  - front-door
+  - advertisement
+  - mailbox
+  - id: west-of-house.white-house
+    name: white house
+    synonyms: [house, beauti house, coloni house]
+  - id: west-of-house.board
+    name: board
+    synonyms: [boards]
+  - id: west-of-house.forest
+    name: forest
+    synonyms: [trees, pines, hemlocks]
+
+navigation:
+  - id: north
+    triggers:
+      - type: change-scene
+        data:
+          scene: north-of-house
+  - id: south
+    triggers:
+      - type: change-scene
+        data:
+          scene: south-of-house
+  - id: east
+    triggers:
+      - type: response
+        data:
+          text: The door is boarded and you can't remove the boards.
+  - id: west
+    triggers:
+      - type: change-scene
+        data:
+          scene: forest-1
+  - id: northeast
+    triggers:
+      - type: change-scene
+        data:
+          scene: north-of-house
+  - id: southeast
+    triggers:
+      - type: change-scene
+        data:
+          scene: south-of-house
+  - id: southwest
+    requires:
+      - type: flag
+        data:
+          flag: won-flag
+    triggers:
+      - type: change-scene
+        data:
+          scene: stone-barrow

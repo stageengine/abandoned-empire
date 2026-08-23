@@ -1,0 +1,20 @@
+id: sword
+
+synonyms:
+  - orcrist
+  - glamdring
+  - blade
+  - elvish sword
+  - elvish orcrist
+  - elvish glamdring
+  - elvish blade
+  - old sword
+  - old orcrist
+  - old glamdring
+  - old blade
+  - antique sword
+  - antique orcrist
+  - antique glamdring
+  - antique blade
+portable: true
+start: living-room

@@ -1,0 +1,13 @@
+id: sandwich-bag
+name: brown sack
+
+synonyms:
+  - bag
+  - sack
+  - brown bag
+  - elongated bag
+  - elongated sack
+  - smelly bag
+  - smelly sack
+portable: true
+start: offstage

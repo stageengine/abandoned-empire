@@ -1,0 +1,28 @@
+id: tool-chest
+name: group of tool chests
+
+noun: plural
+synonyms: [chest, chests, group, toolchests, tool chest, tool chests]
+start: maintenance-room
+
+actions:
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: The chests are all empty.
+
+  - id: get
+    once:
+      failure:
+        triggers:
+          - type: response
+            data:
+              text: There is nothing left of them but rust.
+    triggers:
+      - type: response
+        data:
+          text: The chests are so rusty and corroded that they crumble when you touch them.
+      - type: remove-object
+        data:
+          object: tool-chest

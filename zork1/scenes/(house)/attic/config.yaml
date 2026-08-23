@@ -1,0 +1,46 @@
+id: attic
+tags: [dark]
+
+meta:
+  title: Attic
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+      - type: object-in
+        data:
+          object: rope
+          location: attic
+    triggers:
+      - type: response
+        data:
+          text: This is the attic. The only exit is a stairway leading down.
+      - type: response
+        data:
+          text: A large coil of rope is lying in the corner.
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: This is the attic. The only exit is a stairway leading down.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+objects: [attic-table, knife, rope]
+
+navigation:
+  - id: down
+    triggers:
+      - type: change-scene
+        data:
+          scene: kitchen

@@ -1,0 +1,40 @@
+id: ladder-top
+tags: [dark]
+
+meta:
+  title: Ladder Top
+
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is a very small room. In the corner is a rickety wooden ladder, leading
+            downward. It might be safe to descend. There is also a staircase leading upward.
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: It is pitch black. You are likely to be eaten by a grue.
+
+objects:
+  - id: ladder-top.ladder
+    name: wooden ladder
+    synonyms: [ladder, rickety ladder, narrow ladder]
+
+navigation:
+  - id: up
+    triggers:
+      - type: change-scene
+        data:
+          scene: mine-4
+  - id: down
+    triggers:
+      - type: change-scene
+        data:
+          scene: ladder-bottom

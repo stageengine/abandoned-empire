@@ -1,0 +1,16 @@
+id: lunch
+
+synonyms:
+  - food
+  - sandwich
+  - dinner
+  - hot food
+  - hot sandwich
+  - hot lunch
+  - hot dinner
+  - pepper food
+  - pepper sandwich
+  - pepper lunch
+  - pepper dinner
+portable: true
+start: offstage
