@@ -2,65 +2,88 @@
 
 every-turn:
 
-  # The troll, who blocks both ways on and does not wait to be asked. One roll a
-  # turn: the blow lands or it does not, and which blow it is comes from how the
-  # fight is going rather than from Zork's table of nine.
+  # The troll, who blocks both ways on and does not wait to be asked.
+  #
+  # One roll a turn, and now more than two answers to it. ZIL settles each blow
+  # against a table indexed on both fighters' strength and drawn from nine times
+  # over, and does the weighting by repeating entries inside a sliding window:
+  # `DEF3A` is five MISSED, two STAGGER, two LIGHT-WOUND and two SERIOUS-WOUND,
+  # and a stronger attacker's window drops misses off the front. Those counts are
+  # the weights below.
+  #
+  # The wording is Zork's own, from `TROLL-MELEE`. Where it offers several lines
+  # for one outcome it picks between them without repeating until it has used
+  # them all, which Stage cannot do - so the miss, which is the one the player
+  # sees most, is a nested equal-weight roll and the rest take one line each.
   - requires:
       - type: object-here
         data:
           object: troll
-      - type: measure
-        data:
-          subject: player
-          measure: health
-          max: 2
     chance:
-      percent: 40
-      failure:
-        triggers:
-          - type: response
-            data:
-              text: The axe sweeps past as you jump aside.
-    triggers:
-      - type: response
-        data:
-          text: An axe stroke makes a deep wound in your leg.
-      - type: adjust-measure
-        data:
-          subject: player
-          measure: health
-          by: -1
-      # A wound costs you what you can carry as well as what you can take. Zork
-      # takes twenty off for a serious one and ten for a light one, and stops at
-      # fifty however badly the fight goes.
-      - type: adjust-measure
-        data:
-          subject: player
-          measure: allowance
-          by: -20
+      outcomes:
+        - weight: 5
+          triggers:
+            - type: response
+              chance:
+                outcomes:
+                  - weight: 1
+                    triggers:
+                      - type: response
+                        data:
+                          text: The troll swings his axe, but it misses.
+                  - weight: 1
+                    triggers:
+                      - type: response
+                        data:
+                          text: The troll's axe barely misses your ear.
+                  - weight: 1
+                    triggers:
+                      - type: response
+                        data:
+                          text: The axe sweeps past as you jump aside.
+                  - weight: 1
+                    triggers:
+                      - type: response
+                        data:
+                          text: The axe crashes against the rock, throwing sparks!
+              data:
+                text: The troll swings his axe, but it misses.
 
-  - requires:
-      - type: object-here
-        data:
-          object: troll
-    chance:
-      percent: 40
-      failure:
-        triggers:
-          - type: response
-            data:
-              text: The troll swings his axe, but it misses.
-    triggers:
-      - type: response
-        data:
-          text: The troll swings his axe, and it nicks your arm as you dodge.
-      - type: adjust-measure
-        data:
-          subject: player
-          measure: health
-          by: -1
-      - type: adjust-measure
-        data:
-          subject: player
-          measure: allowance
-          by: -10
+        # A stagger costs the turn and no blood, which is what it costs in Zork.
+        - weight: 2
+          triggers:
+            - type: response
+              data:
+                text: You stagger back under a hail of axe strokes.
+
+        - weight: 2
+          triggers:
+            - type: response
+              data:
+                text: The troll swings his axe, and it nicks your arm as you dodge.
+            - type: adjust-measure
+              data:
+                subject: player
+                measure: health
+                by: -1
+            - type: adjust-measure
+              data:
+                subject: player
+                measure: allowance
+                by: -10
+
+        - weight: 2
+          triggers:
+            - type: response
+              data:
+                text: An axe stroke makes a deep wound in your leg.
+            - type: adjust-measure
+              data:
+                subject: player
+                measure: health
+                by: -1
+            - type: adjust-measure
+              data:
+                subject: player
+                measure: allowance
+                by: -20

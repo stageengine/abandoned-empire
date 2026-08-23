@@ -5,7 +5,7 @@ Generated from `../source/zork1`: 110 rooms, 101 things,
 
 Everything below is a person's job. Delete a line when it is done.
 
-## Things Stage cannot yet say (2)
+## Things Stage cannot yet say (3)
 
 - A room says nothing about what is inside a container standing in it, so the
   kitchen does not mention the brown sack or the bottle on the table, and the
@@ -22,6 +22,14 @@ Everything below is a person's job. Delete a line when it is done.
   a total of four, which is stricter than Zork; the chimney asks only that the
   lamp is in hand. Zork's own fumble above seven held items is the same shape and
   is not ported either.
+
+- `PICK-ONE` draws without replacement: over any run of a table's length every
+  line comes back exactly once before any repeats. Thirteen call sites, two of
+  which pick a room rather than a sentence. A weighted `outcomes` list is the
+  nearest thing and is drawn *with* replacement, so a player hears one line twice
+  before they have heard the third. The troll's misses are written that way and
+  read acceptably at four lines; a two-line table would grate. The engine's
+  roadmap calls this *a line that does not repeat*.
 
 ## Rooms that describe themselves differently as the world changes (10)
 
