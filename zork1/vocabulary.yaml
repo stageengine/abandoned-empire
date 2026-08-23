@@ -98,6 +98,23 @@ verbs:
   - id: search
     synonyms: [rummage]
   - id: pray
+
+  # Verbs that act on nothing, answered by the game's own `actions.yaml` and, for
+  # `pray` above, by South Temple as well. Synonyms as ZIL declares them in
+  # `gsyntax.zil`.
+  - id: wait
+    synonyms: [z]
+  - id: yell
+    synonyms: [scream, shout]
+  - id: zork
+  - id: frobozz
+  - id: win
+    synonyms: [winnage]
+  - id: mumble
+    synonyms: [sigh]
+  - id: chomp
+    synonyms: [lose, barf]
+  - id: repent
   - id: exorcise
     synonyms: [banish, lay to rest]
   - id: ring

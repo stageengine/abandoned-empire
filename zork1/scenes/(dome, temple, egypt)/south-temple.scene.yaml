@@ -31,6 +31,15 @@ actions:
             altar. In one corner is a small hole in the floor which leads into darkness. You
             probably could not get back up it.
 
+  # The one room in Zork I that answers a bare verb its own way. Everywhere else
+  # `pray` is the game's flat line; here it puts you out in the forest, which is
+  # the only way out of the temple that does not need the coffin left behind.
+  - id: pray
+    triggers:
+      - type: change-scene
+        data:
+          scene: forest-1
+
 objects: [altar, book, candles]
 
 navigation:

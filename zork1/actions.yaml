@@ -1,0 +1,70 @@
+# What Zork answers to a verb typed on its own, wherever you are standing.
+#
+# ZIL keeps these as routines that take no object: `V-WAIT`, `V-PRAY`, `V-YELL`
+# and a dozen one-line jokes. A room may answer one of them instead, and is
+# asked first - South Temple's `pray` is the only one in Zork I that does.
+
+actions:
+  # Zork runs its clock three more times inside this one command, and breaks off
+  # early if anything interesting fires. Stage has no trigger that moves the
+  # clock, so this is one turn with Zork's own words on it: the world still does
+  # what a turn passing does, and does it once.
+  - id: wait
+    triggers:
+      - type: response
+        data:
+          text: Time passes...
+
+  - id: pray
+    triggers:
+      - type: response
+        data:
+          text: If you pray enough, your prayers may be answered.
+
+  - id: yell
+    triggers:
+      - type: response
+        data:
+          text: Aaaarrrrgggghhhh!
+
+  - id: zork
+    triggers:
+      - type: response
+        data:
+          text: At your service!
+
+  - id: frobozz
+    triggers:
+      - type: response
+        data:
+          text: The FROBOZZ Corporation created, owns, and operates this dungeon.
+
+  - id: win
+    triggers:
+      - type: response
+        data:
+          text: Naturally!
+
+  - id: mumble
+    triggers:
+      - type: response
+        data:
+          text: You'll have to speak up if you expect me to hear you!
+
+  - id: chomp
+    triggers:
+      - type: response
+        data:
+          text: Preposterous!
+
+  - id: repent
+    triggers:
+      - type: response
+        data:
+          text: It could very well be too late!
+
+  - id: wish
+    triggers:
+      - type: response
+        data:
+          text: With luck, your wish will come true.
