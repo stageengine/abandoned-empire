@@ -10,23 +10,6 @@ actions:
       - type: flag
         data:
           flag: light
-      - type: object-in
-        data:
-          object: engravings
-          location: engravings-cave
-    triggers:
-      - type: response
-        data:
-          text: >-
-            You have entered a low cave with passages leading northwest and east.
-      - type: response
-        data:
-          text: There are old engravings on the walls here.
-  - id: look
-    requires:
-      - type: flag
-        data:
-          flag: light
     triggers:
       - type: response
         data:

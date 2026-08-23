@@ -3,6 +3,7 @@ name: brass bell
 
 synonyms: [bell, small bell, brass bell, hot bell, red hot bell]
 portable: true
+here: There is a brass bell here.
 start: north-temple
 
 # Zork swaps the bell for a second object once it is red hot. The port keeps one

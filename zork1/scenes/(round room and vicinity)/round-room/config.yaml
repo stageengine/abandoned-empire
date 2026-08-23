@@ -10,26 +10,6 @@ actions:
       - type: flag
         data:
           flag: light
-      - type: object-in
-        data:
-          object: thief
-          location: round-room
-    triggers:
-      - type: response
-        data:
-          text: >-
-            This is a circular stone room with passages in all directions. Several of them have
-            unfortunately been blocked by cave-ins.
-      - type: response
-        data:
-          text: >-
-            There is a suspicious-looking individual, holding a large bag, leaning against one
-            wall. He is armed with a deadly stiletto.
-  - id: look
-    requires:
-      - type: flag
-        data:
-          flag: light
     triggers:
       - type: response
         data:

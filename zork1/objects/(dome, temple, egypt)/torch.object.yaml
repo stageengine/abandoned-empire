@@ -10,4 +10,6 @@ synonyms:
   - ivory ivory
   - ivory treasure
 portable: true
+first: Sitting on the pedestal is a flaming torch, made of ivory.
+here: There is a torch here.
 start: in:pedestal

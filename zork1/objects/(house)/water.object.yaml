@@ -3,4 +3,5 @@ name: quantity of water
 
 synonyms: [water, quantity, liquid, h2o]
 portable: true
+here: There is a quantity of water here.
 start: in:bottle

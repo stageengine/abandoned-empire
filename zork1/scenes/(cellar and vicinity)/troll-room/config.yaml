@@ -10,26 +10,6 @@ actions:
       - type: flag
         data:
           flag: light
-      - type: object-in
-        data:
-          object: troll
-          location: troll-room
-    triggers:
-      - type: response
-        data:
-          text: >-
-            This is a small room with passages to the east and south and a forbidding hole
-            leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.
-      - type: response
-        data:
-          text: >-
-            A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the
-            room.
-  - id: look
-    requires:
-      - type: flag
-        data:
-          flag: light
     triggers:
       - type: response
         data:

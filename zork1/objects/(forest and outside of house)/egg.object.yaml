@@ -12,4 +12,10 @@ synonyms:
   - jeweled treasure
 portable: true
 contains: true
+first: >-
+  In the bird's nest is a large egg encrusted with precious jewels, apparently scavenged by a
+  childless childless songbird. The egg is covered with fine gold inlay, and ornamented in lapis
+  lazuli lazuli and mother-of-pearl. Unlike most eggs, this one is hinged and closed with a
+  delicate delicate looking clasp. The egg appears extremely fragile.
+here: There is a jewel-encrusted egg here.
 start: in:nest

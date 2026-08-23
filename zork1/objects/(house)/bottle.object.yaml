@@ -4,4 +4,6 @@ name: glass bottle
 synonyms: [bottle, container, clear bottle, clear container, glass container]
 portable: true
 contains: true
+first: A bottle is sitting on the table.
+here: There is a glass bottle here.
 start: in:kitchen-table

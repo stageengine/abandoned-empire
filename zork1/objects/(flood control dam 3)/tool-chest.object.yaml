@@ -3,6 +3,7 @@ name: group of tool chests
 
 noun: plural
 synonyms: [chest, chests, group, toolchests, tool chest, tool chests]
+here: There is a group of tool chests here.
 start: maintenance-room
 
 actions:

@@ -10,24 +10,6 @@ actions:
       - type: flag
         data:
           flag: light
-      - type: object-in
-        data:
-          object: trident
-          location: atlantis-room
-    triggers:
-      - type: response
-        data:
-          text: >-
-            This is an ancient room, long under water. There is an exit to the south and a
-            staircase leading up.
-      - type: response
-        data:
-          text: On the shore lies Poseidon's own crystal trident.
-  - id: look
-    requires:
-      - type: flag
-        data:
-          flag: light
     triggers:
       - type: response
         data:

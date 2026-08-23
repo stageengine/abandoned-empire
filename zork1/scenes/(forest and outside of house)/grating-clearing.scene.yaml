@@ -5,21 +5,6 @@ meta:
 
 actions:
   - id: look
-    requires:
-      - type: object-in
-        data:
-          object: leaves
-          location: grating-clearing
-    triggers:
-      - type: response
-        data:
-          text: >-
-            You are in a clearing, with a forest surrounding you on all sides. A path leads
-            south.
-      - type: response
-        data:
-          text: On the ground is a pile of leaves.
-  - id: look
     triggers:
       - type: response
         data:

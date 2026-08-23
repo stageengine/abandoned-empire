@@ -144,6 +144,24 @@ const namesFor = (thing: Thing): Array<string> => {
   return [...new Set(all)];
 };
 
+/**
+ * The line ZIL builds for a thing that gives none of its own.
+ *
+ * `"There is a " D .OBJ " here."`, written into the game rather than assembled
+ * as it is read. Stage refuses to assemble one, on the grounds that a room reads
+ * as written or it reads as put together, and one line per thing is what lets a
+ * sack say it smells of hot peppers. Written here, it is a sentence an author can
+ * see and improve, which is the whole difference.
+ *
+ * The article is the one liberty taken. ZIL says "a" whatever follows it.
+ *
+ * @param {String} name What the game calls the thing.
+ *
+ * @returns {String} The sentence.
+ */
+const plainly = (name: string): string =>
+  `There is ${'aeiou'.includes(name[0]?.toLowerCase()) ? 'an' : 'a'} ${name} here.`;
+
 const thingYaml = (thing: Thing): Record<string, Value> => {
   const out: Record<string, Value> = { id: id(thing.id) };
 
@@ -159,6 +177,25 @@ const thingYaml = (thing: Thing): Record<string, Value> => {
 
   if (thing.flags.includes('TAKEBIT')) {
     out.portable = true;
+  }
+
+  // What the room says about it lying there. ZIL decides this in
+  // DESCRIBE-OBJECT: the first line while nobody has touched the thing, the
+  // later line once somebody has, and a plain sentence built from the name
+  // where the object gives neither.
+  //
+  // NDESCBIT is the thing a room never lists, because the room's own prose has
+  // already mentioned it. Taking one clears the bit, though, so a takeable one
+  // still needs the later line and never gets to show a first line at all.
+  const never = thing.flags.includes('NDESCBIT');
+  const listed = !never || thing.flags.includes('TAKEBIT');
+
+  if (listed && !never && thing.first) {
+    out.first = prose(thing.first);
+  }
+
+  if (listed) {
+    out.here = thing.resting ? prose(thing.resting) : plainly(thing.name);
   }
 
   // Where it starts. A thing lying in a room says so; a thing inside another
@@ -223,30 +260,20 @@ const RANKS = [
   { from: 0, rank: 'Beginner' },
 ].reverse();
 
-/** Every subset of the things a room starts with, largest first. */
-const subsets = <T>(items: Array<T>): Array<Array<T>> => {
-  const out: Array<Array<T>> = [[]];
-
-  for (const item of items) {
-    out.push(...out.map((one) => [...one, item]));
-  }
-
-  return out.sort((a, b) => b.length - a.length);
-};
-
 /**
- * A room's descriptions.
+ * A room's description.
  *
- * Stage prints no list of what is lying about, so a thing's own line has to be
- * written into the room that holds it - and taken out again when it is carried
- * off. That is what the subsets are: one description per combination of things
- * still where the game put them, most particular first, so the first that holds
- * is the one the player reads.
+ * One, now. This used to be one description per combination of things still
+ * where the game put them - every subset, most particular first, each gated on
+ * an `object-in` for everything in it - because Stage printed nothing after a
+ * room's own words and a thing's line had to be written into the room that held
+ * it, and taken out again when it was carried off. The living room came to
+ * thirty-two descriptions of itself.
  *
- * It is also the clearest measure of what the missing feature costs. One room
- * with three things on the floor is eight descriptions of the same room.
+ * Stage 0.8.0 gave a thing `here` and `first`, so its line goes on the thing and
+ * moves with it. The room says what it always said and nothing more.
  */
-const describing = (room: Room, standing: Array<Thing>): Array<Value> => {
+const describing = (room: Room): Array<Value> => {
   const written = room.description ?? lookingProse(routines, room.action);
 
   const parts = lookingParts(routines, room.action);
@@ -271,36 +298,15 @@ const describing = (room: Room, standing: Array<Thing>): Array<Value> => {
 
   const base = prose(written ?? `TODO: ${room.name}`);
 
-  const actions = subsets(standing).map((present) => {
-    const requires: Array<Value> = [];
+  const action: Record<string, Value> = { id: 'look' };
 
-    if (!room.lit) {
-      requires.push({ type: 'flag', data: { flag: 'light' } });
-    }
+  if (!room.lit) {
+    action.requires = [{ type: 'flag', data: { flag: 'light' } }];
+  }
 
-    for (const thing of present) {
-      requires.push({ type: 'object-in', data: { object: id(thing.id), location: id(room.id) } });
-    }
+  action.triggers = [{ type: 'response', data: { text: base } }];
 
-    const triggers: Array<Value> = [{ type: 'response', data: { text: base } }];
-
-    for (const thing of present) {
-      triggers.push({
-        type: 'response',
-        data: { text: prose((thing.first ?? thing.resting) as string) },
-      });
-    }
-
-    const action: Record<string, Value> = { id: 'look' };
-
-    if (requires.length) {
-      action.requires = requires;
-    }
-
-    action.triggers = triggers;
-
-    return action as Value;
-  });
+  const actions: Array<Value> = [action as Value];
 
   if (!room.lit) {
     actions.push({ id: 'look', triggers: [{ type: 'response', data: { text: DARK } }] });
@@ -467,10 +473,6 @@ for (const thing of things.filter((one) => BAGS.includes(one.location ?? '') && 
 }
 
 for (const room of rooms) {
-  const standing = filed.filter((thing) =>
-    thing.location === room.id && (thing.first ?? thing.resting) !== null
-  );
-
   // Everything the room is answerable for: what is lying in it, and what is
   // inside something lying in it, which begins offstage but belongs here.
   const here = filed.filter((thing) => homeOf(thing) === room.id).map((thing) => id(thing.id));
@@ -478,7 +480,7 @@ for (const room of rooms) {
   const scene: Record<string, Value> = {
     id: id(room.id),
     meta: { title: room.name },
-    actions: describing(room, standing),
+    actions: describing(room),
   };
 
   const objects = [...here, ...sceneryFor(room)];

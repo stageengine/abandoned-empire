@@ -10,25 +10,6 @@ actions:
       - type: flag
         data:
           flag: light
-      - type: object-in
-        data:
-          object: lowered-basket
-          location: lower-shaft
-    triggers:
-      - type: response
-        data:
-          text: >-
-            This is a small drafty room in which is the bottom of a long shaft. To the south is
-            a passageway and to the east a very narrow passage. In the shaft can be seen a heavy
-            iron chain.
-      - type: response
-        data:
-          text: From the chain is suspended a basket.
-  - id: look
-    requires:
-      - type: flag
-        data:
-          flag: light
     triggers:
       - type: response
         data:

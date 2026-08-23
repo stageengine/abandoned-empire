@@ -10,25 +10,6 @@ actions:
       - type: flag
         data:
           flag: light
-      - type: object-in
-        data:
-          object: buoy
-          location: river-4
-    triggers:
-      - type: response
-        data:
-          text: >-
-            The river is running faster here and the sound ahead appears to be that of rushing
-            water. On the east shore is a sandy beach. A small area of beach can also be seen
-            below the cliffs on the west shore.
-      - type: response
-        data:
-          text: There is a red buoy here (probably a warning).
-  - id: look
-    requires:
-      - type: flag
-        data:
-          flag: light
     triggers:
       - type: response
         data:

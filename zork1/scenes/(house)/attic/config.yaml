@@ -10,22 +10,6 @@ actions:
       - type: flag
         data:
           flag: light
-      - type: object-in
-        data:
-          object: rope
-          location: attic
-    triggers:
-      - type: response
-        data:
-          text: This is the attic. The only exit is a stairway leading down.
-      - type: response
-        data:
-          text: A large coil of rope is lying in the corner.
-  - id: look
-    requires:
-      - type: flag
-        data:
-          flag: light
     triggers:
       - type: response
         data:

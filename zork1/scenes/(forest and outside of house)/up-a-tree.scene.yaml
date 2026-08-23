@@ -5,21 +5,6 @@ meta:
 
 actions:
   - id: look
-    requires:
-      - type: object-in
-        data:
-          object: nest
-          location: up-a-tree
-    triggers:
-      - type: response
-        data:
-          text: >-
-            You are about 10 feet above the ground nestled among some large branches. The
-            nearest branch above you is above your reach.
-      - type: response
-        data:
-          text: Beside you on the branch is a small bird's nest.
-  - id: look
     triggers:
       - type: response
         data:

@@ -2,4 +2,5 @@ id: shovel
 
 synonyms: [tool, tools]
 portable: true
+here: There is a shovel here.
 start: sandy-beach

@@ -5,6 +5,15 @@ Generated from `../source/zork1`: 110 rooms, 101 things,
 
 Everything below is a person's job. Delete a line when it is done.
 
+## Things Stage cannot yet say (1)
+
+- A room says nothing about what is inside a container standing in it, so the
+  kitchen does not mention the brown sack or the bottle on the table, and the
+  altar does not list the black book. Zork recites an open container's contents
+  underneath it, indented. The engine's roadmap calls this *nested description*
+  and defers it; South Temple works around it with an `object-in` on `in:altar`,
+  which is the one room where the sentence was worth writing by hand.
+
 ## Rooms that describe themselves differently as the world changes (10)
 
 - **Aragain Falls** has 3 things it may say, in `FALLS-ROOM`; the seed took the first.
@@ -94,26 +103,6 @@ Everything below is a person's job. Delete a line when it is done.
 - **Clearing**, down, in `GRATING-EXIT`.
 - **Maze**, down, in `MAZE-DIODES`.
 
-## Things inside other things (18)
-
-- `advertisement` starts inside `mailbox`, and waits offstage until there are containers.
-- `axe` starts inside `troll`, and waits offstage until there are containers.
-- `boat-label` starts inside `inflated-boat`, and waits offstage until there are containers.
-- `bottle` starts inside `kitchen-table`, and waits offstage until there are containers.
-- `broken-canary` starts inside `broken-egg`, and waits offstage until there are containers.
-- `canary` starts inside `egg`, and waits offstage until there are containers.
-- `egg` starts inside `nest`, and waits offstage until there are containers.
-- `emerald` starts inside `buoy`, and waits offstage until there are containers.
-- `garlic` starts inside `sandwich-bag`, and waits offstage until there are containers.
-- `knife` starts inside `attic-table`, and waits offstage until there are containers.
-- `large-bag` starts inside `thief`, and waits offstage until there are containers.
-- `lunch` starts inside `sandwich-bag`, and waits offstage until there are containers.
-- `map` starts inside `trophy-case`, and waits offstage until there are containers.
-- `sandwich-bag` starts inside `kitchen-table`, and waits offstage until there are containers.
-- `sceptre` starts inside `coffin`, and waits offstage until there are containers.
-- `stiletto` starts inside `thief`, and waits offstage until there are containers.
-- `torch` starts inside `pedestal`, and waits offstage until there are containers.
-- `water` starts inside `bottle`, and waits offstage until there are containers.
 
 ## Things that are not there until something reveals them (4)
 

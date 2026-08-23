@@ -4,4 +4,6 @@ name: red buoy
 synonyms: [buoy]
 portable: true
 contains: true
+first: There is a red buoy here (probably a warning).
+here: There is a red buoy here.
 start: river-4

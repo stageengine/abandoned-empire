@@ -3,4 +3,5 @@ name: bloody axe
 
 synonyms: [axe, ax, bloody ax]
 portable: true
+here: There is a bloody axe here.
 start: in:troll

@@ -13,4 +13,5 @@ synonyms:
   - pepper lunch
   - pepper dinner
 portable: true
+here: A hot pepper sandwich is here.
 start: in:sandwich-bag

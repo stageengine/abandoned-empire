@@ -3,4 +3,5 @@ name: skeleton key
 
 synonyms: [key]
 portable: true
+here: There is a skeleton key here.
 start: maze-5

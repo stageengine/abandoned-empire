@@ -12,4 +12,5 @@ synonyms:
   - gold treasure
 portable: true
 contains: true
+here: The solid-gold coffin used for the burial of Ramses II is here.
 start: egypt-room

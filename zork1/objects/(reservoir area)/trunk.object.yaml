@@ -3,6 +3,8 @@ name: trunk of jewels
 
 synonyms: [trunk, chest, jewels, treasure, old trunk, old chest, old jewels]
 portable: true
+first: Lying half buried in the mud is an old trunk, bulging with jewels.
+here: There is an old trunk here, bulging with assorted jewels.
 start: reservoir
 
 # Half buried in the mud, and so not there at all until the mud is showing.

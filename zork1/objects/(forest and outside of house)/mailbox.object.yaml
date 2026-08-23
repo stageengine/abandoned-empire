@@ -3,4 +3,5 @@ name: small mailbox
 
 synonyms: [mailbox, box, small box]
 contains: true
+here: There is a small mailbox here.
 start: west-of-house

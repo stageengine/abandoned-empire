@@ -11,4 +11,6 @@ synonyms:
   - smelly sack
 portable: true
 contains: true
+first: On the table is an elongated brown sack, smelling of hot peppers.
+here: There is a brown sack here.
 start: in:kitchen-table

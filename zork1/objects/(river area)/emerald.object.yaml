@@ -3,4 +3,5 @@ name: large emerald
 
 synonyms: [emerald, treasure, large treasure]
 portable: true
+here: There is a large emerald here.
 start: in:buoy

@@ -13,4 +13,11 @@ synonyms:
   - golden canary
   - golden treasure
 portable: true
+first: >-
+  There is a golden clockwork canary nestled in the egg. It seems to have recently had a bad
+  experience. experience. The mountings for its jewel-like eyes are empty, and its silver beak
+  is is crumpled. Through a cracked crystal window below its left wing you can see the remains
+  of of intricate machinery. It is not clear what result winding it would have, as the
+  mainspring mainspring seems sprung.
+here: There is a broken clockwork canary here.
 start: in:broken-egg

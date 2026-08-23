@@ -7,4 +7,5 @@ name: broken lantern
 # reaches whichever of these is actually there.
 synonyms: [lamp, lantern, broken lamp, broken lantern, smashed lamp, smashed lantern]
 portable: true
+here: There is a broken lantern here.
 start: offstage

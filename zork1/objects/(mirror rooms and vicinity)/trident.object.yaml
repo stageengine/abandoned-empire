@@ -14,4 +14,6 @@ synonyms:
   - crystal fork
   - crystal treasure
 portable: true
+first: On the shore lies Poseidon's own crystal trident.
+here: There is a crystal trident here.
 start: atlantis-room

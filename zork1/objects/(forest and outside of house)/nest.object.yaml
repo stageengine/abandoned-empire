@@ -4,4 +4,6 @@ name: bird's nest
 synonyms: [nest, birds nest]
 portable: true
 contains: true
+first: Beside you on the branch is a small bird's nest.
+here: There is a bird's nest here.
 start: up-a-tree

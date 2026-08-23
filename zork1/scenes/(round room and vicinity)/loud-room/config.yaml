@@ -10,24 +10,6 @@ actions:
       - type: flag
         data:
           flag: light
-      - type: object-in
-        data:
-          object: bar
-          location: loud-room
-    triggers:
-      - type: response
-        data:
-          text: >-
-            This is a large room with a ceiling which cannot be detected from the ground. There
-            is a narrow passage from east to west and a stone stairway leading upward.
-      - type: response
-        data:
-          text: On the ground is a large platinum bar.
-  - id: look
-    requires:
-      - type: flag
-        data:
-          flag: light
     triggers:
       - type: response
         data:

@@ -4,6 +4,7 @@ name: matchbook
 noun: as-written
 synonyms: [match, matches, matchbook, book of matches]
 portable: true
+here: There is a matchbook whose cover says "Visit Beautiful FCD#3" here.
 start: dam-lobby
 
 # Six matches, and two turns of burning apiece. `left` is how many are in the

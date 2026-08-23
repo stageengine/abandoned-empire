@@ -10,27 +10,6 @@ actions:
       - type: flag
         data:
           flag: light
-      - type: object-in
-        data:
-          object: owners-manual
-          location: studio
-    triggers:
-      - type: response
-        data:
-          text: >-
-            This appears to have been an artist's studio. The walls and floors are splattered
-            with paints of 69 different colors. Strangely enough, nothing of value is hanging
-            here. At the south end of the room is an open door (also covered with paint). A dark
-            and narrow chimney leads up from a fireplace; although you might be able to get up
-            it, it seems unlikely you could get back down.
-      - type: response
-        data:
-          text: Loosely attached to a wall is a small piece of paper.
-  - id: look
-    requires:
-      - type: flag
-        data:
-          flag: light
     triggers:
       - type: response
         data:

@@ -13,4 +13,5 @@ synonyms:
   - seaworthy raft
 portable: true
 contains: true
+here: There is a magic boat here.
 start: offstage

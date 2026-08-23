@@ -13,4 +13,5 @@ synonyms:
   - engravings silver
   - engravings treasure
 portable: true
+here: There is a silver chalice, intricately engraved, here.
 start: treasure-room

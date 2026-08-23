@@ -10,6 +10,7 @@ synonyms:
   - small booklet
   - small mail
 portable: true
+here: A small leaflet is on the ground.
 start: in:mailbox
 
 actions:

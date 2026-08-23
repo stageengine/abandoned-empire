@@ -11,4 +11,6 @@ synonyms:
   - unrusty knife
   - unrusty blade
 portable: true
+first: On a table is a nasty-looking knife.
+here: There is a nasty knife here.
 start: in:attic-table

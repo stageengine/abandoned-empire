@@ -10,24 +10,6 @@ actions:
       - type: flag
         data:
           flag: light
-      - type: object-in
-        data:
-          object: coffin
-          location: egypt-room
-    triggers:
-      - type: response
-        data:
-          text: >-
-            This is a room which looks like an Egyptian tomb. There is an ascending staircase to
-            the west.
-      - type: response
-        data:
-          text: The solid-gold coffin used for the burial of Ramses II is here.
-  - id: look
-    requires:
-      - type: flag
-        data:
-          flag: light
     triggers:
       - type: response
         data:

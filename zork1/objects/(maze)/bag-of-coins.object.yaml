@@ -12,4 +12,5 @@ synonyms:
   - leather coins
   - leather treasure
 portable: true
+here: An old leather bag, bulging with coins, is here.
 start: maze-5

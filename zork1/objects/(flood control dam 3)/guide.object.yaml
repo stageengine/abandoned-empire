@@ -15,6 +15,8 @@ synonyms:
   - guide books
   - guide guidebooks
 portable: true
+first: Some guidebooks entitled "Flood Control Dam #3" are on the reception desk.
+here: There is a tour guidebook here.
 start: dam-lobby
 
 actions:
