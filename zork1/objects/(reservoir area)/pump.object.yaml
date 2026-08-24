@@ -16,5 +16,9 @@ synonyms:
   - hand-held tools
 portable: true
 size: 5
-here: There is a hand-held air pump here.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: There is a hand-held air pump here.
 start: reservoir-north

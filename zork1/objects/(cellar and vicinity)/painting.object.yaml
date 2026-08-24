@@ -3,10 +3,21 @@ id: painting
 synonyms: [painting, art, canvas, treasure, beauti painting, beauti art, beauti canvas]
 portable: true
 size: 15
-first: >-
-  Fortunately, there is still one chance for you to be a vandal, for on the far wall is a painting
-  of unparalleled beauty.
-here: A painting by a neglected genius is here.
+presence:
+  - requires:
+      - type: handled
+        negate: true
+        data: { object: painting }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Fortunately, there is still one chance for you to be a vandal, for on the far wall is a painting
+            of unparalleled beauty.
+  - triggers:
+      - type: response
+        data:
+          text: A painting by a neglected genius is here.
 start: gallery
 
 actions:

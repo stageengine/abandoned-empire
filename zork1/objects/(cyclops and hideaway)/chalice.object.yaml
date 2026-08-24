@@ -14,5 +14,9 @@ synonyms:
   - engravings treasure
 portable: true
 size: 10
-here: There is a silver chalice, intricately engraved, here.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: There is a silver chalice, intricately engraved, here.
 start: treasure-room

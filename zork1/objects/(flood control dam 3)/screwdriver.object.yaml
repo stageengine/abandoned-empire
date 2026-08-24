@@ -10,5 +10,9 @@ synonyms:
   - screw driver
 portable: true
 size: 5
-here: There is a screwdriver here.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: There is a screwdriver here.
 start: maintenance-room

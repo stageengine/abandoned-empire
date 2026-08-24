@@ -14,6 +14,17 @@ synonyms:
   - useless lamp
 portable: true
 size: 20
-first: The deceased adventurer's useless lantern is here.
-here: There is a burned-out lantern here.
+presence:
+  - requires:
+      - type: handled
+        negate: true
+        data: { object: burned-out-lantern }
+    triggers:
+      - type: response
+        data:
+          text: The deceased adventurer's useless lantern is here.
+  - triggers:
+      - type: response
+        data:
+          text: There is a burned-out lantern here.
 start: maze-5

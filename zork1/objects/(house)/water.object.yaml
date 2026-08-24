@@ -4,5 +4,9 @@ name: quantity of water
 synonyms: [water, quantity, liquid, h2o]
 portable: true
 size: 4
-here: There is a quantity of water here.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: There is a quantity of water here.
 start: in:bottle

@@ -3,5 +3,9 @@ id: shovel
 synonyms: [tool, tools]
 portable: true
 size: 15
-here: There is a shovel here.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: There is a shovel here.
 start: sandy-beach

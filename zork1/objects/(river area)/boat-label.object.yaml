@@ -12,7 +12,11 @@ synonyms:
   - fine print
 portable: true
 size: 2
-here: There is a tan label here.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: There is a tan label here.
 start: in:inflated-boat
 
 actions:

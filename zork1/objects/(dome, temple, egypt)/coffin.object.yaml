@@ -13,5 +13,9 @@ synonyms:
 portable: true
 size: 55
 contains: true
-here: The solid-gold coffin used for the burial of Ramses II is here.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: The solid-gold coffin used for the burial of Ramses II is here.
 start: egypt-room

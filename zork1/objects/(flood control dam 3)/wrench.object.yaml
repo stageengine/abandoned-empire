@@ -3,5 +3,9 @@ id: wrench
 synonyms: [tool, tools]
 portable: true
 size: 10
-here: There is a wrench here.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: There is a wrench here.
 start: maintenance-room

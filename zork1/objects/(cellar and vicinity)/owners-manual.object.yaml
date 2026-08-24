@@ -16,8 +16,19 @@ synonyms:
   - small paper
 portable: true
 size: 5
-first: Loosely attached to a wall is a small piece of paper.
-here: There is a ZORK owner's manual here.
+presence:
+  - requires:
+      - type: handled
+        negate: true
+        data: { object: owners-manual }
+    triggers:
+      - type: response
+        data:
+          text: Loosely attached to a wall is a small piece of paper.
+  - triggers:
+      - type: response
+        data:
+          text: There is a ZORK owner's manual here.
 start: studio
 
 actions:

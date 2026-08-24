@@ -15,5 +15,9 @@ synonyms:
 portable: true
 size: 5
 contains: true
-here: There is a somewhat ruined egg here.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: There is a somewhat ruined egg here.
 start: offstage

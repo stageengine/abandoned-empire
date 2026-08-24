@@ -15,8 +15,19 @@ synonyms:
   - black books
 portable: true
 size: 10
-first: On the altar is a large black book, open to page 569.
-here: There is a black book here.
+presence:
+  - requires:
+      - type: handled
+        negate: true
+        data: { object: book }
+    triggers:
+      - type: response
+        data:
+          text: On the altar is a large black book, open to page 569.
+  - triggers:
+      - type: response
+        data:
+          text: There is a black book here.
 start: in:altar
 
 actions:

@@ -4,7 +4,11 @@ name: viscous material
 synonyms: [material, gunk, viscous gunk, all-purpose gunk]
 portable: true
 size: 6
-here: There is a viscous material here.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: There is a viscous material here.
 start: in:tube
 
 actions:

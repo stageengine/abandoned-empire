@@ -13,5 +13,9 @@ synonyms:
   - vitreous slag
 portable: true
 size: 10
-here: There is a small piece of vitreous slag here.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: There is a small piece of vitreous slag here.
 start: offstage

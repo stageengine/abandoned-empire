@@ -10,5 +10,9 @@ synonyms:
   - broken pile
 portable: true
 size: 50
-here: There is a broken timber here.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: There is a broken timber here.
 start: timber-room

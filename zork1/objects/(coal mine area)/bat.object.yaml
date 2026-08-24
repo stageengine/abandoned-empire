@@ -1,5 +1,9 @@
 id: bat
 
 synonyms: [vampire, vampire bat, vampire vampire, deranged bat, deranged vampire]
-here: There is a bat here.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: There is a bat here.
 start: bat-room

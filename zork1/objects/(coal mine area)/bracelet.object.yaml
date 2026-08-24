@@ -12,5 +12,9 @@ synonyms:
   - sapphire treasure
 portable: true
 size: 10
-here: There is a sapphire-encrusted bracelet here.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: There is a sapphire-encrusted bracelet here.
 start: gas-room

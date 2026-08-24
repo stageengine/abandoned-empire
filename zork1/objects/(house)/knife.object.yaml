@@ -12,6 +12,17 @@ synonyms:
   - unrusty blade
 portable: true
 size: 5
-first: On a table is a nasty-looking knife.
-here: There is a nasty knife here.
+presence:
+  - requires:
+      - type: handled
+        negate: true
+        data: { object: knife }
+    triggers:
+      - type: response
+        data:
+          text: On a table is a nasty-looking knife.
+  - triggers:
+      - type: response
+        data:
+          text: There is a nasty knife here.
 start: in:attic-table

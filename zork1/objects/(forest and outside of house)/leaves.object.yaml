@@ -4,7 +4,11 @@ name: pile of leaves
 synonyms: [leaves, leaf, pile]
 portable: true
 size: 25
-here: On the ground is a pile of leaves.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: On the ground is a pile of leaves.
 start: grating-clearing
 
 # Everything that disturbs the leaves reveals the grating, which is `grate-revealed`

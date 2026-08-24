@@ -4,5 +4,9 @@ name: clove of garlic
 synonyms: [garlic, clove]
 portable: true
 size: 4
-here: There is a clove of garlic here.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: There is a clove of garlic here.
 start: in:sandwich-bag

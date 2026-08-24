@@ -4,8 +4,19 @@ name: trunk of jewels
 synonyms: [trunk, chest, jewels, treasure, old trunk, old chest, old jewels]
 portable: true
 size: 35
-first: Lying half buried in the mud is an old trunk, bulging with jewels.
-here: There is an old trunk here, bulging with assorted jewels.
+presence:
+  - requires:
+      - type: handled
+        negate: true
+        data: { object: trunk }
+    triggers:
+      - type: response
+        data:
+          text: Lying half buried in the mud is an old trunk, bulging with jewels.
+  - triggers:
+      - type: response
+        data:
+          text: There is an old trunk here, bulging with assorted jewels.
 start: reservoir
 
 # Half buried in the mud, and so not there at all until the mud is showing.

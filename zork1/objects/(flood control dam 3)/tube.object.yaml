@@ -4,7 +4,11 @@ synonyms: [tooth, paste, tube of toothpaste]
 portable: true
 size: 5
 contains: true
-here: There is an object which looks like a tube of toothpaste here.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: There is an object which looks like a tube of toothpaste here.
 start: maintenance-room
 
 actions:

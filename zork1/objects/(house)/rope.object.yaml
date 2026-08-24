@@ -3,8 +3,19 @@ id: rope
 synonyms: [hemp, coil, large rope, large hemp, large coil]
 portable: true
 size: 10
-first: A large coil of rope is lying in the corner.
-here: There is a rope here.
+presence:
+  - requires:
+      - type: handled
+        negate: true
+        data: { object: rope }
+    triggers:
+      - type: response
+        data:
+          text: A large coil of rope is lying in the corner.
+  - triggers:
+      - type: response
+        data:
+          text: There is a rope here.
 start: attic
 
 actions:

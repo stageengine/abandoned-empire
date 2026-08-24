@@ -16,5 +16,9 @@ synonyms:
   - large plastic
 portable: true
 size: 20
-here: There is a punctured boat here.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: There is a punctured boat here.
 start: offstage

@@ -17,8 +17,19 @@ synonyms:
   - enameled treasure
 portable: true
 size: 3
-first: >-
-  A sceptre, possibly that of ancient Egypt itself, is in the coffin. The sceptre is ornamented with
-  colored enamel, and tapers to a sharp point.
-here: An ornamented sceptre, tapering to a sharp point, is here.
+presence:
+  - requires:
+      - type: handled
+        negate: true
+        data: { object: sceptre }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            A sceptre, possibly that of ancient Egypt itself, is in the coffin. The sceptre is ornamented with
+            colored enamel, and tapers to a sharp point.
+  - triggers:
+      - type: response
+        data:
+          text: An ornamented sceptre, tapering to a sharp point, is here.
 start: in:coffin

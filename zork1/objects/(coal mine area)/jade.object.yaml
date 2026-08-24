@@ -9,5 +9,9 @@ synonyms:
   - jade treasure
 portable: true
 size: 10
-here: There is an exquisite jade figurine here.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: There is an exquisite jade figurine here.
 start: bat-room

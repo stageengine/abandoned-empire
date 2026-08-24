@@ -17,7 +17,11 @@ synonyms:
   - seedy man
   - seedy person
 contains: true
-here: >-
-  There is a suspicious-looking individual, holding a large bag, leaning against one wall. He is
-  armed with a deadly stiletto.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: >-
+            There is a suspicious-looking individual, holding a large bag, leaning against one wall. He is
+            armed with a deadly stiletto.
 start: round-room

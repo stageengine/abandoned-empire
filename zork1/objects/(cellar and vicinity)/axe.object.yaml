@@ -4,5 +4,9 @@ name: bloody axe
 synonyms: [axe, ax, bloody ax]
 portable: true
 size: 25
-here: There is a bloody axe here.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: There is a bloody axe here.
 start: in:troll

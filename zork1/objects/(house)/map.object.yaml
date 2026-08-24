@@ -11,8 +11,19 @@ synonyms:
   - ancient parchment
 portable: true
 size: 2
-first: In the trophy case is an ancient parchment which appears to be a map.
-here: There is an ancient map here.
+presence:
+  - requires:
+      - type: handled
+        negate: true
+        data: { object: map }
+    triggers:
+      - type: response
+        data:
+          text: In the trophy case is an ancient parchment which appears to be a map.
+  - triggers:
+      - type: response
+        data:
+          text: There is an ancient map here.
 start: in:trophy-case
 
 actions:

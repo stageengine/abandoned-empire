@@ -11,7 +11,11 @@ synonyms:
   - small mail
 portable: true
 size: 2
-here: A small leaflet is on the ground.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: A small leaflet is on the ground.
 start: in:mailbox
 
 actions:

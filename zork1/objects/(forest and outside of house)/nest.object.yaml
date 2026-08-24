@@ -5,8 +5,19 @@ synonyms: [nest, birds nest]
 portable: true
 size: 5
 contains: true
-first: Beside you on the branch is a small bird's nest.
-here: There is a bird's nest here.
+presence:
+  - requires:
+      - type: handled
+        negate: true
+        data: { object: nest }
+    triggers:
+      - type: response
+        data:
+          text: Beside you on the branch is a small bird's nest.
+  - triggers:
+      - type: response
+        data:
+          text: There is a bird's nest here.
 start: up-a-tree
 
 actions:

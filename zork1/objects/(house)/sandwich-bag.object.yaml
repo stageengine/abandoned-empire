@@ -12,6 +12,17 @@ synonyms:
 portable: true
 size: 9
 contains: true
-first: On the table is an elongated brown sack, smelling of hot peppers.
-here: There is a brown sack here.
+presence:
+  - requires:
+      - type: handled
+        negate: true
+        data: { object: sandwich-bag }
+    triggers:
+      - type: response
+        data:
+          text: On the table is an elongated brown sack, smelling of hot peppers.
+  - triggers:
+      - type: response
+        data:
+          text: There is a brown sack here.
 start: in:kitchen-table

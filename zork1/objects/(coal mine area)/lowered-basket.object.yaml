@@ -2,5 +2,9 @@ id: lowered-basket
 name: basket
 
 synonyms: [cage, dumbwaiter, lowered cage, lowered dumbwaiter, lowered basket]
-here: From the chain is suspended a basket.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: From the chain is suspended a basket.
 start: lower-shaft

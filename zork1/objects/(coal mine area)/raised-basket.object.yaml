@@ -2,5 +2,9 @@ id: raised-basket
 name: basket
 
 synonyms: [cage, dumbwaiter]
-here: At the end of the chain is a basket.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: At the end of the chain is a basket.
 start: shaft-room

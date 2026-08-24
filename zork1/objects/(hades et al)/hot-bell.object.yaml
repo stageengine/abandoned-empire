@@ -6,5 +6,9 @@ name: red hot brass bell
 # answering to "bell" is two things the parser cannot choose between. It is left
 # here so that the map of what ZIL had is complete, with no words of its own.
 synonyms: [red hot brass bell]
-here: On the ground is a red hot bell.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: On the ground is a red hot bell.
 start: offstage

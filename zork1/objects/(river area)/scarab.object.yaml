@@ -20,5 +20,9 @@ synonyms:
   - jeweled treasure
 portable: true
 size: 8
-here: There is a beautiful jeweled scarab here.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: There is a beautiful jeweled scarab here.
 start: sandy-cave

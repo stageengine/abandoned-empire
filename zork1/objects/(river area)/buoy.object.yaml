@@ -5,6 +5,17 @@ synonyms: [buoy]
 portable: true
 size: 10
 contains: true
-first: There is a red buoy here (probably a warning).
-here: There is a red buoy here.
+presence:
+  - requires:
+      - type: handled
+        negate: true
+        data: { object: buoy }
+    triggers:
+      - type: response
+        data:
+          text: There is a red buoy here (probably a warning).
+  - triggers:
+      - type: response
+        data:
+          text: There is a red buoy here.
 start: river-4

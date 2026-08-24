@@ -11,6 +11,17 @@ synonyms:
   - ivory treasure
 portable: true
 size: 20
-first: Sitting on the pedestal is a flaming torch, made of ivory.
-here: There is a torch here.
+presence:
+  - requires:
+      - type: handled
+        negate: true
+        data: { object: torch }
+    triggers:
+      - type: response
+        data:
+          text: Sitting on the pedestal is a flaming torch, made of ivory.
+  - triggers:
+      - type: response
+        data:
+          text: There is a torch here.
 start: in:pedestal

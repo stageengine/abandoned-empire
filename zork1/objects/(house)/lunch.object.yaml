@@ -14,5 +14,9 @@ synonyms:
   - pepper dinner
 portable: true
 size: 5
-here: A hot pepper sandwich is here.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: A hot pepper sandwich is here.
 start: in:sandwich-bag

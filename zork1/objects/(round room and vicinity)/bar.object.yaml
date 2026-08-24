@@ -12,5 +12,9 @@ synonyms:
   - large treasure
 portable: true
 size: 20
-here: On the ground is a large platinum bar.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: On the ground is a large platinum bar.
 start: loud-room

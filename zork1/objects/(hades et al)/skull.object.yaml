@@ -4,10 +4,21 @@ name: crystal skull
 synonyms: [skull, head, treasure, crystal head, crystal treasure]
 portable: true
 size: 5
-first: >-
-  Lying in one corner of the room is a beautifully carved crystal skull. It appears to be grinning
-  at you rather nastily.
-here: There is a crystal skull here.
+presence:
+  - requires:
+      - type: handled
+        negate: true
+        data: { object: skull }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Lying in one corner of the room is a beautifully carved crystal skull. It appears to be grinning
+            at you rather nastily.
+  - triggers:
+      - type: response
+        data:
+          text: There is a crystal skull here.
 start: land-of-living-dead
 
 actions:

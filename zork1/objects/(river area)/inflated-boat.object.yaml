@@ -14,5 +14,9 @@ synonyms:
 portable: true
 size: 20
 contains: true
-here: There is a magic boat here.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: There is a magic boat here.
 start: offstage

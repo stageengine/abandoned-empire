@@ -18,6 +18,17 @@ synonyms:
   - antique blade
 portable: true
 size: 30
-first: Above the trophy case hangs an elvish sword of great antiquity.
-here: There is a sword here.
+presence:
+  - requires:
+      - type: handled
+        negate: true
+        data: { object: sword }
+    triggers:
+      - type: response
+        data:
+          text: Above the trophy case hangs an elvish sword of great antiquity.
+  - triggers:
+      - type: response
+        data:
+          text: There is a sword here.
 start: living-room

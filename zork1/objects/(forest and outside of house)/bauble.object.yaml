@@ -10,5 +10,9 @@ synonyms:
   - beauti treasure
 portable: true
 size: 5
-here: There is a beautiful brass bauble here.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: There is a beautiful brass bauble here.
 start: offstage

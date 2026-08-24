@@ -8,5 +8,9 @@ name: broken lantern
 synonyms: [lamp, lantern, broken lamp, broken lantern, smashed lamp, smashed lantern]
 portable: true
 size: 5
-here: There is a broken lantern here.
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: There is a broken lantern here.
 start: offstage

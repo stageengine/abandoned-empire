@@ -15,6 +15,17 @@ synonyms:
   - crystal treasure
 portable: true
 size: 20
-first: On the shore lies Poseidon's own crystal trident.
-here: There is a crystal trident here.
+presence:
+  - requires:
+      - type: handled
+        negate: true
+        data: { object: trident }
+    triggers:
+      - type: response
+        data:
+          text: On the shore lies Poseidon's own crystal trident.
+  - triggers:
+      - type: response
+        data:
+          text: There is a crystal trident here.
 start: atlantis-room
