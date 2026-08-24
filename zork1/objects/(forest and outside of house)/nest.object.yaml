@@ -8,3 +8,32 @@ contains: true
 first: Beside you on the branch is a small bird's nest.
 here: There is a bird's nest here.
 start: up-a-tree
+
+actions:
+  - id: drop
+    requires:
+      - type: scene
+        data:
+          id: up-a-tree
+      - type: object-in
+        data:
+          object: egg
+          location: in:nest
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The nest falls to the ground, and the egg spills out of it, seriously damaged.
+      # The action stands in for the drop, so it has to do the dropping. Zork
+      # leaves the nest up here even though it says otherwise.
+      - type: move-object
+        data:
+          object: nest
+          to: here
+      - type: remove-object
+        data:
+          object: egg
+      - type: move-object
+        data:
+          object: broken-egg
+          to: path

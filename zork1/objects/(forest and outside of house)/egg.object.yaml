@@ -15,8 +15,133 @@ size: 5
 contains: true
 first: >-
   In the bird's nest is a large egg encrusted with precious jewels, apparently scavenged by a
-  childless childless songbird. The egg is covered with fine gold inlay, and ornamented in lapis
-  lazuli lazuli and mother-of-pearl. Unlike most eggs, this one is hinged and closed with a
-  delicate delicate looking clasp. The egg appears extremely fragile.
+  childless songbird. The egg is covered with fine gold inlay, and ornamented in lapis lazuli and
+  mother-of-pearl. Unlike most eggs, this one is hinged and closed with a delicate looking clasp.
+  The egg appears extremely fragile.
 here: There is a jewel-encrusted egg here.
 start: in:nest
+
+actions:
+  - id: open
+    triggers:
+      - type: response
+        data:
+          text: You have neither the tools nor the expertise.
+
+  # Held, so what is left of it stays in your hands.
+  - id: break
+    requires:
+      - type: has-item
+        data:
+          object: egg
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Your rather indelicate handling of the egg has caused it some damage, although you
+            have succeeded in opening it.
+      - type: response
+        data:
+          text: >-
+            There is a golden clockwork canary nestled in the egg. It seems to have recently had
+            a bad experience. The mountings for its jewel-like eyes are empty, and its silver
+            beak is crumpled. Through a cracked crystal window below its left wing you can see
+            the remains of intricate machinery. It is not clear what result winding it would
+            have, as the mainspring seems sprung.
+      - type: set-flag
+        data:
+          flag: egg-open
+          value: true
+      - type: remove-object
+        data:
+          object: egg
+      - type: move-object
+        data:
+          object: broken-egg
+          to: inventory
+
+  - id: break
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Your rather indelicate handling of the egg has caused it some damage, although you
+            have succeeded in opening it.
+      - type: response
+        data:
+          text: >-
+            There is a golden clockwork canary nestled in the egg. It seems to have recently had
+            a bad experience. The mountings for its jewel-like eyes are empty, and its silver
+            beak is crumpled. Through a cracked crystal window below its left wing you can see
+            the remains of intricate machinery. It is not clear what result winding it would
+            have, as the mainspring seems sprung.
+      - type: set-flag
+        data:
+          flag: egg-open
+          value: true
+      - type: remove-object
+        data:
+          object: egg
+      - type: move-object
+        data:
+          object: broken-egg
+          to: here
+
+  # Throwing it is the same ruin by a different route, and it lands where you are.
+  - id: throw
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Your rather indelicate handling of the egg has caused it some damage, although you
+            have succeeded in opening it.
+      - type: response
+        data:
+          text: >-
+            There is a golden clockwork canary nestled in the egg. It seems to have recently had
+            a bad experience. The mountings for its jewel-like eyes are empty, and its silver
+            beak is crumpled. Through a cracked crystal window below its left wing you can see
+            the remains of intricate machinery. It is not clear what result winding it would
+            have, as the mainspring seems sprung.
+      - type: set-flag
+        data:
+          flag: egg-open
+          value: true
+      - type: remove-object
+        data:
+          object: egg
+      - type: move-object
+        data:
+          object: broken-egg
+          to: here
+
+  # Ten feet is enough. It opens on the path below, and what is inside does not
+  # survive the landing either.
+  - id: drop
+    requires:
+      - type: scene
+        data:
+          id: up-a-tree
+    triggers:
+      - type: response
+        data:
+          text: The egg falls to the ground and springs open, seriously damaged.
+      - type: response
+        data:
+          text: >-
+            There is a golden clockwork canary nestled in the egg. It seems to have recently had
+            a bad experience. The mountings for its jewel-like eyes are empty, and its silver
+            beak is crumpled. Through a cracked crystal window below its left wing you can see
+            the remains of intricate machinery. It is not clear what result winding it would
+            have, as the mainspring seems sprung.
+      - type: set-flag
+        data:
+          flag: egg-open
+          value: true
+      - type: remove-object
+        data:
+          object: egg
+      - type: move-object
+        data:
+          object: broken-egg
+          to: path

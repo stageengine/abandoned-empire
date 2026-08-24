@@ -1,5 +1,7 @@
 id: forest-3
 
+tags: [forest]
+
 meta:
   title: Forest
 
@@ -51,6 +53,7 @@ navigation:
         data:
           scene: south-of-house
   - id: up
+    synonyms: [tree]
     triggers:
       - type: response
         data:

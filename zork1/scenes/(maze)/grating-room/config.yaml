@@ -4,7 +4,43 @@ tags: [dark]
 meta:
   title: Grating Room
 
+# Four descriptions, most particular first. The open grating is the only one that
+# does not ask for a light, because an open grating is where the light is coming
+# from - see the daylight rule in `every-turn.yaml`.
 actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: grate-open
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in a small room near the maze. There are twisty passages in the immediate
+            vicinity.
+      - type: response
+        data:
+          text: Above you is an open grating with sunlight pouring in.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: light
+      - type: flag
+        data:
+          flag: grate-unlocked
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in a small room near the maze. There are twisty passages in the immediate
+            vicinity.
+      - type: response
+        data:
+          text: Above you is a grating.
+
   - id: look
     requires:
       - type: flag
@@ -16,6 +52,10 @@ actions:
           text: >-
             You are in a small room near the maze. There are twisty passages in the immediate
             vicinity.
+      - type: response
+        data:
+          text: Above you is a grating locked with a skull-and-crossbones lock.
+
   - id: look
     triggers:
       - type: response
@@ -26,6 +66,129 @@ objects:
   - id: grating-room.grate
     name: grating
     synonyms: [grate]
+    # This side is the working side. The lock only answers to the keys and only
+    # from down here, and the grating only opens once it has.
+    actions:
+      - id: unlock
+        requires:
+          - type: has-item
+            data:
+              object: keys
+            failure:
+              triggers:
+                - type: response
+                  data:
+                    text: You have nothing to unlock it with.
+        triggers:
+          - type: set-flag
+            data:
+              flag: grate-unlocked
+              value: true
+          - type: response
+            data:
+              text: The grate is unlocked.
+
+      - id: lock
+        triggers:
+          - type: set-flag
+            data:
+              flag: grate-unlocked
+              value: false
+          - type: response
+            data:
+              text: The grate is locked.
+
+      # Opening it the first time brings the pile of leaves down with it, which
+      # is the game telling you where you have come out before you have looked.
+      - id: open
+        requires:
+          - type: flag
+            data:
+              flag: grate-unlocked
+            failure:
+              triggers:
+                - type: response
+                  data:
+                    text: The grating is locked.
+          - type: flag
+            negate: true
+            data:
+              flag: grate-open
+            failure:
+              triggers:
+                - type: response
+                  data:
+                    text: It is already open.
+          - type: flag
+            negate: true
+            data:
+              flag: grate-revealed
+        triggers:
+          - type: response
+            data:
+              text: The grating opens to reveal trees above you.
+          - type: response
+            data:
+              text: A pile of leaves falls onto your head and to the ground.
+          - type: move-object
+            data:
+              object: leaves
+              to: here
+          - type: set-flag
+            data:
+              flag: grate-revealed
+              value: true
+          - type: set-flag
+            data:
+              flag: grate-open
+              value: true
+
+      - id: open
+        requires:
+          - type: flag
+            data:
+              flag: grate-unlocked
+            failure:
+              triggers:
+                - type: response
+                  data:
+                    text: The grating is locked.
+          - type: flag
+            negate: true
+            data:
+              flag: grate-open
+            failure:
+              triggers:
+                - type: response
+                  data:
+                    text: It is already open.
+        triggers:
+          - type: response
+            data:
+              text: The grating opens to reveal trees above you.
+          - type: set-flag
+            data:
+              flag: grate-open
+              value: true
+
+      - id: close
+        requires:
+          - type: flag
+            data:
+              flag: grate-open
+            failure:
+              triggers:
+                - type: response
+                  data:
+                    text: It is already closed.
+        triggers:
+          - type: response
+            data:
+              text: The grating is closed.
+          - type: set-flag
+            data:
+              flag: grate-open
+              value: false
 
 navigation:
   - id: southwest

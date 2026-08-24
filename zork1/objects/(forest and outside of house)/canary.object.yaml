@@ -13,8 +13,84 @@ synonyms:
 portable: true
 size: 5
 first: >-
-  There is a golden clockwork canary nestled in the egg. It has ruby eyes and a silver beak.
-  Through Through a crystal window below its left wing you can see intricate machinery inside.
-  It It appears to have wound down.
+  There is a golden clockwork canary nestled in the egg. It has ruby eyes and a silver beak. Through
+  a crystal window below its left wing you can see intricate machinery inside. It appears to have
+  wound down.
 here: There is a golden clockwork canary here.
 start: in:egg
+
+requires:
+  - type: flag
+    data:
+      flag: egg-open
+
+actions:
+  - id: turn
+    requires:
+      - type: flag
+        data:
+          flag: egg-open
+      - type: scene
+        data:
+          id: up-a-tree
+      - type: flag
+        negate: true
+        data:
+          flag: sing-song
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The canary chirps, slightly off-key, an aria from a forgotten opera. From out of the
+            greenery flies a lovely songbird. It perches on a limb just over your head and opens
+            its beak to sing. As it does so a beautiful brass bauble drops from its mouth,
+            bounces off the top of your head, and lands glimmering in the grass. As the canary
+            winds down, the songbird flies away.
+      - type: set-flag
+        data:
+          flag: sing-song
+          value: true
+      - type: move-object
+        data:
+          object: bauble
+          to: path
+
+  - id: turn
+    requires:
+      - type: flag
+        data:
+          flag: egg-open
+      - type: scene
+        data:
+          tag: forest
+      - type: flag
+        negate: true
+        data:
+          flag: sing-song
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The canary chirps, slightly off-key, an aria from a forgotten opera. From out of the
+            greenery flies a lovely songbird. It perches on a limb just over your head and opens
+            its beak to sing. As it does so a beautiful brass bauble drops from its mouth,
+            bounces off the top of your head, and lands glimmering in the grass. As the canary
+            winds down, the songbird flies away.
+      - type: set-flag
+        data:
+          flag: sing-song
+          value: true
+      - type: move-object
+        data:
+          object: bauble
+          to: here
+
+  - id: turn
+    requires:
+      - type: flag
+        data:
+          flag: egg-open
+    triggers:
+      - type: response
+        data:
+          text: The canary chirps blithely, if somewhat tinnily, for a short time.

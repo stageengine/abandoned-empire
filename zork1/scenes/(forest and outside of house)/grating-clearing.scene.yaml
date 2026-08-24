@@ -3,7 +3,39 @@ id: grating-clearing
 meta:
   title: Clearing
 
+# Three descriptions, and the most particular goes first: the grating open, the
+# grating merely found, and the clearing before anybody has disturbed the leaves.
 actions:
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: grate-open
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in a clearing, with a forest surrounding you on all sides. A path leads
+            south.
+      - type: response
+        data:
+          text: There is an open grating, descending into darkness.
+
+  - id: look
+    requires:
+      - type: flag
+        data:
+          flag: grate-revealed
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are in a clearing, with a forest surrounding you on all sides. A path leads
+            south.
+      - type: response
+        data:
+          text: There is a grating securely fastened into the ground.
+
   - id: look
     triggers:
       - type: response
@@ -20,6 +52,72 @@ objects:
   - id: grating-clearing.grate
     name: grating
     synonyms: [grate]
+    requires:
+      - type: flag
+        data:
+          flag: grate-revealed
+    # The wrong side of the lock. It opens up here once somebody has unlocked it
+    # from below, and never before - which is the whole reason the maze is on the
+    # way to the clearing rather than the other way round.
+    actions:
+      - id: open
+        requires:
+          - type: flag
+            data:
+              flag: grate-unlocked
+            failure:
+              triggers:
+                - type: response
+                  data:
+                    text: The grating is locked.
+          - type: flag
+            negate: true
+            data:
+              flag: grate-open
+            failure:
+              triggers:
+                - type: response
+                  data:
+                    text: It is already open.
+        triggers:
+          - type: response
+            data:
+              text: The grating opens.
+          - type: set-flag
+            data:
+              flag: grate-open
+              value: true
+
+      - id: close
+        requires:
+          - type: flag
+            data:
+              flag: grate-open
+            failure:
+              triggers:
+                - type: response
+                  data:
+                    text: It is already closed.
+        triggers:
+          - type: response
+            data:
+              text: The grating is closed.
+          - type: set-flag
+            data:
+              flag: grate-open
+              value: false
+
+      - id: unlock
+        triggers:
+          - type: response
+            data:
+              text: You can't reach the lock from here.
+
+      - id: lock
+        triggers:
+          - type: response
+            data:
+              text: You can't lock it from this side.
 
 navigation:
   - id: north
@@ -42,8 +140,27 @@ navigation:
       - type: change-scene
         data:
           scene: forest-1
+  # Three answers, and the middle one is the point of the puzzle: knowing the
+  # grating is there and not being able to open it from this side.
   - id: down
-    triggers:
-      - type: response
+    requires:
+      - type: flag
         data:
-          text: 'TODO: GRATING-EXIT'
+          flag: grate-open
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: The grating is closed!
+      - type: flag
+        data:
+          flag: grate-revealed
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You can't go that way.
+    triggers:
+      - type: change-scene
+        data:
+          scene: grating-room

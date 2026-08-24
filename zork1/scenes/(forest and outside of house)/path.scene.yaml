@@ -1,5 +1,7 @@
 id: path
 
+tags: [forest]
+
 meta:
   title: Forest Path
 
@@ -48,6 +50,7 @@ navigation:
         data:
           scene: forest-1
   - id: up
+    synonyms: [tree]
     triggers:
       - type: change-scene
         data:

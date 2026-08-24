@@ -59,6 +59,18 @@ every-turn:
             - type: has-item
               data:
                 object: torch
+
+            # Not carried, and the only one that is not: sunlight through the
+            # open grating, which is what lit the Grating Room in Zork too.
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data:
+                      id: grating-room
+                  - type: flag
+                    data:
+                      flag: grate-open
     triggers:
       - type: set-flag
         data:
@@ -216,3 +228,17 @@ every-turn:
           subject: bell
           measure: heat
           by: -1
+
+  # Somewhere out in the trees. Zork queues this the moment you first set foot in
+  # a forest room and turns it off again the moment you leave; a tag asked once a
+  # turn comes to the same thing and needs no queue.
+  - requires:
+      - type: scene
+        data:
+          tag: forest
+    chance:
+      percent: 15
+    triggers:
+      - type: response
+        data:
+          text: You hear in the distance the chirping of a song bird.

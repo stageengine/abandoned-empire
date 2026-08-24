@@ -1,5 +1,7 @@
 id: forest-2
 
+tags: [forest]
+
 meta:
   title: Forest
 
@@ -47,6 +49,7 @@ navigation:
         data:
           scene: path
   - id: up
+    synonyms: [tree]
     triggers:
       - type: response
         data:

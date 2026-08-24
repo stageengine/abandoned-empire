@@ -4,8 +4,8 @@ synonyms: [painting, art, canvas, treasure, beauti painting, beauti art, beauti 
 portable: true
 size: 15
 first: >-
-  Fortunately, there is still one chance for you to be a vandal, for on the far wall is a
-  painting painting of unparalleled beauty.
+  Fortunately, there is still one chance for you to be a vandal, for on the far wall is a painting
+  of unparalleled beauty.
 here: A painting by a neglected genius is here.
 start: gallery
 
@@ -48,8 +48,8 @@ actions:
       - type: response
         data:
           text: >-
-            Congratulations! Unlike the other vandals, who merely stole the artist's
-            masterpieces, you have destroyed one.
+            Congratulations! Unlike the other vandals, who merely stole the artist's masterpieces,
+            you have destroyed one.
       - type: set-flag
         data:
           flag: painting-ruined

@@ -5,8 +5,8 @@ synonyms: [skull, head, treasure, crystal head, crystal treasure]
 portable: true
 size: 5
 first: >-
-  Lying in one corner of the room is a beautifully carved crystal skull. It appears to be
-  grinning grinning at you rather nastily.
+  Lying in one corner of the room is a beautifully carved crystal skull. It appears to be grinning
+  at you rather nastily.
 here: There is a crystal skull here.
 start: land-of-living-dead
 

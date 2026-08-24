@@ -1,5 +1,7 @@
 id: forest-1
 
+tags: [forest]
+
 meta:
   title: Forest
 
@@ -48,6 +50,7 @@ navigation:
         data:
           text: You would need a machete to go further west.
   - id: up
+    synonyms: [tree]
     triggers:
       - type: response
         data:

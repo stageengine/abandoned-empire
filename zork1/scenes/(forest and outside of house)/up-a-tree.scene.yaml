@@ -1,9 +1,31 @@
 id: up-a-tree
 
+tags: [forest]
+
 meta:
   title: Up a Tree
 
 actions:
+  - id: look
+    requires:
+      - type: object-in
+        data:
+          object: egg
+          location: in:nest
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are about 10 feet above the ground nestled among some large branches. The
+            nearest branch above you is above your reach.
+      - type: response
+        data:
+          text: >-
+            In the bird's nest is a large egg encrusted with precious jewels, apparently
+            scavenged by a childless songbird. The egg is covered with fine gold inlay, and
+            ornamented in lapis lazuli and mother-of-pearl. Unlike most eggs, this one is hinged
+            and closed with a delicate looking clasp. The egg appears extremely fragile.
+
   - id: look
     triggers:
       - type: response
@@ -33,6 +55,7 @@ objects:
 
 navigation:
   - id: up
+    synonyms: [tree]
     triggers:
       - type: response
         data:
