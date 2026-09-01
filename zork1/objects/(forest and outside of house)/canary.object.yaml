@@ -35,6 +35,15 @@ requires:
     data:
       flag: egg-open
 
+  # Whether the player can see, as above and everywhere else.
+  - type: any-of
+    data:
+      conditions:
+        - type: scene
+          negate: true
+          data: { tag: dark }
+        - type: flag
+          data: { flag: light }
 actions:
   - id: turn
     requires:

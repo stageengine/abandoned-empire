@@ -8,6 +8,18 @@ name: broken lantern
 synonyms: [lamp, lantern, broken lamp, broken lantern, smashed lamp, smashed lantern]
 portable: true
 size: 5
+requires:
+  # Whether the player can see. Seventy times, which is what
+  # ROADMAP.md's "whether the player can see" is about: one block on the game
+  # would say this once and reach a thing carried in and dropped besides.
+  - type: any-of
+    data:
+      conditions:
+        - type: scene
+          negate: true
+          data: { tag: dark }
+        - type: flag
+          data: { flag: light }
 presence:
   - triggers:
       - type: response
