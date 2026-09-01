@@ -13,6 +13,17 @@ presence:
             path.
 
 objects:
+  - id: canyon-bottom.teeth
+    name: set of teeth
+    synonyms: [teeth, tooth]
+    actions:
+      - id: brush
+        triggers:
+          - type: response
+            data:
+              text: >-
+                Dental hygiene is highly recommended, but I'm not sure what you want to brush
+                them with.
   - id: canyon-bottom.global-water
     name: water
     synonyms: [quantity]

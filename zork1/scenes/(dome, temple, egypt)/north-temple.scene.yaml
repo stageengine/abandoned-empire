@@ -13,8 +13,48 @@ presence:
             leading down. The west wall is solid granite. The exit to the north end of the room
             is through huge marble pillars.
 
-objects: [bell, prayer]
-
+objects:
+  - bell
+  - prayer
+  - id: north-temple.granite-wall
+    name: granite wall
+    synonyms: [granite, granite wall]
+    actions:
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: "The west wall is solid granite here."
+      - id: get
+        triggers:
+          - type: response
+            data:
+              text: "It's solid granite."
+      - id: raise
+        triggers:
+          - type: response
+            data:
+              text: "It's solid granite."
+  - id: north-temple.teeth
+    name: set of teeth
+    synonyms: [teeth, tooth]
+    actions:
+      - id: brush
+        triggers:
+          - type: response
+            data:
+              text: >-
+                Dental hygiene is highly recommended, but I'm not sure what you want to brush
+                them with.
+  - id: north-temple.wall
+    name: surrounding wall
+    synonyms: [wall, walls]
+    actions:
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: The wall is a wall, and gives nothing away.
 navigation:
   - id: north
     triggers:

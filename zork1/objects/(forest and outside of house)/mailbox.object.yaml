@@ -21,3 +21,9 @@ presence:
         data:
           text: There is a small mailbox here.
 start: west-of-house
+
+actions:
+  - id: get
+    triggers:
+      - type: response
+        data: { text: It is securely anchored. }

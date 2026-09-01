@@ -31,3 +31,16 @@ presence:
         data:
           text: There is a glass bottle here.
 start: in:kitchen-table
+
+actions:
+  - id: throw
+    triggers:
+      - type: response
+        data: { text: The bottle hits the far wall and shatters. }
+      - type: remove-object
+        data: { object: bottle }
+
+  - id: shake
+    triggers:
+      - type: response
+        data: { text: The water spills to the floor and evaporates. }

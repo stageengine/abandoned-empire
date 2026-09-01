@@ -34,3 +34,25 @@ navigation:
       - type: change-scene
         data:
           scene: maze-5
+
+objects:
+  - id: maze-3.teeth
+    name: set of teeth
+    synonyms: [teeth, tooth]
+    actions:
+      - id: brush
+        triggers:
+          - type: response
+            data:
+              text: >-
+                Dental hygiene is highly recommended, but I'm not sure what you want to brush
+                them with.
+  - id: maze-3.wall
+    name: surrounding wall
+    synonyms: [wall, walls]
+    actions:
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: The wall is a wall, and gives nothing away.

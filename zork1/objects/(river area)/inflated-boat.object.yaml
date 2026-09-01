@@ -32,3 +32,15 @@ presence:
         data:
           text: There is a magic boat here.
 start: offstage
+
+actions:
+  - id: inflate
+    triggers:
+      - type: response
+        data: { text: Inflating it further would probably burst it. }
+
+  - id: get
+    triggers:
+      - type: response
+        data:
+          text: The boat is too heavy to carry about unless it is deflated.

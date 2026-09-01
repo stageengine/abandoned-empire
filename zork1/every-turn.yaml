@@ -8,6 +8,15 @@
 # setting.
 
 every-turn:
+  # One more move, every turn, whatever the player did with it. First in the pass
+  # so that a rule below reading the count reads this turn's.
+  - triggers:
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: moves
+          by: 1
+
   # Is anything lighting the way? One question now that `any-of` exists, asked
   # once a turn into a flag so that every dark room can ask one thing rather
   # than the whole list. It is an or of ands - a lamp is not a light unless it
@@ -242,3 +251,1376 @@ every-turn:
       - type: response
         data:
           text: You hear in the distance the chirping of a song bird.
+
+  # What a treasure is worth for being found, which Zork scores the moment it is
+  # first held and never again. Zork's own VALUE for each, rather than a table
+  # copied out of the report, which had three of them missing and the rest right.
+  #
+  # One rule each, and the repetition is the engine's own gap rather than a choice:
+  # `has-item` names a fixed object and `adjust-measure` a fixed amount, so "score
+  # whatever they are holding by whatever it is worth" cannot be written once.
+  #
+  # Here rather than on each treasure's `get`, because a treasure can be come by
+  # without being taken - the canary comes out of the egg - and a rule asking what
+  # is in the player's hands catches every route.
+
+  - requires:
+      - type: has-item
+        data:
+          object: bag-of-coins
+      - type: flag
+        negate: true
+        data:
+          flag: found-bag-of-coins
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-bag-of-coins
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 10
+
+  - requires:
+      - type: has-item
+        data:
+          object: bar
+      - type: flag
+        negate: true
+        data:
+          flag: found-bar
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-bar
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 10
+
+  - requires:
+      - type: has-item
+        data:
+          object: bauble
+      - type: flag
+        negate: true
+        data:
+          flag: found-bauble
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-bauble
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 1
+
+  - requires:
+      - type: has-item
+        data:
+          object: bracelet
+      - type: flag
+        negate: true
+        data:
+          flag: found-bracelet
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-bracelet
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 5
+
+  - requires:
+      - type: has-item
+        data:
+          object: canary
+      - type: flag
+        negate: true
+        data:
+          flag: found-canary
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-canary
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 6
+
+  - requires:
+      - type: has-item
+        data:
+          object: chalice
+      - type: flag
+        negate: true
+        data:
+          flag: found-chalice
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-chalice
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 10
+
+  - requires:
+      - type: has-item
+        data:
+          object: coffin
+      - type: flag
+        negate: true
+        data:
+          flag: found-coffin
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-coffin
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 10
+
+  - requires:
+      - type: has-item
+        data:
+          object: diamond
+      - type: flag
+        negate: true
+        data:
+          flag: found-diamond
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-diamond
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 10
+
+  - requires:
+      - type: has-item
+        data:
+          object: egg
+      - type: flag
+        negate: true
+        data:
+          flag: found-egg
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-egg
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 5
+
+  - requires:
+      - type: has-item
+        data:
+          object: emerald
+      - type: flag
+        negate: true
+        data:
+          flag: found-emerald
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-emerald
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 5
+
+  - requires:
+      - type: has-item
+        data:
+          object: jade
+      - type: flag
+        negate: true
+        data:
+          flag: found-jade
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-jade
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 5
+
+  - requires:
+      - type: has-item
+        data:
+          object: painting
+      - type: flag
+        negate: true
+        data:
+          flag: found-painting
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-painting
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 4
+
+  - requires:
+      - type: has-item
+        data:
+          object: pot-of-gold
+      - type: flag
+        negate: true
+        data:
+          flag: found-pot-of-gold
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-pot-of-gold
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 10
+
+  - requires:
+      - type: has-item
+        data:
+          object: scarab
+      - type: flag
+        negate: true
+        data:
+          flag: found-scarab
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-scarab
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 5
+
+  - requires:
+      - type: has-item
+        data:
+          object: sceptre
+      - type: flag
+        negate: true
+        data:
+          flag: found-sceptre
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-sceptre
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 4
+
+  - requires:
+      - type: has-item
+        data:
+          object: skull
+      - type: flag
+        negate: true
+        data:
+          flag: found-skull
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-skull
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 10
+
+  - requires:
+      - type: has-item
+        data:
+          object: torch
+      - type: flag
+        negate: true
+        data:
+          flag: found-torch
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-torch
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 14
+
+  - requires:
+      - type: has-item
+        data:
+          object: trident
+      - type: flag
+        negate: true
+        data:
+          flag: found-trident
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-trident
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 4
+
+  - requires:
+      - type: has-item
+        data:
+          object: trunk
+      - type: flag
+        negate: true
+        data:
+          flag: found-trunk
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-trunk
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 15
+
+  # The thief walks the dungeon. One roll a turn over the rooms ZIL lets him into -
+  # everything below ground except the maze and the rooms it flags sacred - which is
+  # a weighted list of moves rather than 33 rules, because `chance` picks one
+  # answer and the answer is where he goes.
+  #
+  # He is silent about it. Zork announces him arriving and leaving where the player
+  # can see; the room says he is there when it describes itself, which is the half
+  # that reads without a rule per room.
+  - triggers:
+      # A `response` is what a roll with several answers hangs on, and its own text
+      # is replaced by whichever answer comes up - every turn, here, since every
+      # answer is a move. The line below is therefore never read; it is what the
+      # rule would say if the list were ever empty.
+      - type: response
+        data: { text: You hear a scurrying noise in the distance. }
+        chance:
+          outcomes:
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: cellar }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: east-of-chasm }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: gallery }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: studio }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: troll-room }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: dome-room }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: egypt-room }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: engravings-cave }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: north-temple }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: south-temple }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: torch-room }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: entrance-to-hades }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: land-of-living-dead }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: atlantis-room }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: cold-passage }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: mirror-room-1 }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: mirror-room-2 }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: narrow-passage }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: small-cave }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: tiny-cave }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: twisting-passage }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: winding-passage }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: reservoir }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: reservoir-north }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: reservoir-south }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: stream-view }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: chasm-room }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: damp-cave }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: deep-canyon }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: ew-passage }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: loud-room }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: ns-passage }
+            - weight: 1
+              triggers:
+                - type: move-object
+                  data: { object: thief, to: round-room }
+
+  # And what he is for. One rule per treasure, and the repetition is the engine's
+  # gap rather than a choice: `has-item` names a fixed object and
+  # `remove-from-inventory` a fixed object, so "take whatever they are carrying"
+  # cannot be written once. The roadmap has it as a trigger that cannot act on a
+  # thing chosen during play.
+  #
+  # Only where he is standing, and only sometimes, so a player who meets him keeps
+  # most of what they are carrying most of the time. Zork's own words for it: he is
+  # gone before you notice.
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: has-item
+        data:
+          object: bag-of-coins
+    triggers:
+      - type: response
+        data: { text: The thief eyes your possessions greedily. }
+        chance:
+          outcomes:
+            - weight: 1
+              triggers:
+                - type: response
+                  data:
+                    text: >-
+                      The thief just left, still carrying his large bag. You may not have
+                      noticed that he robbed you blind first.
+                - type: remove-from-inventory
+                  data:
+                    object: bag-of-coins
+                - type: move-object
+                  data:
+                    object: thief
+                    to: treasure-room
+            - weight: 8
+              triggers:
+                - type: response
+                  data: { text: The thief is taking an unhealthy interest in your possessions. }
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: has-item
+        data:
+          object: bar
+    triggers:
+      - type: response
+        data: { text: The thief eyes your possessions greedily. }
+        chance:
+          outcomes:
+            - weight: 1
+              triggers:
+                - type: response
+                  data:
+                    text: >-
+                      The thief just left, still carrying his large bag. You may not have
+                      noticed that he robbed you blind first.
+                - type: remove-from-inventory
+                  data:
+                    object: bar
+                - type: move-object
+                  data:
+                    object: thief
+                    to: treasure-room
+            - weight: 8
+              triggers:
+                - type: response
+                  data: { text: The thief is taking an unhealthy interest in your possessions. }
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: has-item
+        data:
+          object: bauble
+    triggers:
+      - type: response
+        data: { text: The thief eyes your possessions greedily. }
+        chance:
+          outcomes:
+            - weight: 1
+              triggers:
+                - type: response
+                  data:
+                    text: >-
+                      The thief just left, still carrying his large bag. You may not have
+                      noticed that he robbed you blind first.
+                - type: remove-from-inventory
+                  data:
+                    object: bauble
+                - type: move-object
+                  data:
+                    object: thief
+                    to: treasure-room
+            - weight: 8
+              triggers:
+                - type: response
+                  data: { text: The thief is taking an unhealthy interest in your possessions. }
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: has-item
+        data:
+          object: bracelet
+    triggers:
+      - type: response
+        data: { text: The thief eyes your possessions greedily. }
+        chance:
+          outcomes:
+            - weight: 1
+              triggers:
+                - type: response
+                  data:
+                    text: >-
+                      The thief just left, still carrying his large bag. You may not have
+                      noticed that he robbed you blind first.
+                - type: remove-from-inventory
+                  data:
+                    object: bracelet
+                - type: move-object
+                  data:
+                    object: thief
+                    to: treasure-room
+            - weight: 8
+              triggers:
+                - type: response
+                  data: { text: The thief is taking an unhealthy interest in your possessions. }
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: has-item
+        data:
+          object: canary
+    triggers:
+      - type: response
+        data: { text: The thief eyes your possessions greedily. }
+        chance:
+          outcomes:
+            - weight: 1
+              triggers:
+                - type: response
+                  data:
+                    text: >-
+                      The thief just left, still carrying his large bag. You may not have
+                      noticed that he robbed you blind first.
+                - type: remove-from-inventory
+                  data:
+                    object: canary
+                - type: move-object
+                  data:
+                    object: thief
+                    to: treasure-room
+            - weight: 8
+              triggers:
+                - type: response
+                  data: { text: The thief is taking an unhealthy interest in your possessions. }
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: has-item
+        data:
+          object: chalice
+    triggers:
+      - type: response
+        data: { text: The thief eyes your possessions greedily. }
+        chance:
+          outcomes:
+            - weight: 1
+              triggers:
+                - type: response
+                  data:
+                    text: >-
+                      The thief just left, still carrying his large bag. You may not have
+                      noticed that he robbed you blind first.
+                - type: remove-from-inventory
+                  data:
+                    object: chalice
+                - type: move-object
+                  data:
+                    object: thief
+                    to: treasure-room
+            - weight: 8
+              triggers:
+                - type: response
+                  data: { text: The thief is taking an unhealthy interest in your possessions. }
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: has-item
+        data:
+          object: coffin
+    triggers:
+      - type: response
+        data: { text: The thief eyes your possessions greedily. }
+        chance:
+          outcomes:
+            - weight: 1
+              triggers:
+                - type: response
+                  data:
+                    text: >-
+                      The thief just left, still carrying his large bag. You may not have
+                      noticed that he robbed you blind first.
+                - type: remove-from-inventory
+                  data:
+                    object: coffin
+                - type: move-object
+                  data:
+                    object: thief
+                    to: treasure-room
+            - weight: 8
+              triggers:
+                - type: response
+                  data: { text: The thief is taking an unhealthy interest in your possessions. }
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: has-item
+        data:
+          object: diamond
+    triggers:
+      - type: response
+        data: { text: The thief eyes your possessions greedily. }
+        chance:
+          outcomes:
+            - weight: 1
+              triggers:
+                - type: response
+                  data:
+                    text: >-
+                      The thief just left, still carrying his large bag. You may not have
+                      noticed that he robbed you blind first.
+                - type: remove-from-inventory
+                  data:
+                    object: diamond
+                - type: move-object
+                  data:
+                    object: thief
+                    to: treasure-room
+            - weight: 8
+              triggers:
+                - type: response
+                  data: { text: The thief is taking an unhealthy interest in your possessions. }
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: has-item
+        data:
+          object: egg
+    triggers:
+      - type: response
+        data: { text: The thief eyes your possessions greedily. }
+        chance:
+          outcomes:
+            - weight: 1
+              triggers:
+                - type: response
+                  data:
+                    text: >-
+                      The thief just left, still carrying his large bag. You may not have
+                      noticed that he robbed you blind first.
+                - type: remove-from-inventory
+                  data:
+                    object: egg
+                - type: move-object
+                  data:
+                    object: thief
+                    to: treasure-room
+            - weight: 8
+              triggers:
+                - type: response
+                  data: { text: The thief is taking an unhealthy interest in your possessions. }
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: has-item
+        data:
+          object: emerald
+    triggers:
+      - type: response
+        data: { text: The thief eyes your possessions greedily. }
+        chance:
+          outcomes:
+            - weight: 1
+              triggers:
+                - type: response
+                  data:
+                    text: >-
+                      The thief just left, still carrying his large bag. You may not have
+                      noticed that he robbed you blind first.
+                - type: remove-from-inventory
+                  data:
+                    object: emerald
+                - type: move-object
+                  data:
+                    object: thief
+                    to: treasure-room
+            - weight: 8
+              triggers:
+                - type: response
+                  data: { text: The thief is taking an unhealthy interest in your possessions. }
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: has-item
+        data:
+          object: jade
+    triggers:
+      - type: response
+        data: { text: The thief eyes your possessions greedily. }
+        chance:
+          outcomes:
+            - weight: 1
+              triggers:
+                - type: response
+                  data:
+                    text: >-
+                      The thief just left, still carrying his large bag. You may not have
+                      noticed that he robbed you blind first.
+                - type: remove-from-inventory
+                  data:
+                    object: jade
+                - type: move-object
+                  data:
+                    object: thief
+                    to: treasure-room
+            - weight: 8
+              triggers:
+                - type: response
+                  data: { text: The thief is taking an unhealthy interest in your possessions. }
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: has-item
+        data:
+          object: pot-of-gold
+    triggers:
+      - type: response
+        data: { text: The thief eyes your possessions greedily. }
+        chance:
+          outcomes:
+            - weight: 1
+              triggers:
+                - type: response
+                  data:
+                    text: >-
+                      The thief just left, still carrying his large bag. You may not have
+                      noticed that he robbed you blind first.
+                - type: remove-from-inventory
+                  data:
+                    object: pot-of-gold
+                - type: move-object
+                  data:
+                    object: thief
+                    to: treasure-room
+            - weight: 8
+              triggers:
+                - type: response
+                  data: { text: The thief is taking an unhealthy interest in your possessions. }
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: has-item
+        data:
+          object: scarab
+    triggers:
+      - type: response
+        data: { text: The thief eyes your possessions greedily. }
+        chance:
+          outcomes:
+            - weight: 1
+              triggers:
+                - type: response
+                  data:
+                    text: >-
+                      The thief just left, still carrying his large bag. You may not have
+                      noticed that he robbed you blind first.
+                - type: remove-from-inventory
+                  data:
+                    object: scarab
+                - type: move-object
+                  data:
+                    object: thief
+                    to: treasure-room
+            - weight: 8
+              triggers:
+                - type: response
+                  data: { text: The thief is taking an unhealthy interest in your possessions. }
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: has-item
+        data:
+          object: sceptre
+    triggers:
+      - type: response
+        data: { text: The thief eyes your possessions greedily. }
+        chance:
+          outcomes:
+            - weight: 1
+              triggers:
+                - type: response
+                  data:
+                    text: >-
+                      The thief just left, still carrying his large bag. You may not have
+                      noticed that he robbed you blind first.
+                - type: remove-from-inventory
+                  data:
+                    object: sceptre
+                - type: move-object
+                  data:
+                    object: thief
+                    to: treasure-room
+            - weight: 8
+              triggers:
+                - type: response
+                  data: { text: The thief is taking an unhealthy interest in your possessions. }
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: has-item
+        data:
+          object: torch
+    triggers:
+      - type: response
+        data: { text: The thief eyes your possessions greedily. }
+        chance:
+          outcomes:
+            - weight: 1
+              triggers:
+                - type: response
+                  data:
+                    text: >-
+                      The thief just left, still carrying his large bag. You may not have
+                      noticed that he robbed you blind first.
+                - type: remove-from-inventory
+                  data:
+                    object: torch
+                - type: move-object
+                  data:
+                    object: thief
+                    to: treasure-room
+            - weight: 8
+              triggers:
+                - type: response
+                  data: { text: The thief is taking an unhealthy interest in your possessions. }
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: has-item
+        data:
+          object: trident
+    triggers:
+      - type: response
+        data: { text: The thief eyes your possessions greedily. }
+        chance:
+          outcomes:
+            - weight: 1
+              triggers:
+                - type: response
+                  data:
+                    text: >-
+                      The thief just left, still carrying his large bag. You may not have
+                      noticed that he robbed you blind first.
+                - type: remove-from-inventory
+                  data:
+                    object: trident
+                - type: move-object
+                  data:
+                    object: thief
+                    to: treasure-room
+            - weight: 8
+              triggers:
+                - type: response
+                  data: { text: The thief is taking an unhealthy interest in your possessions. }
+
+  # Zork scores four rooms for being reached at all, which is the last sixty-five of
+  # the three hundred and fifty and the part the port had none of. `visited` asks
+  # the question directly, so this is one rule each and the flag is what makes it
+  # happen once.
+
+  - requires:
+      - type: visited
+        data:
+          scene: kitchen
+      - type: flag
+        negate: true
+        data:
+          flag: reached-kitchen
+    triggers:
+      - type: set-flag
+        data:
+          flag: reached-kitchen
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 10
+
+  - requires:
+      - type: visited
+        data:
+          scene: cellar
+      - type: flag
+        negate: true
+        data:
+          flag: reached-cellar
+    triggers:
+      - type: set-flag
+        data:
+          flag: reached-cellar
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 25
+
+  - requires:
+      - type: visited
+        data:
+          scene: treasure-room
+      - type: flag
+        negate: true
+        data:
+          flag: reached-treasure-room
+    triggers:
+      - type: set-flag
+        data:
+          flag: reached-treasure-room
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 25
+
+  - requires:
+      - type: visited
+        data:
+          scene: ew-passage
+      - type: flag
+        negate: true
+        data:
+          flag: reached-ew-passage
+    triggers:
+      - type: set-flag
+        data:
+          flag: reached-ew-passage
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 5
+
+  # The skeleton's curse, carried out. One rule per treasure and then the flag is
+  # put down again, so it happens on the turn the ghost appears and no other.
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: bag-of-coins
+    triggers:
+      - type: move-object
+        data:
+          object: bag-of-coins
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: bar
+    triggers:
+      - type: move-object
+        data:
+          object: bar
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: bauble
+    triggers:
+      - type: move-object
+        data:
+          object: bauble
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: bracelet
+    triggers:
+      - type: move-object
+        data:
+          object: bracelet
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: broken-canary
+    triggers:
+      - type: move-object
+        data:
+          object: broken-canary
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: broken-egg
+    triggers:
+      - type: move-object
+        data:
+          object: broken-egg
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: canary
+    triggers:
+      - type: move-object
+        data:
+          object: canary
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: chalice
+    triggers:
+      - type: move-object
+        data:
+          object: chalice
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: coffin
+    triggers:
+      - type: move-object
+        data:
+          object: coffin
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: diamond
+    triggers:
+      - type: move-object
+        data:
+          object: diamond
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: egg
+    triggers:
+      - type: move-object
+        data:
+          object: egg
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: emerald
+    triggers:
+      - type: move-object
+        data:
+          object: emerald
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: jade
+    triggers:
+      - type: move-object
+        data:
+          object: jade
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: painting
+    triggers:
+      - type: move-object
+        data:
+          object: painting
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: pot-of-gold
+    triggers:
+      - type: move-object
+        data:
+          object: pot-of-gold
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: scarab
+    triggers:
+      - type: move-object
+        data:
+          object: scarab
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: sceptre
+    triggers:
+      - type: move-object
+        data:
+          object: sceptre
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: skull
+    triggers:
+      - type: move-object
+        data:
+          object: skull
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: torch
+    triggers:
+      - type: move-object
+        data:
+          object: torch
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: trident
+    triggers:
+      - type: move-object
+        data:
+          object: trident
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: trunk
+    triggers:
+      - type: move-object
+        data:
+          object: trunk
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+    triggers:
+      - type: set-flag
+        data:
+          flag: cursed
+          value: false

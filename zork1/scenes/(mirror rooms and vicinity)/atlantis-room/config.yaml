@@ -20,8 +20,28 @@ presence:
         data:
           text: It is pitch black. You are likely to be eaten by a grue.
 
-objects: [trident]
-
+objects:
+  - trident
+  - id: atlantis-room.teeth
+    name: set of teeth
+    synonyms: [teeth, tooth]
+    actions:
+      - id: brush
+        triggers:
+          - type: response
+            data:
+              text: >-
+                Dental hygiene is highly recommended, but I'm not sure what you want to brush
+                them with.
+  - id: atlantis-room.wall
+    name: surrounding wall
+    synonyms: [wall, walls]
+    actions:
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: The wall is a wall, and gives nothing away.
 navigation:
   - id: south
     triggers:

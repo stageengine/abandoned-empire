@@ -9,3 +9,10 @@ synonyms:
   - flathead mountain
   - flathead range
 start: mountains
+
+actions:
+  - id: climb
+    triggers:
+      - type: response
+        data:
+          text: "Don't you believe me? The mountains are impassable!"

@@ -22,3 +22,18 @@ presence:
         data:
           text: There is a quantity of water here.
 start: in:bottle
+
+actions:
+  - id: drink
+    triggers:
+      - type: response
+        data:
+          text: "Thank you very much. I was rather thirsty (from all this talking, probably)."
+      - type: remove-object
+        data: { object: water }
+
+  - id: get
+    triggers:
+      - type: response
+        data:
+          text: The water slips through your fingers.

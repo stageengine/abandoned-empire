@@ -38,3 +38,10 @@ presence:
         data:
           text: There is a nasty knife here.
 start: in:attic-table
+
+actions:
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: A nasty-looking knife, of the sort a person might regret meeting.

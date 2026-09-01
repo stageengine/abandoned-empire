@@ -38,3 +38,9 @@ presence:
         data:
           text: There is a brown sack here.
 start: in:kitchen-table
+
+actions:
+  - id: smell
+    triggers:
+      - type: response
+        data: { text: It smells of hot peppers. }

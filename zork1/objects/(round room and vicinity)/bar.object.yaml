@@ -30,3 +30,17 @@ presence:
         data:
           text: On the ground is a large platinum bar.
 start: loud-room
+
+# Zork keeps the bar sacred until the echo is called for, which is what stops a
+# player carrying it out of a room they cannot think in.
+actions:
+  - id: get
+    requires:
+      - type: flag
+        negate: true
+        data: { flag: loud-flag }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You cannot hear yourself think, let alone pick anything up.

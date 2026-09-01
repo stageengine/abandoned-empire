@@ -14,6 +14,17 @@ presence:
             cliff, which appears climbable.
 
 objects:
+  - id: cliff-middle.teeth
+    name: set of teeth
+    synonyms: [teeth, tooth]
+    actions:
+      - id: brush
+        triggers:
+          - type: response
+            data:
+              text: >-
+                Dental hygiene is highly recommended, but I'm not sure what you want to brush
+                them with.
   - id: cliff-middle.climbable-cliff
     name: cliff
     synonyms:

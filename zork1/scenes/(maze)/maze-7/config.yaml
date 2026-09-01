@@ -39,8 +39,36 @@ navigation:
       - type: change-scene
         data:
           scene: maze-14
+  # A one-way tunnel. ZIL worked the destination out in code because the same
+  # routine served four rooms; here each room says where its own drop goes.
   - id: down
     triggers:
       - type: response
         data:
-          text: 'TODO: MAZE-DIODES'
+          text: >-
+            You won't be able to get back up to the tunnel you are going through when it gets to the next room.
+      - type: change-scene
+        data:
+          scene: dead-end-1
+
+objects:
+  - id: maze-7.teeth
+    name: set of teeth
+    synonyms: [teeth, tooth]
+    actions:
+      - id: brush
+        triggers:
+          - type: response
+            data:
+              text: >-
+                Dental hygiene is highly recommended, but I'm not sure what you want to brush
+                them with.
+  - id: maze-7.wall
+    name: surrounding wall
+    synonyms: [wall, walls]
+    actions:
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: The wall is a wall, and gives nothing away.

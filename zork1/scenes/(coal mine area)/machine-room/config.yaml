@@ -23,8 +23,31 @@ presence:
         data:
           text: It is pitch black. You are likely to be eaten by a grue.
 
-objects: [diamond, machine, gunk, machine-switch]
-
+objects:
+  - diamond
+  - machine
+  - gunk
+  - machine-switch
+  - id: machine-room.teeth
+    name: set of teeth
+    synonyms: [teeth, tooth]
+    actions:
+      - id: brush
+        triggers:
+          - type: response
+            data:
+              text: >-
+                Dental hygiene is highly recommended, but I'm not sure what you want to brush
+                them with.
+  - id: machine-room.wall
+    name: surrounding wall
+    synonyms: [wall, walls]
+    actions:
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: The wall is a wall, and gives nothing away.
 navigation:
   - id: north
     triggers:

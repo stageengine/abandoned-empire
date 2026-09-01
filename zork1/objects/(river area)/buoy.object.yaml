@@ -31,3 +31,12 @@ presence:
         data:
           text: There is a red buoy here.
 start: river-4
+
+actions:
+  - id: open
+    triggers:
+      - type: response
+        data:
+          text: Opening the buoy reveals a large emerald.
+      - type: move-object
+        data: { object: emerald, to: here }

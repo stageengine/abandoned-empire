@@ -1,2 +1,42 @@
 id: sand
 start: sandy-cave
+
+# Zork counts the digs and collapses the hole on the fourth. A measure is what a
+# number that moves during play is, and its threshold is where the scarab comes up.
+measures:
+  - id: digs
+    max: 4
+    start: 0
+    thresholds:
+      - from: 0
+      - from: 3
+        triggers:
+          - type: response
+            data: { text: You can see a scarab here in the sand. }
+          - type: set-flag
+            data: { flag: scarab-found, value: true }
+      - from: 4
+        triggers:
+          - type: response
+            data:
+              text: The hole collapses, smothering you.
+          - type: end-game
+            data: { journal: smothered in a hole of your own digging }
+
+actions:
+  - id: dig
+    preposition: with
+    indirect: shovel
+    requires:
+      - type: has-item
+        data: { object: shovel }
+    triggers:
+      - type: response
+        data: { text: You seem to be digging a hole here. }
+      - type: adjust-measure
+        data: { subject: sand, measure: digs, by: 1 }
+
+  - id: dig
+    triggers:
+      - type: response
+        data: { text: Digging with your bare hands is silly. }

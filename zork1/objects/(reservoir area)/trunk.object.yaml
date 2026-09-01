@@ -35,28 +35,6 @@ requires:
         - type: flag
           data: { flag: light }
 actions:
-  - id: get
-    once:
-      failure:
-        triggers:
-          - type: response
-            data:
-              text: Taken.
-          - type: add-to-inventory
-            data:
-              object: trunk
-    triggers:
-      - type: response
-        data:
-          text: Taken.
-      - type: add-to-inventory
-        data:
-          object: trunk
-      - type: adjust-measure
-        data:
-          subject: player
-          measure: score
-          by: 15
 
   - id: look
     triggers:

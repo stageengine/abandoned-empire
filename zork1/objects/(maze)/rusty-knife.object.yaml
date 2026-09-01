@@ -30,3 +30,12 @@ presence:
         data:
           text: There is a rusty knife here.
 start: maze-5
+
+actions:
+  - id: get
+    triggers:
+      - type: response
+        data:
+          text: >-
+            As you touch the rusty knife, your sword gives a single pulse of blinding blue
+            light.

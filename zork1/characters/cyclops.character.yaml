@@ -1,0 +1,144 @@
+id: cyclops
+
+synonyms:
+  - monster
+  - eye
+  - hungry cyclops
+  - hungry monster
+  - hungry eye
+  - giant cyclops
+  - giant monster
+  - giant eye
+start: cyclops-room
+
+presence:
+  - requires:
+      - type: flag
+        data: { flag: cyclops-asleep }
+    triggers:
+      - type: response
+        data:
+          text: The cyclops is asleep at the foot of the stairs.
+  - triggers:
+      - type: response
+        data:
+          text: A hungry cyclops is standing at the foot of the stairs.
+
+# ZIL runs the whole of this off one wrath counter: the peppers push it one way,
+# the water the other, and the passage opens when he sleeps. Two flags here, for
+# the two states a player can tell apart, and the order below is the order the
+# first requirement that holds decides between.
+actions:
+  - id: look
+    requires:
+      - type: flag
+        data: { flag: cyclops-asleep }
+    triggers:
+      - type: response
+        data:
+          text: The cyclops is sleeping like a baby, albeit a very ugly one.
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: A hungry cyclops is standing at the foot of the stairs.
+
+  # The peppers make him thirsty, which is the whole of the puzzle: nothing else
+  # will persuade him to drink.
+  - id: give
+    indirect: lunch
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The cyclops says "Mmm Mmm. I love hot peppers! But oh, could I use a drink.
+            Perhaps I could drink the blood of that thing." From the gleam in his eye, it
+            could be surmised that you are "that thing".
+      - type: remove-object
+        data:
+          object: lunch
+      - type: set-flag
+        data:
+          flag: cyclops-thirsty
+          value: true
+
+  # Two blocks rather than one with a refusal written into its requirement. A
+  # `failure` here could never be heard: the catch-all below carries no requirements
+  # of its own, so it answers whenever a particular one does not, and the
+  # particular's words would be dead on the page. The trophy case taught this.
+  - id: give
+    indirect: bottle
+    requires:
+      - type: flag
+        data: { flag: cyclops-thirsty }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The cyclops takes the bottle, checks that it's open, and drinks the water. A
+            moment later, he lets out a yawn that nearly blows you over, and then falls fast
+            asleep (what did you put in that drink, anyway?).
+      - type: move-object
+        data:
+          object: bottle
+          to: here
+      - type: set-flag
+        data:
+          flag: cyclops-asleep
+          value: true
+
+  - id: give
+    indirect: bottle
+    triggers:
+      - type: response
+        data:
+          text: The cyclops apparently is not thirsty and refuses your generous offer.
+
+  - id: give
+    indirect: garlic
+    triggers:
+      - type: response
+        data:
+          text: The cyclops may be hungry, but there is a limit.
+
+  - id: give
+    triggers:
+      - type: response
+        data:
+          text: The cyclops is not so stupid as to eat THAT!
+
+  - id: attack
+    requires:
+      - type: flag
+        data: { flag: cyclops-asleep }
+    triggers:
+      - type: response
+        data:
+          text: The cyclops yawns and stares at the thing that woke him up.
+      - type: set-flag
+        data:
+          flag: cyclops-asleep
+          value: false
+
+  - id: attack
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The cyclops shrugs but otherwise ignores your pitiful attempt.
+
+  - id: tell
+    requires:
+      - type: flag
+        data: { flag: cyclops-asleep }
+    triggers:
+      - type: response
+        data:
+          text: No use talking to him. He's fast asleep.
+
+  - id: tell
+    triggers:
+      - type: response
+        data:
+          text: The cyclops prefers eating to making conversation.

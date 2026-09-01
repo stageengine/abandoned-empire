@@ -3,3 +3,19 @@ name: door
 
 synonyms: [front door, boarded door]
 start: west-of-house
+
+actions:
+  - id: open
+    triggers:
+      - type: response
+        data: { text: The door cannot be opened. }
+
+  - id: burn
+    triggers:
+      - type: response
+        data: { text: You cannot burn this door. }
+
+  - id: attack
+    triggers:
+      - type: response
+        data: { text: You can't seem to damage the door. }

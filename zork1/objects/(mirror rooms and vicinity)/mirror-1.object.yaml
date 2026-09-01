@@ -3,3 +3,27 @@ name: mirror
 
 synonyms: [reflection, enormous]
 start: mirror-room-1
+
+actions:
+  - id: get
+    triggers:
+      - type: response
+        data: { text: The mirror is many times your size. Give up. }
+
+  - id: break
+    triggers:
+      - type: response
+        data:
+          text: "Haven't you done enough damage already?"
+
+  # The whole of the mirror puzzle: touching one puts you in the other room, and
+  # ZIL swaps the contents of the two so that it reads as one mirror rather than two.
+  # The rooms are the same size and hold the same nothing, so the move is the half
+  # that matters.
+  - id: touch
+    triggers:
+      - type: response
+        data:
+          text: There is a rumble from deep within the earth and the room shakes.
+      - type: change-scene
+        data: { scene: mirror-room-2 }

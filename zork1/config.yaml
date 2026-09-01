@@ -52,6 +52,13 @@ player:
                 text: You are bleeding, and it is beginning to tell.
         - from: 4
 
+    # Turns, kept by the game rather than by the engine. Stage counts turns and
+    # does not let prose name the count, so a game that wants to show it keeps its
+    # own measure and moves it once a turn.
+    - id: moves
+      max: 9999
+      start: 0
+
     - id: score
       max: 350
       start: 0

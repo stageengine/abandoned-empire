@@ -37,3 +37,19 @@ presence:
         data:
           text: There is a torch here.
 start: in:pedestal
+
+actions:
+  - id: look
+    triggers:
+      - type: response
+        data: { text: The torch is burning. }
+
+  - id: pour
+    triggers:
+      - type: response
+        data: { text: The water evaporates before it gets close. }
+
+  - id: extinguish
+    triggers:
+      - type: response
+        data: { text: You nearly burn your hand trying to extinguish the flame. }

@@ -107,6 +107,54 @@ presence:
             It is pitch black. You are likely to be eaten by a grue.
 
 objects:
+  - id: reservoir-south.teeth
+    name: set of teeth
+    synonyms: [teeth, tooth]
+    actions:
+      - id: brush
+        triggers:
+          - type: response
+            data:
+              text: >-
+                Dental hygiene is highly recommended, but I'm not sure what you want to brush
+                them with.
+  - id: reservoir-south.wall
+    name: surrounding wall
+    synonyms: [wall, walls]
+    actions:
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: The wall is a wall, and gives nothing away.
+  - id: reservoir-south.chasm
+    name: chasm
+    synonyms: [chasm]
+    actions:
+      - id: jump
+        triggers:
+          - type: response
+            data:
+              text: "You look before leaping, and realize that you would never survive."
+      - id: cross
+        triggers:
+          - type: response
+            data:
+              text: "It's too far to jump, and there's no bridge."
+  - id: reservoir-south.lake
+    name: lake
+    synonyms: [lake]
+    actions:
+      - id: cross
+        triggers:
+          - type: response
+            data:
+              text: "It's too wide to cross."
+      - id: swim
+        triggers:
+          - type: response
+            data:
+              text: "You can't swim in this lake."
   - id: reservoir-south.global-water
     name: water
     synonyms: [quantity]

@@ -23,6 +23,26 @@ presence:
             corner of the house there is a small window which is slightly ajar.
 
 objects:
+  - id: east-of-house.teeth
+    name: set of teeth
+    synonyms: [teeth, tooth]
+    actions:
+      - id: brush
+        triggers:
+          - type: response
+            data:
+              text: >-
+                Dental hygiene is highly recommended, but I'm not sure what you want to brush
+                them with.
+  - id: east-of-house.wall
+    name: surrounding wall
+    synonyms: [wall, walls]
+    actions:
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: The wall is a wall, and gives nothing away.
   - id: east-of-house.white-house
     name: white house
     synonyms: [house, beauti house, coloni house]

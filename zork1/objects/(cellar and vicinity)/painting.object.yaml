@@ -37,28 +37,6 @@ actions:
   # and again for putting it in the case. The first of those has to be written
   # as an action of its own, because the engine's own taking cannot be hooked -
   # so `once` does the scoring and its failure does the plain taking ever after.
-  - id: get
-    once:
-      failure:
-        triggers:
-          - type: response
-            data:
-              text: Taken.
-          - type: add-to-inventory
-            data:
-              object: painting
-    triggers:
-      - type: response
-        data:
-          text: Taken.
-      - type: add-to-inventory
-        data:
-          object: painting
-      - type: adjust-measure
-        data:
-          subject: player
-          measure: score
-          by: 4
 
   - id: break
     once:

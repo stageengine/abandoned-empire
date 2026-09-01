@@ -31,3 +31,22 @@ presence:
         data:
           text: There is a small piece of vitreous slag here.
 start: offstage
+
+actions:
+  - id: get
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The slag was rather insubstantial, and crumbles into dust at your touch.
+      - type: remove-object
+        data: { object: gunk }
+
+  - id: touch
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The slag was rather insubstantial, and crumbles into dust at your touch.
+      - type: remove-object
+        data: { object: gunk }

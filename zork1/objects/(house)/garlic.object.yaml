@@ -22,3 +22,14 @@ presence:
         data:
           text: There is a clove of garlic here.
 start: in:sandwich-bag
+
+actions:
+  - id: eat
+    triggers:
+      - type: response
+        data:
+          text: >-
+            What the heck! You won't make friends this way, but nobody around here is too
+            friendly anyhow. Gulp!
+      - type: remove-object
+        data: { object: garlic }

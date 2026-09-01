@@ -21,4 +21,14 @@ presence:
       - type: response
         data:
           text: There is a bloody axe here.
-start: in:troll
+
+actions:
+  - id: get
+    requires:
+      - type: flag
+        negate: true
+        data: { flag: troll-flag }
+    triggers:
+      - type: response
+        data:
+          text: The troll's grip on it is not one you would care to loosen.

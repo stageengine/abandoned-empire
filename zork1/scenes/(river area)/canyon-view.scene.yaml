@@ -18,6 +18,17 @@ presence:
             here.
 
 objects:
+  - id: canyon-view.teeth
+    name: set of teeth
+    synonyms: [teeth, tooth]
+    actions:
+      - id: brush
+        triggers:
+          - type: response
+            data:
+              text: >-
+                Dental hygiene is highly recommended, but I'm not sure what you want to brush
+                them with.
   - id: canyon-view.climbable-cliff
     name: cliff
     synonyms:
@@ -64,3 +75,14 @@ navigation:
       - type: change-scene
         data:
           scene: cliff-middle
+
+actions:
+  - id: jump
+    triggers:
+      - type: response
+        data:
+          text: "Nice view, lousy place to jump."
+      - type: end-game
+        data:
+          journal: jumped from Canyon View, which was a lousy place to jump
+

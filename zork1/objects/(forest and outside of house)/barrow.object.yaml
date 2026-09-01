@@ -3,3 +3,12 @@ name: stone barrow
 
 synonyms: [barrow, tomb, massive barrow, massive tomb, stone tomb]
 start: stone-barrow
+
+actions:
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            A massive barrow of stone, with a huge door in its east face standing open. You
+            cannot see into the dark of the tomb.

@@ -112,6 +112,35 @@ presence:
             large oriental rug in the center of the room.
 
 objects:
+  - id: living-room.teeth
+    name: set of teeth
+    synonyms: [teeth, tooth]
+    actions:
+      - id: brush
+        triggers:
+          - type: response
+            data:
+              text: >-
+                Dental hygiene is highly recommended, but I'm not sure what you want to brush
+                them with.
+  - id: living-room.wall
+    name: surrounding wall
+    synonyms: [wall, walls]
+    actions:
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: The wall is a wall, and gives nothing away.
+  - id: living-room.nails
+    name: nails
+    synonyms: [nails, nail]
+    actions:
+      - id: get
+        triggers:
+          - type: response
+            data:
+              text: "The nails, deeply imbedded in the door, cannot be removed."
   - broken-lamp
   - trophy-case
   - rug

@@ -12,6 +12,26 @@ presence:
             with a magnificent view of the Falls. The rainbow travels east-west here.
 
 objects:
+  - id: on-rainbow.teeth
+    name: set of teeth
+    synonyms: [teeth, tooth]
+    actions:
+      - id: brush
+        triggers:
+          - type: response
+            data:
+              text: >-
+                Dental hygiene is highly recommended, but I'm not sure what you want to brush
+                them with.
+  - id: on-rainbow.wall
+    name: surrounding wall
+    synonyms: [wall, walls]
+    actions:
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: The wall is a wall, and gives nothing away.
   - id: on-rainbow.rainbow
     name: rainbow
 

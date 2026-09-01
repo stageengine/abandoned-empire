@@ -1,0 +1,93 @@
+id: thief
+
+synonyms:
+  - robber
+  - man
+  - person
+  - shady thief
+  - shady robber
+  - shady man
+  - shady person
+  - suspicious thief
+  - suspicious robber
+  - suspicious man
+  - suspicious person
+  - seedy thief
+  - seedy robber
+  - seedy man
+  - seedy person
+requires:
+  # Whether the player can see. Seventy times, which is what
+  # ROADMAP.md's "whether the player can see" is about: one block on the game
+  # would say this once and reach a thing carried in and dropped besides.
+  - type: any-of
+    data:
+      conditions:
+        - type: scene
+          negate: true
+          data: { tag: dark }
+        - type: flag
+          data: { flag: light }
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: >-
+            There is a suspicious-looking individual, holding a large bag, leaning against one wall. He is
+            armed with a deadly stiletto.
+start: round-room
+
+# In their hands rather than inside them. A thing somebody is holding is not
+# in the room, cannot be taken, and changes hands through an action they own -
+# which is what these two were always meant to be and could not be said before.
+holds: [large-bag, stiletto]
+
+# What he says when spoken to, looked at, fought and given things. What he *does* -
+# wandering the map and taking whatever you are carrying - is not here and cannot
+# be: `remove-from-inventory` names one id, so "take what they are holding" is a
+# rule per stealable thing against a set that changes every turn. The roadmap has
+# it as a trigger that cannot act on a thing chosen during play.
+actions:
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The thief is a slippery character with beady eyes that flit back and forth. He
+            carries, along with an unmistakable arrogance, a large bag over his shoulder and a
+            vicious stiletto, whose blade is aimed menacingly in your direction. I'd watch out
+            if I were you.
+
+  - id: tell
+    triggers:
+      - type: response
+        data:
+          text: The thief is a strong, silent type.
+
+  # Zork lets a treasure buy you a moment's grace, and takes the rest of the fight
+  # off a strength that grows with your score. Neither is written: what is written
+  # is that he takes it, which is the half a player can see.
+  - id: give
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The thief places the gift in his bag and thanks you politely.
+
+  - id: attack
+    preposition: with
+    indirect: knife
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The thief, forgetting his essentially genteel upbringing, cuts your arm with his
+            stiletto.
+
+  - id: attack
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Trying to attack the thief with your bare hands is suicidal - he is armed and you
+            are not.

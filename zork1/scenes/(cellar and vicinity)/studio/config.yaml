@@ -24,6 +24,49 @@ presence:
           text: It is pitch black. You are likely to be eaten by a grue.
 
 objects:
+  - id: studio.teeth
+    name: set of teeth
+    synonyms: [teeth, tooth]
+    actions:
+      - id: brush
+        triggers:
+          - type: response
+            data:
+              text: >-
+                Dental hygiene is highly recommended, but I'm not sure what you want to brush
+                them with.
+  - id: studio.wall
+    name: surrounding wall
+    synonyms: [wall, walls]
+    actions:
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: The wall is a wall, and gives nothing away.
+  - id: studio.door
+    name: door
+    synonyms: [door]
+    actions:
+      - id: open
+        triggers:
+          - type: response
+            data:
+              text: "The door won't budge."
+      - id: close
+        triggers:
+          - type: response
+            data:
+              text: "The door won't budge."
+  - id: studio.paint
+    name: paint
+    synonyms: [paint]
+    actions:
+      - id: break
+        triggers:
+          - type: response
+            data:
+              text: "Some paint chips away, revealing more paint."
   - owners-manual
   - id: studio.chimney
     name: chimney

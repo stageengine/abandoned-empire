@@ -3,3 +3,14 @@ name: stone door
 
 synonyms: [door, huge door]
 start: stone-barrow
+
+actions:
+  - id: open
+    triggers:
+      - type: response
+        data: { text: The door is too heavy. }
+
+  - id: close
+    triggers:
+      - type: response
+        data: { text: The door is too heavy. }

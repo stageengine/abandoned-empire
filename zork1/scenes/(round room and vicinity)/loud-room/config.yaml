@@ -5,6 +5,23 @@ meta:
   title: Loud Room
 
 presence:
+  # Quiet, once the echo has been called for. ZIL also quietens it at low tide with
+  # the gates shut, which the port has no tide for.
+  - requires:
+      - type: all-of
+        data:
+          conditions:
+            - type: flag
+              data: { flag: light }
+            - type: flag
+              data: { flag: loud-flag }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is a large room with a ceiling which cannot be detected from the ground. There
+            is a narrow passage from east to west and a stone stairway leading upward. The room
+            is eerie in its quietness.
   - requires:
       - type: flag
         data:
@@ -14,14 +31,55 @@ presence:
         data:
           text: >-
             This is a large room with a ceiling which cannot be detected from the ground. There
-            is a narrow passage from east to west and a stone stairway leading upward.
+            is a narrow passage from east to west and a stone stairway leading upward. The room
+            is deafeningly loud with an undetermined rushing sound. The sound seems to
+            reverberate from all of the walls, making it difficult even to think.
   - triggers:
       - type: response
         data:
           text: It is pitch black. You are likely to be eaten by a grue.
 
-objects: [bar]
+# The whole of the puzzle: the room is too loud to take anything in until somebody
+# says the word back at it.
+actions:
+  - id: echo
+    requires:
+      - type: flag
+        negate: true
+        data: { flag: loud-flag }
+    triggers:
+      - type: response
+        data: { text: The acoustics of the room change subtly. }
+      - type: set-flag
+        data: { flag: loud-flag, value: true }
 
+  - id: echo
+    triggers:
+      - type: response
+        data: { text: The acoustics of the room are already as they should be. }
+
+objects:
+  - bar
+  - id: loud-room.teeth
+    name: set of teeth
+    synonyms: [teeth, tooth]
+    actions:
+      - id: brush
+        triggers:
+          - type: response
+            data:
+              text: >-
+                Dental hygiene is highly recommended, but I'm not sure what you want to brush
+                them with.
+  - id: loud-room.wall
+    name: surrounding wall
+    synonyms: [wall, walls]
+    actions:
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: The wall is a wall, and gives nothing away.
 navigation:
   - id: east
     triggers:

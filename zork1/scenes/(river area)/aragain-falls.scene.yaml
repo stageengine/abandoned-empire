@@ -4,6 +4,17 @@ meta:
   title: Aragain Falls
 
 presence:
+  # Once the sceptre has been waved, the rainbow is something you can walk on, and
+  # the room says so.
+  - requires:
+      - type: flag
+        data: { flag: rainbow-flag }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You are at the top of Aragain Falls, an enormous waterfall with a drop of about 450
+            feet. The only path here is on the north end. A solid rainbow spans the falls.
   - triggers:
       - type: response
         data:
@@ -12,6 +23,26 @@ presence:
             feet. The only path here is on the north end.
 
 objects:
+  - id: aragain-falls.teeth
+    name: set of teeth
+    synonyms: [teeth, tooth]
+    actions:
+      - id: brush
+        triggers:
+          - type: response
+            data:
+              text: >-
+                Dental hygiene is highly recommended, but I'm not sure what you want to brush
+                them with.
+  - id: aragain-falls.wall
+    name: surrounding wall
+    synonyms: [wall, walls]
+    actions:
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: The wall is a wall, and gives nothing away.
   - id: aragain-falls.global-water
     name: water
     synonyms: [quantity]

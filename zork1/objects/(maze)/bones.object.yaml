@@ -3,3 +3,40 @@ name: skeleton
 
 synonyms: [bones, body]
 start: maze-5
+
+# Disturbing a fellow adventurer's remains. The words are here; the curse itself is
+# in `every-turn.yaml`, because banishing "your valuables" means naming each of them
+# and a rule per treasure is the only way to say it.
+actions:
+  - id: get
+    triggers:
+      - type: response
+        data:
+          text: >-
+            A ghost appears in the room and is appalled at your desecration of the remains of a
+            fellow adventurer. He casts a curse on your valuables and banishes them to the Land
+            of the Living Dead. The ghost leaves, muttering obscenities.
+      - type: set-flag
+        data: { flag: cursed, value: true }
+
+  - id: move
+    triggers:
+      - type: response
+        data:
+          text: >-
+            A ghost appears in the room and is appalled at your desecration of the remains of a
+            fellow adventurer. He casts a curse on your valuables and banishes them to the Land
+            of the Living Dead. The ghost leaves, muttering obscenities.
+      - type: set-flag
+        data: { flag: cursed, value: true }
+
+  - id: attack
+    triggers:
+      - type: response
+        data:
+          text: >-
+            A ghost appears in the room and is appalled at your desecration of the remains of a
+            fellow adventurer. He casts a curse on your valuables and banishes them to the Land
+            of the Living Dead. The ghost leaves, muttering obscenities.
+      - type: set-flag
+        data: { flag: cursed, value: true }

@@ -1,3 +1,23 @@
 id: machine-switch
 name: switch
 start: machine-room
+
+actions:
+  - id: turn
+    preposition: with
+    indirect: screwdriver
+    requires:
+      - type: has-item
+        data: { object: screwdriver }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The machine comes to life (figuratively) with a dazzling display of colored lights
+            and bizarre noises. After a few moments, the excitement abates.
+
+  - id: turn
+    triggers:
+      - type: response
+        data:
+          text: It's not clear how to turn it with your bare hands.

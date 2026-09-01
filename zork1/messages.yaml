@@ -35,8 +35,8 @@ messages:
 
   # Not reading it.
   input.unknown: I don't know that word.
-  input.unknown-part: I don't know the word "<words>".
-  input.leftover: I don't know the word "<words>".
+  input.unknown-part: I don't know the word <words>.
+  input.leftover: I don't know what to do with <words>.
   input.pronoun: I don't know what you're referring to.
   input.verb-alone: What do you want to <verb>?
 

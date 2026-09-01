@@ -34,3 +34,24 @@ presence:
         data:
           text: There is a folded pile of plastic here which has a small valve attached.
 start: dam-base
+
+actions:
+  - id: inflate
+    preposition: with
+    indirect: pump
+    requires:
+      - type: has-item
+        data: { object: pump }
+    triggers:
+      - type: response
+        data: { text: The boat inflates and appears seaworthy. }
+      - type: move-object
+        data: { object: inflatable-boat, to: offstage }
+      - type: move-object
+        data: { object: inflated-boat, to: here }
+
+  - id: inflate
+    triggers:
+      - type: response
+        data:
+          text: With what? Your lungs?

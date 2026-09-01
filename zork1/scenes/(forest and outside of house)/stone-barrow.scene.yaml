@@ -11,9 +11,58 @@ presence:
             You are standing in front of a massive barrow of stone. In the east face is a huge
             stone door which is open. You cannot see into the dark of the tomb.
 
-objects: [barrow-door, barrow]
-
+objects:
+  - barrow-door
+  - barrow
+  - id: stone-barrow.teeth
+    name: set of teeth
+    synonyms: [teeth, tooth]
+    actions:
+      - id: brush
+        triggers:
+          - type: response
+            data:
+              text: >-
+                Dental hygiene is highly recommended, but I'm not sure what you want to brush
+                them with.
+  - id: stone-barrow.wall
+    name: surrounding wall
+    synonyms: [wall, walls]
+    actions:
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: The wall is a wall, and gives nothing away.
 navigation:
+  # The way in, and the end of the game. The last ten of the three hundred and
+  # fifty are for walking through the door, which is the only ending Zork has that
+  # is not a death.
+  - id: west
+    synonyms: [barrow, tomb, door]
+    triggers:
+      - type: response
+        data:
+          text: >-
+            As you enter the barrow, the door closes inexorably behind you. Around you it is
+            dark, but ahead is an enormous cavern, brightly lit. Through its center runs a wide
+            stream. Spanning the stream is a small wooden footbridge, and beyond a path leads
+            into a dark tunnel.
+      - type: response
+        data:
+          text: >-
+            Above the bridge, floating in the air, is a large sign. It reads: All ye who stand
+            before this bridge have completed a great and perilous adventure which has tested
+            your wit and courage. You have mastered the first part of the ZORK trilogy.
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 10
+      - type: end-game
+        data:
+          journal: walked into the barrow, having mastered the Great Underground Empire
+
   - id: northeast
     triggers:
       - type: change-scene

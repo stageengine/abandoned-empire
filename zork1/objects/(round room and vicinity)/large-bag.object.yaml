@@ -2,4 +2,26 @@ id: large-bag
 name: large bag
 
 synonyms: [bag, thiefs bag]
-start: in:thief
+
+actions:
+  - id: get
+    triggers:
+      - type: response
+        data: { text: The bag will be taken over his dead body. }
+
+  - id: open
+    triggers:
+      - type: response
+        data: { text: Getting close enough would be a good trick. }
+
+  - id: close
+    triggers:
+      - type: response
+        data: { text: Getting close enough would be a good trick. }
+
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The bag is underneath the thief, so one can't say what, if anything, is inside.

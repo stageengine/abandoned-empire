@@ -12,33 +12,254 @@ actions:
         data:
           text: The trophy case is securely fastened to the wall.
 
-  # One of these per treasure, because Stage has no containers: a thing is in a
-  # room, in your hands, or offstage, and there is no third place for it to be
-  # inside. Putting a treasure in the case sends it offstage and scores it, and
-  # taking it back out is not something the port can offer yet.
+  # One of these per treasure, and the reason is not the one this comment used to
+  # give. Stage has containers now - `put the coin in the sack` works without
+  # anybody writing it - but the built-in only moves a thing, and each treasure
+  # here is worth a different number of points. A trigger names a fixed object and
+  # a fixed amount, so there is no way to write "score whatever they just put in
+  # by whatever it is worth" once. That is the engine's own test failing, and it
+  # is on the roadmap as a trigger that cannot act on a thing chosen during play.
+  #
+  # Sent offstage rather than into the case, which is also not the old reason. A
+  # thing may be `in:trophy-case` now, and putting one there would be worse: the
+  # room cannot recite a container's contents, so the treasure would be invisible
+  # and still reachable, and `take the coffin` would quietly undo the score. Until
+  # a room lists what is in a container standing in it, offstage is the honest
+  # place for a thing the player has finished with.
+  #
+  # No gate on any of them, and that is worth saying because two were tried. A
+  # `has-item` requirement cannot be heard when it fails: the catch-all below
+  # carries no requirements, so it answers whenever a particular one does not, and
+  # the particular's own words are dead on the page. A `once` cannot be reached
+  # either, for a different reason - the treasure is offstage the moment it is
+  # deposited, so a second attempt names nothing and the catch-all answers that
+  # too. What is left is the honest shape: no gate, because there is no second
+  # time to gate against.
+
+  - id: put
+    preposition: in
+    indirect: bag-of-coins
+    triggers:
+      - type: response
+        data:
+          text: Done.
+      - type: move-object
+        data:
+          object: bag-of-coins
+          to: offstage
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 5
+
+  - id: put
+    preposition: in
+    indirect: bar
+    triggers:
+      - type: response
+        data:
+          text: Done.
+      - type: move-object
+        data:
+          object: bar
+          to: offstage
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 5
+
+  - id: put
+    preposition: in
+    indirect: bauble
+    triggers:
+      - type: response
+        data:
+          text: Done.
+      - type: move-object
+        data:
+          object: bauble
+          to: offstage
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 1
+
+  - id: put
+    preposition: in
+    indirect: bracelet
+    triggers:
+      - type: response
+        data:
+          text: Done.
+      - type: move-object
+        data:
+          object: bracelet
+          to: offstage
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 5
+
+  - id: put
+    preposition: in
+    indirect: broken-canary
+    triggers:
+      - type: response
+        data:
+          text: Done.
+      - type: move-object
+        data:
+          object: broken-canary
+          to: offstage
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 1
+
+  - id: put
+    preposition: in
+    indirect: broken-egg
+    triggers:
+      - type: response
+        data:
+          text: Done.
+      - type: move-object
+        data:
+          object: broken-egg
+          to: offstage
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 2
+
+  - id: put
+    preposition: in
+    indirect: canary
+    triggers:
+      - type: response
+        data:
+          text: Done.
+      - type: move-object
+        data:
+          object: canary
+          to: offstage
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 4
+
+  - id: put
+    preposition: in
+    indirect: chalice
+    triggers:
+      - type: response
+        data:
+          text: Done.
+      - type: move-object
+        data:
+          object: chalice
+          to: offstage
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 5
+
+  - id: put
+    preposition: in
+    indirect: coffin
+    triggers:
+      - type: response
+        data:
+          text: Done.
+      - type: move-object
+        data:
+          object: coffin
+          to: offstage
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 15
+
+  - id: put
+    preposition: in
+    indirect: diamond
+    triggers:
+      - type: response
+        data:
+          text: Done.
+      - type: move-object
+        data:
+          object: diamond
+          to: offstage
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 10
+
+  - id: put
+    preposition: in
+    indirect: egg
+    triggers:
+      - type: response
+        data:
+          text: Done.
+      - type: move-object
+        data:
+          object: egg
+          to: offstage
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 5
+
+  - id: put
+    preposition: in
+    indirect: emerald
+    triggers:
+      - type: response
+        data:
+          text: Done.
+      - type: move-object
+        data:
+          object: emerald
+          to: offstage
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 10
+
+  - id: put
+    preposition: in
+    indirect: jade
+    triggers:
+      - type: response
+        data:
+          text: Done.
+      - type: move-object
+        data:
+          object: jade
+          to: offstage
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 5
+
   - id: put
     preposition: in
     indirect: painting
-    requires:
-      - type: has-item
-        data:
-          object: painting
-        failure:
-          triggers:
-            - type: response
-              data:
-                text: You aren't holding the painting.
-      - type: flag
-        negate: true
-        data:
-          flag: painting-ruined
-        failure:
-          triggers:
-            - type: response
-              data:
-                text: >-
-                  You put the worthless piece of canvas in the case. It does not improve the
-                  look of either.
     triggers:
       - type: response
         data:
@@ -55,23 +276,31 @@ actions:
 
   - id: put
     preposition: in
-    indirect: trunk
-    requires:
-      - type: has-item
-        data:
-          object: trunk
-        failure:
-          triggers:
-            - type: response
-              data:
-                text: You aren't holding the trunk of jewels.
+    indirect: pot-of-gold
     triggers:
       - type: response
         data:
           text: Done.
       - type: move-object
         data:
-          object: trunk
+          object: pot-of-gold
+          to: offstage
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 10
+
+  - id: put
+    preposition: in
+    indirect: scarab
+    triggers:
+      - type: response
+        data:
+          text: Done.
+      - type: move-object
+        data:
+          object: scarab
           to: offstage
       - type: adjust-measure
         data:
@@ -81,16 +310,24 @@ actions:
 
   - id: put
     preposition: in
-    indirect: skull
-    requires:
-      - type: has-item
+    indirect: sceptre
+    triggers:
+      - type: response
         data:
-          object: skull
-        failure:
-          triggers:
-            - type: response
-              data:
-                text: You aren't holding the crystal skull.
+          text: Done.
+      - type: move-object
+        data:
+          object: sceptre
+          to: offstage
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 6
+
+  - id: put
+    preposition: in
+    indirect: skull
     triggers:
       - type: response
         data:
@@ -105,6 +342,59 @@ actions:
           measure: score
           by: 10
 
+  - id: put
+    preposition: in
+    indirect: torch
+    triggers:
+      - type: response
+        data:
+          text: Done.
+      - type: move-object
+        data:
+          object: torch
+          to: offstage
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 6
+
+  - id: put
+    preposition: in
+    indirect: trident
+    triggers:
+      - type: response
+        data:
+          text: Done.
+      - type: move-object
+        data:
+          object: trident
+          to: offstage
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 11
+
+  - id: put
+    preposition: in
+    indirect: trunk
+    triggers:
+      - type: response
+        data:
+          text: Done.
+      - type: move-object
+        data:
+          object: trunk
+          to: offstage
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 5
+
+  # Anything that is not one of the twenty-one. Below them all, and carrying no
+  # requirements, so it answers for everything they do not.
   - id: put
     preposition: in
     triggers:

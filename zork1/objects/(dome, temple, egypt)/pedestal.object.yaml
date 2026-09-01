@@ -3,3 +3,14 @@ id: pedestal
 synonyms: [white pedestal, marble pedestal]
 contains: true
 start: torch-room
+
+actions:
+  - id: open
+    triggers:
+      - type: response
+        data: { text: You can't do that. }
+
+  - id: close
+    triggers:
+      - type: response
+        data: { text: You can't do that. }

@@ -3,6 +3,14 @@ conversational: [ask, tell, answer]
 recipient-first: [give, show]
 
 verbs:
+  # Zork's two questions about the player rather than about the world. Both are
+  # sentences the engine fills in: a measure named in prose is what makes them
+  # writable at all, and before it a score that moved 350 points was invisible.
+  - id: score
+    synonyms: []
+  - id: diagnose
+    synonyms: [health]
+
   - id: look
     synonyms: [examine, read, inspect, study, watch, describe, x, l]
   - id: get
@@ -114,6 +122,8 @@ verbs:
     synonyms: [sigh]
   - id: chomp
     synonyms: [lose, barf]
+  - id: brush
+    synonyms: [clean]
   - id: repent
   - id: exorcise
     synonyms: [banish, lay to rest]
@@ -193,3 +203,10 @@ prepositions:
 conjunctions:
   coordinating: [and, then]
   subordinating: []
+
+# Zork players type `take all` constantly, and it is how the endgame is played.
+# Declared rather than shipped, because `all` is English and this engine ships
+# none: a game in another language writes its own word here.
+quantifiers:
+  - id: all
+    synonyms: [everything, every]

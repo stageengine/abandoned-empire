@@ -32,3 +32,11 @@ presence:
         data:
           text: There is a silver chalice, intricately engraved, here.
 start: treasure-room
+
+actions:
+  - id: put
+    preposition: in
+    triggers:
+      - type: response
+        data:
+          text: "You can't. It's not a very good chalice, is it?"

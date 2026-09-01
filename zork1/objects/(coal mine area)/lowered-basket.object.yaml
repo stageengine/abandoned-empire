@@ -20,3 +20,20 @@ presence:
         data:
           text: From the chain is suspended a basket.
 start: lower-shaft
+
+actions:
+  - id: get
+    triggers:
+      - type: response
+        data:
+          text: The cage is securely fastened to the iron chain.
+
+  - id: raise
+    triggers:
+      - type: response
+        data:
+          text: The basket is raised to the top of the shaft.
+      - type: move-object
+        data: { object: lowered-basket, to: offstage }
+      - type: move-object
+        data: { object: raised-basket, to: here }

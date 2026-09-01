@@ -34,3 +34,14 @@ presence:
         data:
           text: There is a punctured boat here.
 start: offstage
+
+actions:
+  - id: inflate
+    triggers:
+      - type: response
+        data: { text: No chance. Some moron punctured it. }
+
+  - id: board
+    triggers:
+      - type: response
+        data: { text: No chance. Some moron punctured it. }

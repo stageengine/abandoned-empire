@@ -12,6 +12,26 @@ presence:
           text: This is a dimly lit forest, with large trees all around.
 
 objects:
+  - id: forest-3.teeth
+    name: set of teeth
+    synonyms: [teeth, tooth]
+    actions:
+      - id: brush
+        triggers:
+          - type: response
+            data:
+              text: >-
+                Dental hygiene is highly recommended, but I'm not sure what you want to brush
+                them with.
+  - id: forest-3.wall
+    name: surrounding wall
+    synonyms: [wall, walls]
+    actions:
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: The wall is a wall, and gives nothing away.
   - id: forest-3.tree
     name: tree
     synonyms: [branch, large tree, large branch, storm tree, storm branch]

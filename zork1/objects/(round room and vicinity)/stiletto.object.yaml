@@ -20,4 +20,10 @@ presence:
       - type: response
         data:
           text: There is a stiletto here.
-start: in:thief
+
+actions:
+  - id: get
+    triggers:
+      - type: response
+        data:
+          text: The thief has his hand on it, and would rather you did not.

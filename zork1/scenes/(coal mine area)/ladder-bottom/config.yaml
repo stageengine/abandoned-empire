@@ -21,6 +21,26 @@ presence:
           text: It is pitch black. You are likely to be eaten by a grue.
 
 objects:
+  - id: ladder-bottom.teeth
+    name: set of teeth
+    synonyms: [teeth, tooth]
+    actions:
+      - id: brush
+        triggers:
+          - type: response
+            data:
+              text: >-
+                Dental hygiene is highly recommended, but I'm not sure what you want to brush
+                them with.
+  - id: ladder-bottom.wall
+    name: surrounding wall
+    synonyms: [wall, walls]
+    actions:
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: The wall is a wall, and gives nothing away.
   - id: ladder-bottom.ladder
     name: wooden ladder
     synonyms: [ladder, rickety ladder, narrow ladder]

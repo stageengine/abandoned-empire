@@ -32,6 +32,11 @@ requires:
           data: { tag: dark }
         - type: flag
           data: { flag: light }
+
+  # Buried until somebody digs it out of the sand, which is three turns with the
+  # shovel and one turn too many kills you.
+  - type: flag
+    data: { flag: scarab-found }
 presence:
   - triggers:
       - type: response

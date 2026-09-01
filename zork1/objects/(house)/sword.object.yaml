@@ -44,3 +44,24 @@ presence:
         data:
           text: There is a sword here.
 start: living-room
+
+actions:
+  - id: look
+    requires:
+      - type: any-of
+        data:
+          conditions:
+            - type: character-here
+              data: { character: troll }
+            - type: character-here
+              data: { character: thief }
+            - type: character-here
+              data: { character: cyclops }
+    triggers:
+      - type: response
+        data: { text: Your sword is glowing very brightly. }
+
+  - id: look
+    triggers:
+      - type: response
+        data: { text: Your sword is no longer glowing. }

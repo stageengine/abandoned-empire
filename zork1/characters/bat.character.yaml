@@ -1,0 +1,80 @@
+id: bat
+
+synonyms: [vampire, vampire bat, vampire vampire, deranged bat, deranged vampire]
+requires:
+  # Whether the player can see. Seventy times, which is what
+  # ROADMAP.md's "whether the player can see" is about: one block on the game
+  # would say this once and reach a thing carried in and dropped besides.
+  - type: any-of
+    data:
+      conditions:
+        - type: scene
+          negate: true
+          data: { tag: dark }
+        - type: flag
+          data: { flag: light }
+presence:
+  - triggers:
+      - type: response
+        data:
+          text: >-
+            In the corner of the room on the ceiling is a large vampire bat who is obviously
+            deranged and holding his nose.
+
+start: bat-room
+
+# ZIL sends the player flying to a random room in the mine unless they are carrying
+# garlic. The flight is a roll over a table of rooms and is not written here; what
+# is written is why he leaves you alone, which is the part a player has to work out.
+actions:
+  - id: look
+    triggers:
+      - type: response
+        data:
+          text: >-
+            A large vampire bat, hanging from the ceiling, holding his nose against the smell
+            of what you are carrying.
+
+  # Gated on the case being refused, with the refusal in its own triggers, so the
+  # ordinary answer below is reached rather than gated past. Written the other way
+  # round the build says so, which is how this came to be written this way.
+  - id: get
+    requires:
+      - type: has-item
+        negate: true
+        data: { object: garlic }
+    triggers:
+      - type: response
+        data:
+          text: The bat grabs you by the scruff of your neck and lifts you away.
+
+  - id: get
+    triggers:
+      - type: response
+        data:
+          text: You can't reach him; he's on the ceiling.
+
+  # Gated on the case being refused, with the refusal in its own triggers, so the
+  # ordinary answer below is reached rather than gated past. Written the other way
+  # round the build says so, which is how this came to be written this way.
+  - id: attack
+    requires:
+      - type: has-item
+        negate: true
+        data: { object: garlic }
+    triggers:
+      - type: response
+        data:
+          text: The bat grabs you by the scruff of your neck and lifts you away.
+
+  - id: attack
+    triggers:
+      - type: response
+        data:
+          text: You can't reach him; he's on the ceiling.
+
+  - id: tell
+    triggers:
+      - type: response
+        data:
+          text: "    Fweep!\n    Fweep!\n    Fweep!"

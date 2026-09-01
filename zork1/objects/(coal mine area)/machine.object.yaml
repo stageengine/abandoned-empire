@@ -2,3 +2,29 @@ id: machine
 
 synonyms: [pdp10, dryer, lid]
 start: machine-room
+
+actions:
+  - id: get
+    triggers:
+      - type: response
+        data: { text: It is far too large to carry. }
+
+  - id: open
+    triggers:
+      - type: response
+        data: { text: The lid opens. }
+      - type: set-flag
+        data: { flag: machine-open, value: true }
+
+  - id: close
+    triggers:
+      - type: response
+        data: { text: The lid closes. }
+      - type: set-flag
+        data: { flag: machine-open, value: false }
+
+  - id: turn
+    triggers:
+      - type: response
+        data:
+          text: It's not clear how to turn it on with your bare hands.

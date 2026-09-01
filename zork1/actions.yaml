@@ -9,6 +9,22 @@ actions:
   # early if anything interesting fires. Stage has no trigger that moves the
   # clock, so this is one turn with Zork's own words on it: the world still does
   # what a turn passing does, and does it once.
+  - id: score
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Your score is <player:score> (total of 350 points), in <player:moves> moves.
+            This gives you the rank of Beginner.
+
+  - id: diagnose
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You have <player:health> of four wounds' worth of life in you, and can carry
+            <player:allowance>.
+
   - id: wait
     triggers:
       - type: response

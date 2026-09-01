@@ -11,8 +11,28 @@ presence:
             This is an art gallery. Most of the paintings have been stolen by vandals with
             exceptional taste. The vandals left through either the north or west exits.
 
-objects: [painting]
-
+objects:
+  - painting
+  - id: gallery.teeth
+    name: set of teeth
+    synonyms: [teeth, tooth]
+    actions:
+      - id: brush
+        triggers:
+          - type: response
+            data:
+              text: >-
+                Dental hygiene is highly recommended, but I'm not sure what you want to brush
+                them with.
+  - id: gallery.wall
+    name: surrounding wall
+    synonyms: [wall, walls]
+    actions:
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: The wall is a wall, and gives nothing away.
 navigation:
   - id: north
     triggers:

@@ -38,8 +38,43 @@ presence:
             The way through the gate is barred by evil spirits, who jeer at your attempts to
             pass.
 
+characters: [ghosts]
+
 objects:
-  - ghosts
+  - id: entrance-to-hades.teeth
+    name: set of teeth
+    synonyms: [teeth, tooth]
+    actions:
+      - id: brush
+        triggers:
+          - type: response
+            data:
+              text: >-
+                Dental hygiene is highly recommended, but I'm not sure what you want to brush
+                them with.
+  - id: entrance-to-hades.wall
+    name: surrounding wall
+    synonyms: [wall, walls]
+    actions:
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: The wall is a wall, and gives nothing away.
+  - id: entrance-to-hades.gate
+    name: gate
+    synonyms: [gate, gates]
+    actions:
+      - id: touch
+        triggers:
+          - type: response
+            data:
+              text: "The gate is protected by an invisible force. It makes your teeth ache to touch it."
+      - id: open
+        triggers:
+          - type: response
+            data:
+              text: "The gate is protected by an invisible force. It makes your teeth ache to touch it."
   - hot-bell
   - id: entrance-to-hades.bodies
     name: pile of bodies
