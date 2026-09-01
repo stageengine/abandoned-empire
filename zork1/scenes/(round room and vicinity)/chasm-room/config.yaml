@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: Chasm
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -16,8 +15,7 @@ actions:
           text: >-
             A chasm runs southwest to northeast and the path follows it. You are on the south
             side of the chasm, where a crack opens into a passage.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: It is pitch black. You are likely to be eaten by a grue.

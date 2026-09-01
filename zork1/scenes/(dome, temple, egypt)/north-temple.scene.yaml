@@ -3,9 +3,8 @@ id: north-temple
 meta:
   title: Temple
 
-actions:
-  - id: look
-    triggers:
+presence:
+  - triggers:
       - type: response
         data:
           text: >-

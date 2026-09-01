@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: Frigid River
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -16,8 +15,7 @@ actions:
           text: >-
             The river turns a corner here making it impossible to see the Dam. The White Cliffs
             loom on the east bank and large rocks prevent landing on the west.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: It is pitch black. You are likely to be eaten by a grue.

@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: White Cliffs Beach
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -16,8 +15,7 @@ actions:
           text: >-
             You are on a rocky, narrow strip of beach beside the Cliffs. A narrow path leads
             north along the shore.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: It is pitch black. You are likely to be eaten by a grue.

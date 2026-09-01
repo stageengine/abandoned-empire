@@ -3,9 +3,8 @@ id: gallery
 meta:
   title: Gallery
 
-actions:
-  - id: look
-    triggers:
+presence:
+  - triggers:
       - type: response
         data:
           text: >-

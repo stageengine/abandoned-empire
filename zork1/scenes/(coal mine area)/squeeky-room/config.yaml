@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: Squeaky Room
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -16,8 +15,7 @@ actions:
           text: >-
             You are in a small room. Strange squeaky sounds may be heard coming from the passage
             at the north end. You may also escape to the east.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: It is pitch black. You are likely to be eaten by a grue.

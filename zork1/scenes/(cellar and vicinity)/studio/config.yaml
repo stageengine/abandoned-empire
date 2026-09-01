@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: Studio
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -19,8 +18,7 @@ actions:
             here. At the south end of the room is an open door (also covered with paint). A dark
             and narrow chimney leads up from a fireplace; although you might be able to get up
             it, it seems unlikely you could get back down.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: It is pitch black. You are likely to be eaten by a grue.

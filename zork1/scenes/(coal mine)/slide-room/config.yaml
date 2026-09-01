@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: Slide Room
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -18,8 +17,7 @@ actions:
             south wall of the chamber the letters "Granite Wall" are etched in the rock. To the
             east is a long passage, and there is a steep metal slide twisting downward. To the
             north is a small opening.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: It is pitch black. You are likely to be eaten by a grue.

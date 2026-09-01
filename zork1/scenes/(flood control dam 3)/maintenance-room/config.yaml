@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: Maintenance Room
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: maintenance-lights
@@ -18,8 +17,7 @@ actions:
             Apparently, this room has been ransacked recently, for most of the valuable
             equipment is gone. On the wall in front of you is a group of buttons colored blue,
             yellow, brown, and red. There are doorways to the west and south.
-  - id: look
-    requires:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -31,8 +29,7 @@ actions:
             Apparently, this room has been ransacked recently, for most of the valuable
             equipment is gone. On the wall in front of you is a group of buttons colored blue,
             yellow, brown, and red. There are doorways to the west and south.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: >-

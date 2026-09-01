@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: Timber Room
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -17,8 +16,7 @@ actions:
             This is a long and narrow passage, which is cluttered with broken timbers. A wide
             passage comes from the east and turns at the west end of the room into a very narrow
             passageway. From the west comes a strong draft.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: It is pitch black. You are likely to be eaten by a grue.

@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: Sandy Cave
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -14,8 +13,7 @@ actions:
       - type: response
         data:
           text: This is a sand-filled cave whose exit is to the southwest.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: It is pitch black. You are likely to be eaten by a grue.

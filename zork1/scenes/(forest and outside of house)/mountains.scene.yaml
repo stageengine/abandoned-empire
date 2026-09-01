@@ -3,9 +3,8 @@ id: mountains
 meta:
   title: Forest
 
-actions:
-  - id: look
-    triggers:
+presence:
+  - triggers:
       - type: response
         data:
           text: The forest thins out, revealing impassable mountains.

@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: Gas Room
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -16,8 +15,7 @@ actions:
           text: >-
             This is a small room which smells strongly of coal gas. There is a short climb up
             some stairs and a narrow tunnel leading east.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: It is pitch black. You are likely to be eaten by a grue.

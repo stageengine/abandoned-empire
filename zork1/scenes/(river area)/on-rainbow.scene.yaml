@@ -3,9 +3,8 @@ id: on-rainbow
 meta:
   title: On the Rainbow
 
-actions:
-  - id: look
-    triggers:
+presence:
+  - triggers:
       - type: response
         data:
           text: >-

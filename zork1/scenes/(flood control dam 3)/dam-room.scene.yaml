@@ -3,9 +3,8 @@ id: dam-room
 meta:
   title: Dam
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: gate-flag
@@ -32,8 +31,7 @@ actions:
           text: >-
             There is a control panel here, on which a large metal bolt is mounted. Directly
             above the bolt is a small green plastic bubble which is glowing serenely.
-  - id: look
-    requires:
+  - requires:
       - type: flag
         data:
           flag: gate-flag
@@ -61,8 +59,7 @@ actions:
           text: >-
             There is a control panel here, on which a large metal bolt is mounted. Directly
             above the bolt is a small green plastic bubble which is glowing serenely.
-  - id: look
-    requires:
+  - requires:
       - type: flag
         data:
           flag: gate-flag
@@ -90,8 +87,7 @@ actions:
           text: >-
             There is a control panel here, on which a large metal bolt is mounted. Directly
             above the bolt is a small green plastic bubble which is glowing serenely.
-  - id: look
-    requires:
+  - requires:
       - type: flag
         data:
           flag: gate-flag
@@ -120,8 +116,7 @@ actions:
           text: >-
             There is a control panel here, on which a large metal bolt is mounted. Directly
             above the bolt is a small green plastic bubble which is glowing serenely.
-  - id: look
-    requires:
+  - requires:
       - type: flag
         data:
           flag: gates-open
@@ -145,8 +140,7 @@ actions:
           text: >-
             There is a control panel here, on which a large metal bolt is mounted. Directly
             above the bolt is a small green plastic bubble.
-  - id: look
-    requires:
+  - requires:
       - type: flag
         data:
           flag: gates-open
@@ -171,8 +165,7 @@ actions:
           text: >-
             There is a control panel here, on which a large metal bolt is mounted. Directly
             above the bolt is a small green plastic bubble.
-  - id: look
-    requires:
+  - requires:
       - type: flag
         negate: true
         data:
@@ -197,8 +190,7 @@ actions:
           text: >-
             There is a control panel here, on which a large metal bolt is mounted. Directly
             above the bolt is a small green plastic bubble.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: >-

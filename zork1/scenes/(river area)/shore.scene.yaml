@@ -3,9 +3,8 @@ id: shore
 meta:
   title: Shore
 
-actions:
-  - id: look
-    triggers:
+presence:
+  - triggers:
       - type: response
         data:
           text: >-

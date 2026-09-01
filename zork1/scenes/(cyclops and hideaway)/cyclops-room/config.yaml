@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: Cyclops Room
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -15,8 +14,7 @@ actions:
         data:
           text: >-
             This room has an exit on the northwest, and a staircase leading up.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: It is pitch black. You are likely to be eaten by a grue.

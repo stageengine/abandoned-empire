@@ -3,9 +3,8 @@ id: mirror-room-2
 meta:
   title: Mirror Room
 
-actions:
-  - id: look
-    triggers:
+presence:
+  - triggers:
       - type: response
         data:
           text: >-

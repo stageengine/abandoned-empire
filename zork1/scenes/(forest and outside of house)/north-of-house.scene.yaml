@@ -3,9 +3,8 @@ id: north-of-house
 meta:
   title: North of House
 
-actions:
-  - id: look
-    triggers:
+presence:
+  - triggers:
       - type: response
         data:
           text: >-

@@ -5,9 +5,8 @@ tags: [forest]
 meta:
   title: Forest
 
-actions:
-  - id: look
-    triggers:
+presence:
+  - triggers:
       - type: response
         data:
           text: This is a dimly lit forest, with large trees all around.

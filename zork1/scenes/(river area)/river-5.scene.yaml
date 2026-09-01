@@ -3,9 +3,8 @@ id: river-5
 meta:
   title: Frigid River
 
-actions:
-  - id: look
-    triggers:
+presence:
+  - triggers:
       - type: response
         data:
           text: >-

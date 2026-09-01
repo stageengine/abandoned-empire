@@ -7,9 +7,8 @@ meta:
 # Four descriptions, most particular first. The open grating is the only one that
 # does not ask for a light, because an open grating is where the light is coming
 # from - see the daylight rule in `every-turn.yaml`.
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: grate-open
@@ -23,8 +22,7 @@ actions:
         data:
           text: Above you is an open grating with sunlight pouring in.
 
-  - id: look
-    requires:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -41,8 +39,7 @@ actions:
         data:
           text: Above you is a grating.
 
-  - id: look
-    requires:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -56,8 +53,7 @@ actions:
         data:
           text: Above you is a grating locked with a skull-and-crossbones lock.
 
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: It is pitch black. You are likely to be eaten by a grue.

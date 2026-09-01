@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: Treasure Room
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -17,8 +16,7 @@ actions:
             This is a large room, whose east wall is solid granite. A number of discarded bags,
             which crumble at your touch, are scattered about on the floor. There is an exit down
             a staircase.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: It is pitch black. You are likely to be eaten by a grue.

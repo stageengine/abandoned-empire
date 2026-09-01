@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: Frigid River
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -16,8 +15,7 @@ actions:
           text: >-
             The river descends here into a valley. There is a narrow beach on the west shore
             below the cliffs. In the distance a faint rumbling can be heard.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: It is pitch black. You are likely to be eaten by a grue.

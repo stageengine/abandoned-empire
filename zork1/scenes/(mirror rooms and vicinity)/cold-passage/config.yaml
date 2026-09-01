@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: Cold Passage
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -16,8 +15,7 @@ actions:
           text: >-
             This is a cold and damp corridor where a long east-west passageway turns into a
             southward path.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: It is pitch black. You are likely to be eaten by a grue.

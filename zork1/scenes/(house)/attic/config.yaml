@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: Attic
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -14,8 +13,7 @@ actions:
       - type: response
         data:
           text: This is the attic. The only exit is a stairway leading down.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: It is pitch black. You are likely to be eaten by a grue.

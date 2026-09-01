@@ -3,9 +3,8 @@ id: stone-barrow
 meta:
   title: Stone Barrow
 
-actions:
-  - id: look
-    triggers:
+presence:
+  - triggers:
       - type: response
         data:
           text: >-

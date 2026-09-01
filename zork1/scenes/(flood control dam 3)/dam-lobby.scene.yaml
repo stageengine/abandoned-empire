@@ -3,9 +3,8 @@ id: dam-lobby
 meta:
   title: Dam Lobby
 
-actions:
-  - id: look
-    triggers:
+presence:
+  - triggers:
       - type: response
         data:
           text: >-

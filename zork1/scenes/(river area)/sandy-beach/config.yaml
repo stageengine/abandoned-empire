@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: Sandy Beach
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -17,8 +16,7 @@ actions:
             You are on a large sandy beach on the east shore of the river, which is flowing
             quickly by. A path runs beside the river to the south here, and a passage is
             partially buried in sand to the northeast.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: It is pitch black. You are likely to be eaten by a grue.

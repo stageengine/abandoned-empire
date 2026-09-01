@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: Frigid River
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -17,8 +16,7 @@ actions:
             The river is running faster here and the sound ahead appears to be that of rushing
             water. On the east shore is a sandy beach. A small area of beach can also be seen
             below the cliffs on the west shore.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: It is pitch black. You are likely to be eaten by a grue.

@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: Cellar
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -17,8 +16,7 @@ actions:
             You are in a dark and damp cellar with a narrow passageway leading north, and a
             crawlway to the south. On the west is the bottom of a steep metal ramp which is
             unclimbable.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: It is pitch black. You are likely to be eaten by a grue.

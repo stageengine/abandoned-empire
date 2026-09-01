@@ -3,9 +3,8 @@ id: land-of-living-dead
 meta:
   title: Land of the Dead
 
-actions:
-  - id: look
-    triggers:
+presence:
+  - triggers:
       - type: response
         data:
           text: >-

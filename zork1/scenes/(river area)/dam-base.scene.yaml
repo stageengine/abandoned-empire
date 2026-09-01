@@ -3,9 +3,8 @@ id: dam-base
 meta:
   title: Dam Base
 
-actions:
-  - id: look
-    triggers:
+presence:
+  - triggers:
       - type: response
         data:
           text: >-

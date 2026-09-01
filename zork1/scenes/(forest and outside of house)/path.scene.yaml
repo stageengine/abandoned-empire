@@ -5,9 +5,8 @@ tags: [forest]
 meta:
   title: Forest Path
 
-actions:
-  - id: look
-    triggers:
+presence:
+  - triggers:
       - type: response
         data:
           text: >-

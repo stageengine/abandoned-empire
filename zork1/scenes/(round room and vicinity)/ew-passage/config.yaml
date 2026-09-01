@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: East-West Passage
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -16,8 +15,7 @@ actions:
           text: >-
             This is a narrow east-west passageway. There is a narrow stairway leading down at
             the north end of the room.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: It is pitch black. You are likely to be eaten by a grue.

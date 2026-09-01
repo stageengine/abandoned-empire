@@ -6,6 +6,26 @@ portable: true
 size: 5
 contains: true
 presence:
+  # Untouched, and with the egg still in it: the nest first, then what is in it.
+  - requires:
+      - type: handled
+        negate: true
+        data: { object: nest }
+      - type: object-in
+        data:
+          object: egg
+          location: in:nest
+    triggers:
+      - type: response
+        data:
+          text: Beside you on the branch is a small bird's nest.
+      - type: response
+        data:
+          text: >-
+            In the bird's nest is a large egg encrusted with precious jewels, apparently
+            scavenged by a childless songbird. The egg is covered with fine gold inlay, and
+            ornamented in lapis lazuli and mother-of-pearl. Unlike most eggs, this one is hinged
+            and closed with a delicate looking clasp. The egg appears extremely fragile.
   - requires:
       - type: handled
         negate: true
@@ -14,6 +34,23 @@ presence:
       - type: response
         data:
           text: Beside you on the branch is a small bird's nest.
+  # Carried off the branch and put down somewhere, and still saying what is in it.
+  - requires:
+      - type: object-in
+        data:
+          object: egg
+          location: in:nest
+    triggers:
+      - type: response
+        data:
+          text: There is a bird's nest here.
+      - type: response
+        data:
+          text: >-
+            In the bird's nest is a large egg encrusted with precious jewels, apparently
+            scavenged by a childless songbird. The egg is covered with fine gold inlay, and
+            ornamented in lapis lazuli and mother-of-pearl. Unlike most eggs, this one is hinged
+            and closed with a delicate looking clasp. The egg appears extremely fragile.
   - triggers:
       - type: response
         data:

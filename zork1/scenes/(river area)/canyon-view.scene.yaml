@@ -3,9 +3,8 @@ id: canyon-view
 meta:
   title: Canyon View
 
-actions:
-  - id: look
-    triggers:
+presence:
+  - triggers:
       - type: response
         data:
           text: >-

@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: Reservoir South
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -29,8 +28,7 @@ actions:
             There is a path along the stream to the east or west, a steep pathway climbing
             southwest along the edge of a chasm, and a path leading into a canyon to the
             southeast.
-  - id: look
-    requires:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -54,8 +52,7 @@ actions:
             There is a path along the stream to the east or west, a steep pathway climbing
             southwest along the edge of a chasm, and a path leading into a canyon to the
             southeast.
-  - id: look
-    requires:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -79,8 +76,7 @@ actions:
             There is a path along the stream to the east or west, a steep pathway climbing
             southwest along the edge of a chasm, and a path leading into a canyon to the
             southeast.
-  - id: look
-    requires:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -104,8 +100,7 @@ actions:
             There is a path along the stream to the east or west, a steep pathway climbing
             southwest along the edge of a chasm, and a path leading into a canyon to the
             southeast.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: >-

@@ -3,9 +3,8 @@ id: aragain-falls
 meta:
   title: Aragain Falls
 
-actions:
-  - id: look
-    triggers:
+presence:
+  - triggers:
       - type: response
         data:
           text: >-

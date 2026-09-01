@@ -3,9 +3,8 @@ id: south-temple
 meta:
   title: Altar
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: object-in
         data:
           object: book
@@ -22,8 +21,7 @@ actions:
           text: >-
             On the altar is a large black book, open to page 569.
 
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: >-
@@ -31,6 +29,7 @@ actions:
             altar. In one corner is a small hole in the floor which leads into darkness. You
             probably could not get back up it.
 
+actions:
   # The one room in Zork I that answers a bare verb its own way. Everywhere else
   # `pray` is the game's flat line; here it puts you out in the forest, which is
   # the only way out of the temple that does not need the coffin left behind.

@@ -3,9 +3,8 @@ id: south-of-house
 meta:
   title: South of House
 
-actions:
-  - id: look
-    triggers:
+presence:
+  - triggers:
       - type: response
         data:
           text: >-

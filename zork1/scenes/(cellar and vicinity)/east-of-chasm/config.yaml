@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: East of Chasm
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -16,8 +15,7 @@ actions:
           text: >-
             You are on the east edge of a chasm, the bottom of which cannot be seen. A narrow
             passage goes north, and the path you are on continues to the east.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: It is pitch black. You are likely to be eaten by a grue.

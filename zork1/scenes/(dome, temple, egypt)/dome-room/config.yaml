@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: Dome Room
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -26,8 +25,7 @@ actions:
             Hanging down from the railing is a rope which ends about ten feet from the floor
             below.
 
-  - id: look
-    requires:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -39,8 +37,7 @@ actions:
             below. Protecting you from a precipitous drop is a wooden railing which circles the
             dome.
 
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: It is pitch black. You are likely to be eaten by a grue.

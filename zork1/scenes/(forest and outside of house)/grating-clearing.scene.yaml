@@ -5,9 +5,8 @@ meta:
 
 # Three descriptions, and the most particular goes first: the grating open, the
 # grating merely found, and the clearing before anybody has disturbed the leaves.
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: grate-open
@@ -21,8 +20,7 @@ actions:
         data:
           text: There is an open grating, descending into darkness.
 
-  - id: look
-    requires:
+  - requires:
       - type: flag
         data:
           flag: grate-revealed
@@ -36,8 +34,7 @@ actions:
         data:
           text: There is a grating securely fastened into the ground.
 
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: >-

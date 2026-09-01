@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: Twisting Passage
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -15,8 +14,7 @@ actions:
         data:
           text: >-
             This is a winding passage. It seems that there are only exits on the east and north.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: It is pitch black. You are likely to be eaten by a grue.

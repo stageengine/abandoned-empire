@@ -3,9 +3,8 @@ id: kitchen
 meta:
   title: Kitchen
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: kitchen-window-open
@@ -18,8 +17,7 @@ actions:
             seen leading upward. A dark chimney leads down and to the east is a small window
             which is open.
 
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: >-

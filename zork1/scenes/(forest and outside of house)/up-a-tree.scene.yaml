@@ -5,29 +5,11 @@ tags: [forest]
 meta:
   title: Up a Tree
 
-actions:
-  - id: look
-    requires:
-      - type: object-in
-        data:
-          object: egg
-          location: in:nest
-    triggers:
-      - type: response
-        data:
-          text: >-
-            You are about 10 feet above the ground nestled among some large branches. The
-            nearest branch above you is above your reach.
-      - type: response
-        data:
-          text: >-
-            In the bird's nest is a large egg encrusted with precious jewels, apparently
-            scavenged by a childless songbird. The egg is covered with fine gold inlay, and
-            ornamented in lapis lazuli and mother-of-pearl. Unlike most eggs, this one is hinged
-            and closed with a delicate looking clasp. The egg appears extremely fragile.
-
-  - id: look
-    triggers:
+# The nest says what is in it, so the room says only the room. This used to carry
+# a copy of the egg's own words, because a thing's line could not be gated and the
+# room's could - which put a sentence about the egg above the nest it was inside.
+presence:
+  - triggers:
       - type: response
         data:
           text: >-

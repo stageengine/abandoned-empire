@@ -3,9 +3,8 @@ id: west-of-house
 meta:
   title: West of House
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: won-flag
@@ -16,8 +15,7 @@ actions:
             You are standing in an open field west of a white house, with a boarded front door. A
             secret path leads southwest into the forest.
 
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: >-

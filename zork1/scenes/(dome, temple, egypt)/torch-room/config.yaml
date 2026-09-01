@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: Torch Room
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -17,8 +16,7 @@ actions:
             This is a large room with a prominent doorway leading to a down staircase. Above you
             is a large dome. Up around the edge of the dome (20 feet up) is a wooden railing. In
             the center of the room sits a white marble pedestal.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: It is pitch black. You are likely to be eaten by a grue.

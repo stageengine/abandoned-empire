@@ -3,9 +3,8 @@ id: cliff-middle
 meta:
   title: Rocky Ledge
 
-actions:
-  - id: look
-    triggers:
+presence:
+  - triggers:
       - type: response
         data:
           text: >-

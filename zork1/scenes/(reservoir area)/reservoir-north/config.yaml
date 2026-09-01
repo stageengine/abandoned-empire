@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: Reservoir North
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -26,8 +25,7 @@ actions:
         data:
           text: >-
             There is a slimy stairway leaving the room to the north.
-  - id: look
-    requires:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -48,8 +46,7 @@ actions:
         data:
           text: >-
             There is a slimy stairway leaving the room to the north.
-  - id: look
-    requires:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -71,8 +68,7 @@ actions:
         data:
           text: >-
             There is a slimy stairway leaving the room to the north.
-  - id: look
-    requires:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -93,8 +89,7 @@ actions:
         data:
           text: >-
             There is a slimy stairway leaving the room to the north.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: >-

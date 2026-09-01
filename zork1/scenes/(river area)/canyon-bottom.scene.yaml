@@ -3,9 +3,8 @@ id: canyon-bottom
 meta:
   title: Canyon Bottom
 
-actions:
-  - id: look
-    triggers:
+presence:
+  - triggers:
       - type: response
         data:
           text: >-

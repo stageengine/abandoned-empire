@@ -3,10 +3,9 @@ id: entrance-to-hades
 meta:
   title: Entrance to Hades
 
-actions:
+presence:
   # Once the spirits are gone the gate stops saying they are in the way.
-  - id: look
-    requires:
+  - requires:
       - type: flag
         data:
           flag: lld-flag
@@ -22,8 +21,7 @@ actions:
             The gate is open; through it you can see a desolation, with a pile of mangled bodies in one
             corner. Thousands of voices, lamenting some hideous fate, can be heard.
 
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: |-

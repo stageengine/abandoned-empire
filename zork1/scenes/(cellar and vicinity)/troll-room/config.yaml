@@ -4,9 +4,8 @@ tags: [dark]
 meta:
   title: The Troll Room
 
-actions:
-  - id: look
-    requires:
+presence:
+  - requires:
       - type: flag
         data:
           flag: light
@@ -16,8 +15,7 @@ actions:
           text: >-
             This is a small room with passages to the east and south and a forbidding hole
             leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.
-  - id: look
-    triggers:
+  - triggers:
       - type: response
         data:
           text: It is pitch black. You are likely to be eaten by a grue.
