@@ -13,8 +13,9 @@ every-turn:
   #
   # The wording is Zork's own, from `TROLL-MELEE`. Where it offers several lines
   # for one outcome it picks between them without repeating until it has used
-  # them all, which Stage cannot do - so the miss, which is the one the player
-  # sees most, is a nested equal-weight roll and the rest take one line each.
+  # them all - `shuffle` does that now - so the miss, which is the one the
+  # player sees most, is a nested roll of its own with that turned on, and the
+  # rest take one line each.
   - requires:
       - type: object-here
         data:
@@ -25,6 +26,7 @@ every-turn:
           triggers:
             - type: response
               chance:
+                shuffle: troll-miss
                 outcomes:
                   - weight: 1
                     triggers:

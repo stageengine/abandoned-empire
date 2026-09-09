@@ -5,10 +5,9 @@ Generated from `../source/zork1`: 110 rooms, 101 things, 352 ways out.
 ## How much of it is ported
 
 **Ninety-nine per cent of the backlog**, and the game can be finished. What is left
-is the two things the engine still cannot do: a line that does not repeat, and a
-trigger that cannot act on a thing chosen during play. A
-single number is a judgement rather than a measurement, so here is what it is made
-of, all of it counted from the port rather than estimated.
+is the one thing the engine still cannot do: a trigger that cannot act on a thing
+chosen during play. A single number is a judgement rather than a measurement, so
+here is what it is made of, all of it counted from the port rather than estimated.
 
 | | done | of | |
 | --- | --- | --- | --- |
@@ -138,7 +137,7 @@ there is nothing for a `get` to answer for. Fixing this for real means real
 containment, which reopens the exact gap `put` was written to avoid. Left undone,
 and correctly so.
 
-## Things Stage cannot yet say (2)
+## Things Stage cannot yet say (1)
 
 Each of these was tried against the engine before being written down, because two
 things this section claimed last time turned out to be authorable after all. A
@@ -166,13 +165,17 @@ against the built game directly, not only against the engine's own tests. Zork's
 fumble above seven held items is the same shape as `of: count` and is answerable the
 same way now; simply not written, a small flavour mechanic rather than a gap.
 
-- **`PICK-ONE` draws without replacement**: over any run of a table's length every
-  line comes back exactly once before any repeats. Thirteen call sites, two of which
-  pick a room rather than a sentence. A weighted `outcomes` list is the nearest
-  thing and is drawn *with* replacement, so a player hears one line twice before
-  they have heard the third. The troll's misses are written that way and read
-  acceptably at four lines; a two-line table would grate. The roadmap calls this *a
-  line that does not repeat*.
+A fifth, **`PICK-ONE` draws without replacement**, has gone too. `chance` takes a
+`shuffle` name now: every answer comes back exactly once before any repeats, kept
+by the name an author writes rather than by where the gate happens to sit, which
+is what let it be built at all - the roadmap's own question, settled. The troll's
+four miss lines carry `shuffle: troll-miss` and were watched through a real fight
+rather than only the engine's own tests: three different lines, three turns
+running, no repeat. The other twelve of Zork's thirteen `PICK-ONE` tables,
+including the two that pick a room rather than a sentence, want nothing further
+from the engine - `shuffle` sits on any `chance`, whatever its answers do - and
+are content work from here: a name on each remaining table, outside this file's
+count of what the engine itself cannot yet do.
 
 - **Nothing can act on a thing the player chose.** `remove-from-inventory` names one
   id and no condition or trigger carries a wildcard, so "take whatever they are
