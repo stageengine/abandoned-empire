@@ -4,6 +4,7 @@ name: small pile of coal
 synonyms: [coal, pile, heap, small coal, small pile, small heap]
 portable: true
 size: 20
+tags: [basket-cargo]
 requires:
   # Whether the player can see. Seventy times, which is what
   # ROADMAP.md's "whether the player can see" is about: one block on the game

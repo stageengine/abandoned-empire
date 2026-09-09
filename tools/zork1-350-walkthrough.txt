@@ -33,7 +33,6 @@ kill troll with sword
 kill troll with sword
 kill troll with sword
 kill troll with sword
-kill troll with sword
 @checkpoint post-troll
 west
 west
@@ -106,6 +105,8 @@ west
 wait
 wait
 wait
+wait
+wait
 north
 take trunk
 north
@@ -150,7 +151,6 @@ kill thief with knife
 kill thief with knife
 kill thief with knife
 kill thief with knife
-kill thief with knife
 @checkpoint post-thief
 take chalice
 take egg
@@ -184,6 +184,7 @@ tie rope to railing
 down
 take torch
 turn off lamp
+@checkpoint torch-secured
 south
 take bell
 east

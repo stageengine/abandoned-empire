@@ -11,7 +11,7 @@ synonyms:
   - ivory treasure
 portable: true
 size: 20
-tags: [treasure]
+tags: [treasure, basket-cargo]
 requires:
   # Whether the player can see. Seventy times, which is what
   # ROADMAP.md's "whether the player can see" is about: one block on the game

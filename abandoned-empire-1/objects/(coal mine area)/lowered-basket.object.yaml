@@ -2,6 +2,7 @@ id: lowered-basket
 name: basket
 
 synonyms: [cage, dumbwaiter, lowered cage, lowered dumbwaiter, lowered basket]
+contains: true
 requires:
   # Whether the player can see. Seventy times, which is what
   # ROADMAP.md's "whether the player can see" is about: one block on the game
@@ -33,7 +34,12 @@ actions:
       - type: response
         data:
           text: The basket is raised to the top of the shaft.
+      - type: move-tagged
+        data: { tag: basket-cargo, from: in:lowered-basket, to: in:raised-basket }
       - type: move-object
         data: { object: lowered-basket, to: offstage }
+      # The top of the shaft, not `here`, for the same reason `lower` names
+      # `lower-shaft` rather than `here`: raised from the bottom, reachable
+      # again from the top.
       - type: move-object
-        data: { object: raised-basket, to: here }
+        data: { object: raised-basket, to: shaft-room }

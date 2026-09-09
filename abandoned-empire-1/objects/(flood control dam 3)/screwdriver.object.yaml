@@ -10,6 +10,7 @@ synonyms:
   - screw driver
 portable: true
 size: 5
+tags: [basket-cargo]
 requires:
   # Whether the player can see. Seventy times, which is what
   # ROADMAP.md's "whether the player can see" is about: one block on the game
