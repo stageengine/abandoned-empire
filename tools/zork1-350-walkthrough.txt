@@ -34,8 +34,7 @@ kill troll with sword
 kill troll with sword
 kill troll with sword
 kill troll with sword
-kill troll with sword
-kill troll with sword
+@checkpoint post-troll
 west
 west
 west
@@ -152,7 +151,7 @@ kill thief with knife
 kill thief with knife
 kill thief with knife
 kill thief with knife
-kill thief with knife
+@checkpoint post-thief
 take chalice
 take egg
 take canary
