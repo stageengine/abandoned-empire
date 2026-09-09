@@ -17,7 +17,7 @@
 
 import dungeon from './dungeon.ts';
 
-const [sourceDir = '../source/zork1', gameDir = '../zork1'] = Deno.args;
+const [sourceDir = '../source/zork1', gameDir = '../abandoned-empire-1'] = Deno.args;
 
 const { rooms } = dungeon(await Deno.readTextFile(`${sourceDir}/1dungeon.zil`));
 

@@ -18,7 +18,7 @@ import vocabulary from './vocabulary.ts';
 import lookingProse, { lookingParts } from './routines.ts';
 import writeYaml, { type Value } from './write-yaml.ts';
 
-const [sourceDir = '../source/zork1', outputDir = '../zork1'] = Deno.args.filter((one) =>
+const [sourceDir = '../source/zork1', outputDir = '../abandoned-empire-1'] = Deno.args.filter((one) =>
   !one.startsWith('--')
 );
 const force = Deno.args.includes('--force');
@@ -562,11 +562,11 @@ await put(
   'config.yaml',
   writeYaml(
     {
-      id: 'zork1',
+      id: 'abandoned-empire-1',
       start: id(rooms[0].id),
 
       metadata: {
-        title: 'Zork I',
+        title: 'Abandoned Empire',
         version: '0.1.0',
         description: 'The Great Underground Empire, ported to Stage from Infocom\u2019s own ZIL source. ' +
           'A white house, a trap door, and three hundred and fifty points of treasure ' +

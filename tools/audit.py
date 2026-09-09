@@ -10,7 +10,7 @@ Only noise is stripped: dfrotz's status line and loading banner, Infocom's copyr
 and blank runs. Every word either game says to the player is kept, so a difference in
 wording shows up even where the outcome is the same.
 
-    python3 tools/audit.py script.txt ../engine/zork1.stg
+    python3 tools/audit.py script.txt ../engine/abandoned-empire-1.stg
 """
 import re
 import subprocess

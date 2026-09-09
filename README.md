@@ -1,6 +1,8 @@
-# Zork
+# Abandoned Empire
 
-Infocom's Zork, ported to the [Stage engine](https://engine.sgail.com).
+Infocom's Zork, ported to the [Stage engine](https://engine.sgail.com) - published
+under the name *Abandoned Empire*, since the MIT relicense covers the source but not
+the trademark. See [NOTICE.md](NOTICE.md#the-name).
 
 Microsoft relicensed the source of Zork I, II and III under the MIT License on 20
 November 2025, so the rooms, the puzzles and the prose can be carried across rather
@@ -9,13 +11,14 @@ one Infocom wrote. [NOTICE.md](NOTICE.md) says where it came from and under what
 
 Zork I is the game being ported. Zork II and III use the same ZIL, the same parser and
 much of the same vocabulary, so the tooling here is written for all three and this
-repository has room for `zork2/` and `zork3/` beside `zork1/` when their turn comes.
+repository has room for `abandoned-empire-2/` and `abandoned-empire-3/` beside
+`abandoned-empire-1/` when their turn comes.
 
 ## Playing it
 
 ```sh
-stage build zork1
-stage play zork1.stg
+stage build abandoned-empire-1
+stage play abandoned-empire-1.stg
 ```
 
 The map is complete and walkable, and the game plays start to finish. You can open
@@ -51,7 +54,7 @@ the third one is final.
 The game can be finished: every treasure has a score, the trophy case can be filled, and
 walking into the Stone Barrow at three hundred and fifty points is the one ending that
 is not a death. What is still missing is smaller than it was, and
-[report.md](zork1/report.md) is the exact, current list.
+[report.md](abandoned-empire-1/report.md) is the exact, current list.
 
 `messages.yaml` carries Zork's own standard responses, so the game says "Taken." and
 "You can't go that way." rather than Stage's wording, everywhere, without an action
@@ -60,7 +63,7 @@ being written for it.
 ## What is here
 
 ```
-zork1/            the game: 110 rooms, 101 things, 352 ways between them
+abandoned-empire-1/  the game: 110 rooms, 101 things, 352 ways between them
   config.yaml
   vocabulary.yaml
   every-turn.yaml
@@ -68,8 +71,8 @@ zork1/            the game: 110 rooms, 101 things, 352 ways between them
   scenes/(forest and outside of house)/west-of-house.scene.yaml
   objects/(house)/lamp.object.yaml
   report.md       what the seed could not write, which is the work queue
-tools/            the ZIL reader and the generator that seeded zork1/, and
-                  audit.py, which plays a script through both the original and
+tools/            the ZIL reader and the generator that seeded abandoned-empire-1/,
+                  and audit.py, which plays a script through both the original and
                   the port and prints where their replies part company
 source/           Infocom's repository, cloned by tools/fetch.sh, untracked
 ```
@@ -85,7 +88,7 @@ between regions renames nothing. The regions are Infocom's own, taken from the
 
 ## What is left
 
-`zork1/report.md` is generated with the game and kept up to date by hand, and is the
+`abandoned-empire-1/report.md` is generated with the game and kept up to date by hand, and is the
 exact, current list - counted from the port, not estimated. In short: every room is
 written, every treasure is scored, the game can be finished, and what remains is a
 short list of things the *engine* cannot yet say rather than prose nobody has written -
@@ -189,5 +192,5 @@ in this port's history were actually found, and needs `dfrotz` on the path and a
 built `../source/zork1/COMPILED/zork1.z3` to compare against.
 
 ```sh
-python3 tools/audit.py script.txt zork1.stg
+python3 tools/audit.py script.txt abandoned-empire-1.stg
 ```

@@ -1,8 +1,8 @@
-id: zork1
+id: abandoned-empire-1
 start: west-of-house
 
 metadata:
-  title: Zork I
+  title: Abandoned Empire
   version: 0.1.0
   description: >-
     The Great Underground Empire, ported to Stage from Infocom's own ZIL source. A white house,
