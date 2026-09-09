@@ -115,6 +115,18 @@ every-turn:
   # The grue. One rule for all seventy-seven dark rooms, because a room says
   # what kind of room it is and a condition can ask. This used to be the same
   # thirty lines in seventy-seven folders, written by a tool.
+  #
+  # `player-died` rather than `end-game` directly: ZIL's own `JIGS-UP` is one
+  # routine called for every death in the game, grue included, and gives every
+  # one of them the same two resurrections before the third is final. Calling
+  # `end-game` here instead would make this one death always final on the
+  # first turn, when it is the single most common way to die in the game.
+  #
+  # `player-died` negated too: resurrection reads it a pass later than this
+  # rule writes it, the same one-turn lag every every-turn rule reads every
+  # other's writes from, and the room is still dark on that later turn - so
+  # without this, the grue devours the player a second time while the first
+  # death is still waiting to be resolved.
   - requires:
       - type: scene
         data:
@@ -126,15 +138,20 @@ every-turn:
       - type: flag
         data:
           flag: was-dark
+      - type: flag
+        negate: true
+        data:
+          flag: player-died
     chance:
       percent: 80
     triggers:
       - type: response
         data:
           text: Oh, no! A lurking grue slithered into the room and devoured you!
-      - type: end-game
+      - type: set-flag
         data:
-          journal: eaten by a grue
+          flag: player-died
+          value: true
 
   - requires:
       - type: scene

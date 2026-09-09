@@ -20,8 +20,11 @@ measures:
           - type: response
             data:
               text: The hole collapses, smothering you.
-          - type: end-game
-            data: { journal: smothered in a hole of your own digging }
+          # `player-died` rather than `end-game`: every death in ZIL goes
+          # through one routine, `JIGS-UP`, which gives every one of them the
+          # same two resurrections before the third is final - this one too.
+          - type: set-flag
+            data: { flag: player-died, value: true }
 
 actions:
   - id: dig

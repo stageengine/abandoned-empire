@@ -2,20 +2,33 @@
 
 every-turn:
   # Standing on the mud when the gates have been closed again.
+  #
+  # `player-died` negated too: resurrection reads it a pass later than this
+  # writes it, and the tide is still in on that later turn - so without this,
+  # the water drowns the player a second time while the first is still
+  # waiting to be resolved.
   - requires:
       - type: flag
         negate: true
         data:
           flag: low-tide
+      - type: flag
+        negate: true
+        data:
+          flag: player-died
     triggers:
       - type: response
         data:
           text: >-
             The water level here has risen over your head, and the currents take you off your
             feet and away.
-      - type: end-game
+      # `player-died` rather than `end-game`: every death in ZIL goes through
+      # one routine, `JIGS-UP`, which gives every one of them the same two
+      # resurrections before the third is final - drowning included.
+      - type: set-flag
         data:
-          journal: drowned in the reservoir
+          flag: player-died
+          value: true
 
   - requires:
       - type: flag

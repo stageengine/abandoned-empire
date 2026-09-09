@@ -110,9 +110,13 @@ actions:
           text: >-
             A booming voice says "Wrong, cretin!" and you notice that you have turned into a pile
             of dust. How, I can't imagine.
-      - type: end-game
+      # `player-died` rather than `end-game`: every death in ZIL goes through
+      # one routine, `JIGS-UP`, which gives every one of them the same two
+      # resurrections before the third is final - this one included.
+      - type: set-flag
         data:
-          journal: turned to dust for burning the black book
+          flag: player-died
+          value: true
 
   - id: look
     triggers:
