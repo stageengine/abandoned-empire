@@ -12,6 +12,7 @@ synonyms:
   - sapphire treasure
 portable: true
 size: 10
+tags: [treasure]
 requires:
   # Whether the player can see. Seventy times, which is what
   # ROADMAP.md's "whether the player can see" is about: one block on the game

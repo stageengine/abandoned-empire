@@ -63,8 +63,12 @@ measures:
           - type: remove-object
             data:
               object: thief
-          # His bag and blade stay behind, which is what makes killing him worth
-          # it: whatever he has stolen over the game is in that bag.
+          # His bag and blade stay behind, and so does everything he took: the
+          # thief's own death is what makes killing him worth it, and
+          # `move-tagged` is what makes that literally true rather than a
+          # story the bag told about itself. ZIL's `DEPOSIT-BOOTY` drops
+          # everything he is holding in the one room he dies in, which is
+          # exactly this.
           - type: move-object
             data:
               object: large-bag
@@ -73,6 +77,11 @@ measures:
             data:
               object: stiletto
               to: here
+          - type: move-tagged
+            data:
+              tag: treasure
+              from: held:thief
+              to: here
           - type: set-flag
             data:
               flag: thief-fighting
@@ -80,10 +89,9 @@ measures:
       - from: 1
 
 # What he says when spoken to, looked at, fought and given things. What he *does* -
-# wandering the map and taking whatever you are carrying - is not here and cannot
-# be: `remove-from-inventory` names one id, so "take what they are holding" is a
-# rule per stealable thing against a set that changes every turn. The roadmap has
-# it as a trigger that cannot act on a thing chosen during play.
+# wandering the map and taking whatever you are carrying - is not here: he wanders,
+# so it lives in `every-turn.yaml` rather than in one room's own, and stealing is a
+# `tagged`/`move-tagged` pair there rather than one rule per stealable thing.
 actions:
   - id: look
     triggers:

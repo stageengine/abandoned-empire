@@ -4,10 +4,14 @@ Generated from `../source/zork1`: 110 rooms, 101 things, 352 ways out.
 
 ## How much of it is ported
 
-**Ninety-nine per cent of the backlog**, and the game can be finished. What is left
-is the one thing the engine still cannot do: a trigger that cannot act on a thing
-chosen during play. A single number is a judgement rather than a measurement, so
-here is what it is made of, all of it counted from the port rather than estimated.
+**The whole backlog**, and the game can be finished. The one thing the engine could
+not yet do - a trigger that could not act on a thing chosen during play - is closed
+for the shape that blocked it: a thing now carries `tags`, a `tagged` condition asks
+whether anything wearing one is at a place, and a `move-tagged` trigger sweeps every
+match in a single firing, so the sixteen rules stealing wanted are one. See *Things
+Stage cannot yet say* below and `arch/0026` in the engine. A single number is a
+judgement rather than a measurement, so here is what it is made of, all of it
+counted from the port rather than estimated.
 
 | | done | of | |
 | --- | --- | --- | --- |
@@ -63,6 +67,17 @@ build's own warnings said so the whole time - "the flag 'cyclops-flag' is asked 
 but nothing ever sets it" - and went unread. Fixed by keeping the two flags in step,
 found by an audit rather than by play, and worth writing down so the next one gets
 read.
+
+**The thief didn't stay dead.** Killing him printed the right sentence and correctly
+`remove-object`ed him to `bin` - and then, the same turn, `every-turn.yaml`'s wander
+rule moved him right back onto the map, because it is the one rule in the file with
+no gate at all. ZIL doesn't check aliveness inside each of the thief's behaviours; it
+drives all of them off one queued interrupt, `I-THIEF`, and disables it outright on
+death - `<DISABLE <INT I-THIEF>>`, `ROBBER-FUNCTION`'s `F-DEAD` branch. The wander
+rule now reads the same fact `remove-object` already writes: `object-in: { object:
+thief, location: bin }`, negated. Found live, verifying the previous slice's
+`tagged`/`move-tagged` stealing fix, by killing him and watching his own location
+field for the next several hundred turns rather than by reading the rule.
 
 Everything below is a person's job. Delete a line when it is done.
 
@@ -137,7 +152,7 @@ there is nothing for a `get` to answer for. Fixing this for real means real
 containment, which reopens the exact gap `put` was written to avoid. Left undone,
 and correctly so.
 
-## Things Stage cannot yet say (1)
+## Things Stage cannot yet say (0)
 
 Each of these was tried against the engine before being written down, because two
 things this section claimed last time turned out to be authorable after all. A
@@ -177,20 +192,37 @@ from the engine - `shuffle` sits on any `chance`, whatever its answers do - and
 are content work from here: a name on each remaining table, outside this file's
 count of what the engine itself cannot yet do.
 
-- **Nothing can act on a thing the player chose.** `remove-from-inventory` names one
-  id and no condition or trigger carries a wildcard, so "take whatever they are
-  carrying" is one rule per stealable thing, every rule saying the same about a
-  different noun. Sixteen of them make the thief a thief. The same shape is what
-  makes the trophy case eighteen blocks. The roadmap has it as *a trigger cannot act
-  on a thing chosen during play*.
+A sixth, **nothing could act on a thing the player chose**, has gone too. Every
+condition and trigger named a fixed id, so "take whatever they are carrying"
+had to be one rule per stealable thing - sixteen of them, `remove-from-inventory`
+against `has-item`, each saying exactly the same thing about a different noun. A
+thing now carries `tags`, a `tagged` condition asks whether anything wearing one
+is at a place, and a `move-tagged` trigger sweeps every match from one place to
+another in a single firing - see `arch/0026` in the engine. The sixteen rules are
+one now, gated on `tagged: { tag: treasure, location: inventory }` and firing
+`move-tagged` where each used to fire `remove-from-inventory`.
 
-  His *walking* is not part of this and was written up as impossible here once. A
-  `chance` with several answers picks one, so somebody who wanders is one rule with
-  an answer per room - thirty-three of them, in one rule, in `every-turn.yaml`.
-  Neither is his *fighting back* - a strength measure and a miss/wound/death shape
-  copied from the troll's, which this gap never blocked. What is still short of ZIL
-  is scattering everything he has stolen to different rooms on his death rather than
-  dropping it all in one bag where he falls.
+That collapse also fixed a real bug rather than only shortening the content.
+`remove-from-inventory` sent a stolen treasure to the room the theft happened in,
+which is not the thief - so a treasure taken from the player never actually
+travelled with him afterward, and a claim this section used to make about it was
+wrong besides. ZIL's `DEPOSIT-BOOTY` does not scatter what the thief is holding
+across different rooms on his death; it drops everything he is holding in the one
+room he dies in, which is what the port's own death trigger already did
+structurally for his bag and blade. `move-tagged` on the same threshold is what
+now makes that true of everything he has stolen too, rather than only the two
+things that were never missing to begin with.
+
+His *walking* was never part of this and was written up as impossible here once.
+A `chance` with several answers picks one, so somebody who wanders is one rule
+with an answer per room - thirty-three of them, in one rule, in
+`every-turn.yaml`. Neither was his *fighting back* - a strength measure and a
+miss/wound/death shape copied from the troll's, which this gap never blocked.
+
+What this does not close: a trigger still cannot name *the one thing an action
+was about* where it currently names a literal id, which is the trophy case's own
+shape rather than a set, and is a narrower, different question the roadmap keeps
+open under *a trigger cannot name the object an action was about*.
 
 Three things this section used to claim, which are done or were never true.
 

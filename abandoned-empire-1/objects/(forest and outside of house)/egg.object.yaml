@@ -13,6 +13,7 @@ synonyms:
 portable: true
 size: 5
 contains: true
+tags: [treasure]
 requires:
   # Whether the player can see. Seventy times, which is what
   # ROADMAP.md's "whether the player can see" is about: one block on the game

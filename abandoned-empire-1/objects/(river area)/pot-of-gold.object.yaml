@@ -4,6 +4,7 @@ name: pot of gold
 synonyms: [pot, gold, treasure, gold pot, gold gold, gold treasure]
 portable: true
 size: 15
+tags: [treasure]
 requires:
   # Whether the player can see. Seventy times, which is what
   # ROADMAP.md's "whether the player can see" is about: one block on the game
