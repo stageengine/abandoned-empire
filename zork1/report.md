@@ -4,10 +4,11 @@ Generated from `../source/zork1`: 110 rooms, 101 things, 352 ways out.
 
 ## How much of it is ported
 
-**Ninety-eight per cent of the backlog**, and the game can be finished. Two jobs are
-left and both are the same one thing the engine cannot do. A single number is a
-judgement rather than a measurement, so here is what it is made of, all of it
-counted from the port rather than estimated.
+**Ninety-nine per cent of the backlog**, and the game can be finished. What is left
+is the two things the engine still cannot do: a line that does not repeat, and a
+trigger that cannot act on a thing chosen during play. A
+single number is a judgement rather than a measurement, so here is what it is made
+of, all of it counted from the port rather than estimated.
 
 | | done | of | |
 | --- | --- | --- | --- |
@@ -22,17 +23,23 @@ counted from the port rather than estimated.
 | Scenery standing in more than one room | 3 | 3 | written out per room |
 | Ways out ZIL worked out in code | 2 | 2 | |
 | Things revealed / made in play / light | 15 | 15 | |
-| Rooms that read differently as the world changes | 9 | 10 | |
-| Rooms that answer a verb | 3 | 4 | |
+| Rooms that read differently as the world changes | 10 | 10 | |
+| Rooms that answer a verb | 4 | 4 | |
 
-**116 of 118**, where the counts through this went 53, then 70, then 91, then 113.
-Both of the two left are **Up a Tree**: it should list what is lying on the path
-below, and a `presence` answers with the first block that holds rather than every
-one that does. A room can already name one thing in another room, which is the
-useful half; naming the second is the half that is not there.
+**118 of 118**, where the counts through this went 53, then 70, then 91, then 113,
+then 116. Both of the last two were **Up a Tree**, counted once under each heading
+because ZIL's `TREE-ROOM` does both jobs in one routine: a `presence` used to answer
+with the first block that held and nothing else, so a room could name a lamp lying
+on the path below or a length of rope but never both together. `also: true` on a
+presence block closes it, engine-side, recorded in the engine's own `arch/0023` -
+and Up a Tree now carries one block for the lamp and one for the rope, each
+independent of the other and of the room's own fixed line above them.
 
-Eight ways out the seed did not carry across are also outstanding, and are work
-rather than a wall.
+Eight ways out the seed did not carry across, this file claimed since the commit
+that first wrote it. Checked directly against the current source - every exit ZIL
+declares, matched against the port's own navigation entry for direction,
+destination and refusal text - and none are missing or wrong. Whatever fixed
+them went in as part of other room work and nobody deleted the line.
 
 **What the duplication cost.** The three globals - the granite wall, the surrounding
 wall, a set of teeth - are things ZIL reaches from anywhere, and a thing here is in
@@ -61,13 +68,13 @@ read.
 Everything below is a person's job. Delete a line when it is done.
 
 Last checked against the port by hand, not by the generator, so the counts in the
-headings are what is *left* rather than what the seed found. Three sections have
+headings are what is *left* rather than what the seed found. Four sections have
 gone entirely since it was written: the four things that are not there until
 something reveals them all carry a `requires` now, the eight things made during
-play are all written, and the eighteen treasures are all scored. Every gap claimed
-below was tried against the engine before being written down. Two rooms and one
-half of a third are all that remain of the ten that describe themselves several
-ways.
+play are all written, the eighteen treasures are all scored, and the ten rooms
+that describe themselves several ways are now all ten written, Up a Tree being
+the last. Every gap claimed below was tried against the engine before being
+written down.
 
 ## Written beyond what the seed found
 
@@ -87,8 +94,12 @@ port rather than inventing a new one.
   `river-timer` measure counted down in `every-turn.yaml`, reset to the next room's
   own speed on the way through - four turns, four, three, two, one - which is
   `RIVER-SPEEDS` read the same way `config.yaml`'s burn-timers already read a
-  candle's. Only the Dam Base launch point is authored; relaunching partway down
-  from White Cliffs or Sandy Beach is not.
+  candle's. All four of ZIL's `RIVER-LAUNCH` landings on this stretch are
+  authored now - White Cliffs North and South and Sandy Beach relaunch at
+  River Three and River Four, same as Dam Base does at River One - so a boat
+  beached partway down can be taken out again. The other four entries in that
+  same ZIL table, Reservoir and Stream View, belong to the separate reservoir
+  crossing rather than this boat, and stay out of scope here.
 - **Two resurrections, then the third is final**, matching `DEATHS` in ZIL's
   `JIGS-UP`. The health measure's own threshold stays one line - "you have died,"
   a ten-point penalty, a flag - and two rules in `every-turn.yaml` read that flag
@@ -120,35 +131,40 @@ port rather than inventing a new one.
 **Taking a treasure back out of the case turned out not to be simple content work.**
 It looked like it, until reading why `put` sends a treasure offstage rather than
 into the case explained it: a thing sitting `in:trophy-case` would be invisible in
-the room's own text - the same "cannot list a set that varies" below - but still
-there to `get`, silently. An offstage thing cannot be named by the parser at all, so
+the room's own text - a container's contents still have no display shape of their
+own, the roadmap's *nested description* - but still there to `get`, silently. An
+offstage thing cannot be named by the parser at all, so
 there is nothing for a `get` to answer for. Fixing this for real means real
 containment, which reopens the exact gap `put` was written to avoid. Left undone,
 and correctly so.
 
-## Things Stage cannot yet say (4)
+## Things Stage cannot yet say (2)
 
 Each of these was tried against the engine before being written down, because two
-things this section claimed last time turned out to be authorable after all.
+things this section claimed last time turned out to be authorable after all. A
+third, *a description cannot list a set that varies*, has gone since: a `presence`
+read first-match-wins, so a room could name a lamp lying on the path below or a
+length of rope but never both at once. `also: true` on a presence block gives a
+block its own independent say alongside whatever else matched, and Up a Tree now
+carries one for the lamp and one for the rope - which is also what closed the last
+of the ten rooms above and the last of the four with a verb clause below, since all
+three headings were naming the same gap from three different angles. It does not
+close the neighbouring gap, a room reciting an open container's contents: that one
+wants a nested display shape this does not give it, and stays exactly where the
+roadmap's *nested description* entry leaves it.
 
-- **A description cannot list a set that varies.** A `presence` is read
-  first-match-wins, so one block answers and the rest say nothing. A room *can*
-  name a thing that is somewhere else - `object-in` takes any scene, and Up a Tree
-  saying "On the ground below you can see a brass lamp" is one block that correctly
-  stops saying it when somebody picks the lamp up. What it cannot do is mention the
-  rope as well. This is the same gap as a room reciting an open container's
-  contents, which is why the kitchen does not mention the sack on the table and the
-  altar does not list the black book. The roadmap has it under *a description
-  cannot list a set that varies*.
-
-- **Nothing asks how *many* things the player is holding**, or how big the biggest
-  of them is. `carrying` reads a total, and there is no condition that counts. Two
-  of Zork's ways out want the other question: the chimney out of the Studio takes
-  the lamp and one thing more, counted rather than weighed, and the crawl into the
-  Drafty Room passes when every single thing carried weighs four or less. The crawl
-  is approximated with a total of four, which is stricter than Zork; the chimney
-  asks only that the lamp is in hand. Zork's own fumble above seven held items is
-  the same shape and is not ported either.
+A fourth, **nothing asks how *many* things the player is holding, or how big the
+biggest of them is**, has gone the same way. `carrying` now takes an `of`: `total`
+as it always read, `count` for how many things are directly in hand, `largest` for
+the heaviest one, counting what is inside it. The Studio's chimney reads `of: count,
+max: 2` beside the existing `has-item: lamp`, so the lamp and the coffin still climb
+together despite weighing seventy between them, and a third thing no longer does.
+The crawl into the Timber Room reads `of: largest, max: 4`, so two things of three
+each now pass where the old total-of-four bound refused them, and a light bag
+stuffed with something heavier than four still correctly does not. Both tried
+against the built game directly, not only against the engine's own tests. Zork's own
+fumble above seven held items is the same shape as `of: count` and is answerable the
+same way now; simply not written, a small flavour mechanic rather than a gap.
 
 - **`PICK-ONE` draws without replacement**: over any run of a table's length every
   line comes back exactly once before any repeats. Thirteen call sites, two of which
@@ -186,29 +202,24 @@ The trophy case is not a gap either, though it looks like one. Eighteen blocks, 
 each carries a different score, so what repeats is the shape around the number
 rather than the number itself.
 
-## Rooms that describe themselves differently as the world changes (1)
+## Rooms that describe themselves differently as the world changes
 
-Nine of the ten are written, each as several `presence` blocks read top to bottom.
-Aragain Falls reads differently once the sceptre has made the rainbow solid; the
-Mirror Room's second half went in with the mirrors.
+Done, all ten. Aragain Falls reads differently once the sceptre has made the
+rainbow solid; the Mirror Room's second half went in with the mirrors; Up a Tree,
+the last, names the lamp and the rope lying on the path below with one `also`
+block each, once the engine could speak more than the first block that matched.
 
-- **Up a Tree** has 3 things it may say, in `TREE-ROOM`, and one of them lists what is
-  lying on the path below. A room can name one thing in another room, so the useful
-  half of that is writable today; what it cannot do is name the second, because a
-  `presence` answers with the first block that holds and not with all of them.
+## Rooms with something to answer for
 
-
-## Rooms with something to answer for (1 left of 4)
-
-The heading was twenty-four, and twenty of those were never jobs: each line names a
-ZIL room routine, and twenty handle only `M-LOOK` and `M-ENTER` - what the room says
-and what happens on arriving, both of which are a `presence` here and were written
-long ago. Four have a verb clause in them, and three are done: the **Loud Room**
-takes `echo`, which is the whole of its puzzle; **Canyon View** takes `jump`, which
-is a lousy place to; and **Stone Barrow** takes the walk west that finishes the game.
-
-- **Up a Tree** answers to `TREE-ROOM`, and wants to list what is lying on the path
-  below, which is the one thing here the engine cannot do.
+Done, all four with a verb clause in them. The heading was twenty-four, and twenty
+of those were never jobs: each line names a ZIL room routine, and twenty handle
+only `M-LOOK` and `M-ENTER` - what the room says and what happens on arriving, both
+of which are a `presence` here and were written long ago. Of the four that do have
+a verb clause: the **Loud Room** takes `echo`, which is the whole of its puzzle;
+**Canyon View** takes `jump`, which is a lousy place to; **Stone Barrow** takes the
+walk west that finishes the game; and **Up a Tree** answers to `TREE-ROOM`'s own
+`M-LOOK`, naming what is on the path below, which is the same `also` fix as above
+rather than a separate job.
 
 
 ## Things with something to answer for

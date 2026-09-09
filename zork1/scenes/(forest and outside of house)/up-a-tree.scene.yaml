@@ -8,6 +8,12 @@ meta:
 # The nest says what is in it, so the room says only the room. This used to carry
 # a copy of the egg's own words, because a thing's line could not be gated and the
 # room's could - which put a sentence about the egg above the nest it was inside.
+#
+# The lamp and the rope are each their own `also` block rather than one block
+# naming both, because either can be on the path without the other - the engine
+# renders whichever hold, in this order, alongside the fixed line above. `PRINT-
+# CONTENTS` in ZIL reads whatever is on the path generically, which nothing here
+# does yet; these two are the named case, not every case.
 presence:
   - triggers:
       - type: response
@@ -15,6 +21,22 @@ presence:
           text: >-
             You are about 10 feet above the ground nestled among some large branches. The
             nearest branch above you is above your reach.
+  - also: true
+    requires:
+      - type: object-in
+        data: { object: lamp, location: path }
+    triggers:
+      - type: response
+        data:
+          text: On the ground below you can see a brass lantern.
+  - also: true
+    requires:
+      - type: object-in
+        data: { object: rope, location: path }
+    triggers:
+      - type: response
+        data:
+          text: Some rope is lying on the ground below.
 
 objects:
   - id: up-a-tree.teeth
