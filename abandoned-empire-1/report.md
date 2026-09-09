@@ -1,6 +1,6 @@
 # What the seed did not write
 
-Generated from `../source/zork1`: 110 rooms, 101 things, 352 ways out.
+Generated from `../source/zork1`: 110 rooms, 122 things, 343 ways out.
 
 ## How much of it is ported
 
@@ -16,7 +16,7 @@ counted from the port rather than estimated.
 | | done | of | |
 | --- | --- | --- | --- |
 | Rooms written, each describing itself | 110 | 110 | the seed wrote these |
-| Ways out | 344 | 352 | |
+| Ways out | 340 | 343 | |
 | Every point Zork awards | 350 | 350 | |
 | Treasures scored for the case / for finding | 21 / 19 | 21 / 19 | |
 | Rooms scored for being reached | 4 | 4 | |
@@ -44,17 +44,31 @@ declares, matched against the port's own navigation entry for direction,
 destination and refusal text - and none are missing or wrong. Whatever fixed
 them went in as part of other room work and nobody deleted the line.
 
+`tools/survey.ts` reads 343 declared exits and the port's own scenes hold 340
+navigation entries, which looks like the same claim again until each of the three
+is traced. `stone-barrow`'s `west` is real and played correctly - the port counts
+one more than ZIL declares because ZIL's own winning move is written inside a room
+routine rather than as a declared exit, not because the port invented anything.
+`river-1` through `river-4`'s declared `down` is the opposite: dead code in ZIL
+itself, since a room routine intercepts every direction command while the player
+is aboard the boat and the real downstream move is `I-RIVER`'s own timer, which
+*is* in the port as the `river-timer` measure - see *The Frigid River* below. Played
+against the compiled original to be sure rather than read from the source alone.
+Three exits, zero missing.
+
 **What the duplication cost.** The three globals - the granite wall, the surrounding
 wall, a set of teeth - are things ZIL reaches from anywhere, and a thing here is in
-one place. So they are written per room: **220 copies**, which took the game from 199
+one place. So they are written per room: **220 copies**, which took the game from 217
 things to 437 and the built file from 36 KB to 38 KB. The granite wall is only in the
 three rooms Zork gives it words in, because everywhere else Zork says it is not here
 and so does Stage. That is the price of *scenery standing in more than one room*
 paid in full, and it is worth knowing what it comes to.
 
-Two other ways of asking. **437 things and people** stand in the game. And **105
+Two other ways of asking. **437 things and people** stand in the game. And **90
 rules** run each turn, against three before the thief and seventy-six before the
-river, the thief's own fight, resurrection and the sword's glow.
+river, the thief's own fight, resurrection and the sword's glow - down from 105
+once the thief's sixteen stealing rules became one, the same commit that fixed
+him wandering back onto the map after death.
 
 **The game can be won.** Put every treasure in the case, score three hundred and
 fifty, and a whisper sends you to the Stone Barrow, where walking west is the one
@@ -233,7 +247,7 @@ this file said before anybody tried it: prose cannot name Stage's own turn count
 but a game that wants one keeps a `moves` measure and moves it by one in
 `every-turn.yaml`, which is what this port now does.
 
-The trophy case is not a gap either, though it looks like one. Eighteen blocks, but
+The trophy case is not a gap either, though it looks like one. Twenty-one blocks, but
 each carries a different score, so what repeats is the shape around the number
 rather than the number itself.
 

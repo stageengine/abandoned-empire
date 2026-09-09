@@ -63,7 +63,7 @@ being written for it.
 ## What is here
 
 ```
-abandoned-empire-1/  the game: 110 rooms, 101 things, 352 ways between them
+abandoned-empire-1/  the game: 110 rooms, 122 things, 343 ways between them
   config.yaml
   vocabulary.yaml
   every-turn.yaml
@@ -90,12 +90,12 @@ between regions renames nothing. The regions are Infocom's own, taken from the
 
 `abandoned-empire-1/report.md` is generated with the game and kept up to date by hand, and is the
 exact, current list - counted from the port, not estimated. In short: every room is
-written, every treasure is scored, the game can be finished, and what remains is a
-short list of things the *engine* cannot yet say rather than prose nobody has written -
-a room or a container reciting a set of things that changes as the game is played, a
-carrying limit asked by count rather than by weight, and a line of flavour text that can
-repeat before every line in its table has been heard once. `report.md` names exactly
-where each one still shows.
+written, every treasure is scored, the game can be finished, and the engine itself has
+nothing left it cannot say for this port. What remains is one deliberate scope choice
+rather than a gap: a container has no display shape of its own yet, so a room does not
+recite what is inside one standing in it, and a treasure taken back out of the trophy
+case is sent offstage rather than back into it, to keep it from sitting there unseen and
+still takeable. `report.md` names exactly where it shows.
 
 The build is a progress meter of its own. A puzzle that is not wired up yet shows up as
 a flag nothing sets:
