@@ -36,7 +36,7 @@ verbs:
   - id: close
     synonyms: [shut]
   - id: move
-    synonyms: [push, shove, shift]
+    synonyms: [push, press, shove, shift]
   - id: pull
     synonyms: [tug, yank, drag]
   - id: raise

@@ -409,12 +409,28 @@ actions:
           text: >-
             A glass-fronted case, securely fastened to the wall, and empty of everything but
             dust and the promise of what might go in it.
+  # ZIL never gives the case its own words for `open` at all - "Opened." is the
+  # engine's ordinary answer for any container, every time, win or not. The map
+  # is real ZIL content (1dungeon.zil's MAP object, invisible until the score
+  # reaches 350) that a room here has no way to recite on its own - Stage does
+  # not yet read what is inside a container standing in it, the roadmap's own
+  # *nested description* - so this line exists to say what the room cannot,
+  # and has to wait for the same flag the map itself waits for.
   - id: open
+    requires:
+      - type: flag
+        data: { flag: won-flag }
     triggers:
       - type: response
         data:
           text: >-
             Opening the trophy case reveals an ancient map.
+
+  - id: open
+    triggers:
+      - type: response
+        data:
+          text: Opened.
 
   - id: close
     triggers:

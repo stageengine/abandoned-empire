@@ -23,6 +23,12 @@ requires:
           data: { tag: dark }
         - type: flag
           data: { flag: light }
+
+  # ZIL's own map starts invisible and is cleared only once the score reaches
+  # 350 (SCORE-UPD's WON-FLAG branch, gverbs.zil) - a secret rather than
+  # furniture the case has held all along.
+  - type: flag
+    data: { flag: won-flag }
 presence:
   - requires:
       - type: handled

@@ -45,7 +45,11 @@ def tidy(chunk):
 
 
 def original(script):
-    out = subprocess.run(['dfrotz', '-p', '-w', '400', str(ZIL)],
+    # `-m` turns off the MORE pager. Without it, a reply longer than a screen
+    # pauses for a keypress, and the next line of the script is consumed as that
+    # keypress rather than played as a command - a real command goes missing and
+    # every reply after it drifts out of step with the port's own transcript.
+    out = subprocess.run(['dfrotz', '-m', '-p', '-w', '400', str(ZIL)],
                          input=script + '\nquit\ny\n', capture_output=True, text=True,
                          timeout=90).stdout
     return [tidy(c) for c in out.split('>')]
