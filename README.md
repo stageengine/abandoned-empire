@@ -17,9 +17,10 @@ stage build abandoned-empire-1
 stage play abandoned-empire-1.stg
 ```
 
-The game is complete and winnable. [`abandoned-empire-1/ROADMAP.md`](abandoned-empire-1/ROADMAP.md)
-is what is honestly still open; [`arch/`](arch/) records the decisions behind every
-place Stage does not do exactly what ZIL did, in the shape
+The game is complete and winnable, verified directly rather than assumed - see
+[`arch/0012`](arch/0012-verifying-a-puzzle-by-constructing-its-state-directly.md) for
+how. [`arch/`](arch/) records the decisions behind every place Stage does not do
+exactly what ZIL did, in the shape
 [`arch/0000`](arch/0000-record-architecture-decisions.md) describes.
 
 ## The tools
