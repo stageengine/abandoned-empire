@@ -27,3 +27,16 @@ actions:
     triggers:
       - type: response
         data: { text: It is securely anchored. }
+  - id: open
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Opening the small mailbox reveals a leaflet.
+
+  - id: close
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Closed.

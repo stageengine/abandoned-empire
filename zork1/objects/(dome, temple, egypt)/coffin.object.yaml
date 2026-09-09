@@ -31,3 +31,18 @@ presence:
         data:
           text: The solid-gold coffin used for the burial of Ramses II is here.
 start: egypt-room
+
+actions:
+  - id: open
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Opening the gold coffin reveals a sceptre.
+
+  - id: close
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Closed.

@@ -18,7 +18,7 @@ stage build zork1
 stage play zork1.stg
 ```
 
-The map is complete and walkable, and two stretches of it are written. You can open
+The map is complete and walkable, and the game plays start to finish. You can open
 the window, take the lamp and the sword, move the rug, open the trap door, go down
 into the dark, be eaten by a grue for dawdling in it, kill the troll, find the
 painting, come back up the chimney and put it in the trophy case. Then on to Flood
@@ -33,8 +33,25 @@ down to the gate where the spirits jeer. Ring the bell - it goes red hot and dro
 the candles fall out of your hands unlit - then strike a match, light the candles with
 it, and read the prayer while the flames still dance. Six turns from the bell to the
 candles, three from the candles to the prayer, and the wraiths resume their jeering if
-you are slow. Everything past that is map without puzzles - see
-[what is left](#what-is-left).
+you are slow.
+
+Past the coal mine and the dam is the Frigid River. Inflate the boat with the pump, drop
+anything sharp before you get in - a sword or a knife in your hands punctures it on the
+way over - and launch from Dam Base. The current takes it from there on its own
+schedule, four turns through the first bend, four more, three, two, and one last turn's
+grace at the sound of the falls before it takes an unlanded boat over them. The cyclops
+in his own room falls for a hot pepper sandwich and a doctored bottle of water and drops
+off at the foot of his stairs, or - the other way through it - hears the name of his
+father's oldest enemy and knocks the east wall down running, which opens a shortcut
+straight back to the Living Room. The thief fights back now, wanders the whole map
+stealing what he can carry, and drops everything in his bag when somebody finally kills
+him. Die anywhere and Zork gives two returns from the Forest, penalty and all, before
+the third one is final.
+
+The game can be finished: every treasure has a score, the trophy case can be filled, and
+walking into the Stone Barrow at three hundred and fifty points is the one ending that
+is not a death. What is still missing is smaller than it was, and
+[report.md](zork1/report.md) is the exact, current list.
 
 `messages.yaml` carries Zork's own standard responses, so the game says "Taken." and
 "You can't go that way." rather than Stage's wording, everywhere, without an action
@@ -43,14 +60,17 @@ being written for it.
 ## What is here
 
 ```
-zork1/            the game: 110 rooms, 100 things, 352 ways between them
+zork1/            the game: 110 rooms, 101 things, 352 ways between them
   config.yaml
   vocabulary.yaml
   every-turn.yaml
+  assets/         icon and cover art, for the store rather than the game
   scenes/(forest and outside of house)/west-of-house.scene.yaml
   objects/(house)/lamp.object.yaml
   report.md       what the seed could not write, which is the work queue
-tools/            the ZIL reader and the generator that seeded zork1/
+tools/            the ZIL reader and the generator that seeded zork1/, and
+                  audit.py, which plays a script through both the original and
+                  the port and prints where their replies part company
 source/           Infocom's repository, cloned by tools/fetch.sh, untracked
 ```
 
@@ -65,53 +85,52 @@ between regions renames nothing. The regions are Infocom's own, taken from the
 
 ## What is left
 
-`zork1/report.md` is generated with the game and lists everything a person still has
-to write, grouped by the kind of problem it is. At the time of seeding:
+`zork1/report.md` is generated with the game and kept up to date by hand, and is the
+exact, current list - counted from the port, not estimated. In short: every room is
+written, every treasure is scored, the game can be finished, and what remains is a
+short list of things the *engine* cannot yet say rather than prose nobody has written -
+a room or a container reciting a set of things that changes as the game is played, a
+carrying limit asked by count rather than by weight, and a line of flavour text that can
+repeat before every line in its table has been heard once. `report.md` names exactly
+where each one still shows.
 
-| | at seeding | now |
-| --- | --- | --- |
-| Rooms whose description changes with the world | 20 | 10 |
-| Rooms with a routine to answer for | 36 | 24 |
-| Things with a routine to answer for | 65 | 41 |
-| Ways out that ZIL worked out in code | 4 | 2 |
-| Things that begin inside other things | 20 | 18 |
-| Treasures to score | 21 | 18 |
-
-The build is a progress meter of its own. Every puzzle that is not written yet shows
-up as a flag nothing sets:
+The build is a progress meter of its own. A puzzle that is not wired up yet shows up as
+a flag nothing sets:
 
 ```
-scenes/(cyclops and hideaway)/cyclops-room.scene.yaml
-  warning navigation[0].requires[0].data.flag: the flag "magic-flag" is asked
+scenes/(cyclops and hideaway)/cyclops-room/config.yaml
+  warning navigation[2].requires[0].data.flag: the flag "cyclops-flag" is asked
           about, but nothing ever sets it
 ```
 
-There were twenty-one of those when the seed was written and there are fifteen now.
-They go quiet as the game gets written.
+There were twenty-one of those when the seed was written. Chasing the ones that turned
+out to be real bugs rather than unwritten content - a sleeping cyclops whose stairs
+never opened, a `deflate` with no action behind it - is how several of the fixes in this
+file's history were found in the first place.
 
 ## Where the port bends
 
 Stage does not do everything ZIL did, and the gaps show in the files rather than in a
-design document.
+design document. Three that used to live here do not any more - the engine grew a
+`scene` condition, real containment, and answers for a verb with no object after this
+was first written, and the port was rewritten to use all three rather than the
+workarounds below. What is left is smaller and mostly about prose that would have to
+recite a set of things that changes as the game is played, which the engine still has
+no way to do.
 
 **A room never says what is lying in it.** Stage prints a room's own description and
 nothing else, so a thing's line has to be written into the room holding it and taken
 out again when it is carried off. That is why the kitchen has four descriptions and
 Maze 5 has eight: one per combination of things still where the game put them. One
-`here:` field on an object would delete all of them.
-
-**Nothing is inside anything.** A thing in Stage is in a room, in your hands, or
-offstage. Twenty things start inside another thing - the garlic in the sack, the
-sceptre in the coffin, the canary in the egg - and they all wait offstage, listed by
-the room their container stands in so that they belong somewhere.
+`here:` field on an object would delete all of them - and the same gap is why a
+treasure taken out of the trophy case is sent offstage rather than back into it: a
+thing sitting `in:trophy-case` would be invisible in the room's own text but still
+there to be taken again, which is worse than not being able to take it out at all.
 
 **Scenery stands in one place.** ZIL keeps one white house and lets twelve rooms point
 at it. Here each room gets a copy of its own, written where it stands and named for
 the room it is in: `west-of-house.white-house`. Twenty shared things become a hundred
 and eighteen copies.
-
-**A verb needs something to act on.** `pray`, `wait`, `jump` and `echo` reach nothing,
-because a verb with no object is answered with "What do you want to pray?".
 
 **A filler preposition throws away the second object.** `tie the rope to the railing`
 arrives as a bare `tie the rope`, because `to` is filler and what follows a filler is
@@ -130,21 +149,12 @@ as a preposition. The same shape caught the lamp: `lamp` and `broken-lamp` both
 answer to "lamp", and the parser picks by declaration order rather than by which one
 is in the room, so the broken one has to give up the bare word.
 
-**A rule cannot ask where the player is standing.** There is no condition for "here",
-so anything that happens because of the room you are in has to be written in that
-room's own `every-turn.yaml` - which means the room has to be a folder. Seventy-seven
-of Zork's hundred and ten rooms are folders for that one reason: they hold the grue,
-and it is the same thirty lines in every one of them. `tools/darkness.ts` writes them,
-which is the tell - a feature that has to be generated is a feature that is missing.
-The maintenance room's nine water-level lines are the same shape again: they can only
-be heard in that room, so they can only be written in it.
-
-One more is less visible. The question "is anything lighting the way" is an "or" across
-four light sources, and as of Stage 0.8.0 a `requires` can ask one: `every-turn.yaml`
-holds a single `any-of` of `all-of`s and writes the answer into a `light` flag that
-every dark room reads. The flag stays because seventy-seven rooms ask it and writing
-the group out in each would be worse - but it is now two rules rather than five, and
-readable.
+The question "is anything lighting the way" is an "or" across four light sources, and a
+`requires` can only ask one: `every-turn.yaml` holds a single `any-of` of `all-of`s and
+writes the answer into a `light` flag that every dark room reads, once, rather than
+five conditions apiece. The grue is the same shape at a larger scale - one rule, keyed
+on the `dark` tag rather than named per room, answers for all hundred and ten rooms
+instead of writing the same lines into seventy-seven of them.
 
 And that bookkeeping is loud. A flag set by a rule is written to the journal exactly
 as a player's own decision is, so every turn of a playthrough now reads `light became
@@ -170,3 +180,14 @@ will write over their work, which is why it refuses unless given `--force`.
 `read-zil.ts` knows ZIL and nothing about Zork. `dungeon.ts` knows Zork and nothing
 about Stage. `generate.ts` is where the two meet, and is the only file that has to
 change when the mapping does.
+
+`audit.py` checks the two once both exist, rather than seeding either: it plays one
+script through the original under `dfrotz` and through the built `.stg` under
+`stage play`, turn for turn, and prints the first place each turn's reply parts
+company - wording included, not only outcome. It is how the wording differences fixed
+in this port's history were actually found, and needs `dfrotz` on the path and a
+built `../source/zork1/COMPILED/zork1.z3` to compare against.
+
+```sh
+python3 tools/audit.py script.txt zork1.stg
+```

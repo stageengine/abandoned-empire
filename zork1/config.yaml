@@ -5,9 +5,12 @@ metadata:
   title: Zork I
   version: 0.1.0
   description: >-
-    The Great Underground Empire, ported to Stage from Infocom’s own ZIL source. A white house,
+    The Great Underground Empire, ported to Stage from Infocom's own ZIL source. A white house,
     a trap door, and three hundred and fifty points of treasure between you and the rank of
     Master Adventurer.
+  assets:
+    icon: assets/icon.png
+    cover: assets/cover.png
   genres: [Adventure, Fantasy, Puzzle]
 
 player:
@@ -31,15 +34,20 @@ player:
       max: 4
       start: 4
       thresholds:
+        # Resurrection lives in `every-turn.yaml` rather than here: a threshold's
+        # own triggers cannot ask how many times this has already happened, so
+        # this stays the one line true of every death, and `player-died` is what
+        # the deaths-counted rules downstream pick up on the same turn.
         - from: 0
           triggers:
             - type: response
               data:
                 text: >-
                   It appears that that last blow was too much for you. I'm afraid you are dead.
-            - type: end-game
+            - type: set-flag
               data:
-                journal: killed underground
+                flag: player-died
+                value: true
         - from: 1
           triggers:
             - type: response
@@ -52,6 +60,13 @@ player:
                 text: You are bleeding, and it is beginning to tell.
         - from: 4
 
+    # Zork allows two resurrections and ends the game outright on the third,
+    # counted in its own `DEATHS` global. `player-died` is a pulse the health
+    # threshold sets and `every-turn.yaml` clears once it has been read.
+    - id: deaths
+      max: 2
+      start: 0
+
     # Turns, kept by the game rather than by the engine. Stage counts turns and
     # does not let prose name the count, so a game that wants to show it keeps its
     # own measure and moves it once a turn.
@@ -59,49 +74,33 @@ player:
       max: 9999
       start: 0
 
+    # The Frigid River's current. ZIL queues an interrupt at a delay looked up per
+    # room (`RIVER-SPEEDS`: 4, 4, 3, 2, 1) and moves the boat downstream when it
+    # fires; a measure that counts the same way down to a threshold is the same
+    # shape. `every-turn.yaml` resets it to the next room's own speed each time it
+    # carries the player on, and `launch` sets it to River One's on the way in.
+    - id: river-timer
+      max: 4
+      start: 4
+      thresholds:
+        - from: 0
+
     - id: score
       max: 350
       start: 0
       thresholds:
         - from: 0
         - from: 26
-          triggers:
-            - type: response
-              data:
-                text: You have earned the rank of Amateur Adventurer.
         - from: 51
-          triggers:
-            - type: response
-              data:
-                text: You have earned the rank of Novice Adventurer.
         - from: 101
-          triggers:
-            - type: response
-              data:
-                text: You have earned the rank of Junior Adventurer.
         - from: 201
-          triggers:
-            - type: response
-              data:
-                text: You have earned the rank of Adventurer.
         - from: 301
-          triggers:
-            - type: response
-              data:
-                text: You have earned the rank of Master.
         - from: 331
-          triggers:
-            - type: response
-              data:
-                text: You have earned the rank of Wizard.
         # Three hundred and fifty is the whole of it, and Zork answers it with a
         # whisper rather than a fanfare. The flag it sets is what opens the way
         # southwest out of West of House.
         - from: 350
           triggers:
-            - type: response
-              data:
-                text: You have earned the rank of Master Adventurer.
             - type: response
               data:
                 text: >-

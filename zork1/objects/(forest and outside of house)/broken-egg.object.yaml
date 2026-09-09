@@ -33,3 +33,18 @@ presence:
         data:
           text: There is a somewhat ruined egg here.
 start: offstage
+
+actions:
+  - id: open
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Opening the broken egg reveals a broken clockwork canary.
+
+  - id: close
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Closed.

@@ -38,12 +38,52 @@ objects:
   - id: end-of-rainbow.global-water
     name: water
     synonyms: [quantity]
+    actions:
+      - id: get
+        triggers:
+          - type: response
+            data:
+              text: >-
+                The water slips through your fingers.
+      - id: drink
+        triggers:
+          - type: response
+            data:
+              text: >-
+                Thank you very much. I was rather thirsty.
   - id: end-of-rainbow.rainbow
     name: rainbow
+    actions:
+      - id: cross
+        triggers:
+          - type: response
+            data:
+              text: >-
+                From here?!?
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: >-
+                A rainbow, and no way to reach it from here.
   - id: end-of-rainbow.river
     name: river
     synonyms: [frigid river]
 
+    actions:
+      - id: swim
+        triggers:
+          - type: response
+            data:
+              text: >-
+                A look before leaping reveals that the river is wide and dangerous, with swift currents
+                and large, half-submerged rocks.
+      - id: cross
+        triggers:
+          - type: response
+            data:
+              text: >-
+                You should get in the boat then launch it.
 navigation:
   - id: east
     requires:

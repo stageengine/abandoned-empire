@@ -42,6 +42,43 @@ start: round-room
 # which is what these two were always meant to be and could not be said before.
 holds: [large-bag, stiletto]
 
+# Zork gives him a strength of five against the troll's two - the toughest fixed
+# fight in the game - and settles each blow against a table keyed on both
+# fighters' relative strength. Stage has one flat roll per action, the same
+# simplification `troll.character.yaml` already makes, so the number moves but
+# the shape does not: a strength that only goes down, and a miss/wound pair of
+# actions rather than nine outcomes.
+measures:
+  - id: strength
+    max: 5
+    start: 5
+    thresholds:
+      - from: 0
+        triggers:
+          - type: response
+            data:
+              text: >-
+                Almost as soon as the thief breathes his last breath, a cloud of sinister black
+                fog envelops him, and when the fog lifts, the carcass has disappeared.
+          - type: remove-object
+            data:
+              object: thief
+          # His bag and blade stay behind, which is what makes killing him worth
+          # it: whatever he has stolen over the game is in that bag.
+          - type: move-object
+            data:
+              object: large-bag
+              to: here
+          - type: move-object
+            data:
+              object: stiletto
+              to: here
+          - type: set-flag
+            data:
+              flag: thief-fighting
+              value: false
+      - from: 1
+
 # What he says when spoken to, looked at, fought and given things. What he *does* -
 # wandering the map and taking whatever you are carrying - is not here and cannot
 # be: `remove-from-inventory` names one id, so "take what they are holding" is a
@@ -74,15 +111,76 @@ actions:
           text: >-
             The thief places the gift in his bag and thanks you politely.
 
+  # ZIL's own villain table names the knife as his one weakness (a sword or bare
+  # hands answer through the block below instead) - written above the other
+  # because the first requirement that holds decides which action this is, and a
+  # nearly-beaten thief is the particular case.
   - id: attack
     preposition: with
     indirect: knife
+    requires:
+      - type: has-item
+        data:
+          object: knife
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You aren't holding the knife.
+      - type: measure
+        data:
+          subject: thief
+          measure: strength
+          max: 1
+    chance:
+      percent: 40
+      failure:
+        triggers:
+          - type: response
+            data:
+              text: Your knife misses the thief by an inch.
     triggers:
       - type: response
         data:
-          text: >-
-            The thief, forgetting his essentially genteel upbringing, cuts your arm with his
-            stiletto.
+          text: The fatal blow catches the thief squarely, and he crumples to the floor.
+      - type: adjust-measure
+        data:
+          subject: thief
+          measure: strength
+          by: -1
+
+  - id: attack
+    preposition: with
+    indirect: knife
+    requires:
+      - type: has-item
+        data:
+          object: knife
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You aren't holding the knife.
+    chance:
+      percent: 40
+      failure:
+        triggers:
+          - type: response
+            data:
+              text: Your knife misses the thief by an inch.
+    triggers:
+      - type: response
+        data:
+          text: A quick thrust pinks the thief's arm, and blood starts to trickle down.
+      - type: adjust-measure
+        data:
+          subject: thief
+          measure: strength
+          by: -1
+      - type: set-flag
+        data:
+          flag: thief-fighting
+          value: true
 
   - id: attack
     triggers:

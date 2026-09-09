@@ -46,6 +46,20 @@ objects:
   - id: east-of-house.white-house
     name: white house
     synonyms: [house, beauti house, coloni house]
+    actions:
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: >-
+                The house is a beautiful colonial house which is painted white. It is clear that the
+                owners must have been extremely wealthy.
+      - id: burn
+        triggers:
+          - type: response
+            data:
+              text: >-
+                You must be joking.
   - id: east-of-house.kitchen-window
     name: kitchen window
     synonyms: [window, small window]
@@ -116,6 +130,19 @@ objects:
     name: forest
     synonyms: [trees, pines, hemlocks]
 
+    actions:
+      - id: listen
+        triggers:
+          - type: response
+            data:
+              text: >-
+                The pines and the hemlocks seem to be murmuring.
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: >-
+                You cannot see the forest for the trees.
 navigation:
   - id: north
     triggers:
@@ -133,6 +160,7 @@ navigation:
         data:
           scene: clearing
   - id: west
+    synonyms: [window, kitchen, house]
     requires:
       - type: flag
         data:

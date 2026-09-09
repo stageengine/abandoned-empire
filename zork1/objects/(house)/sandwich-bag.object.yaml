@@ -37,10 +37,27 @@ presence:
       - type: response
         data:
           text: There is a brown sack here.
-start: in:kitchen-table
+# In the kitchen rather than inside the table. The line below already says it is
+# sitting on the table, and a room lists what is standing in it rather than what is
+# inside a container standing in it - so filed here, the prose reads as Zork's and
+# the thing is where the player can see it.
+start: kitchen
 
 actions:
   - id: smell
     triggers:
       - type: response
         data: { text: It smells of hot peppers. }
+  - id: open
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Opening the brown sack reveals a lunch and a clove of garlic.
+
+  - id: close
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Closed.

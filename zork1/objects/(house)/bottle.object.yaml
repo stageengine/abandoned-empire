@@ -22,6 +22,17 @@ presence:
       - type: handled
         negate: true
         data: { object: bottle }
+      - type: object-in
+        data: { object: water, location: in:bottle }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            A bottle is sitting on the table. The glass bottle contains: A quantity of water
+  - requires:
+      - type: handled
+        negate: true
+        data: { object: bottle }
     triggers:
       - type: response
         data:
@@ -30,7 +41,11 @@ presence:
       - type: response
         data:
           text: There is a glass bottle here.
-start: in:kitchen-table
+# In the kitchen rather than inside the table. The line below already says it is
+# sitting on the table, and a room lists what is standing in it rather than what is
+# inside a container standing in it - so filed here, the prose reads as Zork's and
+# the thing is where the player can see it.
+start: kitchen
 
 actions:
   - id: throw
@@ -44,3 +59,16 @@ actions:
     triggers:
       - type: response
         data: { text: The water spills to the floor and evaporates. }
+  - id: open
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Opening the glass bottle reveals a quantity of water.
+
+  - id: close
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Closed.

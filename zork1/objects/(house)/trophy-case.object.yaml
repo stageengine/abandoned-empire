@@ -409,3 +409,16 @@ actions:
           text: >-
             A glass-fronted case, securely fastened to the wall, and empty of everything but
             dust and the promise of what might go in it.
+  - id: open
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Opening the trophy case reveals an ancient map.
+
+  - id: close
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Closed.

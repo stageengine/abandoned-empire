@@ -45,16 +45,69 @@ objects:
   - id: up-a-tree.tree
     name: tree
     synonyms: [branch, large tree, large branch, storm tree, storm branch]
+    actions:
+      - id: climb
+        triggers:
+          - type: response
+            data:
+              text: >-
+                There is no tree here suitable for climbing.
   - id: up-a-tree.forest
     name: forest
     synonyms: [trees, pines, hemlocks]
+    actions:
+      - id: listen
+        triggers:
+          - type: response
+            data:
+              text: >-
+                The pines and the hemlocks seem to be murmuring.
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: >-
+                You cannot see the forest for the trees.
   - id: up-a-tree.songbird
     name: songbird
     synonyms: [bird, song bird, song songbird]
+    actions:
+      - id: get
+        triggers:
+          - type: response
+            data:
+              text: >-
+                The songbird is not here but is probably nearby.
+      - id: listen
+        triggers:
+          - type: response
+            data:
+              text: >-
+                You can't hear the songbird now.
+      - id: follow
+        triggers:
+          - type: response
+            data:
+              text: >-
+                It can't be followed.
   - id: up-a-tree.white-house
     name: white house
     synonyms: [house, beauti house, coloni house]
 
+    actions:
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: >-
+                The house is a beautiful colonial house which is painted white. It is clear that the
+                owners must have been extremely wealthy.
+      - id: burn
+        triggers:
+          - type: response
+            data:
+              text: >-
+                You must be joking.
 navigation:
   - id: up
     synonyms: [tree]

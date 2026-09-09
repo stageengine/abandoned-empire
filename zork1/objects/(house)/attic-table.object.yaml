@@ -2,3 +2,18 @@ id: attic-table
 name: table
 contains: true
 start: attic
+
+actions:
+  - id: open
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Opening the table reveals a nasty knife.
+
+  - id: close
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Closed.

@@ -1,5 +1,5 @@
 id: river-4
-tags: [dark]
+tags: [dark, river]
 
 meta:
   title: Frigid River
@@ -47,18 +47,53 @@ objects:
   - id: river-4.global-water
     name: water
     synonyms: [quantity]
+    actions:
+      - id: get
+        triggers:
+          - type: response
+            data:
+              text: >-
+                The water slips through your fingers.
+      - id: drink
+        triggers:
+          - type: response
+            data:
+              text: >-
+                Thank you very much. I was rather thirsty.
   - id: river-4.river
     name: river
     synonyms: [frigid river]
 
+    actions:
+      - id: swim
+        triggers:
+          - type: response
+            data:
+              text: >-
+                A look before leaping reveals that the river is wide and dangerous, with swift currents
+                and large, half-submerged rocks.
+      - id: cross
+        triggers:
+          - type: response
+            data:
+              text: >-
+                You should get in the boat then launch it.
 navigation:
   - id: east
     triggers:
+      - type: set-flag
+        data:
+          flag: aboard
+          value: false
       - type: change-scene
         data:
           scene: sandy-beach
   - id: west
     triggers:
+      - type: set-flag
+        data:
+          flag: aboard
+          value: false
       - type: change-scene
         data:
           scene: white-cliffs-south
@@ -67,11 +102,6 @@ navigation:
       - type: response
         data:
           text: You cannot go upstream due to strong currents.
-  - id: down
-    triggers:
-      - type: change-scene
-        data:
-          scene: river-5
   - id: land
     triggers:
       - type: response

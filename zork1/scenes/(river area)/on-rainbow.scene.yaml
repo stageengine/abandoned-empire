@@ -35,6 +35,19 @@ objects:
   - id: on-rainbow.rainbow
     name: rainbow
 
+    actions:
+      - id: cross
+        triggers:
+          - type: response
+            data:
+              text: >-
+                From here?!?
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: >-
+                A rainbow, and no way to reach it from here.
 navigation:
   - id: east
     triggers:

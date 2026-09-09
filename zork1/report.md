@@ -42,12 +42,21 @@ three rooms Zork gives it words in, because everywhere else Zork says it is not 
 and so does Stage. That is the price of *scenery standing in more than one room*
 paid in full, and it is worth knowing what it comes to.
 
-Two other ways of asking. **437 things and people** stand in the game. And **76
-rules** run each turn, against three before the thief.
+Two other ways of asking. **437 things and people** stand in the game. And **105
+rules** run each turn, against three before the thief and seventy-six before the
+river, the thief's own fight, resurrection and the sword's glow.
 
 **The game can be won.** Put every treasure in the case, score three hundred and
 fifty, and a whisper sends you to the Stone Barrow, where walking west is the one
-ending Zork has that is not a death. It has been played through to the closing sign.
+ending Zork has that is not a death. It has been played through to the closing sign -
+and re-verified since, because this claim was quietly false for a while. The Cyclops
+Room's `up` read a flag named `cyclops-flag`, exactly as ZIL's own single flag does,
+but the sleeping-cyclops trigger set a *different* one, `cyclops-asleep`, so the stairs
+to the Treasure Room never opened and the chalice was unreachable by any means. The
+build's own warnings said so the whole time - "the flag 'cyclops-flag' is asked about,
+but nothing ever sets it" - and went unread. Fixed by keeping the two flags in step,
+found by an audit rather than by play, and worth writing down so the next one gets
+read.
 
 Everything below is a person's job. Delete a line when it is done.
 
@@ -59,6 +68,63 @@ play are all written, and the eighteen treasures are all scored. Every gap claim
 below was tried against the engine before being written down. Two rooms and one
 half of a third are all that remain of the ten that describe themselves several
 ways.
+
+## Written beyond what the seed found
+
+None of this is in the counts above, because none of it comes from a ZIL room or
+object routine - it is the map the seed drew, made playable rather than merely
+walkable. Six pieces, each following a pattern already proven somewhere else in the
+port rather than inventing a new one.
+
+- **The thief fights back.** `characters/thief.character.yaml` gains a `strength`
+  measure - five against the troll's two, which is ZIL's own numbers - and the same
+  miss/wound/death shape `troll.character.yaml` already used. His bag and stiletto
+  drop where he falls, which is the only way to recover what he has stolen over the
+  game. Wandering and stealing were already written before this; only the fight was
+  missing.
+- **The Frigid River.** `board`, `disembark` and `launch` on the inflated boat, a
+  puncture the moment anything sharp comes aboard, and the current itself: a
+  `river-timer` measure counted down in `every-turn.yaml`, reset to the next room's
+  own speed on the way through - four turns, four, three, two, one - which is
+  `RIVER-SPEEDS` read the same way `config.yaml`'s burn-timers already read a
+  candle's. Only the Dam Base launch point is authored; relaunching partway down
+  from White Cliffs or Sandy Beach is not.
+- **Two resurrections, then the third is final**, matching `DEATHS` in ZIL's
+  `JIGS-UP`. The health measure's own threshold stays one line - "you have died,"
+  a ten-point penalty, a flag - and two rules in `every-turn.yaml` read that flag
+  against a `deaths` measure to decide which of Zork's two answers this death gets,
+  because a threshold's own triggers cannot ask a second measure's value and an
+  ordinary rule can. Simplified once: every resurrection uses the ordinary Forest
+  return rather than ZIL's alternate ghost-in-Hades one for a death after the
+  Temple has been visited, and only the lamp is returned to the Living Room, ZIL's
+  own special case - scattering everything else currently held would want one rule
+  per thing, the same cost the trophy case already pays, for a corner case few
+  playthroughs will reach.
+- **`xyzzy`, `plugh` and bare `hello`.** Zork's own joke at *Adventure*'s expense
+  rather than a teleport - "A hollow voice says 'Fool.'" - and one of four lines
+  picked at random for a greeting, the same weighted-`chance` shape the troll's
+  miss lines already use.
+- **The sword's glow is proactive.** It answered `look` before; now
+  `every-turn.yaml` says so unprompted the turn a monster shares the room, which is
+  most of what the warning is for. The faint glow for a monster one room over stays
+  unwritten - it wants to know which room is next to which, and the troll and
+  cyclops hold still for it but the thief wanders across thirty-three rooms, which
+  is the roadmap's own unbuilt "closeness."
+- **Room titles are shown.** `meta.title` sat on every scene, read by nothing a
+  player could see. The engine now prints it once above a room's own description on
+  every visit - full fidelity with Zork's *verbose* mode, which never shortens a
+  revisit. Its *default*, `brief`, also drops the body text on a second visit,
+  which is a `visited`-gated second `presence` block on all hundred and ten rooms
+  and is not this.
+
+**Taking a treasure back out of the case turned out not to be simple content work.**
+It looked like it, until reading why `put` sends a treasure offstage rather than
+into the case explained it: a thing sitting `in:trophy-case` would be invisible in
+the room's own text - the same "cannot list a set that varies" below - but still
+there to `get`, silently. An offstage thing cannot be named by the parser at all, so
+there is nothing for a `get` to answer for. Fixing this for real means real
+containment, which reopens the exact gap `put` was written to avoid. Left undone,
+and correctly so.
 
 ## Things Stage cannot yet say (4)
 
@@ -102,6 +168,10 @@ things this section claimed last time turned out to be authorable after all.
   His *walking* is not part of this and was written up as impossible here once. A
   `chance` with several answers picks one, so somebody who wanders is one rule with
   an answer per room - thirty-three of them, in one rule, in `every-turn.yaml`.
+  Neither is his *fighting back* - a strength measure and a miss/wound/death shape
+  copied from the troll's, which this gap never blocked. What is still short of ZIL
+  is scattering everything he has stolen to different rooms on his death rather than
+  dropping it all in one bag where he falls.
 
 Three things this section used to claim, which are done or were never true.
 
@@ -190,8 +260,8 @@ maximum nobody could reach.
 
 What is not done is taking a treasure back *out* of the case. Zork subtracts the
 points; the port sends the treasure offstage instead, where nobody can reach it,
-which keeps the score honest at the cost of an empty-looking case. See *Things Stage
-cannot yet say* for why it is not simply put inside it.
+which keeps the score honest at the cost of an empty-looking case. See *Written
+beyond what the seed found* for why this is not simply a `get` action away.
 
 ## Light (3)
 

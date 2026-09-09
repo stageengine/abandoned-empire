@@ -45,6 +45,13 @@ objects:
     name: wooden ladder
     synonyms: [ladder, rickety ladder, narrow ladder]
 
+    actions:
+      - id: climb
+        triggers:
+          - type: response
+            data:
+              text: >-
+                The ladder is not going anywhere you can use.
 navigation:
   - id: south
     triggers:

@@ -10,12 +10,83 @@ actions:
   # clock, so this is one turn with Zork's own words on it: the world still does
   # what a turn passing does, and does it once.
   - id: score
+    requires:
+      - type: measure
+        data: { subject: player, measure: score, min: 350 }
     triggers:
       - type: response
         data:
           text: >-
-            Your score is <player:score> (total of 350 points), in <player:moves> moves.
-            This gives you the rank of Beginner.
+            Your score is <player:score> (total of 350 points), in <player:moves> moves. This
+            gives you the rank of Master Adventurer.
+  - id: score
+    requires:
+      - type: measure
+        data: { subject: player, measure: score, min: 331 }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Your score is <player:score> (total of 350 points), in <player:moves> moves. This
+            gives you the rank of Wizard.
+  - id: score
+    requires:
+      - type: measure
+        data: { subject: player, measure: score, min: 301 }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Your score is <player:score> (total of 350 points), in <player:moves> moves. This
+            gives you the rank of Master.
+  - id: score
+    requires:
+      - type: measure
+        data: { subject: player, measure: score, min: 201 }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Your score is <player:score> (total of 350 points), in <player:moves> moves. This
+            gives you the rank of Adventurer.
+  - id: score
+    requires:
+      - type: measure
+        data: { subject: player, measure: score, min: 101 }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Your score is <player:score> (total of 350 points), in <player:moves> moves. This
+            gives you the rank of Junior Adventurer.
+  - id: score
+    requires:
+      - type: measure
+        data: { subject: player, measure: score, min: 51 }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Your score is <player:score> (total of 350 points), in <player:moves> moves. This
+            gives you the rank of Novice Adventurer.
+  - id: score
+    requires:
+      - type: measure
+        data: { subject: player, measure: score, min: 26 }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Your score is <player:score> (total of 350 points), in <player:moves> moves. This
+            gives you the rank of Amateur Adventurer.
+  - id: score
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Your score is <player:score> (total of 350 points), in <player:moves> moves. This
+            gives you the rank of Beginner.
+
 
   - id: diagnose
     triggers:
@@ -36,6 +107,52 @@ actions:
       - type: response
         data:
           text: If you pray enough, your prayers may be answered.
+
+  # The Cyclops Room answers this one for itself while the cyclops is there to
+  # hear it; everywhere else, and once he is gone, it is just a name.
+  - id: odysseus
+    triggers:
+      - type: response
+        data:
+          text: Wasn't he a sailor?
+
+  # Zork's own joke at a different game's expense - XYZZY and PLUGH teleport in
+  # Adventure, and are just a word here too.
+  - id: xyzzy
+    triggers:
+      - type: response
+        data:
+          text: A hollow voice says "Fool."
+
+  # ZIL picks one of four lines with no memory between calls, so a weighted roll
+  # is the shape already used for the troll's misses rather than a new one.
+  - id: hello
+    triggers:
+      - type: response
+        chance:
+          outcomes:
+            - weight: 1
+              triggers:
+                - type: response
+                  data:
+                    text: Hello.
+            - weight: 1
+              triggers:
+                - type: response
+                  data:
+                    text: Good day.
+            - weight: 1
+              triggers:
+                - type: response
+                  data:
+                    text: Nice weather we've been having lately.
+            - weight: 1
+              triggers:
+                - type: response
+                  data:
+                    text: Goodbye.
+        data:
+          text: Hello.
 
   - id: yell
     triggers:

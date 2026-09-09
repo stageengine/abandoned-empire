@@ -44,3 +44,125 @@ actions:
       - type: response
         data:
           text: The boat is too heavy to carry about unless it is deflated.
+  - id: open
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Opening the boat reveals a tan label.
+
+  - id: close
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Closed.
+
+  # The narrow paths at the White Cliffs read `deflate` rather than the boat's own
+  # state, exactly as ZIL's global does - so re-inflating below clears it again.
+  - id: deflate
+    triggers:
+      - type: response
+        data: { text: The boat deflates. }
+      - type: move-object
+        data: { object: inflated-boat, to: offstage }
+      - type: move-object
+        data: { object: inflatable-boat, to: here }
+      - type: set-flag
+        data: { flag: deflate, value: true }
+
+  # ZIL punctures the boat the moment anything sharp comes aboard in your hands -
+  # written above the plain boarding because the first requirement that holds
+  # decides which of the two this is.
+  - id: board
+    requires:
+      - type: any-of
+        data:
+          conditions:
+            - type: has-item
+              data: { object: sceptre }
+            - type: has-item
+              data: { object: knife }
+            - type: has-item
+              data: { object: sword }
+            - type: has-item
+              data: { object: rusty-knife }
+            - type: has-item
+              data: { object: axe }
+            - type: has-item
+              data: { object: stiletto }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Oops! Something sharp seems to have slipped and punctured the boat. The boat
+            deflates to the sounds of hissing, sputtering, and cursing.
+      - type: move-object
+        data: { object: inflated-boat, to: offstage }
+      - type: move-object
+        data: { object: punctured-boat, to: here }
+
+  - id: board
+    triggers:
+      - type: response
+        data: { text: You are now in the magic boat. }
+      - type: set-flag
+        data: { flag: aboard, value: true }
+
+  # Every room the current runs through is water with nothing to stand on, so
+  # climbing out mid-river is the same fate as launching from nowhere is not -
+  # written above the plain disembark for the same reason boarding's puncture is.
+  - id: disembark
+    requires:
+      - type: flag
+        data: { flag: aboard }
+      - type: scene
+        data: { tag: river }
+    triggers:
+      - type: response
+        data:
+          text: Another pathetic sputter, this time from you, heralds your drowning.
+      - type: end-game
+        data:
+          journal: climbed out of the boat in the middle of the river
+
+  - id: disembark
+    requires:
+      - type: flag
+        data: { flag: aboard }
+        failure:
+          triggers:
+            - type: response
+              data: { text: You're not in the boat! }
+    triggers:
+      - type: response
+        data: { text: You are no longer in the magic boat. }
+      - type: set-flag
+        data: { flag: aboard, value: false }
+
+  # `RIVER-LAUNCH` sends a launch from other landings straight into a later river
+  # room; only the Dam Base put-in is authored; ZIL's DAM-BASE case both.
+  - id: launch
+    requires:
+      - type: flag
+        data: { flag: aboard }
+        failure:
+          triggers:
+            - type: response
+              data: { text: You're not in the boat! }
+      - type: scene
+        data: { id: dam-base }
+        failure:
+          triggers:
+            - type: response
+              data: { text: You can't launch it here. }
+    triggers:
+      - type: response
+        data: { text: The boat is moving in the current. }
+      - type: change-scene
+        data: { scene: river-1 }
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: river-timer
+          to: 4

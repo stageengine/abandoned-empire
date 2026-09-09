@@ -1,27 +1,8 @@
 # What this room does, and only this room.
+#
+# The trap door shutting behind you used to be here, because ZIL hangs it on
+# entering the room. An every-turn rule runs after the turn, so it read after the
+# room description where Zork reads it before - so it sits on the way down out of
+# the living room now, which is the only way in while the door is still open.
 
-every-turn:
-
-  # The way you came in, shutting behind you. ZIL hangs this on entering the
-  # room rather than on the way down, so that it happens however you arrive
-  # while the door is still open above.
-  - requires:
-      - type: flag
-        data:
-          flag: trap-door-open
-      - type: flag
-        negate: true
-        data:
-          flag: trap-door-barred
-    triggers:
-      - type: response
-        data:
-          text: The trap door crashes shut, and you hear someone barring it.
-      - type: set-flag
-        data:
-          flag: trap-door-open
-          value: false
-      - type: set-flag
-        data:
-          flag: trap-door-barred
-          value: true
+every-turn: []

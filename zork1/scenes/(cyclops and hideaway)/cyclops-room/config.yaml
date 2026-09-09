@@ -21,6 +21,35 @@ presence:
 
 characters: [cyclops]
 
+# `odysseus`'s other answer, "Wasn't he a sailor?", lives in the game's own
+# `actions.yaml` and is what a failed `requires` here falls through to - once he
+# has fled, or from anywhere else in the game.
+actions:
+  - id: odysseus
+    requires:
+      - type: character-here
+        data: { character: cyclops }
+      - type: flag
+        negate: true
+        data: { flag: cyclops-flag }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The cyclops, hearing the name of his father's deadly nemesis, flees the room by
+            knocking down the wall on the east of the room.
+      - type: remove-object
+        data:
+          object: cyclops
+      - type: set-flag
+        data:
+          flag: cyclops-flag
+          value: true
+      - type: set-flag
+        data:
+          flag: magic-flag
+          value: true
+
 navigation:
   - id: east
     requires:

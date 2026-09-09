@@ -35,16 +35,69 @@ objects:
   - id: north-of-house.boarded-window
     name: boarded window
     synonyms: [window]
+    actions:
+      - id: open
+        triggers:
+          - type: response
+            data:
+              text: >-
+                The windows are boarded and can't be opened.
+      - id: break
+        triggers:
+          - type: response
+            data:
+              text: >-
+                You can't break the windows open.
   - id: north-of-house.board
     name: board
     synonyms: [boards]
+    actions:
+      - id: get
+        triggers:
+          - type: response
+            data:
+              text: >-
+                The boards are securely fastened.
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: >-
+                The boards are securely fastened.
   - id: north-of-house.white-house
     name: white house
     synonyms: [house, beauti house, coloni house]
+    actions:
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: >-
+                The house is a beautiful colonial house which is painted white. It is clear that the
+                owners must have been extremely wealthy.
+      - id: burn
+        triggers:
+          - type: response
+            data:
+              text: >-
+                You must be joking.
   - id: north-of-house.forest
     name: forest
     synonyms: [trees, pines, hemlocks]
 
+    actions:
+      - id: listen
+        triggers:
+          - type: response
+            data:
+              text: >-
+                The pines and the hemlocks seem to be murmuring.
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: >-
+                You cannot see the forest for the trees.
 navigation:
   - id: north
     triggers:

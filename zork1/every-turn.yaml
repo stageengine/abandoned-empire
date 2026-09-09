@@ -1262,6 +1262,251 @@ every-turn:
                 - type: response
                   data: { text: The thief is taking an unhealthy interest in your possessions. }
 
+  # His own counter-swing, wherever he currently is: he wanders, so this cannot
+  # live in one room's own `every-turn.yaml` the way the troll's does. Silent
+  # until `attack` sets `thief-fighting` - he is a thief before he is a fighter,
+  # and does not start a fight just for being in the room with you. Same 5:2:2:2
+  # weighting as the troll's, which is ZIL's own `DEF3A` table read the same way.
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: flag
+        data:
+          flag: thief-fighting
+    chance:
+      outcomes:
+        - weight: 5
+          triggers:
+            - type: response
+              chance:
+                outcomes:
+                  - weight: 1
+                    triggers:
+                      - type: response
+                        data:
+                          text: The thief stabs nonchalantly with his stiletto and misses.
+                  - weight: 1
+                    triggers:
+                      - type: response
+                        data:
+                          text: You dodge as the thief comes in low.
+                  - weight: 1
+                    triggers:
+                      - type: response
+                        data:
+                          text: >-
+                            You parry a lightning thrust, and the thief salutes you with a grim
+                            nod.
+                  - weight: 1
+                    triggers:
+                      - type: response
+                        data:
+                          text: The thief tries to sneak past your guard, but you twist away.
+              data:
+                text: The thief stabs nonchalantly with his stiletto and misses.
+
+        - weight: 2
+          triggers:
+            - type: response
+              data:
+                text: The thief attacks, and you fall back desperately.
+
+        - weight: 2
+          triggers:
+            - type: response
+              data:
+                text: A quick thrust pinks your left arm, and blood starts to trickle down.
+            - type: adjust-measure
+              data:
+                subject: player
+                measure: health
+                by: -1
+            - type: adjust-measure
+              data:
+                subject: player
+                measure: allowance
+                by: -10
+
+        - weight: 2
+          triggers:
+            - type: response
+              data:
+                text: The thief strikes like a snake! The resulting wound is serious.
+            - type: adjust-measure
+              data:
+                subject: player
+                measure: health
+                by: -1
+            - type: adjust-measure
+              data:
+                subject: player
+                measure: allowance
+                by: -20
+
+  # The encounter ends when either of you leaves, not only when he dies -
+  # otherwise a fight broken off by walking away would resume the moment he
+  # next wanders back into whatever room the player is standing in.
+  - requires:
+      - type: character-here
+        negate: true
+        data:
+          character: thief
+      - type: flag
+        data:
+          flag: thief-fighting
+    triggers:
+      - type: set-flag
+        data:
+          flag: thief-fighting
+          value: false
+
+  # The sword's own warning, said without being asked - which is most of what it
+  # is for. `sword.object.yaml`'s `look` already answers the question if asked;
+  # this is the same question, asked and answered on the turn it changes. ZIL
+  # also glows faintly for a villain one room over; that wants a map of which
+  # room is next to which, which the engine does not have, so only the same-room
+  # bright warning is said here.
+  - requires:
+      - type: has-item
+        data:
+          object: sword
+      - type: any-of
+        data:
+          conditions:
+            - type: character-here
+              data: { character: troll }
+            - type: character-here
+              data: { character: thief }
+            - type: character-here
+              data: { character: cyclops }
+      - type: flag
+        negate: true
+        data:
+          flag: sword-glowing
+    triggers:
+      - type: response
+        data:
+          text: Your sword has begun to glow very brightly.
+      - type: set-flag
+        data:
+          flag: sword-glowing
+          value: true
+
+  - requires:
+      - type: has-item
+        data:
+          object: sword
+      - type: flag
+        data:
+          flag: sword-glowing
+      - type: any-of
+        negate: true
+        data:
+          conditions:
+            - type: character-here
+              data: { character: troll }
+            - type: character-here
+              data: { character: thief }
+            - type: character-here
+              data: { character: cyclops }
+    triggers:
+      - type: response
+        data:
+          text: Your sword is no longer glowing.
+      - type: set-flag
+        data:
+          flag: sword-glowing
+          value: false
+
+  # Resurrection. ZIL's `JIGS-UP` reads this off `DEATHS` at the moment of death;
+  # here the health threshold only raises `player-died`, and these two rules read
+  # the running count to decide which of Zork's two answers this death gets.
+  # Simplified in one way apiece: every resurrection uses the ordinary Forest
+  # branch rather than ZIL's alternate ghost-in-Hades one for a death after the
+  # Temple has been visited, and only the lamp gets ZIL's special-cased return -
+  # scattering every other currently-held thing needs a rule per thing, the same
+  # cost the trophy case already pays, and is left for a later pass.
+  # Ahead of the rule below and reading the same, still-unset `player-died`,
+  # because that rule clears it - ZIL's own special case, and the only thing
+  # returned rather than simply kept: see the note below about what a player
+  # was carrying otherwise.
+  - requires:
+      - type: flag
+        data:
+          flag: player-died
+      - type: measure
+        data:
+          subject: player
+          measure: deaths
+          max: 1
+      - type: has-item
+        data:
+          object: lamp
+    triggers:
+      - type: move-object
+        data:
+          object: lamp
+          to: living-room
+
+  - requires:
+      - type: flag
+        data:
+          flag: player-died
+      - type: measure
+        data:
+          subject: player
+          measure: deaths
+          max: 1
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Now, let's take a look here... Well, you probably deserve another chance. I can't
+            quite fix you up completely, but you can't have everything.
+      - type: change-scene
+        data:
+          scene: forest-1
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: health
+          to: 4
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: -10
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: deaths
+          by: 1
+      - type: set-flag
+        data:
+          flag: player-died
+          value: false
+
+  - requires:
+      - type: flag
+        data:
+          flag: player-died
+      - type: measure
+        data:
+          subject: player
+          measure: deaths
+          min: 2
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You clearly are a suicidal maniac. We don't allow psychotics in the cave, since they
+            may harm other adventurers. Your remains will be installed in the Land of the Living
+            Dead, where your fellow adventurers may gloat over them.
+      - type: end-game
+        data:
+          journal: died once too often
+
   # Zork scores four rooms for being reached at all, which is the last sixty-five of
   # the three hundred and fifty and the part the port had none of. `visited` asks
   # the question directly, so this is one rule each and the flag is what makes it
@@ -1624,3 +1869,144 @@ every-turn:
         data:
           flag: cursed
           value: false
+
+  # The Frigid River's current. `river-timer` counts down while the player is
+  # aboard and on the river; the room they are in when it reaches zero decides
+  # where it carries them, which is what `RIVER-NEXT`/`RIVER-SPEEDS` did in ZIL
+  # with a table instead of five rules. River Five has no next room in that
+  # table either - past it is the waterfall.
+  - requires:
+      - type: flag
+        data:
+          flag: aboard
+      - type: scene
+        data:
+          tag: river
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: river-timer
+          by: -1
+
+  - requires:
+      - type: scene
+        data:
+          id: river-1
+      - type: flag
+        data:
+          flag: aboard
+      - type: measure
+        data:
+          subject: player
+          measure: river-timer
+          max: 0
+    triggers:
+      - type: response
+        data:
+          text: The flow of the river carries you downstream.
+      - type: change-scene
+        data:
+          scene: river-2
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: river-timer
+          to: 4
+
+  - requires:
+      - type: scene
+        data:
+          id: river-2
+      - type: flag
+        data:
+          flag: aboard
+      - type: measure
+        data:
+          subject: player
+          measure: river-timer
+          max: 0
+    triggers:
+      - type: response
+        data:
+          text: The flow of the river carries you downstream.
+      - type: change-scene
+        data:
+          scene: river-3
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: river-timer
+          to: 3
+
+  - requires:
+      - type: scene
+        data:
+          id: river-3
+      - type: flag
+        data:
+          flag: aboard
+      - type: measure
+        data:
+          subject: player
+          measure: river-timer
+          max: 0
+    triggers:
+      - type: response
+        data:
+          text: The flow of the river carries you downstream.
+      - type: change-scene
+        data:
+          scene: river-4
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: river-timer
+          to: 2
+
+  - requires:
+      - type: scene
+        data:
+          id: river-4
+      - type: flag
+        data:
+          flag: aboard
+      - type: measure
+        data:
+          subject: player
+          measure: river-timer
+          max: 0
+    triggers:
+      - type: response
+        data:
+          text: The flow of the river carries you downstream.
+      - type: change-scene
+        data:
+          scene: river-5
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: river-timer
+          to: 1
+
+  - requires:
+      - type: scene
+        data:
+          id: river-5
+      - type: flag
+        data:
+          flag: aboard
+      - type: measure
+        data:
+          subject: player
+          measure: river-timer
+          max: 0
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Unfortunately, the magic boat doesn't provide protection from the rocks and boulders
+            one meets at the bottom of waterfalls. Including this one.
+      - type: end-game
+        data:
+          journal: went over the falls in the boat

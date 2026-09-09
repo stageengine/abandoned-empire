@@ -88,6 +88,13 @@ objects:
       - mangled remains
       - mangled pile
 
+    actions:
+      - id: get
+        triggers:
+          - type: response
+            data:
+              text: >-
+                A force keeps you from taking the bodies.
 navigation:
   - id: south
     requires:

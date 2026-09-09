@@ -4,3 +4,18 @@ name: kitchen table
 synonyms: [table]
 contains: true
 start: kitchen
+
+actions:
+  - id: open
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Opening the table reveals a glass bottle and a brown sack.
+
+  - id: close
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Closed.

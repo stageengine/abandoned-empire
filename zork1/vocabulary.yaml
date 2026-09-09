@@ -1,4 +1,4 @@
-navigational: [walk, climb, board, disembark, cross, follow]
+navigational: [walk, climb, board, disembark, cross, follow, enter]
 conversational: [ask, tell, answer]
 recipient-first: [give, show]
 
@@ -21,6 +21,8 @@ verbs:
     synonyms: [go, head, run, travel, proceed, return, wander]
   - id: climb
     synonyms: [scale, ascend, clamber]
+  - id: enter
+    synonyms: [go in, walk in]
   - id: board
     synonyms: [embark, get in, get into, sit in]
   - id: disembark
@@ -108,10 +110,16 @@ verbs:
   - id: pray
 
   # Verbs that act on nothing, answered by the game's own `actions.yaml` and, for
-  # `pray` above, by South Temple as well. Synonyms as ZIL declares them in
-  # `gsyntax.zil`.
+  # `pray` above, by South Temple, and for `odysseus` below, by the Cyclops Room
+  # as well. Synonyms as ZIL declares them in `gsyntax.zil`.
   - id: wait
     synonyms: [z]
+  - id: odysseus
+    synonyms: [ulysses]
+  - id: xyzzy
+    synonyms: [plugh]
+  - id: hello
+    synonyms: [hi]
   - id: yell
     synonyms: [scream, shout]
   - id: zork

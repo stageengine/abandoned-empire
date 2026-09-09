@@ -83,6 +83,13 @@ objects:
       - twisting ramp
       - twisting slide
 
+    actions:
+      - id: climb
+        triggers:
+          - type: response
+            data:
+              text: >-
+                You tumble down the slide.
 navigation:
   - id: north
     triggers:

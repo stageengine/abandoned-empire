@@ -60,6 +60,19 @@ objects:
     name: water
     synonyms: [quantity]
 
+    actions:
+      - id: get
+        triggers:
+          - type: response
+            data:
+              text: >-
+                The water slips through your fingers.
+      - id: drink
+        triggers:
+          - type: response
+            data:
+              text: >-
+                Thank you very much. I was rather thirsty.
 navigation:
   - id: east
     triggers:

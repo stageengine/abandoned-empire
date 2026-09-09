@@ -45,6 +45,13 @@ objects:
     name: crack
     synonyms: [narrow crack]
 
+    actions:
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: >-
+                You can't fit through the crack.
 navigation:
   - id: south
     triggers:

@@ -22,3 +22,16 @@ actions:
           text: >-
             A broad slab of stone, worn smooth in the middle by a great many hands and a great
             many years.
+  - id: open
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Opening the altar reveals a black book.
+
+  - id: close
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Closed.

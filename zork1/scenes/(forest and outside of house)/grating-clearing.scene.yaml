@@ -66,6 +66,20 @@ objects:
   - id: grating-clearing.white-house
     name: white house
     synonyms: [house, beauti house, coloni house]
+    actions:
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: >-
+                The house is a beautiful colonial house which is painted white. It is clear that the
+                owners must have been extremely wealthy.
+      - id: burn
+        triggers:
+          - type: response
+            data:
+              text: >-
+                You must be joking.
   - id: grating-clearing.grate
     name: grating
     synonyms: [grate]

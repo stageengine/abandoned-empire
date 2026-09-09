@@ -43,12 +43,46 @@ objects:
       - sheer cliff
       - sheer walls
       - sheer ledge
+    actions:
+      - id: climb
+        triggers:
+          - type: response
+            data:
+              text: >-
+                The cliff is too steep for climbing here.
   - id: canyon-view.river
     name: river
     synonyms: [frigid river]
+    actions:
+      - id: swim
+        triggers:
+          - type: response
+            data:
+              text: >-
+                A look before leaping reveals that the river is wide and dangerous, with swift currents
+                and large, half-submerged rocks.
+      - id: cross
+        triggers:
+          - type: response
+            data:
+              text: >-
+                You should get in the boat then launch it.
   - id: canyon-view.rainbow
     name: rainbow
 
+    actions:
+      - id: cross
+        triggers:
+          - type: response
+            data:
+              text: >-
+                From here?!?
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: >-
+                A rainbow, and no way to reach it from here.
 navigation:
   - id: south
     triggers:

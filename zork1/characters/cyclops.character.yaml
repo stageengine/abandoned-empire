@@ -28,6 +28,12 @@ presence:
 # the water the other, and the passage opens when he sleeps. Two flags here, for
 # the two states a player can tell apart, and the order below is the order the
 # first requirement that holds decides between.
+#
+# `cyclops-room/config.yaml`'s stairs read a third flag, `cyclops-flag`, which is
+# ZIL's own name for the one thing it keeps in a single global: asleep, fled, or
+# neither. Kept in step here rather than merged into `cyclops-asleep`, because the
+# stairs also open when he flees for good (`odysseus`), which is not sleep and
+# has no waking-up half.
 actions:
   - id: look
     requires:
@@ -87,6 +93,10 @@ actions:
         data:
           flag: cyclops-asleep
           value: true
+      - type: set-flag
+        data:
+          flag: cyclops-flag
+          value: true
 
   - id: give
     indirect: bottle
@@ -119,6 +129,10 @@ actions:
       - type: set-flag
         data:
           flag: cyclops-asleep
+          value: false
+      - type: set-flag
+        data:
+          flag: cyclops-flag
           value: false
 
   - id: attack

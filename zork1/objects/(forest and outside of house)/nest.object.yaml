@@ -97,3 +97,16 @@ actions:
         data:
           object: broken-egg
           to: path
+  - id: open
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Opening the bird's nest reveals a jewel-encrusted egg.
+
+  - id: close
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Closed.

@@ -50,9 +50,11 @@ objects:
   - water
   - lunch
   - kitchen-table
+  # The bottle before the sack, which is the order Zork reads them in. A room lists
+  # its things in the order it names them, so the order here is the prose.
+  - bottle
   - sandwich-bag
   - garlic
-  - bottle
   - id: kitchen.kitchen-window
     name: kitchen window
     synonyms: [window, small window]
@@ -123,6 +125,13 @@ objects:
     name: chimney
     synonyms: [dark chimney, narrow chimney]
 
+    actions:
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: >-
+                The chimney leads downward, and looks climbable.
 navigation:
   - id: east
     requires:

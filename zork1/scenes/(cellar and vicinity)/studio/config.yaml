@@ -72,6 +72,13 @@ objects:
     name: chimney
     synonyms: [dark chimney, narrow chimney]
 
+    actions:
+      - id: look
+        triggers:
+          - type: response
+            data:
+              text: >-
+                The chimney leads downward, and looks climbable.
 navigation:
   - id: south
     triggers:

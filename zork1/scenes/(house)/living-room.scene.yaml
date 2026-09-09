@@ -145,9 +145,11 @@ objects:
   - trophy-case
   - rug
   - trap-door
-  - lamp
   - wooden-door
+  # The sword hangs above the case and the lantern sits on it, and a room lists
+  # its things in the order they are written, so this is the order Zork reads.
   - sword
+  - lamp
   - map
 
 navigation:
@@ -189,6 +191,22 @@ navigation:
               data:
                 text: The trap door is closed.
     triggers:
+      # Before the room, because that is the order Zork reads it in: the door
+      # shuts as you go through it rather than once you have looked around. ZIL
+      # hangs this on entering the cellar, which puts it after the description
+      # here - and every other way into the cellar wants coming through this one
+      # first, so the way down is where it belongs.
+      - type: response
+        data:
+          text: The trap door crashes shut, and you hear someone barring it.
+      - type: set-flag
+        data:
+          flag: trap-door-open
+          value: false
+      - type: set-flag
+        data:
+          flag: trap-door-barred
+          value: true
       - type: change-scene
         data:
           scene: cellar

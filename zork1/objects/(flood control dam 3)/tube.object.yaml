@@ -53,3 +53,16 @@ actions:
           text: |-
             ---> Frobozz Magic Gunk Company <---
             All-Purpose Gunk
+  - id: open
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Opening the tube reveals a viscous material.
+
+  - id: close
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Closed.
