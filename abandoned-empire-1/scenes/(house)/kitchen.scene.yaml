@@ -153,16 +153,7 @@ navigation:
         data:
           scene: attic
   - id: down
-    requires:
-      - type: flag
-        data:
-          flag: false-flag
-        failure:
-          triggers:
-            - type: response
-              data:
-                text: Only Santa Claus climbs down chimneys.
     triggers:
-      - type: change-scene
+      - type: response
         data:
-          scene: studio
+          text: Only Santa Claus climbs down chimneys.
