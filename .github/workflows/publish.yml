@@ -2,12 +2,12 @@ name: Publish
 
 on:
   push:
-    tags: ['v*']
+    tags: ['*-v*']
 
   workflow_dispatch:
     inputs:
       tag:
-        description: The tag to build and release.
+        description: 'The tag to build and release, e.g. abandoned-empire-1-v0.1.0.'
         required: true
       engine:
         description: Which Stage to build with.
@@ -17,7 +17,7 @@ permissions:
   contents: write
 
 env:
-  STAGE: ${{ inputs.engine || '0.7.0' }}
+  STAGE: ${{ inputs.engine || '0.9.1' }}
 
 jobs:
   publish:
@@ -27,6 +27,27 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ inputs.tag || github.ref }}
+
+      - name: Parse the tag
+        id: tag
+        env:
+          TAG: ${{ inputs.tag || github.ref_name }}
+        run: |
+          set -euo pipefail
+
+          if [[ ! "$TAG" =~ ^(.+)-v([0-9].*)$ ]]; then
+            echo "::error::tag $TAG does not look like <game>-v<version>, e.g. abandoned-empire-1-v0.1.0."
+            exit 1
+          fi
+
+          game="${BASH_REMATCH[1]}"
+
+          if [ ! -d "$game" ]; then
+            echo "::error::no directory '$game' in this repo (parsed from tag $TAG)."
+            exit 1
+          fi
+
+          echo "game=$game" >> "$GITHUB_OUTPUT"
 
       - name: Fetch Stage
         run: |
@@ -40,10 +61,12 @@ jobs:
           ./stage --version
 
       - name: Build the game
+        env:
+          GAME: ${{ steps.tag.outputs.game }}
         run: |
           set -euo pipefail
 
-          ./stage build . --output game.stg --strict
+          ./stage build "$GAME" --output game.stg --strict
 
       - name: Read what was built
         id: built
@@ -76,13 +99,21 @@ jobs:
       - name: Check the tag against the game
         env:
           TAG: ${{ inputs.tag || github.ref_name }}
+          GAME: ${{ steps.tag.outputs.game }}
+          ID: ${{ steps.built.outputs.id }}
           VERSION: ${{ steps.built.outputs.version }}
         run: |
           set -euo pipefail
 
-          if [ "${TAG#v}" != "$VERSION" ]; then
+          if [ "$ID" != "$GAME" ]; then
+            echo "::error::built game id ($ID) does not match the directory the tag named ($GAME)."
+            exit 1
+          fi
+
+          expected="${TAG#"${GAME}"-v}"
+          if [ "$expected" != "$VERSION" ]; then
             echo "::error::tag $TAG does not match the version in the game ($VERSION)."
-            echo "Set metadata.version in config.yaml, or tag v$VERSION."
+            echo "Set metadata.version in $GAME/config.yaml, or tag ${GAME}-v$VERSION."
             exit 1
           fi
 
