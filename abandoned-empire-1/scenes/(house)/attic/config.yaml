@@ -1,8 +1,7 @@
 id: attic
 tags: [dark]
 
-meta:
-  title: Attic
+name: Attic
 
 presence:
   - requires:

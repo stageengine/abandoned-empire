@@ -1,8 +1,7 @@
 id: sandy-beach
 tags: [dark]
 
-meta:
-  title: Sandy Beach
+name: Sandy Beach
 
 presence:
   - requires:

@@ -2,8 +2,7 @@ id: path
 
 tags: [forest]
 
-meta:
-  title: Forest Path
+name: Forest Path
 
 presence:
   - triggers:

@@ -1,8 +1,7 @@
 id: torch-room
 tags: [dark]
 
-meta:
-  title: Torch Room
+name: Torch Room
 
 presence:
   - requires:

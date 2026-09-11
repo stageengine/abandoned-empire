@@ -1,8 +1,7 @@
 id: dead-end-1
 tags: [dark]
 
-meta:
-  title: Dead End
+name: Dead End
 
 presence:
   - requires:

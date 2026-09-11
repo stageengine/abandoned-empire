@@ -1,7 +1,6 @@
 id: mirror-room-2
 
-meta:
-  title: Mirror Room
+name: Mirror Room
 
 presence:
   - triggers:

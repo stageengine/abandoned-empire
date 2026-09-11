@@ -1,8 +1,7 @@
 id: cold-passage
 tags: [dark]
 
-meta:
-  title: Cold Passage
+name: Cold Passage
 
 presence:
   - requires:

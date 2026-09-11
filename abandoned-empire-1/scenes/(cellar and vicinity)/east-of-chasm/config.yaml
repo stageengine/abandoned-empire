@@ -1,8 +1,7 @@
 id: east-of-chasm
 tags: [dark]
 
-meta:
-  title: East of Chasm
+name: East of Chasm
 
 presence:
   - requires:

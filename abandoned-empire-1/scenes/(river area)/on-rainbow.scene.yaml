@@ -1,7 +1,6 @@
 id: on-rainbow
 
-meta:
-  title: On the Rainbow
+name: On the Rainbow
 
 presence:
   - triggers:

@@ -1,8 +1,7 @@
 id: twisting-passage
 tags: [dark]
 
-meta:
-  title: Twisting Passage
+name: Twisting Passage
 
 presence:
   - requires:

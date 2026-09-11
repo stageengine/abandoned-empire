@@ -1,8 +1,7 @@
 id: egypt-room
 tags: [dark]
 
-meta:
-  title: Egyptian Room
+name: Egyptian Room
 
 presence:
   - requires:

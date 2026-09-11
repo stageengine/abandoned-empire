@@ -1,7 +1,6 @@
 id: gallery
 
-meta:
-  title: Gallery
+name: Gallery
 
 presence:
   - triggers:

@@ -1,7 +1,6 @@
 id: land-of-living-dead
 
-meta:
-  title: Land of the Dead
+name: Land of the Dead
 
 presence:
   - triggers:

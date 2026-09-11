@@ -1,8 +1,7 @@
 id: reservoir-north
 tags: [dark]
 
-meta:
-  title: Reservoir North
+name: Reservoir North
 
 presence:
   - requires:

@@ -1,8 +1,7 @@
 id: shaft-room
 tags: [dark]
 
-meta:
-  title: Shaft Room
+name: Shaft Room
 
 presence:
   - requires:

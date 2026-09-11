@@ -1,8 +1,7 @@
 id: deep-canyon
 tags: [dark]
 
-meta:
-  title: Deep Canyon
+name: Deep Canyon
 
 presence:
   - requires:

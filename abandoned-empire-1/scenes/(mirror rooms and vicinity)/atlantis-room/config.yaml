@@ -1,8 +1,7 @@
 id: atlantis-room
 tags: [dark]
 
-meta:
-  title: Atlantis Room
+name: Atlantis Room
 
 presence:
   - requires:

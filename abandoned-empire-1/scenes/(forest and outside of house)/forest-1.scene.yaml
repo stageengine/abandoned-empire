@@ -2,8 +2,7 @@ id: forest-1
 
 tags: [forest]
 
-meta:
-  title: Forest
+name: Forest
 
 presence:
   - triggers:

@@ -1,7 +1,6 @@
 id: clearing
 
-meta:
-  title: Clearing
+name: Clearing
 
 presence:
   - triggers:

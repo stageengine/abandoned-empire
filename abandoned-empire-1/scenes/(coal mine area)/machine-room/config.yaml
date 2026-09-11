@@ -1,8 +1,7 @@
 id: machine-room
 tags: [dark]
 
-meta:
-  title: Machine Room
+name: Machine Room
 
 presence:
   - requires:

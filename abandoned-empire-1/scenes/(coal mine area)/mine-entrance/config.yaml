@@ -1,8 +1,7 @@
 id: mine-entrance
 tags: [dark]
 
-meta:
-  title: Mine Entrance
+name: Mine Entrance
 
 presence:
   - requires:

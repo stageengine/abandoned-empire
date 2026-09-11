@@ -1,7 +1,6 @@
 id: east-of-house
 
-meta:
-  title: Behind House
+name: Behind House
 
 presence:
   - requires:

@@ -1,8 +1,7 @@
 id: timber-room
 tags: [dark]
 
-meta:
-  title: Timber Room
+name: Timber Room
 
 presence:
   - requires:

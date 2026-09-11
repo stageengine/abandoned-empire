@@ -1,7 +1,6 @@
 id: mountains
 
-meta:
-  title: Forest
+name: Forest
 
 presence:
   - triggers:

@@ -1,7 +1,6 @@
 id: south-of-house
 
-meta:
-  title: South of House
+name: South of House
 
 presence:
   - triggers:

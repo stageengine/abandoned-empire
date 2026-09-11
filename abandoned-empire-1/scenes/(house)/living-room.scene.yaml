@@ -1,7 +1,6 @@
 id: living-room
 
-meta:
-  title: Living Room
+name: Living Room
 
 presence:
   - requires:

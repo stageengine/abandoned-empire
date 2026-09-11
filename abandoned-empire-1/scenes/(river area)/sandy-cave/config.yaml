@@ -1,8 +1,7 @@
 id: sandy-cave
 tags: [dark]
 
-meta:
-  title: Sandy Cave
+name: Sandy Cave
 
 presence:
   - requires:

@@ -1,7 +1,6 @@
 id: canyon-bottom
 
-meta:
-  title: Canyon Bottom
+name: Canyon Bottom
 
 presence:
   - triggers:

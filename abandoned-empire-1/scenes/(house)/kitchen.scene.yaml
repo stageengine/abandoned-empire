@@ -1,7 +1,6 @@
 id: kitchen
 
-meta:
-  title: Kitchen
+name: Kitchen
 
 presence:
   - requires:

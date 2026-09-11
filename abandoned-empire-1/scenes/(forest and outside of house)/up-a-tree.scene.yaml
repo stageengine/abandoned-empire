@@ -2,8 +2,7 @@ id: up-a-tree
 
 tags: [forest]
 
-meta:
-  title: Up a Tree
+name: Up a Tree
 
 # The nest says what is in it, so the room says only the room. This used to carry
 # a copy of the egg's own words, because a thing's line could not be gated and the

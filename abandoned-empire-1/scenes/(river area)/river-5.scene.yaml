@@ -1,8 +1,7 @@
 id: river-5
 tags: [river]
 
-meta:
-  title: Frigid River
+name: Frigid River
 
 presence:
   - triggers:

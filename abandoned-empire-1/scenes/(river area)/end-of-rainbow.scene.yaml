@@ -1,7 +1,6 @@
 id: end-of-rainbow
 
-meta:
-  title: End of Rainbow
+name: End of Rainbow
 
 presence:
   - triggers:

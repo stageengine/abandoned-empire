@@ -1,8 +1,7 @@
 id: ladder-top
 tags: [dark]
 
-meta:
-  title: Ladder Top
+name: Ladder Top
 
 presence:
   - requires:

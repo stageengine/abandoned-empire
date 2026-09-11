@@ -1,8 +1,7 @@
 id: reservoir-south
 tags: [dark]
 
-meta:
-  title: Reservoir South
+name: Reservoir South
 
 presence:
   - requires:

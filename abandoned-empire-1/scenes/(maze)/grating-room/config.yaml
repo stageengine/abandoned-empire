@@ -1,8 +1,7 @@
 id: grating-room
 tags: [dark]
 
-meta:
-  title: Grating Room
+name: Grating Room
 
 # Four descriptions, most particular first. The open grating is the only one that
 # does not ask for a light, because an open grating is where the light is coming

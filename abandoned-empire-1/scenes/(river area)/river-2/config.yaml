@@ -1,8 +1,7 @@
 id: river-2
 tags: [dark, river]
 
-meta:
-  title: Frigid River
+name: Frigid River
 
 presence:
   - requires:

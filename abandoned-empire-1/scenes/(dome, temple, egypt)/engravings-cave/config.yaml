@@ -1,8 +1,7 @@
 id: engravings-cave
 tags: [dark]
 
-meta:
-  title: Engravings Cave
+name: Engravings Cave
 
 presence:
   - requires:

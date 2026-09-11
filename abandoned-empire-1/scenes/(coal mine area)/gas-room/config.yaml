@@ -1,8 +1,7 @@
 id: gas-room
 tags: [dark]
 
-meta:
-  title: Gas Room
+name: Gas Room
 
 presence:
   - requires:

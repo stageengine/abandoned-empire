@@ -1,8 +1,7 @@
 id: chasm-room
 tags: [dark]
 
-meta:
-  title: Chasm
+name: Chasm
 
 presence:
   - requires:

@@ -1,8 +1,7 @@
 id: white-cliffs-north
 tags: [dark]
 
-meta:
-  title: White Cliffs Beach
+name: White Cliffs Beach
 
 presence:
   - requires:

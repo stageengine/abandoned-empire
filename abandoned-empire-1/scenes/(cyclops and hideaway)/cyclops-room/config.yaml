@@ -1,8 +1,7 @@
 id: cyclops-room
 tags: [dark]
 
-meta:
-  title: Cyclops Room
+name: Cyclops Room
 
 presence:
   - requires:

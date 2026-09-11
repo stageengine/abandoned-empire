@@ -1,8 +1,7 @@
 id: maze-1
 tags: [dark]
 
-meta:
-  title: Maze
+name: Maze
 
 presence:
   - requires:

@@ -1,8 +1,7 @@
 id: squeeky-room
 tags: [dark]
 
-meta:
-  title: Squeaky Room
+name: Squeaky Room
 
 presence:
   - requires:

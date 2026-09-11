@@ -1,8 +1,7 @@
 id: mine-3
 tags: [dark]
 
-meta:
-  title: Coal Mine
+name: Coal Mine
 
 presence:
   - requires:

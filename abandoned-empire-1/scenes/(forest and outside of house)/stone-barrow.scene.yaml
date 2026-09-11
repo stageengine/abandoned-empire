@@ -1,7 +1,6 @@
 id: stone-barrow
 
-meta:
-  title: Stone Barrow
+name: Stone Barrow
 
 presence:
   - triggers:

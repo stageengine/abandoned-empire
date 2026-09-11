@@ -1,7 +1,6 @@
 id: shore
 
-meta:
-  title: Shore
+name: Shore
 
 presence:
   - triggers:

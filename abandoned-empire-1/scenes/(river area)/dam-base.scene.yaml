@@ -1,7 +1,6 @@
 id: dam-base
 
-meta:
-  title: Dam Base
+name: Dam Base
 
 presence:
   - triggers:

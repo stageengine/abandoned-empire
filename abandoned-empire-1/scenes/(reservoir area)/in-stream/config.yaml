@@ -1,8 +1,7 @@
 id: in-stream
 tags: [dark]
 
-meta:
-  title: Stream
+name: Stream
 
 presence:
   - requires:

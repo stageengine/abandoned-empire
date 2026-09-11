@@ -1,8 +1,7 @@
 id: stream-view
 tags: [dark]
 
-meta:
-  title: Stream View
+name: Stream View
 
 presence:
   - requires:

@@ -1,8 +1,7 @@
 id: treasure-room
 tags: [dark]
 
-meta:
-  title: Treasure Room
+name: Treasure Room
 
 presence:
   - requires:

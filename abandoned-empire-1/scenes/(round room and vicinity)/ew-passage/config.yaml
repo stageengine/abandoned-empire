@@ -1,8 +1,7 @@
 id: ew-passage
 tags: [dark]
 
-meta:
-  title: East-West Passage
+name: East-West Passage
 
 presence:
   - requires:

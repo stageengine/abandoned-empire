@@ -1,8 +1,7 @@
 id: slide-room
 tags: [dark]
 
-meta:
-  title: Slide Room
+name: Slide Room
 
 presence:
   - requires:

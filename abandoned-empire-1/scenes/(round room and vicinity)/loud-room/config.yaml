@@ -1,8 +1,7 @@
 id: loud-room
 tags: [dark]
 
-meta:
-  title: Loud Room
+name: Loud Room
 
 presence:
   # Quiet, once the echo has been called for. ZIL also quietens it at low tide with

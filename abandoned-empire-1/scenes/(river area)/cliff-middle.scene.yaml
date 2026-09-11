@@ -1,7 +1,6 @@
 id: cliff-middle
 
-meta:
-  title: Rocky Ledge
+name: Rocky Ledge
 
 presence:
   - triggers:

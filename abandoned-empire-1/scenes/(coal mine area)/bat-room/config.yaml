@@ -1,8 +1,7 @@
 id: bat-room
 tags: [dark]
 
-meta:
-  title: Bat Room
+name: Bat Room
 
 presence:
   - requires:

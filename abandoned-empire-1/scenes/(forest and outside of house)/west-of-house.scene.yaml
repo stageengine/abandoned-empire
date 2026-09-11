@@ -1,7 +1,6 @@
 id: west-of-house
 
-meta:
-  title: West of House
+name: West of House
 
 presence:
   - requires:

@@ -1,8 +1,7 @@
 id: winding-passage
 tags: [dark]
 
-meta:
-  title: Winding Passage
+name: Winding Passage
 
 presence:
   - requires:

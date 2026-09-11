@@ -1,7 +1,6 @@
 id: dam-room
 
-meta:
-  title: Dam
+name: Dam
 
 presence:
   - requires:

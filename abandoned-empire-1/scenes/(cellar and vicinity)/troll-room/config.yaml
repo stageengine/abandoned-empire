@@ -1,8 +1,7 @@
 id: troll-room
 tags: [dark]
 
-meta:
-  title: The Troll Room
+name: The Troll Room
 
 presence:
   - requires:

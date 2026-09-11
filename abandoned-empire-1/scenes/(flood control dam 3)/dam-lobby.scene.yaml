@@ -1,7 +1,6 @@
 id: dam-lobby
 
-meta:
-  title: Dam Lobby
+name: Dam Lobby
 
 presence:
   - triggers:

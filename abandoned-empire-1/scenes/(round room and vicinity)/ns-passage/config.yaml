@@ -1,8 +1,7 @@
 id: ns-passage
 tags: [dark]
 
-meta:
-  title: North-South Passage
+name: North-South Passage
 
 presence:
   - requires:

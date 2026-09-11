@@ -1,8 +1,7 @@
 id: narrow-passage
 tags: [dark]
 
-meta:
-  title: Narrow Passage
+name: Narrow Passage
 
 presence:
   - requires:

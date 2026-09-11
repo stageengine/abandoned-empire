@@ -1,8 +1,7 @@
 id: mirror-room-1
 tags: [dark]
 
-meta:
-  title: Mirror Room
+name: Mirror Room
 
 presence:
   - requires:

@@ -1,8 +1,7 @@
 id: damp-cave
 tags: [dark]
 
-meta:
-  title: Damp Cave
+name: Damp Cave
 
 presence:
   - requires:

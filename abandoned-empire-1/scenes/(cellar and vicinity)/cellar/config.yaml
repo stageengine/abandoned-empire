@@ -1,8 +1,7 @@
 id: cellar
 tags: [dark]
 
-meta:
-  title: Cellar
+name: Cellar
 
 presence:
   - requires:

@@ -1,7 +1,6 @@
 id: north-of-house
 
-meta:
-  title: North of House
+name: North of House
 
 presence:
   - triggers:

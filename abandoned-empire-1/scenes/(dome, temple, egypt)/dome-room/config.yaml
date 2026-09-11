@@ -1,8 +1,7 @@
 id: dome-room
 tags: [dark]
 
-meta:
-  title: Dome Room
+name: Dome Room
 
 presence:
   - requires:

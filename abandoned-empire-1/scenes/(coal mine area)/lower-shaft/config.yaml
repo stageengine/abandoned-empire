@@ -1,8 +1,7 @@
 id: lower-shaft
 tags: [dark]
 
-meta:
-  title: Drafty Room
+name: Drafty Room
 
 presence:
   - requires:

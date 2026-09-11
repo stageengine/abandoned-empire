@@ -1,8 +1,7 @@
 id: smelly-room
 tags: [dark]
 
-meta:
-  title: Smelly Room
+name: Smelly Room
 
 presence:
   - requires:

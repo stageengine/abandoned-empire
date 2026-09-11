@@ -1,8 +1,7 @@
 id: round-room
 tags: [dark]
 
-meta:
-  title: Round Room
+name: Round Room
 
 presence:
   - requires:

@@ -1,7 +1,6 @@
 id: entrance-to-hades
 
-meta:
-  title: Entrance to Hades
+name: Entrance to Hades
 
 presence:
   # Once the spirits are gone the gate stops saying they are in the way.

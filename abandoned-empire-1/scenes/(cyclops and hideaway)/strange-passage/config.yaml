@@ -1,8 +1,7 @@
 id: strange-passage
 tags: [dark]
 
-meta:
-  title: Strange Passage
+name: Strange Passage
 
 presence:
   - requires:

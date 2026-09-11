@@ -1,8 +1,7 @@
 id: tiny-cave
 tags: [dark]
 
-meta:
-  title: Cave
+name: Cave
 
 presence:
   - requires:

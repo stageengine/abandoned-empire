@@ -1,7 +1,6 @@
 id: aragain-falls
 
-meta:
-  title: Aragain Falls
+name: Aragain Falls
 
 presence:
   # Once the sceptre has been waved, the rainbow is something you can walk on, and

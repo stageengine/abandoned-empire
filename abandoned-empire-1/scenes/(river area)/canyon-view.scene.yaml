@@ -1,7 +1,6 @@
 id: canyon-view
 
-meta:
-  title: Canyon View
+name: Canyon View
 
 presence:
   - triggers:

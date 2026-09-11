@@ -1,8 +1,7 @@
 id: ladder-bottom
 tags: [dark]
 
-meta:
-  title: Ladder Bottom
+name: Ladder Bottom
 
 presence:
   - requires:

@@ -1,8 +1,7 @@
 id: reservoir
 tags: [dark]
 
-meta:
-  title: Reservoir
+name: Reservoir
 
 presence:
   - requires:

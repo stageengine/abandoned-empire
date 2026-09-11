@@ -1,7 +1,6 @@
 id: south-temple
 
-meta:
-  title: Altar
+name: Altar
 
 presence:
   - requires:

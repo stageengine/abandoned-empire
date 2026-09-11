@@ -1,8 +1,7 @@
 id: maintenance-room
 tags: [dark]
 
-meta:
-  title: Maintenance Room
+name: Maintenance Room
 
 presence:
   - requires:

@@ -1,7 +1,6 @@
 id: north-temple
 
-meta:
-  title: Temple
+name: Temple
 
 presence:
   - triggers:
