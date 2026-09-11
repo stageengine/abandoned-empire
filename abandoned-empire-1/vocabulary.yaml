@@ -1,4 +1,3 @@
-navigational: [walk, climb, board, disembark, cross, follow, enter]
 conversational: [ask, tell, answer]
 recipient-first: [give, show]
 
@@ -19,17 +18,24 @@ verbs:
     synonyms: [put down, discard, release, let go of]
   - id: walk
     synonyms: [go, head, run, travel, proceed, return, wander]
+    navigational: true
   - id: climb
     synonyms: [scale, ascend, clamber]
+    navigational: true
   - id: enter
     synonyms: [go in, walk in]
+    navigational: true
   - id: board
     synonyms: [embark, get in, get into, sit in]
+    navigational: true
   - id: disembark
     synonyms: [get out, get off]
+    navigational: true
   - id: cross
+    navigational: true
   - id: follow
     synonyms: [pursue, chase]
+    navigational: true
   - id: put
     synonyms: [place, insert, stuff, set, lay]
   - id: open
