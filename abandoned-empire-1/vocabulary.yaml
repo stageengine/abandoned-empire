@@ -1,4 +1,3 @@
-conversational: [ask, tell, answer]
 recipient-first: [give, show]
 
 verbs:
@@ -147,10 +146,13 @@ verbs:
   - id: echo
   - id: ask
     synonyms: [question, enquire, inquire, quiz]
+    conversational: true
   - id: tell
     synonyms: [inform]
+    conversational: true
   - id: answer
     synonyms: [reply, respond, say]
+    conversational: true
   - id: give
     synonyms: [hand, hand over, offer, pay, donate]
   - id: show
