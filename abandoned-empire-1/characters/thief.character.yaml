@@ -140,13 +140,16 @@ actions:
           subject: thief
           measure: strength
           max: 1
-    chance:
-      percent: 40
-      failure:
-        triggers:
-          - type: response
-            data:
-              text: Your knife misses the thief by an inch.
+      - type: chance
+        data:
+          percent: 40
+          name: characters-thief-character-143
+        failure:
+          triggers:
+            - type: journal
+            - type: response
+              data:
+                text: Your knife misses the thief by an inch.
     triggers:
       - type: response
         data:
@@ -169,13 +172,16 @@ actions:
             - type: response
               data:
                 text: You aren't holding the knife.
-    chance:
-      percent: 40
-      failure:
-        triggers:
-          - type: response
-            data:
-              text: Your knife misses the thief by an inch.
+      - type: chance
+        data:
+          percent: 40
+          name: characters-thief-character-172
+        failure:
+          triggers:
+            - type: journal
+            - type: response
+              data:
+                text: Your knife misses the thief by an inch.
     triggers:
       - type: response
         data:

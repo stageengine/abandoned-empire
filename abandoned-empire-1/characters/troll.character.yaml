@@ -77,13 +77,16 @@ actions:
           subject: troll
           measure: strength
           max: 1
-    chance:
-      percent: 60
-      failure:
-        triggers:
-          - type: response
-            data:
-              text: Clang! Crash! The troll parries.
+      - type: chance
+        data:
+          percent: 60
+          name: characters-troll-character-80
+        failure:
+          triggers:
+            - type: journal
+            - type: response
+              data:
+                text: Clang! Crash! The troll parries.
     triggers:
       - type: response
         data:
@@ -106,13 +109,16 @@ actions:
             - type: response
               data:
                 text: You aren't holding the sword.
-    chance:
-      percent: 60
-      failure:
-        triggers:
-          - type: response
-            data:
-              text: Your sword misses the troll by an inch.
+      - type: chance
+        data:
+          percent: 60
+          name: characters-troll-character-109
+        failure:
+          triggers:
+            - type: journal
+            - type: response
+              data:
+                text: Your sword misses the troll by an inch.
     triggers:
       - type: response
         data:

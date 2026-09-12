@@ -142,8 +142,10 @@ every-turn:
         negate: true
         data:
           flag: player-died
-    chance:
-      percent: 80
+      - type: chance
+        data:
+          percent: 80
+          name: every-turn-145
     triggers:
       - type: response
         data:
@@ -262,8 +264,10 @@ every-turn:
       - type: scene
         data:
           tag: forest
-    chance:
-      percent: 15
+      - type: chance
+        data:
+          percent: 15
+          name: every-turn-265
     triggers:
       - type: response
         data:
@@ -830,6 +834,10 @@ every-turn:
   # until `attack` sets `thief-fighting` - he is a thief before he is a fighter,
   # and does not start a fight just for being in the room with you. Same 5:2:2:2
   # weighting as the troll's, which is ZIL's own `DEF3A` table read the same way.
+  #
+  # The roll is one trigger, saying one of four things. Its own line is never
+  # said - an answer runs in place of it - and repeats the miss, the commonest
+  # of the four, the same way the miss's own wrapper below repeats its first.
   - requires:
       - type: character-here
         data:
@@ -837,75 +845,79 @@ every-turn:
       - type: flag
         data:
           flag: thief-fighting
-    chance:
-      outcomes:
-        - weight: 5
-          triggers:
-            - type: response
-              chance:
-                outcomes:
-                  - weight: 1
-                    triggers:
-                      - type: response
-                        data:
-                          text: The thief stabs nonchalantly with his stiletto and misses.
-                  - weight: 1
-                    triggers:
-                      - type: response
-                        data:
-                          text: You dodge as the thief comes in low.
-                  - weight: 1
-                    triggers:
-                      - type: response
-                        data:
-                          text: >-
-                            You parry a lightning thrust, and the thief salutes you with a grim
-                            nod.
-                  - weight: 1
-                    triggers:
-                      - type: response
-                        data:
-                          text: The thief tries to sneak past your guard, but you twist away.
-              data:
-                text: The thief stabs nonchalantly with his stiletto and misses.
+    triggers:
+      - type: response
+        data:
+          text: The thief stabs nonchalantly with his stiletto and misses.
+        chance:
+          outcomes:
+            - weight: 5
+              triggers:
+                - type: response
+                  chance:
+                    outcomes:
+                      - weight: 1
+                        triggers:
+                          - type: response
+                            data:
+                              text: The thief stabs nonchalantly with his stiletto and misses.
+                      - weight: 1
+                        triggers:
+                          - type: response
+                            data:
+                              text: You dodge as the thief comes in low.
+                      - weight: 1
+                        triggers:
+                          - type: response
+                            data:
+                              text: >-
+                                You parry a lightning thrust, and the thief salutes you with a grim
+                                nod.
+                      - weight: 1
+                        triggers:
+                          - type: response
+                            data:
+                              text: The thief tries to sneak past your guard, but you twist away.
+                  data:
+                    text: The thief stabs nonchalantly with his stiletto and misses.
 
-        - weight: 2
-          triggers:
-            - type: response
-              data:
-                text: The thief attacks, and you fall back desperately.
+            - weight: 2
+              triggers:
+                - type: response
+                  data:
+                    text: The thief attacks, and you fall back desperately.
 
-        - weight: 2
-          triggers:
-            - type: response
-              data:
-                text: A quick thrust pinks your left arm, and blood starts to trickle down.
-            - type: adjust-measure
-              data:
-                subject: player
-                measure: health
-                by: -1
-            - type: adjust-measure
-              data:
-                subject: player
-                measure: allowance
-                by: -10
+            - weight: 2
+              triggers:
+                - type: response
+                  data:
+                    text: A quick thrust pinks your left arm, and blood starts to trickle down.
+                - type: adjust-measure
+                  data:
+                    subject: player
+                    measure: health
+                    by: -1
+                - type: adjust-measure
+                  data:
+                    subject: player
+                    measure: allowance
+                    by: -10
 
-        - weight: 2
-          triggers:
-            - type: response
-              data:
-                text: The thief strikes like a snake! The resulting wound is serious.
-            - type: adjust-measure
-              data:
-                subject: player
-                measure: health
-                by: -1
-            - type: adjust-measure
-              data:
-                subject: player
-                measure: allowance
-                by: -20
+            - weight: 2
+              triggers:
+                - type: response
+                  data:
+                    text: The thief strikes like a snake! The resulting wound is serious.
+                - type: adjust-measure
+                  data:
+                    subject: player
+                    measure: health
+                    by: -1
+                - type: adjust-measure
+                  data:
+                    subject: player
+                    measure: allowance
+                    by: -20
 
   # The encounter ends when either of you leaves, not only when he dies -
   # otherwise a fight broken off by walking away would resume the moment he

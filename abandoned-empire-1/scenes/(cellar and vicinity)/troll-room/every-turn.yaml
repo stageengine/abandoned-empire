@@ -16,76 +16,84 @@ every-turn:
   # them all - `shuffle` does that now - so the miss, which is the one the
   # player sees most, is a nested roll of its own with that turned on, and the
   # rest take one line each.
+  #
+  # The roll is one trigger, saying one of four things. Its own line is never
+  # said - an answer runs in place of it - and is the miss, the commonest of the
+  # four, the same way the miss's own wrapper below repeats its first line.
   - requires:
       - type: object-here
         data:
           object: troll
-    chance:
-      outcomes:
-        - weight: 5
-          triggers:
-            - type: response
-              chance:
-                shuffle: troll-miss
-                outcomes:
-                  - weight: 1
-                    triggers:
-                      - type: response
-                        data:
-                          text: The troll swings his axe, but it misses.
-                  - weight: 1
-                    triggers:
-                      - type: response
-                        data:
-                          text: The troll's axe barely misses your ear.
-                  - weight: 1
-                    triggers:
-                      - type: response
-                        data:
-                          text: The axe sweeps past as you jump aside.
-                  - weight: 1
-                    triggers:
-                      - type: response
-                        data:
-                          text: The axe crashes against the rock, throwing sparks!
-              data:
-                text: The troll swings his axe, but it misses.
+    triggers:
+      - type: response
+        data:
+          text: The troll swings his axe, but it misses.
+        chance:
+          outcomes:
+            - weight: 5
+              triggers:
+                - type: response
+                  chance:
+                    shuffle: troll-miss
+                    outcomes:
+                      - weight: 1
+                        triggers:
+                          - type: response
+                            data:
+                              text: The troll swings his axe, but it misses.
+                      - weight: 1
+                        triggers:
+                          - type: response
+                            data:
+                              text: The troll's axe barely misses your ear.
+                      - weight: 1
+                        triggers:
+                          - type: response
+                            data:
+                              text: The axe sweeps past as you jump aside.
+                      - weight: 1
+                        triggers:
+                          - type: response
+                            data:
+                              text: The axe crashes against the rock, throwing sparks!
+                  data:
+                    text: The troll swings his axe, but it misses.
 
-        # A stagger costs the turn and no blood, which is what it costs in Zork.
-        - weight: 2
-          triggers:
-            - type: response
-              data:
-                text: You stagger back under a hail of axe strokes.
+            # A stagger costs the turn and no blood, which is what it costs in Zork.
+            - weight: 2
+              triggers:
+                - type: response
+                  data:
+                    text: You stagger back under a hail of axe strokes.
 
-        - weight: 2
-          triggers:
-            - type: response
-              data:
-                text: The troll swings his axe, and it nicks your arm as you dodge.
-            - type: adjust-measure
-              data:
-                subject: player
-                measure: health
-                by: -1
-            - type: adjust-measure
-              data:
-                subject: player
-                measure: allowance
-                by: -10
+            - weight: 2
+              triggers:
+                - type: response
+                  data:
+                    text: The troll swings his axe, and it nicks your arm as you dodge.
+                - type: adjust-measure
+                  data:
+                    subject: player
+                    measure: health
+                    by: -1
+                - type: adjust-measure
+                  data:
+                    subject: player
+                    measure: allowance
+                    by: -10
 
-        - weight: 2
-          triggers:
-            - type: response
-              data:
-                text: An axe stroke makes a deep wound in your leg.
-            - type: adjust-measure
-              data:
-                subject: player
-                measure: health
-                by: -1
-            - type: adjust-measure
-              data:
-                subject: player
-                measure: allowance
-                by: -20
+            - weight: 2
+              triggers:
+                - type: response
+                  data:
+                    text: An axe stroke makes a deep wound in your leg.
+                - type: adjust-measure
+                  data:
+                    subject: player
+                    measure: health
+                    by: -1
+                - type: adjust-measure
+                  data:
+                    subject: player
+                    measure: allowance
+                    by: -20
