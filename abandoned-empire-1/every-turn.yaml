@@ -144,7 +144,8 @@ every-turn:
           flag: player-died
       - type: chance
         data:
-          percent: 80
+          of: 100
+          index: [1..80]
           name: every-turn-145
     triggers:
       - type: response
@@ -266,7 +267,8 @@ every-turn:
           tag: forest
       - type: chance
         data:
-          percent: 15
+          of: 100
+          index: [1..15]
           name: every-turn-265
     triggers:
       - type: response
@@ -627,10 +629,10 @@ every-turn:
           measure: score
           by: 15
 
-  # The thief walks the dungeon. One roll a turn over the rooms ZIL lets him into -
-  # everything below ground except the maze and the rooms it flags sacred - which is
-  # a weighted list of moves rather than 33 rules, because `chance` picks one
-  # answer and the answer is where he goes.
+  # The thief walks the dungeon. One roll a turn, `thief-walk`, over the rooms
+  # ZIL lets him into - everything below ground except the maze and the rooms
+  # it flags sacred - and one rule per room, each claiming one index of the
+  # thirty-three, so exactly one of them fires and that is where he goes.
   #
   # Silent once he is dead, too. ZIL drives every thief behaviour off one queued
   # interrupt and disables it in full on death (`<DISABLE <INT I-THIEF>>`,
@@ -645,147 +647,331 @@ every-turn:
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 1 }
     triggers:
-      # A `response` is what a roll with several answers hangs on, and its own text
-      # is replaced by whichever answer comes up - every turn, here, since every
-      # answer is a move. The line below is therefore never read; it is what the
-      # rule would say if the list were ever empty.
-      - type: response
-        data: { text: You hear a scurrying noise in the distance. }
-        chance:
-          outcomes:
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: cellar }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: east-of-chasm }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: gallery }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: studio }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: troll-room }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: dome-room }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: egypt-room }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: engravings-cave }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: north-temple }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: south-temple }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: torch-room }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: entrance-to-hades }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: land-of-living-dead }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: atlantis-room }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: cold-passage }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: mirror-room-1 }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: mirror-room-2 }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: narrow-passage }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: small-cave }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: tiny-cave }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: twisting-passage }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: winding-passage }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: reservoir }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: reservoir-north }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: reservoir-south }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: stream-view }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: chasm-room }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: damp-cave }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: deep-canyon }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: ew-passage }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: loud-room }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: ns-passage }
-            - weight: 1
-              triggers:
-                - type: move-object
-                  data: { object: thief, to: round-room }
+      - type: move-object
+        data: { object: thief, to: cellar }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 2 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: east-of-chasm }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 3 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: gallery }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 4 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: studio }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 5 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: troll-room }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 6 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: dome-room }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 7 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: egypt-room }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 8 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: engravings-cave }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 9 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: north-temple }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 10 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: south-temple }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 11 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: torch-room }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 12 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: entrance-to-hades }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 13 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: land-of-living-dead }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 14 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: atlantis-room }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 15 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: cold-passage }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 16 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: mirror-room-1 }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 17 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: mirror-room-2 }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 18 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: narrow-passage }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 19 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: small-cave }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 20 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: tiny-cave }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 21 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: twisting-passage }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 22 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: winding-passage }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 23 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: reservoir }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 24 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: reservoir-north }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 25 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: reservoir-south }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 26 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: stream-view }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 27 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: chasm-room }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 28 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: damp-cave }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 29 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: deep-canyon }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 30 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: ew-passage }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 31 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: loud-room }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 32 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: ns-passage }
+
+  - requires:
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 33 }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: round-room }
 
   # And what he is for, now written once. `tagged` asks whether anything
   # tagged `treasure` is in the player's hands, and `move-tagged` takes
@@ -797,8 +983,9 @@ every-turn:
   # the engine.
   #
   # Only where he is standing, and only sometimes, so a player who meets him keeps
-  # most of what they are carrying most of the time. Zork's own words for it: he is
-  # gone before you notice.
+  # most of what they are carrying most of the time: one roll of nine, `thief-robbery`,
+  # of which one index robs and the other eight only look. Zork's own words for it:
+  # he is gone before you notice.
 
   - requires:
       - type: character-here
@@ -806,38 +993,42 @@ every-turn:
           character: thief
       - type: tagged
         data: { tag: treasure, location: inventory }
+      - type: chance
+        data: { name: thief-robbery, of: 9, index: 1 }
     triggers:
       - type: response
-        data: { text: The thief eyes your possessions greedily. }
-        chance:
-          outcomes:
-            - weight: 1
-              triggers:
-                - type: response
-                  data:
-                    text: >-
-                      The thief just left, still carrying his large bag. You may not have
-                      noticed that he robbed you blind first.
-                - type: move-tagged
-                  data: { tag: treasure, from: inventory, to: held:thief }
-                - type: move-object
-                  data:
-                    object: thief
-                    to: treasure-room
-            - weight: 8
-              triggers:
-                - type: response
-                  data: { text: The thief is taking an unhealthy interest in your possessions. }
+        data:
+          text: >-
+            The thief just left, still carrying his large bag. You may not have
+            noticed that he robbed you blind first.
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: held:thief }
+      - type: move-object
+        data:
+          object: thief
+          to: treasure-room
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: tagged
+        data: { tag: treasure, location: inventory }
+      - type: chance
+        data: { name: thief-robbery, of: 9, index: [2..9] }
+    triggers:
+      - type: response
+        data: { text: The thief is taking an unhealthy interest in your possessions. }
 
   # His own counter-swing, wherever he currently is: he wanders, so this cannot
   # live in one room's own `every-turn.yaml` the way the troll's does. Silent
   # until `attack` sets `thief-fighting` - he is a thief before he is a fighter,
   # and does not start a fight just for being in the room with you. Same 5:2:2:2
-  # weighting as the troll's, which is ZIL's own `DEF3A` table read the same way.
-  #
-  # The roll is one trigger, saying one of four things. Its own line is never
-  # said - an answer runs in place of it - and repeats the miss, the commonest
-  # of the four, the same way the miss's own wrapper below repeats its first.
+  # weighting as the troll's, which is ZIL's own `DEF3A` table read the same way:
+  # one roll of eleven, `thief-blow`, sliced between the rules below, and the
+  # miss - the commonest of the four - a second roll of four, `thief-miss`, to
+  # pick a line. Repeating, unlike the troll's: ZIL picks the thief's lines
+  # with no memory between blows.
   - requires:
       - type: character-here
         data:
@@ -845,79 +1036,126 @@ every-turn:
       - type: flag
         data:
           flag: thief-fighting
+      - type: chance
+        data: { name: thief-blow, of: 11, index: [1..5] }
+      - type: chance
+        data: { name: thief-miss, of: 4, index: 1 }
     triggers:
       - type: response
         data:
           text: The thief stabs nonchalantly with his stiletto and misses.
-        chance:
-          outcomes:
-            - weight: 5
-              triggers:
-                - type: response
-                  chance:
-                    outcomes:
-                      - weight: 1
-                        triggers:
-                          - type: response
-                            data:
-                              text: The thief stabs nonchalantly with his stiletto and misses.
-                      - weight: 1
-                        triggers:
-                          - type: response
-                            data:
-                              text: You dodge as the thief comes in low.
-                      - weight: 1
-                        triggers:
-                          - type: response
-                            data:
-                              text: >-
-                                You parry a lightning thrust, and the thief salutes you with a grim
-                                nod.
-                      - weight: 1
-                        triggers:
-                          - type: response
-                            data:
-                              text: The thief tries to sneak past your guard, but you twist away.
-                  data:
-                    text: The thief stabs nonchalantly with his stiletto and misses.
 
-            - weight: 2
-              triggers:
-                - type: response
-                  data:
-                    text: The thief attacks, and you fall back desperately.
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: flag
+        data:
+          flag: thief-fighting
+      - type: chance
+        data: { name: thief-blow, of: 11, index: [1..5] }
+      - type: chance
+        data: { name: thief-miss, of: 4, index: 2 }
+    triggers:
+      - type: response
+        data:
+          text: You dodge as the thief comes in low.
 
-            - weight: 2
-              triggers:
-                - type: response
-                  data:
-                    text: A quick thrust pinks your left arm, and blood starts to trickle down.
-                - type: adjust-measure
-                  data:
-                    subject: player
-                    measure: health
-                    by: -1
-                - type: adjust-measure
-                  data:
-                    subject: player
-                    measure: allowance
-                    by: -10
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: flag
+        data:
+          flag: thief-fighting
+      - type: chance
+        data: { name: thief-blow, of: 11, index: [1..5] }
+      - type: chance
+        data: { name: thief-miss, of: 4, index: 3 }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You parry a lightning thrust, and the thief salutes you with a grim
+            nod.
 
-            - weight: 2
-              triggers:
-                - type: response
-                  data:
-                    text: The thief strikes like a snake! The resulting wound is serious.
-                - type: adjust-measure
-                  data:
-                    subject: player
-                    measure: health
-                    by: -1
-                - type: adjust-measure
-                  data:
-                    subject: player
-                    measure: allowance
-                    by: -20
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: flag
+        data:
+          flag: thief-fighting
+      - type: chance
+        data: { name: thief-blow, of: 11, index: [1..5] }
+      - type: chance
+        data: { name: thief-miss, of: 4, index: 4 }
+    triggers:
+      - type: response
+        data:
+          text: The thief tries to sneak past your guard, but you twist away.
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: flag
+        data:
+          flag: thief-fighting
+      - type: chance
+        data: { name: thief-blow, of: 11, index: [6..7] }
+    triggers:
+      - type: response
+        data:
+          text: The thief attacks, and you fall back desperately.
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: flag
+        data:
+          flag: thief-fighting
+      - type: chance
+        data: { name: thief-blow, of: 11, index: [8..9] }
+    triggers:
+      - type: response
+        data:
+          text: A quick thrust pinks your left arm, and blood starts to trickle down.
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: health
+          by: -1
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: allowance
+          by: -10
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: flag
+        data:
+          flag: thief-fighting
+      - type: chance
+        data: { name: thief-blow, of: 11, index: [10..11] }
+    triggers:
+      - type: response
+        data:
+          text: The thief strikes like a snake! The resulting wound is serious.
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: health
+          by: -1
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: allowance
+          by: -20
 
   # The encounter ends when either of you leaves, not only when he dies -
   # otherwise a fight broken off by walking away would resume the moment he

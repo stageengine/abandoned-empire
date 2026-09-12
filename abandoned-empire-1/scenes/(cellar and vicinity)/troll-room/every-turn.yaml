@@ -4,96 +4,124 @@ every-turn:
 
   # The troll, who blocks both ways on and does not wait to be asked.
   #
-  # One roll a turn, and now more than two answers to it. ZIL settles each blow
-  # against a table indexed on both fighters' strength and drawn from nine times
-  # over, and does the weighting by repeating entries inside a sliding window:
-  # `DEF3A` is five MISSED, two STAGGER, two LIGHT-WOUND and two SERIOUS-WOUND,
-  # and a stronger attacker's window drops misses off the front. Those counts are
-  # the weights below.
+  # One roll a turn, `troll-blow`, and more than two answers to it. ZIL settles
+  # each blow against a table indexed on both fighters' strength and drawn from
+  # nine times over, and does the weighting by repeating entries inside a
+  # sliding window: `DEF3A` is five MISSED, two STAGGER, two LIGHT-WOUND and two
+  # SERIOUS-WOUND, and a stronger attacker's window drops misses off the front.
+  # Those counts are the slices below: a roll of eleven, of which one through
+  # five miss, six and seven stagger, eight and nine wound lightly, and ten and
+  # eleven wound seriously. Every rule below asks the same roll, and the slices
+  # never overlap, so at most one of them fires a turn.
   #
   # The wording is Zork's own, from `TROLL-MELEE`. Where it offers several lines
   # for one outcome it picks between them without repeating until it has used
-  # them all - `shuffle` does that now - so the miss, which is the one the
-  # player sees most, is a nested roll of its own with that turned on, and the
-  # rest take one line each.
-  #
-  # The roll is one trigger, saying one of four things. Its own line is never
-  # said - an answer runs in place of it - and is the miss, the commonest of the
-  # four, the same way the miss's own wrapper below repeats its first line.
+  # them all, so the miss, which is the one the player sees most, is four rules
+  # sharing a second roll of their own, `troll-miss`, marked `no-repeat`: each
+  # line comes up once before any repeats, and the draw advances only when a
+  # miss rule fires - a stagger does not spend one.
   - requires:
       - type: object-here
         data:
           object: troll
+      - type: chance
+        data: { name: troll-blow, of: 11, index: [1..5] }
+      - type: chance
+        data: { name: troll-miss, of: 4, index: 1, no-repeat: true }
     triggers:
       - type: response
         data:
           text: The troll swings his axe, but it misses.
-        chance:
-          outcomes:
-            - weight: 5
-              triggers:
-                - type: response
-                  chance:
-                    shuffle: troll-miss
-                    outcomes:
-                      - weight: 1
-                        triggers:
-                          - type: response
-                            data:
-                              text: The troll swings his axe, but it misses.
-                      - weight: 1
-                        triggers:
-                          - type: response
-                            data:
-                              text: The troll's axe barely misses your ear.
-                      - weight: 1
-                        triggers:
-                          - type: response
-                            data:
-                              text: The axe sweeps past as you jump aside.
-                      - weight: 1
-                        triggers:
-                          - type: response
-                            data:
-                              text: The axe crashes against the rock, throwing sparks!
-                  data:
-                    text: The troll swings his axe, but it misses.
 
-            # A stagger costs the turn and no blood, which is what it costs in Zork.
-            - weight: 2
-              triggers:
-                - type: response
-                  data:
-                    text: You stagger back under a hail of axe strokes.
+  - requires:
+      - type: object-here
+        data:
+          object: troll
+      - type: chance
+        data: { name: troll-blow, of: 11, index: [1..5] }
+      - type: chance
+        data: { name: troll-miss, of: 4, index: 2, no-repeat: true }
+    triggers:
+      - type: response
+        data:
+          text: The troll's axe barely misses your ear.
 
-            - weight: 2
-              triggers:
-                - type: response
-                  data:
-                    text: The troll swings his axe, and it nicks your arm as you dodge.
-                - type: adjust-measure
-                  data:
-                    subject: player
-                    measure: health
-                    by: -1
-                - type: adjust-measure
-                  data:
-                    subject: player
-                    measure: allowance
-                    by: -10
+  - requires:
+      - type: object-here
+        data:
+          object: troll
+      - type: chance
+        data: { name: troll-blow, of: 11, index: [1..5] }
+      - type: chance
+        data: { name: troll-miss, of: 4, index: 3, no-repeat: true }
+    triggers:
+      - type: response
+        data:
+          text: The axe sweeps past as you jump aside.
 
-            - weight: 2
-              triggers:
-                - type: response
-                  data:
-                    text: An axe stroke makes a deep wound in your leg.
-                - type: adjust-measure
-                  data:
-                    subject: player
-                    measure: health
-                    by: -1
-                - type: adjust-measure
-                  data:
-                    subject: player
-                    measure: allowance
-                    by: -20
+  - requires:
+      - type: object-here
+        data:
+          object: troll
+      - type: chance
+        data: { name: troll-blow, of: 11, index: [1..5] }
+      - type: chance
+        data: { name: troll-miss, of: 4, index: 4, no-repeat: true }
+    triggers:
+      - type: response
+        data:
+          text: The axe crashes against the rock, throwing sparks!
+
+  # A stagger costs the turn and no blood, which is what it costs in Zork.
+  - requires:
+      - type: object-here
+        data:
+          object: troll
+      - type: chance
+        data: { name: troll-blow, of: 11, index: [6..7] }
+    triggers:
+      - type: response
+        data:
+          text: You stagger back under a hail of axe strokes.
+
+  - requires:
+      - type: object-here
+        data:
+          object: troll
+      - type: chance
+        data: { name: troll-blow, of: 11, index: [8..9] }
+    triggers:
+      - type: response
+        data:
+          text: The troll swings his axe, and it nicks your arm as you dodge.
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: health
+          by: -1
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: allowance
+          by: -10
+
+  - requires:
+      - type: object-here
+        data:
+          object: troll
+      - type: chance
+        data: { name: troll-blow, of: 11, index: [10..11] }
+    triggers:
+      - type: response
+        data:
+          text: An axe stroke makes a deep wound in your leg.
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: health
+          by: -1
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: allowance
+          by: -20

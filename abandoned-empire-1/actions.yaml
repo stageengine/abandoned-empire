@@ -124,35 +124,44 @@ actions:
         data:
           text: A hollow voice says "Fool."
 
-  # ZIL picks one of four lines with no memory between calls, so a weighted roll
-  # is the shape already used for the troll's misses rather than a new one.
+  # ZIL picks one of four lines with no memory between calls: one roll of four
+  # a turn, and four answers to the verb each claiming one index of it. The
+  # first whose requirements hold is the one that speaks.
   - id: hello
+    requires:
+      - type: chance
+        data: { name: hello, of: 4, index: 1 }
     triggers:
       - type: response
-        chance:
-          outcomes:
-            - weight: 1
-              triggers:
-                - type: response
-                  data:
-                    text: Hello.
-            - weight: 1
-              triggers:
-                - type: response
-                  data:
-                    text: Good day.
-            - weight: 1
-              triggers:
-                - type: response
-                  data:
-                    text: Nice weather we've been having lately.
-            - weight: 1
-              triggers:
-                - type: response
-                  data:
-                    text: Goodbye.
         data:
           text: Hello.
+
+  - id: hello
+    requires:
+      - type: chance
+        data: { name: hello, of: 4, index: 2 }
+    triggers:
+      - type: response
+        data:
+          text: Good day.
+
+  - id: hello
+    requires:
+      - type: chance
+        data: { name: hello, of: 4, index: 3 }
+    triggers:
+      - type: response
+        data:
+          text: Nice weather we've been having lately.
+
+  - id: hello
+    requires:
+      - type: chance
+        data: { name: hello, of: 4, index: 4 }
+    triggers:
+      - type: response
+        data:
+          text: Goodbye.
 
   - id: yell
     triggers:

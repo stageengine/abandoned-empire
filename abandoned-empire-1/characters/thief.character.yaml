@@ -142,7 +142,8 @@ actions:
           max: 1
       - type: chance
         data:
-          percent: 40
+          of: 100
+          index: [1..40]
           name: characters-thief-character-143
         failure:
           triggers:
@@ -174,7 +175,8 @@ actions:
                 text: You aren't holding the knife.
       - type: chance
         data:
-          percent: 40
+          of: 100
+          index: [1..40]
           name: characters-thief-character-172
         failure:
           triggers:

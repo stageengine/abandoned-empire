@@ -79,7 +79,8 @@ actions:
           max: 1
       - type: chance
         data:
-          percent: 60
+          of: 100
+          index: [1..60]
           name: characters-troll-character-80
         failure:
           triggers:
@@ -111,7 +112,8 @@ actions:
                 text: You aren't holding the sword.
       - type: chance
         data:
-          percent: 60
+          of: 100
+          index: [1..60]
           name: characters-troll-character-109
         failure:
           triggers:
