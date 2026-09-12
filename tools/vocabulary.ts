@@ -128,12 +128,17 @@ const listed = (table: Record<string, Array<string>>): Array<Value> =>
     synonyms.length ? { id, synonyms } : { id } as Value
   ) as Array<Value>;
 
-export const vocabulary = (): Record<string, Value> => ({
-  navigational: NAVIGATIONAL,
-  conversational: CONVERSATIONAL,
-  'recipient-first': RECIPIENT_FIRST,
+/** A verb's own entry, its synonyms beside a boolean for each property it has. */
+const verbs = (): Array<Value> =>
+  listed(VERBS).map((entry) => ({
+    ...entry as Record<string, Value>,
+    ...(NAVIGATIONAL.includes((entry as { id: string }).id) ? { navigational: true } : {}),
+    ...(CONVERSATIONAL.includes((entry as { id: string }).id) ? { conversational: true } : {}),
+    ...(RECIPIENT_FIRST.includes((entry as { id: string }).id) ? { 'recipient-first': true } : {}),
+  }));
 
-  verbs: listed(VERBS),
+export const vocabulary = (): Record<string, Value> => ({
+  verbs: verbs(),
   directions: listed(DIRECTIONS),
 
   articles: [{ id: 'the' }, { id: 'a' }, { id: 'an' }, { id: 'some' }],
