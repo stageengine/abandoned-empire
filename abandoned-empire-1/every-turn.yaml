@@ -1020,6 +1020,34 @@ every-turn:
       - type: response
         data: { text: The thief is taking an unhealthy interest in your possessions. }
 
+  # The egg, opened undamaged, but only by his death. See `arch/0013`: ZIL's
+  # `DEPOSIT-BOOTY` moves every treasure the thief was holding to the room he
+  # dies in and, for the egg alone among them, also sets its open bit -
+  # `<FSET ,EGG ,OPENBIT>`. `move-tagged` above already does the moving; this
+  # is the one-line exception `move-tagged` cannot itself express, since it
+  # sweeps every match the same way and does not ask which object each one is.
+  #
+  # `thief-just-died` is a one-turn pulse the death threshold raises and this
+  # pass always lowers again, the same shape `was-dark` already uses above -
+  # read once, acted on if it applies, gone by the next turn regardless, so an
+  # unrelated closed egg lying on some later floor can never be mistaken for
+  # this one.
+  - requires:
+      - type: flag
+        data: { flag: thief-just-died }
+      - type: object-here
+        data: { object: egg }
+    triggers:
+      - type: set-flag
+        data: { flag: egg-open, value: true }
+
+  - requires:
+      - type: flag
+        data: { flag: thief-just-died }
+    triggers:
+      - type: set-flag
+        data: { flag: thief-just-died, value: false }
+
   # His own counter-swing, wherever he currently is: he wanders, so this cannot
   # live in one room's own `every-turn.yaml` the way the troll's does. Silent
   # until `attack` sets `thief-fighting` - he is a thief before he is a fighter,

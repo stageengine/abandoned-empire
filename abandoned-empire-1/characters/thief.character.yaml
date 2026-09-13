@@ -86,6 +86,14 @@ measures:
             data:
               flag: thief-fighting
               value: false
+          # A one-turn pulse `every-turn.yaml` reads to open the egg, if it was
+          # among what he dropped just now. See `arch/0013`: `DEPOSIT-BOOTY`
+          # special-cases the egg among everything else it deposits, and a
+          # threshold's own triggers cannot branch on which object this is.
+          - type: set-flag
+            data:
+              flag: thief-just-died
+              value: true
       - from: 1
 
 # What he says when spoken to, looked at, fought and given things. What he *does* -

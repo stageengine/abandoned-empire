@@ -2,8 +2,8 @@ id: abandoned-empire-1
 start: west-of-house
 
 metadata:
-  title: Abandoned Empire
-  version: 0.1.1
+  title: Abandoned Empire I
+  version: 0.1.2
   description: >-
     The Great Underground Empire, ported to Stage from Infocom's own ZIL source. A white house,
     a trap door, and three hundred and fifty points of treasure between you and the rank of
