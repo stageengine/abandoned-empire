@@ -11,7 +11,10 @@ synonyms:
   - jeweled egg
   - jeweled treasure
 portable: true
-size: 5
+size: weight
+measures:
+  - id: weight
+    max: 5
 contains: true
 tags: [treasure]
 requires:

@@ -13,7 +13,10 @@ synonyms:
   - pepper lunch
   - pepper dinner
 portable: true
-size: 5
+size: weight
+measures:
+  - id: weight
+    max: 5
 requires:
   # Whether the player can see. Seventy times, which is what
   # ROADMAP.md's "whether the player can see" is about: one block on the game

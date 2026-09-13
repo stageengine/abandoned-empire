@@ -12,7 +12,10 @@ synonyms:
   - seaworthy boat
   - seaworthy raft
 portable: true
-size: 20
+size: weight
+measures:
+  - id: weight
+    max: 20
 contains: true
 requires:
   # Whether the player can see. Seventy times, which is what

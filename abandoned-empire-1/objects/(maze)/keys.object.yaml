@@ -3,7 +3,10 @@ name: skeleton key
 
 synonyms: [key]
 portable: true
-size: 10
+size: weight
+measures:
+  - id: weight
+    max: 10
 requires:
   # Whether the player can see. Seventy times, which is what
   # ROADMAP.md's "whether the player can see" is about: one block on the game

@@ -4,7 +4,7 @@ name: pair of candles
 noun: plural
 synonyms: [candles, pair, burning candles, burning pair]
 portable: true
-size: 10
+size: weight
 requires:
   # Whether the player can see. Seventy times, which is what
   # ROADMAP.md's "whether the player can see" is about: one block on the game
@@ -71,6 +71,8 @@ measures:
             data:
               text: The candles grow shorter.
       - from: 36
+  - id: weight
+    max: 10
 
 actions:
   - id: burn

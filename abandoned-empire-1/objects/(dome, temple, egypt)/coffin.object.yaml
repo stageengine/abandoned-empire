@@ -11,7 +11,10 @@ synonyms:
   - gold casket
   - gold treasure
 portable: true
-size: 55
+size: weight
+measures:
+  - id: weight
+    max: 55
 contains: true
 tags: [treasure]
 requires:

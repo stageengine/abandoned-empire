@@ -4,7 +4,7 @@ name: matchbook
 noun: as-written
 synonyms: [match, matches, matchbook, book of matches]
 portable: true
-size: 2
+size: weight
 requires:
   # Whether the player can see. Seventy times, which is what
   # ROADMAP.md's "whether the player can see" is about: one block on the game
@@ -48,6 +48,8 @@ measures:
               flag: match-on
               value: false
       - from: 1
+  - id: weight
+    max: 2
 
 actions:
   - id: burn

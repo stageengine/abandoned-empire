@@ -9,7 +9,10 @@ synonyms:
   - beauti bauble
   - beauti treasure
 portable: true
-size: 5
+size: weight
+measures:
+  - id: weight
+    max: 5
 tags: [treasure]
 requires:
   # Whether the player can see. Seventy times, which is what

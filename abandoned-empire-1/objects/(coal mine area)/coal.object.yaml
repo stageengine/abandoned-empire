@@ -3,7 +3,10 @@ name: small pile of coal
 
 synonyms: [coal, pile, heap, small coal, small pile, small heap]
 portable: true
-size: 20
+size: weight
+measures:
+  - id: weight
+    max: 20
 tags: [basket-cargo]
 requires:
   # Whether the player can see. Seventy times, which is what

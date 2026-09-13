@@ -3,7 +3,10 @@ name: pot of gold
 
 synonyms: [pot, gold, treasure, gold pot, gold gold, gold treasure]
 portable: true
-size: 15
+size: weight
+measures:
+  - id: weight
+    max: 15
 tags: [treasure]
 requires:
   # Whether the player can see. Seventy times, which is what

@@ -10,7 +10,10 @@ synonyms:
   - small booklet
   - small mail
 portable: true
-size: 2
+size: weight
+measures:
+  - id: weight
+    max: 2
 requires:
   # Whether the player can see. Seventy times, which is what
   # ROADMAP.md's "whether the player can see" is about: one block on the game

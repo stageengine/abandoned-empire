@@ -3,7 +3,7 @@ name: brass bell
 
 synonyms: [bell, small bell, brass bell, hot bell, red hot bell]
 portable: true
-size: 5
+size: weight
 requires:
   # Whether the player can see. Seventy times, which is what
   # ROADMAP.md's "whether the player can see" is about: one block on the game
@@ -42,6 +42,8 @@ measures:
             data:
               text: The bell appears to have cooled down.
       - from: 1
+  - id: weight
+    max: 5
 
 actions:
   # Ringing it at the gate is the first act of the ceremony.

@@ -14,7 +14,10 @@ synonyms:
   - crystal fork
   - crystal treasure
 portable: true
-size: 20
+size: weight
+measures:
+  - id: weight
+    max: 20
 tags: [treasure]
 requires:
   # Whether the player can see. Seventy times, which is what

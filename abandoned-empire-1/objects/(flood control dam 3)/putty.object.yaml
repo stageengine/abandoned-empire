@@ -3,7 +3,10 @@ name: viscous material
 
 synonyms: [material, gunk, viscous gunk, all-purpose gunk]
 portable: true
-size: 6
+size: weight
+measures:
+  - id: weight
+    max: 6
 requires:
   # Whether the player can see. Seventy times, which is what
   # ROADMAP.md's "whether the player can see" is about: one block on the game

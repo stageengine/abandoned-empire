@@ -11,7 +11,10 @@ synonyms:
   - golden canary
   - golden treasure
 portable: true
-size: 5
+size: weight
+measures:
+  - id: weight
+    max: 5
 tags: [treasure]
 presence:
   - requires:

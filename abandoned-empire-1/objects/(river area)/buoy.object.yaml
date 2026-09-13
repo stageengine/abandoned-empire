@@ -3,7 +3,10 @@ name: red buoy
 
 synonyms: [buoy]
 portable: true
-size: 10
+size: weight
+measures:
+  - id: weight
+    max: 10
 contains: true
 requires:
   # Whether the player can see. Seventy times, which is what

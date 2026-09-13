@@ -19,7 +19,10 @@ synonyms:
   - jeweled beetle
   - jeweled treasure
 portable: true
-size: 8
+size: weight
+measures:
+  - id: weight
+    max: 8
 tags: [treasure]
 requires:
   # Whether the player can see. Seventy times, which is what

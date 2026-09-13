@@ -3,7 +3,10 @@ name: bird's nest
 
 synonyms: [nest, birds nest]
 portable: true
-size: 5
+size: weight
+measures:
+  - id: weight
+    max: 5
 contains: true
 requires:
   # Whether the player can see. Seventy times, which is what

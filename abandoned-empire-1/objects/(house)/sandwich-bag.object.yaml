@@ -10,7 +10,10 @@ synonyms:
   - smelly bag
   - smelly sack
 portable: true
-size: 9
+size: weight
+measures:
+  - id: weight
+    max: 9
 contains: true
 requires:
   # Whether the player can see. Seventy times, which is what

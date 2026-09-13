@@ -16,7 +16,10 @@ synonyms:
   - enameled scepter
   - enameled treasure
 portable: true
-size: 3
+size: weight
+measures:
+  - id: weight
+    max: 3
 tags: [treasure]
 requires:
   # Whether the player can see. Seventy times, which is what

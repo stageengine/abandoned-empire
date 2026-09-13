@@ -3,7 +3,10 @@ name: pile of leaves
 
 synonyms: [leaves, leaf, pile]
 portable: true
-size: 25
+size: weight
+measures:
+  - id: weight
+    max: 25
 requires:
   # Whether the player can see. Seventy times, which is what
   # ROADMAP.md's "whether the player can see" is about: one block on the game

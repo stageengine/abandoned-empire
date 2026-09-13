@@ -3,7 +3,10 @@ name: trunk of jewels
 
 synonyms: [trunk, chest, jewels, treasure, old trunk, old chest, old jewels]
 portable: true
-size: 35
+size: weight
+measures:
+  - id: weight
+    max: 35
 presence:
   - requires:
       - type: handled

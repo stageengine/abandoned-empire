@@ -9,7 +9,10 @@ synonyms:
   - broken timbers
   - broken pile
 portable: true
-size: 50
+size: weight
+measures:
+  - id: weight
+    max: 50
 requires:
   # Whether the player can see. Seventy times, which is what
   # ROADMAP.md's "whether the player can see" is about: one block on the game

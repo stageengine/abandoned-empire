@@ -2,7 +2,10 @@ id: painting
 
 synonyms: [painting, art, canvas, treasure, beauti painting, beauti art, beauti canvas]
 portable: true
-size: 15
+size: weight
+measures:
+  - id: weight
+    max: 15
 requires:
   # Whether the player can see. Seventy times, which is what
   # ROADMAP.md's "whether the player can see" is about: one block on the game
