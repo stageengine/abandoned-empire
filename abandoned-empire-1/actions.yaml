@@ -101,12 +101,157 @@ actions:
       - type: response
         data:
           text: Time passes...
+      # ZIL's `V-WAIT` runs the clock three times for this one typed command,
+      # not once - confirmed against the compiled game: a lit lamp measurably
+      # burns faster through a run of waits than a naive one-tick `wait` would
+      # drain it. `1actions.zil`/`gverbs.zil`'s `V-WAIT` is the source of this.
+      - type: turn
+        data:
+          count: 3
+
+  # `V-VERBOSE` also sets `SUPER-BRIEF` false and `VERBOSE` true - both moot
+  # here, since the port only ever writes the long description, the behavior
+  # those flags ask for. Recognising the word is what was missing, not a mode
+  # to switch: `brief`/`superbrief` would need the engine to withhold a room's
+  # long description on a later visit, which nothing here does yet.
+  - id: verbose
+    triggers:
+      - type: response
+        data:
+          text: Maximum verbosity.
 
   - id: pray
     triggers:
       - type: response
         data:
           text: If you pray enough, your prayers may be answered.
+
+  # `RIVER-LAUNCH` sends a launch from other landings straight into a later river
+  # room, at that room's own `RIVER-SPEEDS` rather than River One's four turns -
+  # four landings on the Frigid River side of the table, each its own block so
+  # the destination and the timer it starts at differ per site the way ZIL's
+  # table entry did. Reservoir and Stream View entries in the same ZIL global
+  # belong to the separate reservoir crossing, not this boat. A bare verb
+  # rather than the boat's own, since `launch` takes no object in ZIL and a
+  # transitive verb here left a bare `launch` asking what to launch instead
+  # of answering it, exactly as `wait`/`pray` above it would if they were not
+  # bare too.
+  - id: launch
+    requires:
+      - type: flag
+        data: { flag: aboard }
+      - type: scene
+        data: { id: dam-base }
+    triggers:
+      - type: response
+        data: { text: The boat is moving in the current. }
+      - type: change-scene
+        data: { scene: river-1 }
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: river-timer
+          to: 4
+
+  - id: launch
+    requires:
+      - type: flag
+        data: { flag: aboard }
+      - type: scene
+        data: { id: white-cliffs-north }
+    triggers:
+      - type: response
+        data: { text: The boat is moving in the current. }
+      - type: change-scene
+        data: { scene: river-3 }
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: river-timer
+          to: 3
+
+  - id: launch
+    requires:
+      - type: flag
+        data: { flag: aboard }
+      - type: scene
+        data: { id: white-cliffs-south }
+    triggers:
+      - type: response
+        data: { text: The boat is moving in the current. }
+      - type: change-scene
+        data: { scene: river-4 }
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: river-timer
+          to: 2
+
+  - id: launch
+    requires:
+      - type: flag
+        data: { flag: aboard }
+      - type: scene
+        data: { id: sandy-beach }
+    triggers:
+      - type: response
+        data: { text: The boat is moving in the current. }
+      - type: change-scene
+        data: { scene: river-4 }
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: river-timer
+          to: 2
+
+  - id: launch
+    requires:
+      - type: flag
+        data: { flag: aboard }
+        failure:
+          triggers:
+            - type: response
+              data: { text: You're not in the boat! }
+    triggers:
+      - type: response
+        data: { text: You can't launch it here. }
+
+  # Every room the current runs through is water with nothing to stand on, so
+  # climbing out mid-river is the same fate as launching from nowhere is not -
+  # written above the plain disembark for the same reason boarding's puncture
+  # is. Bare for the same reason `launch` above it is: ZIL's `V-DISEMBARK`
+  # names no object either.
+  - id: disembark
+    requires:
+      - type: flag
+        data: { flag: aboard }
+      - type: scene
+        data: { tag: river }
+    triggers:
+      - type: response
+        data:
+          text: Another pathetic sputter, this time from you, heralds your drowning.
+      # `player-died` rather than `end-game`: every death in ZIL goes through
+      # one routine, `JIGS-UP`, which gives every one of them the same two
+      # resurrections before the third is final - drowning included.
+      - type: set-flag
+        data:
+          flag: player-died
+          value: true
+
+  - id: disembark
+    requires:
+      - type: flag
+        data: { flag: aboard }
+        failure:
+          triggers:
+            - type: response
+              data: { text: You're not in the boat! }
+    triggers:
+      - type: response
+        data: { text: You are no longer in the magic boat. }
+      - type: set-flag
+        data: { flag: aboard, value: false }
 
   # The Cyclops Room answers this one for itself while the cyclops is there to
   # hear it; everywhere else, and once he is gone, it is just a name.

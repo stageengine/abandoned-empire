@@ -26,17 +26,18 @@ requires:
       flag: rug-moved
 
 actions:
+  # ZIL answers "open" or "close" on a door already in that state with
+  # `<PICK-ONE ,DUMMY>` - one roll shared by every object that pulls from the
+  # same generic table, rather than a line of its own for each. Three blocks
+  # per verb, gated on the same roll, are that table here: the last carries no
+  # `chance` of its own, since one roll of three has nothing left to be but
+  # the third once the first two have missed.
   - id: open
     requires:
       - type: flag
-        negate: true
         data:
           flag: trap-door-open
-        failure:
-          triggers:
-            - type: response
-              data:
-                text: It is already open.
+        negate: true
     triggers:
       - type: response
         data:
@@ -47,16 +48,35 @@ actions:
           flag: trap-door-open
           value: true
 
+  - id: open
+    requires:
+      - type: chance
+        data: { name: dummy-open, of: 3, index: 1 }
+    triggers:
+      - type: response
+        data:
+          text: Look around.
+
+  - id: open
+    requires:
+      - type: chance
+        data: { name: dummy-open, of: 3, index: 2 }
+    triggers:
+      - type: response
+        data:
+          text: Too late for that.
+
+  - id: open
+    triggers:
+      - type: response
+        data:
+          text: Have your eyes checked.
+
   - id: close
     requires:
       - type: flag
         data:
           flag: trap-door-open
-        failure:
-          triggers:
-            - type: response
-              data:
-                text: It is already closed.
     triggers:
       - type: response
         data:
@@ -65,6 +85,30 @@ actions:
         data:
           flag: trap-door-open
           value: false
+
+  - id: close
+    requires:
+      - type: chance
+        data: { name: dummy-close, of: 3, index: 1 }
+    triggers:
+      - type: response
+        data:
+          text: Look around.
+
+  - id: close
+    requires:
+      - type: chance
+        data: { name: dummy-close, of: 3, index: 2 }
+    triggers:
+      - type: response
+        data:
+          text: Too late for that.
+
+  - id: close
+    triggers:
+      - type: response
+        data:
+          text: Have your eyes checked.
 
   - id: look
     preposition: under

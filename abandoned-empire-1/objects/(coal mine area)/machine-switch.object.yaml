@@ -3,18 +3,60 @@ name: switch
 start: machine-room
 
 actions:
+  # ZIL only does anything with the lid closed - open, it "doesn't seem to want
+  # to do anything" - and only coal becomes the diamond: whatever else is
+  # inside, or nothing at all, comes out as gunk instead. Two blocks rather
+  # than one, since a trigger cannot branch on what it finds: the first claims
+  # the coal-to-diamond turn and the second is every other turn of the switch.
   - id: turn
     preposition: with
     indirect: screwdriver
     requires:
       - type: has-item
         data: { object: screwdriver }
+      - type: flag
+        negate: true
+        data: { flag: machine-open }
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: The machine doesn't seem to want to do anything.
+      - type: object-in
+        data: { object: coal, location: 'in:machine' }
     triggers:
       - type: response
         data:
           text: >-
             The machine comes to life (figuratively) with a dazzling display of colored lights
             and bizarre noises. After a few moments, the excitement abates.
+      - type: remove-object
+        data: { object: coal }
+      - type: move-object
+        data: { object: diamond, to: 'in:machine' }
+
+  - id: turn
+    preposition: with
+    indirect: screwdriver
+    requires:
+      - type: has-item
+        data: { object: screwdriver }
+      - type: flag
+        negate: true
+        data: { flag: machine-open }
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: The machine doesn't seem to want to do anything.
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The machine comes to life (figuratively) with a dazzling display of colored lights
+            and bizarre noises. After a few moments, the excitement abates.
+      - type: move-object
+        data: { object: gunk, to: 'in:machine' }
 
   - id: turn
     triggers:

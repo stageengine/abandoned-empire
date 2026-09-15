@@ -69,6 +69,12 @@ navigation:
       - type: change-scene
         data:
           scene: maze-15
+  # ZIL hangs the thief's ambush on the treasure room's own `M-ENTER`; the
+  # engine puts an entry's effects on the way in instead (the trap door's
+  # `down` in `living-room.scene.yaml` is the same habit), and this is the
+  # only way in. He is teleported in rather than found already there only the
+  # first time - a live thief already standing in the room (wandered there on
+  # his own) needs no scream to explain his presence.
   - id: up
     requires:
       - type: flag
@@ -79,7 +85,30 @@ navigation:
             - type: response
               data:
                 text: The cyclops doesn't look like he'll let you past.
+      - type: all-of
+        data:
+          conditions:
+            - type: object-in
+              negate: true
+              data: { object: thief, location: bin }
+            - type: object-in
+              negate: true
+              data: { object: thief, location: treasure-room }
+        failure:
+          triggers:
+            - type: change-scene
+              data:
+                scene: treasure-room
     triggers:
+      - type: response
+        data:
+          text: >-
+            You hear a scream of anguish as you violate the robber's hideaway. Using passages
+            unknown to you, he rushes to its defense.
+      - type: move-object
+        data:
+          object: thief
+          to: treasure-room
       - type: change-scene
         data:
           scene: treasure-room

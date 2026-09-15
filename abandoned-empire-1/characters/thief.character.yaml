@@ -117,6 +117,31 @@ actions:
         data:
           text: The thief is a strong, silent type.
 
+  # `arch/0013` verified this action's text against ROBBER-FUNCTION and missed
+  # the line right above the message it read: real ZIL moves whatever is given
+  # straight into the thief's own holdings (`<MOVE ,PRSO ,THIEF>`) before ever
+  # choosing which line to print, unconditionally - and a gift worth points
+  # (`P?TVALUE` above zero) gets "taken aback... stops to admire its beauty"
+  # rather than the plain line below, which is ZIL's answer for something
+  # worthless instead. Giving the egg away is the walkthrough's whole reason to
+  # give anything at all, and without the move its weight - and the canary's,
+  # nested inside it - never actually left the player's own hands the way real
+  # Zork's does; carried the rest of the way to the mine's own carrying limit,
+  # that is a pound too many the same trip that used to spend one on the rope
+  # instead.
+  - id: give
+    indirect: egg
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The thief is taken aback by your unexpected generosity, but accepts the
+            jewel-encrusted egg and stops to admire its beauty.
+      - type: move-object
+        data:
+          object: egg
+          to: held:thief
+
   # Zork lets a treasure buy you a moment's grace, and takes the rest of the fight
   # off a strength that grows with your score. Neither is written: what is written
   # is that he takes it, which is the half a player can see.

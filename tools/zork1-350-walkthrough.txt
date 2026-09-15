@@ -53,36 +53,6 @@ east
 put coins in case
 drop sword
 drop key
-wait
-wait
-wait
-wait
-wait
-wait
-wait
-wait
-wait
-wait
-wait
-wait
-wait
-wait
-wait
-wait
-wait
-wait
-wait
-wait
-wait
-wait
-wait
-wait
-wait
-wait
-wait
-wait
-wait
-wait
 open trap door
 down
 north
@@ -158,8 +128,6 @@ take canary
 down
 east
 east
-put chalice in case
-put egg in case
 east
 east
 north
@@ -170,7 +138,9 @@ south
 east
 west
 west
+put chalice in case
 put canary in case
+put egg in case
 put bauble in case
 drop knife
 open trap door
@@ -407,13 +377,12 @@ take buoy
 wait
 take buoy
 east
-get out of boat
+get out
 open buoy
 take emerald
 drop buoy
 take shovel
 northeast
-dig sand with shovel
 dig sand with shovel
 dig sand with shovel
 dig sand with shovel

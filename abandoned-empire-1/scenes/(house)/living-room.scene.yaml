@@ -189,6 +189,21 @@ navigation:
             - type: response
               data:
                 text: The trap door is closed.
+      # ZIL only slams the door the first time: TOUCHBIT, once set, is never
+      # cleared by an ordinary open/close, so every later trip down leaves the
+      # door exactly as the player left it. `trap-door-barred` plays that part
+      # here - checked, not just set, so a second descent does not re-bar a
+      # door the player already reopened from the living room. The `failure`
+      # is the ordinary, unremarkable descent every later trip is.
+      - type: flag
+        negate: true
+        data:
+          flag: trap-door-barred
+        failure:
+          triggers:
+            - type: change-scene
+              data:
+                scene: cellar
     triggers:
       # Before the room, because that is the order Zork reads it in: the door
       # shuts as you go through it rather than once you have looked around. ZIL

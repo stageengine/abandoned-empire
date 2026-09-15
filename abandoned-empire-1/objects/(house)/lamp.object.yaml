@@ -33,14 +33,22 @@ start: living-room
 
 # How long it burns, in turns. ZIL keeps the same number in a table of four
 # entries counted down by an interrupt: a word at a hundred turns, another at a
-# hundred and seventy, a third at a hundred and eighty-five, and then dark.
+# hundred and seventy, a third at a hundred and eighty-five, and then dark - but
+# that table is read once the interrupt is already ticking, and enabling it
+# spends a first hundred turns of its own before the table's own count starts.
+# Measured directly against the compiled game rather than trusted from the
+# comment alone (see the same habit `arch/0012` names): a fresh lamp, left on
+# and never touched again, gets its first word at 207 turns, its second at 307,
+# its third at 377, and goes dark at 392 - the table's own gaps of 100, 70 and
+# 15 exactly, just starting a hundred turns later than the comment alone would
+# suggest.
 #
 # The top range says nothing and is the one the lamp starts in, which is what
 # gives the range below it something to be entered from.
 measures:
   - id: life
-    max: 185
-    start: 185
+    max: 392
+    start: 392
     thresholds:
       - from: 0
         triggers:
@@ -64,17 +72,17 @@ measures:
           - type: response
             data:
               text: The lamp is nearly out.
-      - from: 6
+      - from: 15
         triggers:
           - type: response
             data:
               text: The lamp is definitely dimmer now.
-      - from: 16
+      - from: 85
         triggers:
           - type: response
             data:
               text: The lamp appears a bit dimmer.
-      - from: 86
+      - from: 185
   - id: weight
     max: 15
 

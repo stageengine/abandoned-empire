@@ -17,6 +17,20 @@ every-turn:
           measure: moves
           by: 1
 
+  # Zork brings the allowance back on its own once a fight is over: `1actions.zil`
+  # adds 10 back each turn until it reaches `LOAD-MAX` again. `laden` already
+  # reads the measure as it stands, so recovery was the one piece missing - a
+  # wound left the player permanently under-strength otherwise.
+  - requires:
+      - type: measure
+        data: { subject: player, measure: allowance, max: 99 }
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: allowance
+          by: 10
+
   # Is anything lighting the way? One question now that `any-of` exists, asked
   # once a turn into a flag so that every dark room can ask one thing rather
   # than the whole list. It is an or of ands - a lamp is not a light unless it
@@ -35,10 +49,20 @@ every-turn:
       - type: any-of
         data:
           conditions:
+            # `object-here`, not `has-item`, on all three of these too: ZIL's
+            # `LIT?` reads whatever is in the current room for `ONBIT`, not
+            # whatever the player's hands hold - a lit lamp left behind still
+            # lights the room it was dropped in. Confirmed directly against
+            # the compiled game: drop a lit lamp, walk away, walk back, and
+            # the room you left it in was never dark. The mine's own basket
+            # puzzle depends on the very next condition having this already,
+            # and the crawlway either side of it depends on this one having
+            # it too - `drop all` there leaves a lit lamp exactly where a
+            # player will need it again once they are back within reach.
             - type: all-of
               data:
                 conditions:
-                  - type: has-item
+                  - type: object-here
                     data:
                       object: lamp
                   - type: flag
@@ -48,7 +72,7 @@ every-turn:
             - type: all-of
               data:
                 conditions:
-                  - type: has-item
+                  - type: object-here
                     data:
                       object: candles
                   - type: flag
@@ -58,19 +82,25 @@ every-turn:
             - type: all-of
               data:
                 conditions:
-                  - type: has-item
+                  - type: object-here
                     data:
                       object: match
                   - type: flag
                     data:
                       flag: match-on
 
-            - type: has-item
+            # ZIL's torch carries `ONBIT` fixed
+            # forever on, so it lights whatever room it is sitting in exactly as
+            # readily as one the player is holding - the mine's basket puzzle
+            # depends on this, lowering the torch down the shaft ahead of a
+            # player who has to cross a passage too narrow to carry anything
+            # through, and finding it still burning at the bottom.
+            - type: object-here
               data:
                 object: torch
 
-            # Not carried, and the only one that is not: sunlight through the
-            # open grating, which is what lit the Grating Room in Zork too.
+            # Not an object at all, unlike the four above it: sunlight through
+            # the open grating, which is what lit the Grating Room in Zork too.
             - type: all-of
               data:
                 conditions:
@@ -643,7 +673,16 @@ every-turn:
   # He is silent about it. Zork announces him arriving and leaving where the player
   # can see; the room says he is there when it describes itself, which is the half
   # that reads without a rule per room.
+  #
+  # Silent about standing still, too. `I-THIEF` only reaches this wander at all
+  # once it already knows `<NOT <EQUAL? .RM ,HERE>>` - he does not roll to leave
+  # a room he shares with the player, which is what makes an ambush he was just
+  # placed into (`cyclops-room/config.yaml`'s `up`) stand there rather than
+  # scatter to a random room on the very turn he arrives.
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -654,6 +693,9 @@ every-turn:
         data: { object: thief, to: cellar }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -664,6 +706,9 @@ every-turn:
         data: { object: thief, to: east-of-chasm }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -674,6 +719,9 @@ every-turn:
         data: { object: thief, to: gallery }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -684,6 +732,9 @@ every-turn:
         data: { object: thief, to: studio }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -694,6 +745,9 @@ every-turn:
         data: { object: thief, to: troll-room }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -704,6 +758,9 @@ every-turn:
         data: { object: thief, to: dome-room }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -714,6 +771,9 @@ every-turn:
         data: { object: thief, to: egypt-room }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -724,6 +784,9 @@ every-turn:
         data: { object: thief, to: engravings-cave }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -734,6 +797,9 @@ every-turn:
         data: { object: thief, to: north-temple }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -744,6 +810,9 @@ every-turn:
         data: { object: thief, to: south-temple }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -754,6 +823,9 @@ every-turn:
         data: { object: thief, to: torch-room }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -764,6 +836,9 @@ every-turn:
         data: { object: thief, to: entrance-to-hades }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -774,6 +849,9 @@ every-turn:
         data: { object: thief, to: land-of-living-dead }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -784,6 +862,9 @@ every-turn:
         data: { object: thief, to: atlantis-room }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -794,6 +875,9 @@ every-turn:
         data: { object: thief, to: cold-passage }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -804,6 +888,9 @@ every-turn:
         data: { object: thief, to: mirror-room-1 }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -814,6 +901,9 @@ every-turn:
         data: { object: thief, to: mirror-room-2 }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -824,6 +914,9 @@ every-turn:
         data: { object: thief, to: narrow-passage }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -834,6 +927,9 @@ every-turn:
         data: { object: thief, to: small-cave }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -844,6 +940,9 @@ every-turn:
         data: { object: thief, to: tiny-cave }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -854,6 +953,9 @@ every-turn:
         data: { object: thief, to: twisting-passage }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -864,6 +966,9 @@ every-turn:
         data: { object: thief, to: winding-passage }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -874,6 +979,9 @@ every-turn:
         data: { object: thief, to: reservoir }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -884,6 +992,9 @@ every-turn:
         data: { object: thief, to: reservoir-north }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -894,6 +1005,9 @@ every-turn:
         data: { object: thief, to: reservoir-south }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -904,6 +1018,9 @@ every-turn:
         data: { object: thief, to: stream-view }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -914,6 +1031,9 @@ every-turn:
         data: { object: thief, to: chasm-room }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -924,6 +1044,9 @@ every-turn:
         data: { object: thief, to: damp-cave }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -934,6 +1057,9 @@ every-turn:
         data: { object: thief, to: deep-canyon }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -944,6 +1070,9 @@ every-turn:
         data: { object: thief, to: ew-passage }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -954,6 +1083,9 @@ every-turn:
         data: { object: thief, to: loud-room }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -964,6 +1096,9 @@ every-turn:
         data: { object: thief, to: ns-passage }
 
   - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
       - type: object-in
         negate: true
         data: { object: thief, location: bin }
@@ -1425,6 +1560,43 @@ every-turn:
           measure: score
           by: 5
 
+  # A fifth room-reached bonus, and the one the four above were named for
+  # without being: ZIL's `NO-OBJS` checks this on every room entry, not only
+  # this one, but the `AND` inside it only ever holds at the Drafty Room -
+  # thirteen points, once, the moment the player gets here lit and carrying
+  # nothing heavier than four (`LIGHT-SHAFT`, zeroed the instant it pays out).
+  # No line is printed for it in ZIL either; the only way a player learns it
+  # happened is `score` reading higher than the treasures alone explain. The
+  # `east` exit out of here already asks the nearest true version of the same
+  # question - `carrying: max: 4` in place of ZIL's true per-item check - and
+  # this asks it again rather than reuse that exit's own passing as a proxy,
+  # since arriving lit and light enough is the whole of ZIL's condition and
+  # this may be read on the very turn the player walks in, before they have
+  # tried to leave at all.
+  - requires:
+      - type: scene
+        data:
+          id: lower-shaft
+      - type: flag
+        data:
+          flag: light
+      - type: carrying
+        data:
+          max: 4
+      - type: flag
+        negate: true
+        data:
+          flag: reached-lower-shaft-lit
+    triggers:
+      - type: set-flag
+        data:
+          flag: reached-lower-shaft-lit
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 13
+
   # The skeleton's curse, carried out. One rule per treasure and then the flag is
   # put down again, so it happens on the turn the ghost appears and no other.
 
@@ -1716,6 +1888,17 @@ every-turn:
   # where it carries them, which is what `RIVER-NEXT`/`RIVER-SPEEDS` did in ZIL
   # with a table instead of five rules. River Five has no next room in that
   # table either - past it is the waterfall.
+  #
+  # Each transition below reads `max: 1`, not `max: 0`: every rule in a pass
+  # sees the same snapshot from before any of them fired (this file's own
+  # habit, and the reason a patrol written as one rule per leg does not
+  # silently walk its whole circuit in a single turn), so the plain decrement
+  # above and a transition checking the *already-decremented* value can never
+  # both fire on the turn the count actually reaches zero - the transition
+  # would not see zero until the turn after, one tick later than ZIL's own
+  # `I-RIVER`, which re-queues itself for exactly the speed a room names, not
+  # that plus one. Reading the count as it stood before this tick's decrement
+  # - due to hit zero *by* this tick - is what makes the two turns line up.
   - requires:
       - type: flag
         data:
@@ -1741,7 +1924,7 @@ every-turn:
         data:
           subject: player
           measure: river-timer
-          max: 0
+          max: 1
     triggers:
       - type: response
         data:
@@ -1766,7 +1949,7 @@ every-turn:
         data:
           subject: player
           measure: river-timer
-          max: 0
+          max: 1
     triggers:
       - type: response
         data:
@@ -1791,7 +1974,7 @@ every-turn:
         data:
           subject: player
           measure: river-timer
-          max: 0
+          max: 1
     triggers:
       - type: response
         data:
@@ -1816,7 +1999,7 @@ every-turn:
         data:
           subject: player
           measure: river-timer
-          max: 0
+          max: 1
     triggers:
       - type: response
         data:
@@ -1841,7 +2024,7 @@ every-turn:
         data:
           subject: player
           measure: river-timer
-          max: 0
+          max: 1
     triggers:
       - type: response
         data:

@@ -3,6 +3,11 @@ id: machine
 synonyms: [pdp10, dryer, lid]
 start: machine-room
 
+# So `put coal in machine` has somewhere to put it: the engine's own `put`
+# refuses into anything not declared a container, and this one had never said
+# so - `turn switch with screwdriver` is what reads whatever ended up inside.
+contains: true
+
 actions:
   - id: get
     triggers:

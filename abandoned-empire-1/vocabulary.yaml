@@ -19,14 +19,15 @@ verbs:
   - id: climb
     synonyms: [scale, ascend, clamber]
     navigational: true
-  - id: enter
-    synonyms: [go in, walk in]
-    navigational: true
+  # One verb rather than two: ZIL answers `enter the window` and `board the
+  # boat` with the same routine, and the split here meant `enter boat` fell
+  # through to a plain scene-exit lookup that a portable object's own `board`
+  # action was never going to be found by - confirmed directly, since nothing
+  # in this game names a scene exit `enter` or defines an action by that id;
+  # every `enter <room-entrance>` here was already answered by the same
+  # generic navigational handling `board` gets, just under the other name.
   - id: board
-    synonyms: [embark, get in, get into, sit in]
-    navigational: true
-  - id: disembark
-    synonyms: [get out, get off]
+    synonyms: [embark, get in, get into, sit in, enter, go in, walk in]
     navigational: true
   - id: cross
     navigational: true
@@ -70,8 +71,6 @@ verbs:
   - id: inflate
     synonyms: [pump up, blow up]
   - id: deflate
-  - id: launch
-    synonyms: [set sail]
   - id: oil
     synonyms: [lubricate, grease]
   - id: attack
@@ -117,6 +116,18 @@ verbs:
   # as well. Synonyms as ZIL declares them in `gsyntax.zil`.
   - id: wait
     synonyms: [z]
+  - id: verbose
+  # No object: ZIL's `V-LAUNCH` takes none either, since there is only ever
+  # one thing a player standing in a boat could mean by it. A transitive
+  # verb here left `launch` with nothing to answer a bare command with,
+  # asking "What do you want to launch?" of a sentence Zork just answers.
+  - id: launch
+    synonyms: [set sail]
+  # Bare for the same reason `launch` is: ZIL's `V-DISEMBARK` names no object
+  # either, and asking a player "What do you want to get out?" is not an
+  # answer their own sentence ever needed.
+  - id: disembark
+    synonyms: [get out, get off]
   - id: odysseus
     synonyms: [ulysses]
   - id: xyzzy
@@ -195,6 +206,12 @@ prepositions:
     - id: from
       synonyms: [out of]
     - id: for
+      synonyms: []
+    # `disembark` claims the two words of `get out` for itself as one verb
+    # synonym, which leaves `of` standing alone in `get out of the boat` -
+    # nowhere near the `out of` above, since that pairing only exists to be
+    # read as `from` when `out` was not already spent on the verb.
+    - id: of
       synonyms: []
   significant:
     - id: in

@@ -44,7 +44,12 @@ objects:
   - lowered-basket
   - id: lower-shaft.chain
     name: chain
-    synonyms: [chain]
+    # `basket` too, listed after the real `lowered-basket` so declaration
+    # order gives that object first claim on the word whenever it is
+    # actually present - this only answers for `basket` when neither basket
+    # object is here to, which is exactly when the basket has been raised
+    # and there is nothing else in this room the word could mean.
+    synonyms: [chain, basket, cage, dumbwaiter]
     actions:
       - id: get
         triggers:
@@ -61,11 +66,31 @@ objects:
           - type: response
             data:
               text: "Perhaps you should do that to the basket."
+      # The same gap `shaft-room/config.yaml`'s own `raise` closes, mirrored:
+      # once the basket is up, neither basket object is reachable from down
+      # here to be lowered again, `raised-basket` living at the other end and
+      # `lowered-basket` sitting offstage until it is. Not a crossing the
+      # walkthrough happens to need, but the same fact either direction.
       - id: lower
+        requires:
+          - type: object-in
+            negate: true
+            data: { object: lowered-basket, location: lower-shaft }
+            failure:
+              triggers:
+                - type: response
+                  data:
+                    text: It's already down here.
         triggers:
           - type: response
             data:
-              text: "Perhaps you should do that to the basket."
+              text: The basket is lowered to the bottom of the shaft.
+          - type: move-tagged
+            data: { tag: basket-cargo, from: 'in:raised-basket', to: 'in:lowered-basket' }
+          - type: move-object
+            data: { object: raised-basket, to: offstage }
+          - type: move-object
+            data: { object: lowered-basket, to: lower-shaft }
       - id: look
         triggers:
           - type: response

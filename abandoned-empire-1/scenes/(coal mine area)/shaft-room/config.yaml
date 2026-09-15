@@ -45,7 +45,12 @@ objects:
   - raised-basket
   - id: shaft-room.chain
     name: chain
-    synonyms: [chain]
+    # `basket` too, listed after the real `raised-basket` so declaration
+    # order gives that object first claim on the word whenever it is
+    # actually present - this only answers for `basket` when neither basket
+    # object is here to, which is exactly when the basket has been lowered
+    # and there is nothing else in this room the word could mean.
+    synonyms: [chain, basket, cage, dumbwaiter]
     actions:
       - id: get
         triggers:
@@ -57,11 +62,35 @@ objects:
           - type: response
             data:
               text: "The chain is secure."
+      # "Perhaps you should do that to the basket" used to answer this
+      # unconditionally, which was fine advice for `lower` - said to the
+      # basket, it is reachable and already does this - and useless for
+      # `raise`: once the basket is down, neither basket object is reachable
+      # from here to be raised, since `raised-basket` went offstage the
+      # moment it was lowered and `lowered-basket` lives at the other end of
+      # the shaft. ZIL answers this from a `CHAIN-PSEUDO` object visible from
+      # both ends regardless of which state the basket is in; this is that,
+      # for the one direction the walkthrough actually calls from up here.
       - id: raise
+        requires:
+          - type: object-in
+            negate: true
+            data: { object: raised-basket, location: shaft-room }
+            failure:
+              triggers:
+                - type: response
+                  data:
+                    text: It's already up here.
         triggers:
           - type: response
             data:
-              text: "Perhaps you should do that to the basket."
+              text: The basket is raised to the top of the shaft.
+          - type: move-tagged
+            data: { tag: basket-cargo, from: 'in:lowered-basket', to: 'in:raised-basket' }
+          - type: move-object
+            data: { object: lowered-basket, to: offstage }
+          - type: move-object
+            data: { object: raised-basket, to: shaft-room }
       - id: lower
         triggers:
           - type: response
