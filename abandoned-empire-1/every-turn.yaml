@@ -1482,12 +1482,26 @@ every-turn:
           flag: thief-fighting
           value: false
 
-  # The sword's own warning, said without being asked - which is most of what it
-  # is for. `sword.object.yaml`'s `look` already answers the question if asked;
-  # this is the same question, asked and answered on the turn it changes. ZIL
-  # also glows faintly for a villain one room over; that wants a map of which
-  # room is next to which, which the engine does not have, so only the same-room
-  # bright warning is said here.
+  # The sword's own warning, said without being asked - which is most of what
+  # it is for. `sword.object.yaml`'s `look` answers the same question if
+  # asked, reading the same `glow` measure these rules set; its own
+  # thresholds say the words the moment it actually changes, matching ZIL's
+  # own change-only announcement.
+  #
+  # ZIL's `INFESTED?` is not troll/thief/cyclops specifically - it is any
+  # object with `ACTORBIT` set and `INVISIBLE` clear, which in this game
+  # means five: those three plus the bat and the ghosts. `object-in` reads
+  # true villain state (fled, dead, not yet spawned) the same way
+  # `character-here` already does for "in this room", so neither list needs
+  # its own separate fled/dead handling.
+  #
+  # The faint tier - a villain one room over - only covers the four fixed
+  # guardians (troll, cyclops, ghosts, bat), each with a short, genuinely
+  # fixed list of neighbors read straight off their own room's exits. The
+  # thief is the one ZIL villain this omits: he is the only one that
+  # actually wanders, so "faintly warn of the thief" would need an
+  # adjacency check against every room in the game rather than a handful of
+  # fixed ones - a proportionality call, not an oversight.
   - requires:
       - type: has-item
         data:
@@ -1501,26 +1515,21 @@ every-turn:
               data: { character: thief }
             - type: character-here
               data: { character: cyclops }
-      - type: flag
-        negate: true
-        data:
-          flag: sword-glowing
+            - type: character-here
+              data: { character: bat }
+            - type: character-here
+              data: { character: ghosts }
     triggers:
-      - type: response
+      - type: adjust-measure
         data:
-          text: Your sword has begun to glow very brightly.
-      - type: set-flag
-        data:
-          flag: sword-glowing
-          value: true
+          subject: sword
+          measure: glow
+          to: 2
 
   - requires:
       - type: has-item
         data:
           object: sword
-      - type: flag
-        data:
-          flag: sword-glowing
       - type: any-of
         negate: true
         data:
@@ -1531,14 +1540,188 @@ every-turn:
               data: { character: thief }
             - type: character-here
               data: { character: cyclops }
+            - type: character-here
+              data: { character: bat }
+            - type: character-here
+              data: { character: ghosts }
+      - type: any-of
+        data:
+          conditions:
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: cellar }
+                  - type: object-in
+                    data: { object: troll, location: troll-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: ew-passage }
+                  - type: object-in
+                    data: { object: troll, location: troll-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: maze-1 }
+                  - type: object-in
+                    data: { object: troll, location: troll-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: strange-passage }
+                  - type: object-in
+                    data: { object: cyclops, location: cyclops-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: maze-15 }
+                  - type: object-in
+                    data: { object: cyclops, location: cyclops-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: treasure-room }
+                  - type: object-in
+                    data: { object: cyclops, location: cyclops-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: land-of-living-dead }
+                  - type: object-in
+                    data: { object: ghosts, location: entrance-to-hades }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: tiny-cave }
+                  - type: object-in
+                    data: { object: ghosts, location: entrance-to-hades }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: squeeky-room }
+                  - type: object-in
+                    data: { object: bat, location: bat-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: shaft-room }
+                  - type: object-in
+                    data: { object: bat, location: bat-room }
     triggers:
-      - type: response
+      - type: adjust-measure
         data:
-          text: Your sword is no longer glowing.
-      - type: set-flag
+          subject: sword
+          measure: glow
+          to: 1
+
+  - requires:
+      - type: has-item
         data:
-          flag: sword-glowing
-          value: false
+          object: sword
+      - type: any-of
+        negate: true
+        data:
+          conditions:
+            - type: character-here
+              data: { character: troll }
+            - type: character-here
+              data: { character: thief }
+            - type: character-here
+              data: { character: cyclops }
+            - type: character-here
+              data: { character: bat }
+            - type: character-here
+              data: { character: ghosts }
+      - type: any-of
+        negate: true
+        data:
+          conditions:
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: cellar }
+                  - type: object-in
+                    data: { object: troll, location: troll-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: ew-passage }
+                  - type: object-in
+                    data: { object: troll, location: troll-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: maze-1 }
+                  - type: object-in
+                    data: { object: troll, location: troll-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: strange-passage }
+                  - type: object-in
+                    data: { object: cyclops, location: cyclops-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: maze-15 }
+                  - type: object-in
+                    data: { object: cyclops, location: cyclops-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: treasure-room }
+                  - type: object-in
+                    data: { object: cyclops, location: cyclops-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: land-of-living-dead }
+                  - type: object-in
+                    data: { object: ghosts, location: entrance-to-hades }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: tiny-cave }
+                  - type: object-in
+                    data: { object: ghosts, location: entrance-to-hades }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: squeeky-room }
+                  - type: object-in
+                    data: { object: bat, location: bat-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: shaft-room }
+                  - type: object-in
+                    data: { object: bat, location: bat-room }
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: sword
+          measure: glow
+          to: 0
 
   # Resurrection. ZIL's `JIGS-UP` reads this off `DEATHS` at the moment of death;
   # here the health threshold only raises `player-died`, and these two rules read

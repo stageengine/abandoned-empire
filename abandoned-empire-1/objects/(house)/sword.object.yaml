@@ -21,6 +21,31 @@ size: weight
 measures:
   - id: weight
     max: 30
+  # ZIL's `I-SWORD` computes this same 0/1/2 each turn and only speaks when it
+  # actually changes - a threshold fires exactly on that change, so
+  # `every-turn.yaml`'s own glow rules just set the number the current room
+  # earns and this says what crossing into it means. See those rules for the
+  # five ZIL calls it (`INFESTED?`: any non-fled, non-dead villain) and the
+  # one-hop neighbor list each of the four fixed ones earns a room.
+  - id: glow
+    max: 2
+    start: 0
+    thresholds:
+      - from: 0
+        triggers:
+          - type: response
+            data:
+              text: Your sword is no longer glowing.
+      - from: 1
+        triggers:
+          - type: response
+            data:
+              text: Your sword is glowing with a faint blue glow.
+      - from: 2
+        triggers:
+          - type: response
+            data:
+              text: Your sword has begun to glow very brightly.
 tags: [belongings]
 requires:
   # Whether the player can see. Seventy times, which is what
@@ -125,22 +150,36 @@ actions:
       - type: set-flag
         data: { flag: aboard, value: false }
 
+  # `SWORD-FCN`'s own EXAMINE branch says one of these two lines or nothing
+  # at all - there is no third, "not glowing" case in ZIL, since "no longer
+  # glowing" is exclusively `I-SWORD`'s own transition announcement
+  # (`every-turn.yaml`), never something `examine` says on its own. The
+  # block this replaces said it on every non-glowing look, including the
+  # very first, before the sword had ever glowed at all.
+  # `SWORD-FCN`'s own EXAMINE branch reads the same stored glow value
+  # `I-SWORD` computes, rather than re-deriving it - the `glow` measure is
+  # that value here too, so examining just reads it back.
   - id: look
     requires:
-      - type: any-of
-        data:
-          conditions:
-            - type: character-here
-              data: { character: troll }
-            - type: character-here
-              data: { character: thief }
-            - type: character-here
-              data: { character: cyclops }
+      - type: measure
+        data: { subject: sword, measure: glow, min: 2 }
     triggers:
       - type: response
         data: { text: Your sword is glowing very brightly. }
 
   - id: look
+    requires:
+      - type: measure
+        data: { subject: sword, measure: glow, min: 1, max: 1 }
     triggers:
       - type: response
-        data: { text: Your sword is no longer glowing. }
+        data: { text: Your sword is glowing with a faint blue glow. }
+
+  # Restores the engine's own generic examine text: an authored `look` block
+  # answers for itself once it exists at all, rather than falling through to
+  # that default on its own when the block above does not match, so the
+  # plain case needs saying explicitly here.
+  - id: look
+    triggers:
+      - type: response
+        data: { text: There's nothing special about the sword. }

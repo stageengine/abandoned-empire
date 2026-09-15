@@ -1161,3 +1161,102 @@ Deno.test('match: two drafty coal-mine rooms waste it instantly instead of light
   assertEquals(lit.turns[0].messages, ['One of the matches starts to burn.']);
   assertEquals(lit.state.flags['match-on'], true);
 });
+
+Deno.test('carrying: picking up one item too many refuses with the overloaded message', () => {
+  // ZIL's `ITAKE` refuses a take that would push total weight past
+  // `LOAD-ALLOWED` (100) with "Your load is too heavy." - the port's
+  // generic built-in `get` handler already enforces this via the player's
+  // `allowance` measure, but nothing exercised the path directly.
+  const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  state.scene = 'timber-room';
+  state.objects.locations['lamp'] = 'inventory';
+  state.flags['lamp-on'] = true;
+  state.objects.locations['coffin'] = 'inventory';
+  state.objects.locations['trunk'] = 'inventory';
+  state.objects.locations['timbers'] = 'timber-room';
+  const primed = play(source, state, ['look']).state;
+
+  const played = play(source, primed, ['take timbers']);
+
+  assertEquals(played.turns[0].messages, ['Your load is too heavy.']);
+  assertEquals(played.state.objects.locations['timbers'], 'timber-room');
+});
+
+Deno.test('sword: examining it says nothing about glowing unless it actually is', () => {
+  // `SWORD-FCN`'s own EXAMINE branch has no case at all for "not glowing" -
+  // that line is exclusively `I-SWORD`'s own transition announcement. The
+  // port used to say "Your sword is no longer glowing." on every non-bright
+  // examine, including the very first, before it had ever glowed.
+  const plain = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  plain.scene = 'living-room';
+  plain.objects.locations['sword'] = 'inventory';
+  const plainPrimed = play(source, plain, ['look']).state;
+
+  assertEquals(
+    play(source, plainPrimed, ['look sword']).turns[0].messages,
+    ["There's nothing special about the sword."],
+  );
+
+  // `light` set directly rather than primed with a turn: `character-here`
+  // reads the troll's own "can the player see" requirement, so a still-dark
+  // room reports no one there yet regardless of the sword - a priming turn
+  // would need a second one besides to catch up, the same lag the earlier
+  // thief tests hit. The torch stays in inventory so the every-turn
+  // recompute this same priming turn runs keeps `light` true rather than
+  // reading it back to false for want of a real source.
+  const withTroll = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  withTroll.scene = 'troll-room';
+  withTroll.flags['light'] = true;
+  withTroll.objects.locations['torch'] = 'inventory';
+  withTroll.objects.locations['sword'] = 'inventory';
+  const trollPrimed = play(source, withTroll, ['look']).state;
+
+  assertEquals(
+    play(source, trollPrimed, ['look sword']).turns[0].messages,
+    ['Your sword is glowing very brightly.'],
+  );
+});
+
+Deno.test('sword: glows faintly for a fixed villain one room over, not just in the same room', () => {
+  // ZIL's `I-SWORD` glows faintly (not brightly) for any `INFESTED?` villain
+  // in an adjacent room - previously entirely unported, per the port's own
+  // comment acknowledging the gap. Scoped to the four fixed guardians
+  // (troll, cyclops, ghosts, bat); the wandering thief is deliberately out
+  // of scope (see the comment on these rules in every-turn.yaml).
+  const nearTroll = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  nearTroll.scene = 'cellar';
+  nearTroll.flags['light'] = true;
+  nearTroll.objects.locations['torch'] = 'inventory';
+  nearTroll.objects.locations['sword'] = 'inventory';
+
+  const nearTrollPlayed = play(source, nearTroll, ['look']);
+
+  assert(
+    (nearTrollPlayed.turns[0].passing ?? []).includes('Your sword is glowing with a faint blue glow.'),
+  );
+  assertEquals(nearTrollPlayed.state.measures?.['sword']?.['glow'], 1);
+
+  const elsewhere = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  elsewhere.scene = 'living-room';
+  elsewhere.objects.locations['sword'] = 'inventory';
+
+  const elsewherePlayed = play(source, elsewhere, ['look']);
+
+  assertEquals(elsewherePlayed.turns[0].passing, undefined);
+  assertEquals(elsewherePlayed.state.measures?.['sword']?.['glow'], 0);
+
+  // A dead troll is no longer a villain to glow about, even standing right
+  // next to where he used to be - `object-in` reads his real location, not
+  // an assumption that he is always in his own room.
+  const trollDead = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  trollDead.scene = 'cellar';
+  trollDead.flags['light'] = true;
+  trollDead.objects.locations['torch'] = 'inventory';
+  trollDead.objects.locations['sword'] = 'inventory';
+  trollDead.objects.locations['troll'] = 'bin';
+
+  const trollDeadPlayed = play(source, trollDead, ['look']);
+
+  assertEquals(trollDeadPlayed.turns[0].passing, undefined);
+  assertEquals(trollDeadPlayed.state.measures?.['sword']?.['glow'], 0);
+});
