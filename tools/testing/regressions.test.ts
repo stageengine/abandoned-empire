@@ -192,7 +192,19 @@ Deno.test('give: "give egg to thief" answers exactly as "give thief the egg" doe
 });
 
 Deno.test('chalice: banks in the trophy case instead of refusing every "put chalice in" sentence', () => {
-  const played = play(source, pinned(source.id, diamondSecured.seed), diamondSecured.commands);
+  // Taken and banked the moment the treasure room is reached, before the
+  // thief fight even starts - he is still alive and wandering the rest of
+  // this scenario's own script, and a chalice carried the long way round
+  // risks his ordinary theft the way the fight's own outcome never does.
+  const toTreasureRoom = postThief.commands.slice(0, postThief.commands.indexOf('kill thief with knife'));
+  const played = play(source, pinned(source.id, postThief.seed), [
+    ...toTreasureRoom,
+    'take chalice',
+    'down',
+    'east',
+    'east',
+    'put chalice in case',
+  ]);
 
   assertEquals(played.state.objects.locations['chalice'], 'offstage');
 });
@@ -242,4 +254,217 @@ Deno.test('fullGame: a clean playthrough reaches all 350 points', () => {
     transcript(played).some((line) => line.includes('Your score is 350')),
     'expected a full run of the walkthrough to bank every point, lower-shaft bonus included',
   );
+});
+
+Deno.test('bat: flies the player to a random mine room, unless garlic is carried or lying here', () => {
+  const withoutGarlic = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  withoutGarlic.scene = 'bat-room';
+  withoutGarlic.flags['light'] = true;
+
+  const flown = play(source, withoutGarlic, ['look']);
+
+  assertEquals(flown.state.scene !== 'bat-room', true, 'expected the bat to relocate a garlic-less player');
+
+  const withGarlicHeld = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  withGarlicHeld.scene = 'bat-room';
+  withGarlicHeld.flags['light'] = true;
+  withGarlicHeld.objects.locations['garlic'] = 'inventory';
+
+  assertEquals(play(source, withGarlicHeld, ['look']).state.scene, 'bat-room');
+
+  const withGarlicHere = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  withGarlicHere.scene = 'bat-room';
+  withGarlicHere.flags['light'] = true;
+  withGarlicHere.objects.locations['garlic'] = 'bat-room';
+
+  assertEquals(play(source, withGarlicHere, ['look']).state.scene, 'bat-room');
+});
+
+/**
+ * Like `seek`, but starting from a state the caller gets to mutate first -
+ * for a weapon this early game never hands the player any other way to
+ * reach without replaying the maze that actually holds one.
+ */
+const seekFrom = (
+  commands: ReadonlyArray<string>,
+  prime: (state: ReturnType<typeof pinned>) => void,
+  check: (played: ReturnType<typeof play>) => boolean,
+  tries = 500,
+) => {
+  for (let i = 0; i < tries; i++) {
+    const seed = new Date(Date.parse('2020-01-01T00:00:00.000Z') + i * 1000).toISOString();
+    const state = pinned(source.id, seed);
+    prime(state);
+
+    const played = play(source, state, commands);
+
+    if (check(played)) {
+      return played;
+    }
+  }
+
+  throw new Error(`no seed in [0, ${tries}) satisfied the check for ${JSON.stringify(commands)}`);
+};
+
+Deno.test('combat: other weapons fight the troll and thief instead of a wrong generic refusal', () => {
+  // `kill troll with knife`, reached the ordinary way (down through the
+  // cellar) but carrying a knife the real maze does not hand out this
+  // early - primed directly, since the fight itself is what is under test,
+  // not the maze. Used to fall through every action on `troll.character.yaml` -
+  // none of them owned a `with knife` shape - and land on the engine's own
+  // "You cannot attack the troll with the knife" rather than a fight.
+  const toTroll = [
+    'south', 'east', 'open window', 'enter window', 'west', 'take lamp', 'turn on lamp',
+    'move rug', 'open trap door', 'down', 'north',
+  ];
+  const trollPlayed = seekFrom(
+    [...toTroll, ...Array(6).fill('kill troll with knife')],
+    (state) => {
+      state.objects.locations['knife'] = 'inventory';
+    },
+    (played) => played.state.objects.locations['troll'] === 'bin',
+  );
+
+  assert(
+    trollPlayed.turns
+      .slice(toTroll.length)
+      .flatMap((turn) => turn.messages)
+      .some((line) => line.includes('struck on the arm') || line.includes('fatal blow')),
+    'expected a real fight, not a generic refusal, from kill troll with knife',
+  );
+
+  // `kill thief with sword`, reached the ordinary way (through to the
+  // treasure-room ambush), used to fall through the same way.
+  const toThief = postThief.commands.slice(0, postThief.commands.indexOf('kill thief with knife'));
+  const thiefFight = seek(
+    source,
+    [...toThief.filter((c) => c !== 'drop sword'), ...Array(9).fill('kill thief with sword')],
+    (played) => played.state.objects.locations['thief'] === 'bin',
+  );
+
+  assert(
+    thiefFight.played.turns
+      .slice(toThief.length)
+      .flatMap((turn) => turn.messages)
+      .some((line) => line.includes("thief's arm") || line.includes('crumples to the floor')),
+    'expected a real fight, not a generic refusal, from kill thief with sword',
+  );
+});
+
+Deno.test('cyclops: provoking him and staying escalates to a real death, not a free pass', () => {
+  const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  state.scene = 'cyclops-room';
+  state.objects.locations['torch'] = 'inventory';
+
+  const played = play(source, state, ['attack cyclops', ...Array(6).fill('look')]);
+  const passing = played.turns.flatMap((turn) => turn.passing ?? []);
+
+  for (const snippet of [
+    'somewhat agitated',
+    'getting more agitated',
+    'looking for something',
+    'salt and pepper',
+    'unfriendly manner',
+    'two choices',
+  ]) {
+    assert(
+      passing.some((line) => line.includes(snippet)),
+      `expected one of CYCLOMAD's six warnings ("${snippet}") among the escalation`,
+    );
+  }
+  assert(
+    passing.some((line) => line.includes('grabs you firmly')),
+    'expected the seventh turn provoked and un-appeased to kill the player',
+  );
+});
+
+Deno.test('cyclops: leaving the room pauses the timer instead of continuing it unseen', () => {
+  const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  state.scene = 'cyclops-room';
+  state.objects.locations['torch'] = 'inventory';
+
+  const played = play(source, state, ['attack cyclops', 'look', 'look', 'northwest', ...Array(6).fill('look')]);
+
+  assertEquals(played.state.measures?.cyclops?.wrath, 3, 'expected the count to stop the moment he left, not keep climbing');
+  assertEquals(played.state.flags['player-died'], undefined);
+});
+
+Deno.test('cyclops: lunch and water in time puts him to sleep rather than killing the player', () => {
+  const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  state.scene = 'cyclops-room';
+  state.objects.locations['torch'] = 'inventory';
+  state.objects.locations['lunch'] = 'inventory';
+  state.objects.locations['bottle'] = 'inventory';
+  state.objects.locations['water'] = 'in:bottle';
+
+  const played = play(source, state, [
+    'give lunch to cyclops',
+    'give bottle to cyclops',
+    ...Array(8).fill('look'),
+  ]);
+
+  assertEquals(played.state.flags['cyclops-asleep'], true);
+  assertEquals(played.state.flags['player-died'], undefined);
+});
+
+Deno.test('mirror: breaking it stops the teleport and answers examine differently', () => {
+  const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  state.scene = 'mirror-room-1';
+  state.objects.locations['torch'] = 'inventory';
+
+  const played = play(source, state, ['break mirror', 'break mirror', 'examine mirror', 'touch mirror']);
+
+  assertEquals(
+    played.turns[0].messages[0],
+    "You have broken the mirror. I hope you have a seven years' supply of good luck handy.",
+  );
+  assertEquals(played.turns[1].messages[0], "Haven't you done enough damage already?");
+  assertEquals(played.turns[2].messages[0], 'The mirror is broken into many pieces.');
+  assertEquals(played.state.scene, 'mirror-room-1', 'expected a broken mirror to no longer teleport');
+});
+
+Deno.test('mirror: rubbing it with a tool tingles rather than teleporting', () => {
+  const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  state.scene = 'mirror-room-1';
+  state.objects.locations['torch'] = 'inventory';
+  state.objects.locations['knife'] = 'inventory';
+
+  const played = play(source, state, ['rub mirror with knife']);
+
+  assertEquals(played.turns[0].messages, ['You feel a faint tingling transmitted through it.']);
+  assertEquals(played.state.scene, 'mirror-room-1');
+});
+
+Deno.test('mirror: touching it bare-handed still swaps rooms', () => {
+  const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  state.scene = 'mirror-room-1';
+  state.objects.locations['torch'] = 'inventory';
+
+  const played = play(source, state, ['touch mirror']);
+
+  assertEquals(played.state.scene, 'mirror-room-2');
+});
+
+Deno.test('death: scatters carried treasures outside instead of quietly keeping them', () => {
+  const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  state.scene = 'troll-room';
+  state.objects.locations['lamp'] = 'inventory';
+  state.objects.locations['coffin'] = 'inventory';
+  state.objects.locations['chalice'] = 'inventory';
+  state.objects.locations['knife'] = 'inventory';
+  state.flags['player-died'] = true;
+
+  const played = play(source, state, ['look']);
+
+  assertEquals(played.state.objects.locations['lamp'], 'living-room', "ZIL's own special case");
+  assertEquals(played.state.objects.locations['coffin'], 'egypt-room', "ZIL's own special case");
+  assertEquals(
+    ['west-of-house', 'north-of-house', 'east-of-house', 'south-of-house', 'forest-1', 'forest-2', 'forest-3',
+      'path', 'clearing', 'grating-clearing', 'canyon-view'].includes(
+      played.state.objects.locations['chalice'] as string,
+    ),
+    true,
+    'expected the chalice to land in one of the eleven above-ground scatter rooms',
+  );
+  assertEquals(played.state.objects.locations['knife'], 'inventory', 'a non-treasure is not scattered');
 });

@@ -50,7 +50,7 @@ const CHECKPOINTS: ReadonlyArray<Checkpoint> = [
   { name: 'postTroll', through: 35 },
   { name: 'postThief', through: 124 },
   { name: 'torchSecured', through: 157 },
-  { name: 'diamondSecured', through: 328, ok: (played) => played.state.objects.locations['diamond'] === 'inventory' },
+  { name: 'diamondSecured', through: 327, ok: (played) => played.state.objects.locations['diamond'] === 'inventory' },
   // Past the end of the file rather than a line count kept in sync by hand -
   // `commandsThrough` slices, and slicing past the end of an array is the
   // rest of the array, not an error. 350 is this walkthrough's own name for

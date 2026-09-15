@@ -11,6 +11,19 @@ presence:
             mirror which fills the entire wall. There are exits on the other three sides of the
             room.
 
+  # ZIL's own `MIRROR-ROOM` routine answers for both rooms, and appends this
+  # line to either one's own description once the mirror is broken - `also`,
+  # so it speaks beside whichever of the two blocks above answered rather
+  # than competing with them for the room's one description.
+  - also: true
+    requires:
+      - type: flag
+        data: { flag: mirror-mung }
+    triggers:
+      - type: response
+        data:
+          text: Unfortunately, the mirror has been destroyed by your recklessness.
+
 objects:
   - mirror-2
   - id: mirror-room-2.teeth

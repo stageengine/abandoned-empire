@@ -342,7 +342,7 @@ export const torchSecured: Scenario = {
 };
 
 export const diamondSecured: Scenario = {
-  seed: "2020-01-01T00:00:03.000Z",
+  seed: "2020-01-01T00:00:00.000Z",
   commands: [
     "verbose",
     "south",
@@ -594,7 +594,6 @@ export const diamondSecured: Scenario = {
     "take sack",
     "open sack",
     "take garlic",
-    "drop sack",
     "west",
     "open trap door",
     "down",
@@ -925,7 +924,6 @@ export const fullGame: Scenario = {
     "take sack",
     "open sack",
     "take garlic",
-    "drop sack",
     "west",
     "open trap door",
     "down",

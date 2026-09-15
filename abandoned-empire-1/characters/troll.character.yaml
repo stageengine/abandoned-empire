@@ -131,6 +131,306 @@ actions:
           measure: strength
           by: -1
 
+  # ZIL's `FIND-WEAPON` answers to any of five blades - stiletto, axe, sword,
+  # knife, rusty knife - not the sword alone: `V-ATTACK` only asks
+  # `WEAPONBIT`, and `VILLAIN-STRENGTH` only singles the sword out for a
+  # further -1 to the troll's own effective strength (`V-BEST-ADV`, the
+  # `VILLAINS` table's third field), lower being easier to land a killing
+  # blow against. Without a sword this port's `attack` only had the bare-hands
+  # block below to fall to - no `preposition` field there to match `with`
+  # anything, so `resolve.ts`'s own dispatch (`select`, then `acted`'s
+  # fallback to the other object) found nothing at all and answered with the
+  # engine's generic refusal instead of a fight. Fixed the same way the sword
+  # already was, three more times over, at a flat percentage fifteen points
+  # under the sword's own: the nearest true thing this port's one-roll-per-
+  # swing model has to a defense strength that is a point higher without the
+  # bonus, not a claim that ZIL's own nine-outcome table comes out fifteen
+  # points apart - it does not read that way at all, and porting it exactly
+  # would mean porting the table, not the fight.
+  - id: attack
+    preposition: with
+    indirect: axe
+    requires:
+      - type: has-item
+        data:
+          object: axe
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You aren't holding the axe.
+      - type: measure
+        data:
+          subject: troll
+          measure: strength
+          max: 1
+      - type: chance
+        data:
+          of: 100
+          index: [1..45]
+          name: characters-troll-character-axe-1
+        failure:
+          triggers:
+            - type: journal
+            - type: response
+              data:
+                text: Your axe misses the troll by an inch.
+    triggers:
+      - type: response
+        data:
+          text: 'The fatal blow strikes the troll square in the heart: He dies.'
+      - type: adjust-measure
+        data:
+          subject: troll
+          measure: strength
+          by: -1
+
+  - id: attack
+    preposition: with
+    indirect: axe
+    requires:
+      - type: has-item
+        data:
+          object: axe
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You aren't holding the axe.
+      - type: chance
+        data:
+          of: 100
+          index: [1..45]
+          name: characters-troll-character-axe-2
+        failure:
+          triggers:
+            - type: journal
+            - type: response
+              data:
+                text: Your axe misses the troll by an inch.
+    triggers:
+      - type: response
+        data:
+          text: The troll is struck on the arm; blood begins to trickle down.
+      - type: adjust-measure
+        data:
+          subject: troll
+          measure: strength
+          by: -1
+
+  - id: attack
+    preposition: with
+    indirect: knife
+    requires:
+      - type: has-item
+        data:
+          object: knife
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You aren't holding the knife.
+      - type: measure
+        data:
+          subject: troll
+          measure: strength
+          max: 1
+      - type: chance
+        data:
+          of: 100
+          index: [1..45]
+          name: characters-troll-character-knife-1
+        failure:
+          triggers:
+            - type: journal
+            - type: response
+              data:
+                text: Your knife misses the troll by an inch.
+    triggers:
+      - type: response
+        data:
+          text: 'The fatal blow strikes the troll square in the heart: He dies.'
+      - type: adjust-measure
+        data:
+          subject: troll
+          measure: strength
+          by: -1
+
+  - id: attack
+    preposition: with
+    indirect: knife
+    requires:
+      - type: has-item
+        data:
+          object: knife
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You aren't holding the knife.
+      - type: chance
+        data:
+          of: 100
+          index: [1..45]
+          name: characters-troll-character-knife-2
+        failure:
+          triggers:
+            - type: journal
+            - type: response
+              data:
+                text: Your knife misses the troll by an inch.
+    triggers:
+      - type: response
+        data:
+          text: The troll is struck on the arm; blood begins to trickle down.
+      - type: adjust-measure
+        data:
+          subject: troll
+          measure: strength
+          by: -1
+
+  - id: attack
+    preposition: with
+    indirect: rusty-knife
+    requires:
+      - type: has-item
+        data:
+          object: rusty-knife
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You aren't holding the rusty knife.
+      - type: measure
+        data:
+          subject: troll
+          measure: strength
+          max: 1
+      - type: chance
+        data:
+          of: 100
+          index: [1..45]
+          name: characters-troll-character-rusty-knife-1
+        failure:
+          triggers:
+            - type: journal
+            - type: response
+              data:
+                text: Your rusty knife misses the troll by an inch.
+    triggers:
+      - type: response
+        data:
+          text: 'The fatal blow strikes the troll square in the heart: He dies.'
+      - type: adjust-measure
+        data:
+          subject: troll
+          measure: strength
+          by: -1
+
+  - id: attack
+    preposition: with
+    indirect: rusty-knife
+    requires:
+      - type: has-item
+        data:
+          object: rusty-knife
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You aren't holding the rusty knife.
+      - type: chance
+        data:
+          of: 100
+          index: [1..45]
+          name: characters-troll-character-rusty-knife-2
+        failure:
+          triggers:
+            - type: journal
+            - type: response
+              data:
+                text: Your rusty knife misses the troll by an inch.
+    triggers:
+      - type: response
+        data:
+          text: The troll is struck on the arm; blood begins to trickle down.
+      - type: adjust-measure
+        data:
+          subject: troll
+          measure: strength
+          by: -1
+
+  - id: attack
+    preposition: with
+    indirect: stiletto
+    requires:
+      - type: has-item
+        data:
+          object: stiletto
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You aren't holding the stiletto.
+      - type: measure
+        data:
+          subject: troll
+          measure: strength
+          max: 1
+      - type: chance
+        data:
+          of: 100
+          index: [1..45]
+          name: characters-troll-character-stiletto-1
+        failure:
+          triggers:
+            - type: journal
+            - type: response
+              data:
+                text: Your stiletto misses the troll by an inch.
+    triggers:
+      - type: response
+        data:
+          text: 'The fatal blow strikes the troll square in the heart: He dies.'
+      - type: adjust-measure
+        data:
+          subject: troll
+          measure: strength
+          by: -1
+
+  - id: attack
+    preposition: with
+    indirect: stiletto
+    requires:
+      - type: has-item
+        data:
+          object: stiletto
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You aren't holding the stiletto.
+      - type: chance
+        data:
+          of: 100
+          index: [1..45]
+          name: characters-troll-character-stiletto-2
+        failure:
+          triggers:
+            - type: journal
+            - type: response
+              data:
+                text: Your stiletto misses the troll by an inch.
+    triggers:
+      - type: response
+        data:
+          text: The troll is struck on the arm; blood begins to trickle down.
+      - type: adjust-measure
+        data:
+          subject: troll
+          measure: strength
+          by: -1
+
   - id: attack
     triggers:
       - type: response

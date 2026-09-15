@@ -231,6 +231,242 @@ actions:
           flag: thief-fighting
           value: true
 
+  # ZIL's `FIND-WEAPON` answers to any of five blades, not the knife alone -
+  # `V-ATTACK` only asks `WEAPONBIT`, and `VILLAIN-STRENGTH` only singles the
+  # knife out for a further -1 to the thief's own effective strength
+  # (`V-BEST-ADV`), lower being easier to land a killing blow against.
+  # Without the knife this port's `attack` only had the bare-hands block
+  # below to fall to - no `preposition` field there to match `with` anything,
+  # so a real fight never started. Fixed the same three more times over, at a
+  # flat percentage fifteen points under the knife's own - the same
+  # approximation `troll.character.yaml` makes for its own off-weapon fights,
+  # and for the same reason: this port's one-roll-per-swing model has no
+  # nine-outcome table to be fifteen points apart from in the first place.
+  - id: attack
+    preposition: with
+    indirect: sword
+    requires:
+      - type: has-item
+        data:
+          object: sword
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You aren't holding the sword.
+      - type: measure
+        data:
+          subject: thief
+          measure: strength
+          max: 1
+      - type: chance
+        data:
+          of: 100
+          index: [1..25]
+          name: characters-thief-character-sword-1
+        failure:
+          triggers:
+            - type: journal
+            - type: response
+              data:
+                text: Your sword misses the thief by an inch.
+    triggers:
+      - type: response
+        data:
+          text: The fatal blow catches the thief squarely, and he crumples to the floor.
+      - type: adjust-measure
+        data:
+          subject: thief
+          measure: strength
+          by: -1
+
+  - id: attack
+    preposition: with
+    indirect: sword
+    requires:
+      - type: has-item
+        data:
+          object: sword
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You aren't holding the sword.
+      - type: chance
+        data:
+          of: 100
+          index: [1..25]
+          name: characters-thief-character-sword-2
+        failure:
+          triggers:
+            - type: journal
+            - type: response
+              data:
+                text: Your sword misses the thief by an inch.
+    triggers:
+      - type: response
+        data:
+          text: A quick thrust pinks the thief's arm, and blood starts to trickle down.
+      - type: adjust-measure
+        data:
+          subject: thief
+          measure: strength
+          by: -1
+      - type: set-flag
+        data:
+          flag: thief-fighting
+          value: true
+
+  - id: attack
+    preposition: with
+    indirect: axe
+    requires:
+      - type: has-item
+        data:
+          object: axe
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You aren't holding the axe.
+      - type: measure
+        data:
+          subject: thief
+          measure: strength
+          max: 1
+      - type: chance
+        data:
+          of: 100
+          index: [1..25]
+          name: characters-thief-character-axe-1
+        failure:
+          triggers:
+            - type: journal
+            - type: response
+              data:
+                text: Your axe misses the thief by an inch.
+    triggers:
+      - type: response
+        data:
+          text: The fatal blow catches the thief squarely, and he crumples to the floor.
+      - type: adjust-measure
+        data:
+          subject: thief
+          measure: strength
+          by: -1
+
+  - id: attack
+    preposition: with
+    indirect: axe
+    requires:
+      - type: has-item
+        data:
+          object: axe
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You aren't holding the axe.
+      - type: chance
+        data:
+          of: 100
+          index: [1..25]
+          name: characters-thief-character-axe-2
+        failure:
+          triggers:
+            - type: journal
+            - type: response
+              data:
+                text: Your axe misses the thief by an inch.
+    triggers:
+      - type: response
+        data:
+          text: A quick thrust pinks the thief's arm, and blood starts to trickle down.
+      - type: adjust-measure
+        data:
+          subject: thief
+          measure: strength
+          by: -1
+      - type: set-flag
+        data:
+          flag: thief-fighting
+          value: true
+
+  - id: attack
+    preposition: with
+    indirect: rusty-knife
+    requires:
+      - type: has-item
+        data:
+          object: rusty-knife
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You aren't holding the rusty knife.
+      - type: measure
+        data:
+          subject: thief
+          measure: strength
+          max: 1
+      - type: chance
+        data:
+          of: 100
+          index: [1..25]
+          name: characters-thief-character-rusty-knife-1
+        failure:
+          triggers:
+            - type: journal
+            - type: response
+              data:
+                text: Your rusty knife misses the thief by an inch.
+    triggers:
+      - type: response
+        data:
+          text: The fatal blow catches the thief squarely, and he crumples to the floor.
+      - type: adjust-measure
+        data:
+          subject: thief
+          measure: strength
+          by: -1
+
+  - id: attack
+    preposition: with
+    indirect: rusty-knife
+    requires:
+      - type: has-item
+        data:
+          object: rusty-knife
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: You aren't holding the rusty knife.
+      - type: chance
+        data:
+          of: 100
+          index: [1..25]
+          name: characters-thief-character-rusty-knife-2
+        failure:
+          triggers:
+            - type: journal
+            - type: response
+              data:
+                text: Your rusty knife misses the thief by an inch.
+    triggers:
+      - type: response
+        data:
+          text: A quick thrust pinks the thief's arm, and blood starts to trickle down.
+      - type: adjust-measure
+        data:
+          subject: thief
+          measure: strength
+          by: -1
+      - type: set-flag
+        data:
+          flag: thief-fighting
+          value: true
+
   - id: attack
     triggers:
       - type: response

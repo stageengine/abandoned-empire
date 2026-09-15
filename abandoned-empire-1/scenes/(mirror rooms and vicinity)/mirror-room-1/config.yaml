@@ -20,6 +20,22 @@ presence:
         data:
           text: It is pitch black. You are likely to be eaten by a grue.
 
+  # ZIL's own `MIRROR-ROOM` routine answers for both rooms, and appends this
+  # line to either one's own description once the mirror is broken - `also`,
+  # so it speaks beside whichever of the two blocks above answered (lit or
+  # dark alike) rather than competing with them for the room's one
+  # description.
+  - also: true
+    requires:
+      - type: flag
+        data: { flag: mirror-mung }
+      - type: flag
+        data: { flag: light }
+    triggers:
+      - type: response
+        data:
+          text: Unfortunately, the mirror has been destroyed by your recklessness.
+
 objects:
   - mirror-1
   - id: mirror-room-1.teeth

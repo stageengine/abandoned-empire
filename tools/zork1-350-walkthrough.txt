@@ -251,7 +251,6 @@ east
 take sack
 open sack
 take garlic
-drop sack
 west
 open trap door
 down

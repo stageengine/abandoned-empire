@@ -11,6 +11,66 @@ synonyms:
   - giant eye
 start: cyclops-room
 
+# ZIL's `I-CYCLOPS` is a queued interrupt: once `give lunch` or `attack` (or
+# `throw`/`mung`, neither of which this port answers on him at all) first
+# enables it, it runs every turn the player spends here with him awake,
+# escalating `CYCLOWRATH` by one and reading `CYCLOMAD`'s own line for
+# whatever it just became - six of them, and a seventh that grabs the player
+# for good rather than talking. `DISABLE`s itself while the player is
+# elsewhere or he is asleep, which a `measure`'s own thresholds do nothing to
+# imitate on their own; `every-turn.yaml`'s own rule gates the ticking on
+# both, so the count sits wherever it was left rather than resetting, exactly
+# as a global that nothing but this touches would.
+measures:
+  - id: wrath
+    max: 10
+    start: 0
+    thresholds:
+      - from: 1
+        triggers:
+          - type: response
+            data:
+              text: The cyclops seems somewhat agitated.
+      - from: 2
+        triggers:
+          - type: response
+            data:
+              text: The cyclops appears to be getting more agitated.
+      - from: 3
+        triggers:
+          - type: response
+            data:
+              text: The cyclops is moving about the room, looking for something.
+      - from: 4
+        triggers:
+          - type: response
+            data:
+              text: >-
+                The cyclops was looking for salt and pepper. No doubt they are condiments for
+                his upcoming snack.
+      - from: 5
+        triggers:
+          - type: response
+            data:
+              text: The cyclops is moving toward you in an unfriendly manner.
+      - from: 6
+        triggers:
+          - type: response
+            data:
+              text: 'You have two choices: 1. Leave  2. Become dinner.'
+      - from: 7
+        triggers:
+          - type: response
+            data:
+              text: >-
+                The cyclops, tired of all of your games and trickery, grabs you firmly. As he
+                licks his chops, he says "Mmm. Just like Mom used to make 'em." It's nice to be
+                appreciated.
+          - type: set-flag
+            data:
+              flag: player-died
+              value: true
+
 presence:
   - requires:
       - type: flag
@@ -67,6 +127,10 @@ actions:
       - type: set-flag
         data:
           flag: cyclops-thirsty
+          value: true
+      - type: set-flag
+        data:
+          flag: cyclops-provoked
           value: true
 
   # Two blocks rather than one with a refusal written into its requirement. A
@@ -134,6 +198,10 @@ actions:
         data:
           flag: cyclops-flag
           value: false
+      - type: set-flag
+        data:
+          flag: cyclops-provoked
+          value: true
 
   - id: attack
     triggers:
@@ -141,6 +209,10 @@ actions:
         data:
           text: >-
             The cyclops shrugs but otherwise ignores your pitiful attempt.
+      - type: set-flag
+        data:
+          flag: cyclops-provoked
+          value: true
 
   - id: tell
     requires:

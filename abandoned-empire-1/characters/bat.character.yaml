@@ -24,8 +24,11 @@ presence:
 start: bat-room
 
 # ZIL sends the player flying to a random room in the mine unless they are carrying
-# garlic. The flight is a roll over a table of rooms and is not written here; what
-# is written is why he leaves you alone, which is the part a player has to work out.
+# garlic (or it is lying loose in the room). The flight itself - one `chance` of
+# eight over `BAT-DROPS`' own table - lives in `every-turn.yaml`, gated on
+# `scene: bat-room` rather than a room-entry event this engine has no other name
+# for; what is written here is why he leaves you alone, which is the part a
+# player has to work out.
 actions:
   - id: look
     triggers:

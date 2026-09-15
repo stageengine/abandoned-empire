@@ -1398,15 +1398,12 @@ every-turn:
   # Resurrection. ZIL's `JIGS-UP` reads this off `DEATHS` at the moment of death;
   # here the health threshold only raises `player-died`, and these two rules read
   # the running count to decide which of Zork's two answers this death gets.
-  # Simplified in one way apiece: every resurrection uses the ordinary Forest
-  # branch rather than ZIL's alternate ghost-in-Hades one for a death after the
-  # Temple has been visited, and only the lamp gets ZIL's special-cased return -
-  # scattering every other currently-held thing needs a rule per thing, the same
-  # cost the trophy case already pays, and is left for a later pass.
+  # Simplified in one way: every resurrection uses the ordinary Forest branch
+  # rather than ZIL's alternate ghost-in-Hades one for a death after the Temple
+  # has been visited.
   # Ahead of the rule below and reading the same, still-unset `player-died`,
-  # because that rule clears it - ZIL's own special case, and the only thing
-  # returned rather than simply kept: see the note below about what a player
-  # was carrying otherwise.
+  # because that rule clears it - ZIL's own special case, and one of two things
+  # returned rather than scattered with everything else a player was carrying.
   - requires:
       - type: flag
         data:
@@ -1424,6 +1421,158 @@ every-turn:
         data:
           object: lamp
           to: living-room
+
+  # ZIL's other special case: `RANDOMIZE-OBJECTS` names the coffin by itself,
+  # the same way it names the lamp, ahead of the generic sweep below.
+  - requires:
+      - type: flag
+        data:
+          flag: player-died
+      - type: measure
+        data:
+          subject: player
+          measure: deaths
+          max: 1
+      - type: has-item
+        data:
+          object: coffin
+    triggers:
+      - type: move-object
+        data:
+          object: coffin
+          to: egypt-room
+
+  # Everything else a player was carrying, scattered together. `RANDOMIZE-OBJECTS`
+  # rolls once per treasure (`P?TVALUE` above zero) against every above-ground room
+  # in the game, 50% a try, and drops anything else straight into one of eleven
+  # named ones (`ABOVE-GROUND`'s own table) picked uniformly - this engine's
+  # `move-tagged` acts on everything a tag currently marks in one trigger rather
+  # than one roll per treasure, so every treasure still held answers the one
+  # roll below together rather than each finding its own room. `ABOVE-GROUND`'s
+  # own eleven rooms are exactly what get used, since asking a random condition
+  # about literally any room in the game is not a question this engine's
+  # `chance` can put; not the same room a treasure would fetch on its own die,
+  # but the same shape - dropped outside, and nowhere the player left it.
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter, of: 11, index: 1 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: west-of-house }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter, of: 11, index: 2 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: north-of-house }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter, of: 11, index: 3 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: east-of-house }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter, of: 11, index: 4 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: south-of-house }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter, of: 11, index: 5 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: forest-1 }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter, of: 11, index: 6 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: forest-2 }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter, of: 11, index: 7 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: forest-3 }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter, of: 11, index: 8 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: path }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter, of: 11, index: 9 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: clearing }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter, of: 11, index: 10 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: grating-clearing }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter, of: 11, index: 11 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: canyon-view }
 
   - requires:
       - type: flag
@@ -1596,6 +1745,187 @@ every-turn:
           subject: player
           measure: score
           by: 13
+
+  # The bat, carried out. `BATS-ROOM` checks this on every `M-ENTER` (not
+  # gated on light, unlike almost everything else in this file) and flies the
+  # player to one of eight rooms the instant they arrive without garlic
+  # (`LOC ,GARLIC` reading either the player's own hands or the floor here) -
+  # a per-turn `scene: bat-room` check comes to the same thing, since the turn
+  # this fires is always the turn of arrival: nothing else moves the player
+  # out of the room first, garlic dropped after arriving is still garlic
+  # `object-here` can see, and there is no later turn to differ on once they
+  # are already gone. One `chance` of eight and one block per destination,
+  # `BAT-DROPS`' own table, in its own order.
+  - requires:
+      - type: scene
+        data:
+          id: bat-room
+      - type: has-item
+        negate: true
+        data: { object: garlic }
+      - type: object-here
+        negate: true
+        data: { object: garlic }
+      - type: chance
+        data: { name: bat-flight, of: 8, index: 1 }
+    triggers:
+      - type: response
+        data:
+          text: The bat grabs you by the scruff of your neck and lifts you away....
+      - type: change-scene
+        data: { scene: mine-1 }
+
+  - requires:
+      - type: scene
+        data:
+          id: bat-room
+      - type: has-item
+        negate: true
+        data: { object: garlic }
+      - type: object-here
+        negate: true
+        data: { object: garlic }
+      - type: chance
+        data: { name: bat-flight, of: 8, index: 2 }
+    triggers:
+      - type: response
+        data:
+          text: The bat grabs you by the scruff of your neck and lifts you away....
+      - type: change-scene
+        data: { scene: mine-2 }
+
+  - requires:
+      - type: scene
+        data:
+          id: bat-room
+      - type: has-item
+        negate: true
+        data: { object: garlic }
+      - type: object-here
+        negate: true
+        data: { object: garlic }
+      - type: chance
+        data: { name: bat-flight, of: 8, index: 3 }
+    triggers:
+      - type: response
+        data:
+          text: The bat grabs you by the scruff of your neck and lifts you away....
+      - type: change-scene
+        data: { scene: mine-3 }
+
+  - requires:
+      - type: scene
+        data:
+          id: bat-room
+      - type: has-item
+        negate: true
+        data: { object: garlic }
+      - type: object-here
+        negate: true
+        data: { object: garlic }
+      - type: chance
+        data: { name: bat-flight, of: 8, index: 4 }
+    triggers:
+      - type: response
+        data:
+          text: The bat grabs you by the scruff of your neck and lifts you away....
+      - type: change-scene
+        data: { scene: mine-4 }
+
+  - requires:
+      - type: scene
+        data:
+          id: bat-room
+      - type: has-item
+        negate: true
+        data: { object: garlic }
+      - type: object-here
+        negate: true
+        data: { object: garlic }
+      - type: chance
+        data: { name: bat-flight, of: 8, index: 5 }
+    triggers:
+      - type: response
+        data:
+          text: The bat grabs you by the scruff of your neck and lifts you away....
+      - type: change-scene
+        data: { scene: ladder-top }
+
+  - requires:
+      - type: scene
+        data:
+          id: bat-room
+      - type: has-item
+        negate: true
+        data: { object: garlic }
+      - type: object-here
+        negate: true
+        data: { object: garlic }
+      - type: chance
+        data: { name: bat-flight, of: 8, index: 6 }
+    triggers:
+      - type: response
+        data:
+          text: The bat grabs you by the scruff of your neck and lifts you away....
+      - type: change-scene
+        data: { scene: ladder-bottom }
+
+  - requires:
+      - type: scene
+        data:
+          id: bat-room
+      - type: has-item
+        negate: true
+        data: { object: garlic }
+      - type: object-here
+        negate: true
+        data: { object: garlic }
+      - type: chance
+        data: { name: bat-flight, of: 8, index: 7 }
+    triggers:
+      - type: response
+        data:
+          text: The bat grabs you by the scruff of your neck and lifts you away....
+      - type: change-scene
+        data: { scene: squeeky-room }
+
+  - requires:
+      - type: scene
+        data:
+          id: bat-room
+      - type: has-item
+        negate: true
+        data: { object: garlic }
+      - type: object-here
+        negate: true
+        data: { object: garlic }
+      - type: chance
+        data: { name: bat-flight, of: 8, index: 8 }
+    triggers:
+      - type: response
+        data:
+          text: The bat grabs you by the scruff of your neck and lifts you away....
+      - type: change-scene
+        data: { scene: mine-entrance }
+
+  # The cyclops's own wrath, ticking. See `cyclops.character.yaml`'s own
+  # comment above its `wrath` measure for what escalates and what stops it -
+  # this rule is only the ticking itself, gated on the two things ZIL's
+  # `DISABLE` answers for: being elsewhere, and being asleep.
+  - requires:
+      - type: scene
+        data: { id: cyclops-room }
+      - type: flag
+        data: { flag: cyclops-provoked }
+      - type: flag
+        negate: true
+        data: { flag: cyclops-asleep }
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: cyclops
+          measure: wrath
+          by: 1
 
   # The skeleton's curse, carried out. One rule per treasure and then the flag is
   # put down again, so it happens on the turn the ghost appears and no other.
