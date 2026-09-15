@@ -1442,17 +1442,26 @@ every-turn:
           object: coffin
           to: egypt-room
 
-  # Everything else a player was carrying, scattered together. `RANDOMIZE-OBJECTS`
-  # rolls once per treasure (`P?TVALUE` above zero) against every above-ground room
-  # in the game, 50% a try, and drops anything else straight into one of eleven
-  # named ones (`ABOVE-GROUND`'s own table) picked uniformly - this engine's
-  # `move-tagged` acts on everything a tag currently marks in one trigger rather
-  # than one roll per treasure, so every treasure still held answers the one
-  # roll below together rather than each finding its own room. `ABOVE-GROUND`'s
-  # own eleven rooms are exactly what get used, since asking a random condition
-  # about literally any room in the game is not a question this engine's
-  # `chance` can put; not the same room a treasure would fetch on its own die,
-  # but the same shape - dropped outside, and nowhere the player left it.
+  # Everything else a player was carrying, scattered together - and split the
+  # way `RANDOMIZE-OBJECTS` (1actions.zil:4101-4123) actually splits it, which
+  # an earlier pass of this fix had backwards. ZIL's `ELSE` branch - anything
+  # that is *not* a treasure (`P?TVALUE` zero, which it forces the sword's own
+  # to be first) - drops straight into one of the eleven named `ABOVE-GROUND`
+  # rooms, picked uniformly; a real treasure instead rolls once per treasure
+  # against *every* room in the game with `RLANDBIT` set and `ONBIT` clear
+  # (50% a try, cycling until one hits) - the ordinary, mostly-dark dungeon,
+  # explicitly excluding the lit house-and-outdoors set `ABOVE-GROUND` names.
+  # This engine's `move-tagged` acts on everything a tag currently marks in
+  # one trigger rather than one roll per item, so everything a tag marks
+  # answers the one roll below together rather than each finding its own
+  # room - the `belongings` tag (every portable non-treasure except the lamp,
+  # already special-cased above) gets `ABOVE-GROUND`'s own eleven exactly;
+  # the `treasure` tag gets a second, differently-named roll of eleven
+  # against a representative sample of ordinary dungeon rooms instead, since
+  # asking a random condition about literally every room in the game is not
+  # a question this engine's `chance` can put. Not the same room either one
+  # would fetch on its own die, but the same shape - dropped outside the
+  # player's own hands, and nowhere they left it.
   - requires:
       - type: flag
         data: { flag: player-died }
@@ -1462,7 +1471,7 @@ every-turn:
         data: { name: death-scatter, of: 11, index: 1 }
     triggers:
       - type: move-tagged
-        data: { tag: treasure, from: inventory, to: west-of-house }
+        data: { tag: belongings, from: inventory, to: west-of-house }
 
   - requires:
       - type: flag
@@ -1473,7 +1482,7 @@ every-turn:
         data: { name: death-scatter, of: 11, index: 2 }
     triggers:
       - type: move-tagged
-        data: { tag: treasure, from: inventory, to: north-of-house }
+        data: { tag: belongings, from: inventory, to: north-of-house }
 
   - requires:
       - type: flag
@@ -1484,7 +1493,7 @@ every-turn:
         data: { name: death-scatter, of: 11, index: 3 }
     triggers:
       - type: move-tagged
-        data: { tag: treasure, from: inventory, to: east-of-house }
+        data: { tag: belongings, from: inventory, to: east-of-house }
 
   - requires:
       - type: flag
@@ -1495,7 +1504,7 @@ every-turn:
         data: { name: death-scatter, of: 11, index: 4 }
     triggers:
       - type: move-tagged
-        data: { tag: treasure, from: inventory, to: south-of-house }
+        data: { tag: belongings, from: inventory, to: south-of-house }
 
   - requires:
       - type: flag
@@ -1506,7 +1515,7 @@ every-turn:
         data: { name: death-scatter, of: 11, index: 5 }
     triggers:
       - type: move-tagged
-        data: { tag: treasure, from: inventory, to: forest-1 }
+        data: { tag: belongings, from: inventory, to: forest-1 }
 
   - requires:
       - type: flag
@@ -1517,7 +1526,7 @@ every-turn:
         data: { name: death-scatter, of: 11, index: 6 }
     triggers:
       - type: move-tagged
-        data: { tag: treasure, from: inventory, to: forest-2 }
+        data: { tag: belongings, from: inventory, to: forest-2 }
 
   - requires:
       - type: flag
@@ -1528,7 +1537,7 @@ every-turn:
         data: { name: death-scatter, of: 11, index: 7 }
     triggers:
       - type: move-tagged
-        data: { tag: treasure, from: inventory, to: forest-3 }
+        data: { tag: belongings, from: inventory, to: forest-3 }
 
   - requires:
       - type: flag
@@ -1539,7 +1548,7 @@ every-turn:
         data: { name: death-scatter, of: 11, index: 8 }
     triggers:
       - type: move-tagged
-        data: { tag: treasure, from: inventory, to: path }
+        data: { tag: belongings, from: inventory, to: path }
 
   - requires:
       - type: flag
@@ -1550,7 +1559,7 @@ every-turn:
         data: { name: death-scatter, of: 11, index: 9 }
     triggers:
       - type: move-tagged
-        data: { tag: treasure, from: inventory, to: clearing }
+        data: { tag: belongings, from: inventory, to: clearing }
 
   - requires:
       - type: flag
@@ -1561,7 +1570,7 @@ every-turn:
         data: { name: death-scatter, of: 11, index: 10 }
     triggers:
       - type: move-tagged
-        data: { tag: treasure, from: inventory, to: grating-clearing }
+        data: { tag: belongings, from: inventory, to: grating-clearing }
 
   - requires:
       - type: flag
@@ -1572,7 +1581,128 @@ every-turn:
         data: { name: death-scatter, of: 11, index: 11 }
     triggers:
       - type: move-tagged
-        data: { tag: treasure, from: inventory, to: canyon-view }
+        data: { tag: belongings, from: inventory, to: canyon-view }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter-underground, of: 11, index: 1 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: round-room }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter-underground, of: 11, index: 2 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: troll-room }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter-underground, of: 11, index: 3 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: cellar }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter-underground, of: 11, index: 4 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: maze-1 }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter-underground, of: 11, index: 5 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: deep-canyon }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter-underground, of: 11, index: 6 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: reservoir-south }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter-underground, of: 11, index: 7 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: dam-room }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter-underground, of: 11, index: 8 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: torch-room }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter-underground, of: 11, index: 9 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: egypt-room }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter-underground, of: 11, index: 10 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: south-temple }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter-underground, of: 11, index: 11 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: gallery }
 
   - requires:
       - type: flag

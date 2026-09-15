@@ -445,7 +445,53 @@ Deno.test('mirror: touching it bare-handed still swaps rooms', () => {
   assertEquals(played.state.scene, 'mirror-room-2');
 });
 
-Deno.test('death: scatters carried treasures outside instead of quietly keeping them', () => {
+Deno.test('rainbow: the pot of gold is invisible until the sceptre actually solidifies it', () => {
+  const withoutWaving = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  withoutWaving.scene = 'end-of-rainbow';
+  withoutWaving.objects.locations['torch'] = 'inventory';
+
+  assertEquals(
+    play(source, withoutWaving, ['take pot']).turns[0].messages,
+    ["You can't see any pot here."],
+  );
+
+  const afterWaving = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  afterWaving.scene = 'end-of-rainbow';
+  afterWaving.objects.locations['torch'] = 'inventory';
+  afterWaving.objects.locations['sceptre'] = 'inventory';
+
+  const played = play(source, afterWaving, ['wave sceptre', 'take pot']);
+
+  assertEquals(played.turns[1].messages, ['Taken.']);
+});
+
+Deno.test('rainbow: waving again dissolves it, and waving from atop it is fatal', () => {
+  const toggle = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  toggle.scene = 'aragain-falls';
+  toggle.objects.locations['torch'] = 'inventory';
+  toggle.objects.locations['sceptre'] = 'inventory';
+
+  const played = play(source, toggle, ['wave sceptre', 'wave sceptre']);
+
+  assertEquals(played.turns[1].messages, ['The rainbow seems to have become somewhat run-of-the-mill.']);
+  assertEquals(played.state.flags['rainbow-flag'], false);
+
+  const fatal = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  fatal.scene = 'on-rainbow';
+  fatal.objects.locations['torch'] = 'inventory';
+  fatal.objects.locations['sceptre'] = 'inventory';
+
+  assert(
+    play(source, fatal, ['wave sceptre']).turns[0].messages.some((line) => line.includes('hanging in midair')),
+  );
+});
+
+Deno.test('death: scatters what was carried, treasures underground and belongings above ground', () => {
+  // `RANDOMIZE-OBJECTS` (1actions.zil:4101-4123) splits the other way round
+  // from an earlier pass of this same fix: a treasure scatters into the
+  // ordinary, mostly-dark dungeon (`RLANDBIT` set, `ONBIT` clear), and
+  // everything else - the sword forced into this branch too - into one of
+  // `ABOVE-GROUND`'s eleven named, lit, outdoor rooms.
   const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
   state.scene = 'troll-room';
   state.objects.locations['lamp'] = 'inventory';
@@ -456,15 +502,51 @@ Deno.test('death: scatters carried treasures outside instead of quietly keeping 
 
   const played = play(source, state, ['look']);
 
+  const aboveGround = ['west-of-house', 'north-of-house', 'east-of-house', 'south-of-house', 'forest-1',
+    'forest-2', 'forest-3', 'path', 'clearing', 'grating-clearing', 'canyon-view'];
+  const underground = ['round-room', 'troll-room', 'cellar', 'maze-1', 'deep-canyon', 'reservoir-south',
+    'dam-room', 'torch-room', 'egypt-room', 'south-temple', 'gallery'];
+
   assertEquals(played.state.objects.locations['lamp'], 'living-room', "ZIL's own special case");
   assertEquals(played.state.objects.locations['coffin'], 'egypt-room', "ZIL's own special case");
   assertEquals(
-    ['west-of-house', 'north-of-house', 'east-of-house', 'south-of-house', 'forest-1', 'forest-2', 'forest-3',
-      'path', 'clearing', 'grating-clearing', 'canyon-view'].includes(
-      played.state.objects.locations['chalice'] as string,
-    ),
+    underground.includes(played.state.objects.locations['chalice'] as string),
     true,
-    'expected the chalice to land in one of the eleven above-ground scatter rooms',
+    'expected the chalice (a treasure) to land in one of the underground scatter rooms',
   );
-  assertEquals(played.state.objects.locations['knife'], 'inventory', 'a non-treasure is not scattered');
+  assertEquals(
+    aboveGround.includes(played.state.objects.locations['knife'] as string),
+    true,
+    'expected the knife (a belonging, not a treasure) to land in one of the above-ground scatter rooms',
+  );
+});
+
+Deno.test('exorcise: "exorcise ghosts" reaches the ghosts\' own answer, not a bare-verb refusal', () => {
+  // `exorcise` was mistakenly marked intransitive alongside the game's real
+  // bare verbs earlier this session: ZIL's `GHOSTS-F` branches on whether the
+  // indirect object is the ghosts themselves, so this one genuinely needs an
+  // ordinary target, the same road `attack ghosts` already takes there.
+  const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  state.scene = 'entrance-to-hades';
+  state.objects.locations['torch'] = 'inventory';
+  state.objects.locations['ghosts'] = 'entrance-to-hades';
+
+  const played = play(source, state, ['exorcise ghosts']);
+
+  assertEquals(played.turns[0].messages, ['Only the ceremony itself has any effect.']);
+});
+
+Deno.test('bell: ringing it while already holding lit candles drops and puts them out', () => {
+  const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  state.scene = 'entrance-to-hades';
+  state.objects.locations['torch'] = 'inventory';
+  state.objects.locations['ghosts'] = 'entrance-to-hades';
+  state.objects.locations['bell'] = 'inventory';
+  state.objects.locations['candles'] = 'inventory';
+  state.flags['candles-on'] = true;
+
+  const played = play(source, state, ['ring bell']);
+
+  assertEquals(played.state.objects.locations['candles'], 'entrance-to-hades');
+  assertEquals(played.state.flags['candles-on'], false);
 });

@@ -4,6 +4,7 @@ name: brass bell
 synonyms: [bell, small bell, brass bell, hot bell, red hot bell]
 portable: true
 size: weight
+tags: [belongings]
 requires:
   # Whether the player can see. Seventy times, which is what
   # ROADMAP.md's "whether the player can see" is about: one block on the game
@@ -47,6 +48,64 @@ measures:
 
 actions:
   # Ringing it at the gate is the first act of the ceremony.
+  # ZIL drops and puts out held, lit candles the moment the bell rings -
+  # written above the plain version below because the first requirement that
+  # holds decides which of the two this is, and holding lit candles already
+  # is the particular case.
+  - id: ring
+    requires:
+      - type: object-here
+        data:
+          object: ghosts
+      - type: flag
+        negate: true
+        data:
+          flag: bell-hot
+      - type: flag
+        negate: true
+        data:
+          flag: lld-flag
+      - type: has-item
+        data:
+          object: candles
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The bell suddenly becomes red hot and falls to the ground. The wraiths, as if
+            paralyzed, stop their jeering and slowly turn to face you. On their ashen faces, the
+            expression of a long-forgotten terror takes shape.
+      - type: move-object
+        data:
+          object: bell
+          to: here
+      - type: set-flag
+        data:
+          flag: bell-hot
+          value: true
+      - type: adjust-measure
+        data:
+          subject: bell
+          measure: heat
+          to: 20
+      - type: set-flag
+        data:
+          flag: ceremony
+          value: true
+      - type: adjust-measure
+        data:
+          subject: ghosts
+          measure: patience
+          to: 6
+      - type: move-object
+        data:
+          object: candles
+          to: here
+      - type: set-flag
+        data:
+          flag: candles-on
+          value: false
+
   - id: ring
     requires:
       - type: object-here

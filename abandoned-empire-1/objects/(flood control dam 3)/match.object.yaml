@@ -5,6 +5,7 @@ noun: as-written
 synonyms: [match, matches, matchbook, book of matches]
 portable: true
 size: weight
+tags: [belongings]
 requires:
   # Whether the player can see. Seventy times, which is what
   # ROADMAP.md's "whether the player can see" is about: one block on the game

@@ -50,9 +50,61 @@ presence:
           text: An ornamented sceptre, tapering to a sharp point, is here.
 start: in:coffin
 
+# ZIL answers `WAVE`/`RAISE` identically, by where the player is standing and
+# whether the rainbow is already solid - four shapes, not one: solidifying it
+# from either end (the end of the rainbow's own block also announcing the pot
+# appearing, since only that one has it to see), dissolving it again from
+# either end once it already is solid, a fatal wave while standing on the
+# thing itself, and a flavour line answering the sceptre from anywhere else.
+# The port had only the first shape, unconditionally, which is also what let
+# the pot of gold answer for itself before this ever ran - see the flag this
+# sets and `pot-of-gold.object.yaml`'s own new requirement on it.
 actions:
-  # Zork opens the rainbow from either end of it. The port has the one end.
   - id: wave
+    requires:
+      - type: scene
+        data: { id: end-of-rainbow }
+      - type: flag
+        negate: true
+        data: { flag: rainbow-flag }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Suddenly, the rainbow appears to become solid and, I venture, walkable (I think the
+            giveaway was the stairs and bannister).
+      - type: response
+        data:
+          text: A shimmering pot of gold appears at the end of the rainbow.
+      - type: set-flag
+        data: { flag: rainbow-flag, value: true }
+
+  - id: raise
+    requires:
+      - type: scene
+        data: { id: end-of-rainbow }
+      - type: flag
+        negate: true
+        data: { flag: rainbow-flag }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Suddenly, the rainbow appears to become solid and, I venture, walkable (I think the
+            giveaway was the stairs and bannister).
+      - type: response
+        data:
+          text: A shimmering pot of gold appears at the end of the rainbow.
+      - type: set-flag
+        data: { flag: rainbow-flag, value: true }
+
+  - id: wave
+    requires:
+      - type: scene
+        data: { id: aragain-falls }
+      - type: flag
+        negate: true
+        data: { flag: rainbow-flag }
     triggers:
       - type: response
         data:
@@ -63,6 +115,12 @@ actions:
         data: { flag: rainbow-flag, value: true }
 
   - id: raise
+    requires:
+      - type: scene
+        data: { id: aragain-falls }
+      - type: flag
+        negate: true
+        data: { flag: rainbow-flag }
     triggers:
       - type: response
         data:
@@ -71,3 +129,83 @@ actions:
             giveaway was the stairs and bannister).
       - type: set-flag
         data: { flag: rainbow-flag, value: true }
+
+  - id: wave
+    requires:
+      - type: any-of
+        data:
+          conditions:
+            - type: scene
+              data: { id: end-of-rainbow }
+            - type: scene
+              data: { id: aragain-falls }
+      - type: flag
+        data: { flag: rainbow-flag }
+    triggers:
+      - type: response
+        data:
+          text: The rainbow seems to have become somewhat run-of-the-mill.
+      - type: set-flag
+        data: { flag: rainbow-flag, value: false }
+
+  - id: raise
+    requires:
+      - type: any-of
+        data:
+          conditions:
+            - type: scene
+              data: { id: end-of-rainbow }
+            - type: scene
+              data: { id: aragain-falls }
+      - type: flag
+        data: { flag: rainbow-flag }
+    triggers:
+      - type: response
+        data:
+          text: The rainbow seems to have become somewhat run-of-the-mill.
+      - type: set-flag
+        data: { flag: rainbow-flag, value: false }
+
+  # Standing on the thing you have just asked to stop being solid, ZIL does not
+  # let a player survive to see it happen.
+  - id: wave
+    requires:
+      - type: scene
+        data: { id: on-rainbow }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The structural integrity of the rainbow is severely compromised, leaving you hanging
+            in midair, supported only by water vapor. Bye.
+      - type: set-flag
+        data: { flag: rainbow-flag, value: false }
+      - type: set-flag
+        data: { flag: player-died, value: true }
+
+  - id: raise
+    requires:
+      - type: scene
+        data: { id: on-rainbow }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The structural integrity of the rainbow is severely compromised, leaving you hanging
+            in midair, supported only by water vapor. Bye.
+      - type: set-flag
+        data: { flag: rainbow-flag, value: false }
+      - type: set-flag
+        data: { flag: player-died, value: true }
+
+  - id: wave
+    triggers:
+      - type: response
+        data:
+          text: A dazzling display of color briefly emanates from the sceptre.
+
+  - id: raise
+    triggers:
+      - type: response
+        data:
+          text: A dazzling display of color briefly emanates from the sceptre.

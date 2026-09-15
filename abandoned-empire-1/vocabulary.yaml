@@ -172,9 +172,14 @@ verbs:
     synonyms: [clean]
   - id: repent
     intransitive: true
+  # Not `intransitive`, unlike its neighbours here: ZIL's own `GHOSTS-F`
+  # branches on whether `PRSI` is the ghosts themselves (`exorcise ghosts`
+  # answers differently from the bare form the Land of the Dead's own room
+  # handler reads), so this is really `ghosts.character.yaml`'s to answer
+  # by way of an ordinary target, the same road `attack ghosts` already
+  # takes there.
   - id: exorcise
     synonyms: [banish, lay to rest]
-    intransitive: true
   # Not `intransitive`: `ring` also answers "ring bell" in the Land of the Dead.
   - id: ring
     synonyms: [toll]
