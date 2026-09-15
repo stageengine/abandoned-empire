@@ -437,14 +437,217 @@ actions:
         data:
           text: Trying to attack the troll with your bare hands is suicidal.
 
+  # ZIL's give/throw handling for the troll, in the same order it checks: a
+  # blade specifically has a one-in-five chance of being eaten and killing
+  # him outright (a second, non-combat way to win the room), and otherwise
+  # gets thrown back at you, hostile. Anything else is just eaten -
+  # `REMOVE-CAREFULLY` in ZIL, gone for good. His own axe is not among these:
+  # he holds it (`holds: [axe]`) for as long as he is alive, so there is no
+  # way to be carrying it to give or throw back in the first place - ZIL's
+  # own re-arming branch for that case is accordingly unreachable here too.
+  - id: give
+    indirect: knife
+    requires:
+      - type: chance
+        data: { name: troll-fed-weapon-knife-give, of: 5, index: 1 }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The troll, who is not overly proud, graciously accepts the gift and eats it hungrily. Poor
+            troll, he dies from an internal hemorrhage and his carcass disappears in a sinister black
+            fog.
+      - type: remove-object
+        data:
+          object: knife
+      - type: remove-object
+        data:
+          object: troll
+      - type: move-object
+        data:
+          object: axe
+          to: here
+      - type: set-flag
+        data:
+          flag: troll-flag
+          value: true
+
+  - id: give
+    indirect: knife
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The troll, who is not overly proud, graciously accepts the gift and, being for the moment
+            sated, throws it back. Fortunately, the troll has poor control, and the nasty knife falls to
+            the floor. He does not look pleased.
+      - type: move-object
+        data:
+          object: knife
+          to: here
+
+  - id: give
+    indirect: sword
+    requires:
+      - type: chance
+        data: { name: troll-fed-weapon-sword-give, of: 5, index: 1 }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The troll, who is not overly proud, graciously accepts the gift and eats it hungrily. Poor
+            troll, he dies from an internal hemorrhage and his carcass disappears in a sinister black
+            fog.
+      - type: remove-object
+        data:
+          object: sword
+      - type: remove-object
+        data:
+          object: troll
+      - type: move-object
+        data:
+          object: axe
+          to: here
+      - type: set-flag
+        data:
+          flag: troll-flag
+          value: true
+
+  - id: give
+    indirect: sword
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The troll, who is not overly proud, graciously accepts the gift and, being for the moment
+            sated, throws it back. Fortunately, the troll has poor control, and the sword falls to the
+            floor. He does not look pleased.
+      - type: move-object
+        data:
+          object: sword
+          to: here
+
+  # ZIL removes the gift here too (`REMOVE-CAREFULLY ,PRSO`) - not reproduced,
+  # since this catch-all is the one place this file cannot name what it is
+  # answering: no placeholder stands for whichever object a sentence like
+  # this named, the way ZIL's own `D ,PRSO` prints it live, and destroying an
+  # object this block cannot name is worse than leaving it be.
   - id: give
     triggers:
       - type: response
         data:
           text: >-
-            The troll, who is not overly proud, graciously accepts the gift and, being for the
-            moment sated, throws it back. Fortunately, the troll has poor control, and the gift
-            sails over your head.
+            The troll, who is not overly proud, graciously accepts the gift and, not having the most
+            discriminating tastes, gleefully eats it.
+
+  - id: throw
+    indirect: knife
+    requires:
+      - type: chance
+        data: { name: troll-fed-weapon-knife-throw, of: 5, index: 1 }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The troll, who is remarkably coordinated, catches the nasty knife and eats it hungrily. Poor
+            troll, he dies from an internal hemorrhage and his carcass disappears in a sinister black
+            fog.
+      - type: remove-object
+        data:
+          object: knife
+      - type: remove-object
+        data:
+          object: troll
+      - type: move-object
+        data:
+          object: axe
+          to: here
+      - type: set-flag
+        data:
+          flag: troll-flag
+          value: true
+
+  - id: throw
+    indirect: knife
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The troll, who is remarkably coordinated, catches the nasty knife and, being for the moment
+            sated, throws it back. Fortunately, the troll has poor control, and the nasty knife falls to
+            the floor. He does not look pleased.
+      - type: move-object
+        data:
+          object: knife
+          to: here
+
+  - id: throw
+    indirect: sword
+    requires:
+      - type: chance
+        data: { name: troll-fed-weapon-sword-throw, of: 5, index: 1 }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The troll, who is remarkably coordinated, catches the sword and eats it hungrily. Poor troll,
+            he dies from an internal hemorrhage and his carcass disappears in a sinister black fog.
+      - type: remove-object
+        data:
+          object: sword
+      - type: remove-object
+        data:
+          object: troll
+      - type: move-object
+        data:
+          object: axe
+          to: here
+      - type: set-flag
+        data:
+          flag: troll-flag
+          value: true
+
+  - id: throw
+    indirect: sword
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The troll, who is remarkably coordinated, catches the sword and, being for the moment sated,
+            throws it back. Fortunately, the troll has poor control, and the sword falls to the floor. He
+            does not look pleased.
+      - type: move-object
+        data:
+          object: sword
+          to: here
+
+  - id: throw
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The troll, who is remarkably coordinated, catches the gift and, not having the most
+            discriminating tastes, gleefully eats it.
+
+  - id: get
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The troll spits in your face, grunting "Better luck next time" in a rather barbarous accent.
+
+  - id: break
+    triggers:
+      - type: response
+        data:
+          text: The troll laughs at your puny gesture.
+
+  - id: listen
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Every so often the troll says something, probably uncomplimentary, in his guttural tongue.
 
   - id: tell
     triggers:

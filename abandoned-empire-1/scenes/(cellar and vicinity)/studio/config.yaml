@@ -88,9 +88,21 @@ navigation:
   # count of things rather than a weight of them: the lamp and the coffin are
   # two things and go up together, though they weigh seventy between them.
   # `carrying`'s `of: count` asks exactly that, so a size bound never has to be
-  # written and the coffin Zork allows is still allowed.
+  # written and the coffin Zork allows is still allowed. Empty-handed gets its
+  # own line in ZIL, checked first here for the same reason: `has-item lamp`
+  # alone would answer it with the generic overloaded message instead.
   - id: up
     requires:
+      - type: carrying
+        negate: true
+        data:
+          of: count
+          max: 0
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: Going up empty-handed is a bad idea.
       - type: has-item
         data:
           object: lamp

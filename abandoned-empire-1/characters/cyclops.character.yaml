@@ -214,6 +214,51 @@ actions:
           flag: cyclops-provoked
           value: true
 
+  # ZIL answers THROW the same way as ATTACK here, one shared branch
+  # (`<VERB? THROW ATTACK MUNG>`) that starts the same agitation timer -
+  # only MUNG gets its own line. Not reproduced: ZIL also drops the thrown
+  # object to the floor (`<MOVE ,PRSO ,HERE>`), which this block cannot do
+  # for an object it has no way to name generically.
+  - id: throw
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The cyclops shrugs but otherwise ignores your pitiful attempt.
+      - type: set-flag
+        data:
+          flag: cyclops-provoked
+          value: true
+
+  - id: break
+    triggers:
+      - type: response
+        data:
+          text: >-
+            "Do you think I'm as stupid as my father was?", he says, dodging.
+      - type: set-flag
+        data:
+          flag: cyclops-provoked
+          value: true
+
+  - id: get
+    triggers:
+      - type: response
+        data:
+          text: The cyclops doesn't take kindly to being grabbed.
+
+  - id: tie
+    triggers:
+      - type: response
+        data:
+          text: You cannot tie the cyclops, though he is fit to be tied.
+
+  - id: listen
+    triggers:
+      - type: response
+        data:
+          text: You can hear his stomach rumbling.
+
   - id: tell
     requires:
       - type: flag

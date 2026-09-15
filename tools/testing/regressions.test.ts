@@ -1001,3 +1001,133 @@ Deno.test('reservoir: the lake answers "cross"/"swim" differently once it has dr
   assertEquals(play(source, primed, ['cross lake']).turns[0].messages, ["There's not much lake left...."]);
   assertEquals(play(source, primed, ['swim lake']).turns[0].messages, ["There's not much lake left...."]);
 });
+
+Deno.test('chimney: the Studio climb gates on the lamp and a count of two items, not a size', () => {
+  // `UP-CHIMNEY-FUNCTION` in ZIL: empty-handed gets its own line, the lamp
+  // plus at most one other thing succeeds regardless of what that other
+  // thing weighs (the coffin included), and anything else - too many items,
+  // or missing the lamp - gets the generic overloaded refusal. Checked here
+  // as the one gap the audit found: empty-handed used to fall through to the
+  // generic refusal instead of its own line, since `has-item lamp` alone
+  // answered it first.
+  const climb = (setup: (state: ReturnType<typeof pinned>) => void) => {
+    const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+    state.scene = 'studio';
+    setup(state);
+    const primed = play(source, state, ['look']).state;
+    return play(source, primed, ['up']);
+  };
+
+  assertEquals(
+    climb(() => {}).turns[0].messages,
+    ['Going up empty-handed is a bad idea.'],
+  );
+
+  const lampOnly = climb((s) => {
+    s.objects.locations['lamp'] = 'inventory';
+  });
+  assertEquals(lampOnly.state.scene, 'kitchen');
+
+  const lampAndOne = climb((s) => {
+    s.objects.locations['lamp'] = 'inventory';
+    s.objects.locations['sword'] = 'inventory';
+  });
+  assertEquals(lampAndOne.state.scene, 'kitchen');
+
+  const lampAndTwo = climb((s) => {
+    s.objects.locations['lamp'] = 'inventory';
+    s.objects.locations['sword'] = 'inventory';
+    s.objects.locations['knife'] = 'inventory';
+  });
+  assertEquals(lampAndTwo.turns[0].messages, ["You can't get up there with what you're carrying."]);
+  assertEquals(lampAndTwo.state.scene, 'studio');
+
+  const noLamp = climb((s) => {
+    s.objects.locations['sword'] = 'inventory';
+  });
+  assertEquals(noLamp.turns[0].messages, ["You can't get up there with what you're carrying."]);
+  assertEquals(noLamp.state.scene, 'studio');
+});
+
+Deno.test('troll: giving him a blade can kill him outright, a second way to clear the room', () => {
+  // ZIL's troll give/throw handler: a knife/sword has a one-in-five chance
+  // of being eaten and killing him instead of thrown back angrily - a
+  // non-combat way to win the room that had no equivalent in the port.
+  const state = pinned(source.id, '2020-01-01T00:00:01.000Z');
+  state.scene = 'troll-room';
+  state.objects.locations['torch'] = 'inventory';
+  const primed = play(source, state, ['look']).state;
+  primed.objects.locations['knife'] = 'inventory';
+
+  const played = play(source, primed, ['give knife to troll']);
+
+  assert(played.turns[0].messages.some((line) => line.includes('dies from an internal hemorrhage')));
+  assertEquals(played.state.flags['troll-flag'], true);
+  assertEquals(played.state.objects.locations['axe'], 'troll-room');
+});
+
+Deno.test('troll: a blade he does not eat is thrown back, and other gifts are simply eaten', () => {
+  const gift = (item: string, command: string) => {
+    const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+    state.scene = 'troll-room';
+    state.objects.locations['torch'] = 'inventory';
+    const primed = play(source, state, ['look']).state;
+    primed.objects.locations[item] = 'inventory';
+    return play(source, primed, [command]);
+  };
+
+  const thrownBack = gift('knife', 'give knife to troll');
+  assert(thrownBack.turns[0].messages.some((line) => line.includes('throws it back')));
+  assertEquals(thrownBack.state.objects.locations['knife'], 'troll-room');
+
+  const eaten = gift('garlic', 'give garlic to troll');
+  assert(eaten.turns[0].messages.some((line) => line.includes('gleefully eats it')));
+});
+
+Deno.test('troll: "take"/"mung"/"listen" get their own lines instead of a generic refusal', () => {
+  const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  state.scene = 'troll-room';
+  state.objects.locations['torch'] = 'inventory';
+  const primed = play(source, state, ['look']).state;
+
+  assertEquals(
+    play(source, primed, ['take troll']).turns[0].messages,
+    ['The troll spits in your face, grunting "Better luck next time" in a rather barbarous accent.'],
+  );
+  assertEquals(
+    play(source, primed, ['break troll']).turns[0].messages,
+    ['The troll laughs at your puny gesture.'],
+  );
+  assertEquals(
+    play(source, primed, ['listen to troll']).turns[0].messages,
+    ['Every so often the troll says something, probably uncomplimentary, in his guttural tongue.'],
+  );
+});
+
+Deno.test('cyclops: throwing something at him provokes the same as attacking, and gets its own lines', () => {
+  const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  state.scene = 'cyclops-room';
+  state.objects.locations['torch'] = 'inventory';
+  const primed = play(source, state, ['look']).state;
+
+  const thrown = play(source, primed, ['throw sword at cyclops']);
+  assertEquals(thrown.turns[0].messages, ['The cyclops shrugs but otherwise ignores your pitiful attempt.']);
+  assertEquals(thrown.state.flags['cyclops-provoked'], true);
+
+  assertEquals(
+    play(source, primed, ['break cyclops']).turns[0].messages,
+    ['"Do you think I\'m as stupid as my father was?", he says, dodging.'],
+  );
+  assertEquals(
+    play(source, primed, ['take cyclops']).turns[0].messages,
+    ["The cyclops doesn't take kindly to being grabbed."],
+  );
+  assertEquals(
+    play(source, primed, ['tie cyclops']).turns[0].messages,
+    ['You cannot tie the cyclops, though he is fit to be tied.'],
+  );
+  assertEquals(
+    play(source, primed, ['listen to cyclops']).turns[0].messages,
+    ['You can hear his stomach rumbling.'],
+  );
+});
