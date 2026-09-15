@@ -92,6 +92,42 @@ actions:
           flag: dome-flag
           value: false
 
+  # Take it back while it is still tied and ZIL refuses outright, rather than
+  # quietly detaching it the way a plain `get` would.
+  - id: get
+    requires:
+      - type: flag
+        data:
+          flag: dome-flag
+    triggers:
+      - type: response
+        data:
+          text: The rope is tied to the railing.
+
+  # Dropped untied in the Dome Room, ZIL's own `ROPE-FUNCTION` sends it
+  # through the hole to the Torch Room floor below rather than leaving it
+  # where it fell - the one way to lose the rope for good, since nothing ever
+  # climbs back up to fetch it. Faithfully reproduced rather than softened:
+  # `arch` favors matching a real risk over inventing a safety net ZIL itself
+  # does not have.
+  - id: drop
+    requires:
+      - type: scene
+        data:
+          id: dome-room
+      - type: flag
+        negate: true
+        data:
+          flag: dome-flag
+    triggers:
+      - type: response
+        data:
+          text: The rope drops gently to the floor below.
+      - type: move-object
+        data:
+          object: rope
+          to: torch-room
+
   - id: look
     requires:
       - type: flag

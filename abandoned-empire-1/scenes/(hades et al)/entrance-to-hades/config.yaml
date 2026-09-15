@@ -39,6 +39,43 @@ presence:
 
 characters: [ghosts]
 
+# ZIL's `LLD-ROOM` answers a bare `EXORCISE` the same way it answers
+# `EXORCISE GHOSTS`, both at M-BEG before either name reaches an object - the
+# character file's own copy of this handles the named form, and this one
+# answers the sentence typed with no object at all, which otherwise falls
+# through to the engine's generic "What do you want to exorcise?".
+actions:
+  - id: exorcise
+    requires:
+      - type: flag
+        negate: true
+        data:
+          flag: lld-flag
+      - type: has-item
+        data:
+          object: bell
+      - type: has-item
+        data:
+          object: book
+      - type: has-item
+        data:
+          object: candles
+    triggers:
+      - type: response
+        data:
+          text: You must perform the ceremony.
+
+  - id: exorcise
+    requires:
+      - type: flag
+        negate: true
+        data:
+          flag: lld-flag
+    triggers:
+      - type: response
+        data:
+          text: You aren't equipped for an exorcism.
+
 objects:
   - id: entrance-to-hades.teeth
     name: set of teeth

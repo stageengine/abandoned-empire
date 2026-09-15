@@ -67,6 +67,43 @@ actions:
         data:
           text: The spirits jeer loudly and ignore you.
 
+  # ZIL's `LLD-ROOM` answers every `EXORCISE`, named object or none, at M-BEG -
+  # before the ceremony is done this is what actually answers "exorcise
+  # ghosts" too, not the plain line below, which only stands a chance once
+  # the spirits are already banished (`lld-flag` set) and naming them at all
+  # is closer to moot. Ordered the same way LLD-ROOM checks it: the
+  # fully-equipped case, then the general one.
+  - id: exorcise
+    requires:
+      - type: flag
+        negate: true
+        data:
+          flag: lld-flag
+      - type: has-item
+        data:
+          object: bell
+      - type: has-item
+        data:
+          object: book
+      - type: has-item
+        data:
+          object: candles
+    triggers:
+      - type: response
+        data:
+          text: You must perform the ceremony.
+
+  - id: exorcise
+    requires:
+      - type: flag
+        negate: true
+        data:
+          flag: lld-flag
+    triggers:
+      - type: response
+        data:
+          text: You aren't equipped for an exorcism.
+
   - id: exorcise
     triggers:
       - type: response

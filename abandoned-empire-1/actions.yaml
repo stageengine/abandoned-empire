@@ -217,10 +217,17 @@ actions:
         data: { text: You can't launch it here. }
 
   # Every room the current runs through is water with nothing to stand on, so
-  # climbing out mid-river is the same fate as launching from nowhere is not -
-  # written above the plain disembark for the same reason boarding's puncture
-  # is. Bare for the same reason `launch` above it is: ZIL's `V-DISEMBARK`
-  # names no object either.
+  # climbing out mid-river refuses rather than succeeding - written above the
+  # plain disembark for the same reason boarding's puncture is. Bare for the
+  # same reason `launch` above it is: ZIL's `V-DISEMBARK` names no object either.
+  #
+  # A refusal, not a death: this used to fire the puncture's own drowning line
+  # and kill the player, but ZIL's `V-DISEMBARK` only ever answers a non-land
+  # room with "You realize that getting out here would be fatal." and an
+  # `RFATAL` - a macro that ends the turn's dispatch, not the player's life.
+  # The only way to actually die out here is the puncture itself (see
+  # `inflated-boat.object.yaml`) or the current carrying the boat over the
+  # falls (`every-turn.yaml`).
   - id: disembark
     requires:
       - type: flag
@@ -230,14 +237,7 @@ actions:
     triggers:
       - type: response
         data:
-          text: Another pathetic sputter, this time from you, heralds your drowning.
-      # `player-died` rather than `end-game`: every death in ZIL goes through
-      # one routine, `JIGS-UP`, which gives every one of them the same two
-      # resurrections before the third is final - drowning included.
-      - type: set-flag
-        data:
-          flag: player-died
-          value: true
+          text: You realize that getting out here would be fatal.
 
   - id: disembark
     requires:

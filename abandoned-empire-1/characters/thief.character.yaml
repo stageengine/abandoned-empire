@@ -117,18 +117,33 @@ actions:
         data:
           text: The thief is a strong, silent type.
 
+  - id: listen
+    triggers:
+      - type: response
+        data:
+          text: The thief says nothing, as you have not been formally introduced.
+
+  - id: get
+    triggers:
+      - type: response
+        data:
+          text: Once you got him, what would you do with him?
+
   # `arch/0013` verified this action's text against ROBBER-FUNCTION and missed
   # the line right above the message it read: real ZIL moves whatever is given
   # straight into the thief's own holdings (`<MOVE ,PRSO ,THIEF>`) before ever
   # choosing which line to print, unconditionally - and a gift worth points
   # (`P?TVALUE` above zero) gets "taken aback... stops to admire its beauty"
   # rather than the plain line below, which is ZIL's answer for something
-  # worthless instead. Giving the egg away is the walkthrough's whole reason to
-  # give anything at all, and without the move its weight - and the canary's,
-  # nested inside it - never actually left the player's own hands the way real
-  # Zork's does; carried the rest of the way to the mine's own carrying limit,
-  # that is a pound too many the same trip that used to spend one on the rope
-  # instead.
+  # worthless instead. First found from the egg specifically - giving it away
+  # is the walkthrough's whole reason to give anything at all, and without the
+  # move its weight, and the canary's nested inside it, never actually left
+  # the player's own hands the way real Zork's does - but the same is true of
+  # every other treasure in the game, not the egg alone: one block below per
+  # treasure this port declares, `indirect` naming each and the message
+  # naming it back, since this engine has no placeholder standing for
+  # whatever a trigger's own object turned out to be, the way ZIL's `D ,PRSO`
+  # prints it live.
   - id: give
     indirect: egg
     triggers:
@@ -140,6 +155,266 @@ actions:
       - type: move-object
         data:
           object: egg
+          to: held:thief
+
+  - id: give
+    indirect: bag-of-coins
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The thief is taken aback by your unexpected generosity, but accepts the
+            leather bag of coins and stops to admire its beauty.
+      - type: move-object
+        data:
+          object: bag-of-coins
+          to: held:thief
+
+  - id: give
+    indirect: bar
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The thief is taken aback by your unexpected generosity, but accepts the
+            platinum bar and stops to admire its beauty.
+      - type: move-object
+        data:
+          object: bar
+          to: held:thief
+
+  - id: give
+    indirect: bauble
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The thief is taken aback by your unexpected generosity, but accepts the
+            beautiful brass bauble and stops to admire its beauty.
+      - type: move-object
+        data:
+          object: bauble
+          to: held:thief
+
+  - id: give
+    indirect: bracelet
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The thief is taken aback by your unexpected generosity, but accepts the
+            sapphire-encrusted bracelet and stops to admire its beauty.
+      - type: move-object
+        data:
+          object: bracelet
+          to: held:thief
+
+  - id: give
+    indirect: broken-canary
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The thief is taken aback by your unexpected generosity, but accepts the
+            broken clockwork canary and stops to admire its beauty.
+      - type: move-object
+        data:
+          object: broken-canary
+          to: held:thief
+
+  - id: give
+    indirect: broken-egg
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The thief is taken aback by your unexpected generosity, but accepts the
+            broken jewel-encrusted egg and stops to admire its beauty.
+      - type: move-object
+        data:
+          object: broken-egg
+          to: held:thief
+
+  - id: give
+    indirect: canary
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The thief is taken aback by your unexpected generosity, but accepts the
+            golden clockwork canary and stops to admire its beauty.
+      - type: move-object
+        data:
+          object: canary
+          to: held:thief
+
+  - id: give
+    indirect: chalice
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The thief is taken aback by your unexpected generosity, but accepts the
+            chalice and stops to admire its beauty.
+      - type: move-object
+        data:
+          object: chalice
+          to: held:thief
+
+  - id: give
+    indirect: coffin
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The thief is taken aback by your unexpected generosity, but accepts the
+            gold coffin and stops to admire its beauty.
+      - type: move-object
+        data:
+          object: coffin
+          to: held:thief
+
+  - id: give
+    indirect: diamond
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The thief is taken aback by your unexpected generosity, but accepts the
+            huge diamond and stops to admire its beauty.
+      - type: move-object
+        data:
+          object: diamond
+          to: held:thief
+
+  - id: give
+    indirect: emerald
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The thief is taken aback by your unexpected generosity, but accepts the
+            large emerald and stops to admire its beauty.
+      - type: move-object
+        data:
+          object: emerald
+          to: held:thief
+
+  - id: give
+    indirect: jade
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The thief is taken aback by your unexpected generosity, but accepts the
+            jade figurine and stops to admire its beauty.
+      - type: move-object
+        data:
+          object: jade
+          to: held:thief
+
+  - id: give
+    indirect: painting
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The thief is taken aback by your unexpected generosity, but accepts the
+            painting and stops to admire its beauty.
+      - type: move-object
+        data:
+          object: painting
+          to: held:thief
+
+  - id: give
+    indirect: pot-of-gold
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The thief is taken aback by your unexpected generosity, but accepts the
+            pot of gold and stops to admire its beauty.
+      - type: move-object
+        data:
+          object: pot-of-gold
+          to: held:thief
+
+  - id: give
+    indirect: scarab
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The thief is taken aback by your unexpected generosity, but accepts the
+            beautiful jeweled scarab and stops to admire its beauty.
+      - type: move-object
+        data:
+          object: scarab
+          to: held:thief
+
+  - id: give
+    indirect: sceptre
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The thief is taken aback by your unexpected generosity, but accepts the
+            sceptre and stops to admire its beauty.
+      - type: move-object
+        data:
+          object: sceptre
+          to: held:thief
+
+  - id: give
+    indirect: skull
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The thief is taken aback by your unexpected generosity, but accepts the
+            crystal skull and stops to admire its beauty.
+      - type: move-object
+        data:
+          object: skull
+          to: held:thief
+
+  - id: give
+    indirect: torch
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The thief is taken aback by your unexpected generosity, but accepts the
+            torch and stops to admire its beauty.
+      - type: move-object
+        data:
+          object: torch
+          to: held:thief
+
+  - id: give
+    indirect: trident
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The thief is taken aback by your unexpected generosity, but accepts the
+            crystal trident and stops to admire its beauty.
+      - type: move-object
+        data:
+          object: trident
+          to: held:thief
+
+  - id: give
+    indirect: trunk
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The thief is taken aback by your unexpected generosity, but accepts the
+            trunk of jewels and stops to admire its beauty.
+      - type: move-object
+        data:
+          object: trunk
           to: held:thief
 
   # Zork lets a treasure buy you a moment's grace, and takes the rest of the fight
@@ -226,6 +501,36 @@ actions:
           subject: thief
           measure: strength
           by: -1
+      - type: set-flag
+        data:
+          flag: thief-fighting
+          value: true
+
+  # Throwing rather than swinging the knife at a thief not yet fighting -
+  # ZIL's `ROBBER-FUNCTION` answers this one separately from `V-ATTACK`, and
+  # a tenth of the time frightens him into fleeing with everything he is
+  # holding spilling to the floor. That branch needs a state this port's
+  # thief does not have - alive and fighting or dead, nothing between - so
+  # only the nine-in-ten "missed and angered him" outcome is reproduced here,
+  # the same scope the audit that found this gap already accepted for the
+  # thief's missing unconscious state.
+  - id: throw
+    indirect: knife
+    requires:
+      - type: flag
+        negate: true
+        data:
+          flag: thief-fighting
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You missed. The thief makes no attempt to take the knife, though it would be a fine
+            addition to the collection in his bag. He does seem angered by your attempt.
+      - type: move-object
+        data:
+          object: knife
+          to: here
       - type: set-flag
         data:
           flag: thief-fighting

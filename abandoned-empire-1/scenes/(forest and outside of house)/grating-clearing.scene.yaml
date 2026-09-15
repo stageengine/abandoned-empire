@@ -149,6 +149,105 @@ objects:
             data:
               text: You can't lock it from this side.
 
+      # See `grating-room.grate`'s copy of this same block for why it is scoped
+      # to only the handful of objects real ZIL sizes too large for the grate,
+      # rather than every portable object in the game.
+      - id: put
+        preposition: in
+        indirect: axe
+        triggers:
+          - type: response
+            data:
+              text: It won't fit through the grating.
+
+      - id: put
+        preposition: in
+        indirect: timbers
+        triggers:
+          - type: response
+            data:
+              text: It won't fit through the grating.
+
+      - id: put
+        preposition: in
+        indirect: coffin
+        triggers:
+          - type: response
+            data:
+              text: It won't fit through the grating.
+
+      - id: put
+        preposition: in
+        indirect: leaves
+        triggers:
+          - type: response
+            data:
+              text: It won't fit through the grating.
+
+      - id: put
+        preposition: in
+        indirect: sword
+        triggers:
+          - type: response
+            data:
+              text: It won't fit through the grating.
+
+      - id: put
+        preposition: in
+        indirect: trunk
+        triggers:
+          - type: response
+            data:
+              text: It won't fit through the grating.
+
+      - id: put
+        preposition: on
+        indirect: axe
+        triggers:
+          - type: response
+            data:
+              text: It won't fit through the grating.
+
+      - id: put
+        preposition: on
+        indirect: timbers
+        triggers:
+          - type: response
+            data:
+              text: It won't fit through the grating.
+
+      - id: put
+        preposition: on
+        indirect: coffin
+        triggers:
+          - type: response
+            data:
+              text: It won't fit through the grating.
+
+      - id: put
+        preposition: on
+        indirect: leaves
+        triggers:
+          - type: response
+            data:
+              text: It won't fit through the grating.
+
+      - id: put
+        preposition: on
+        indirect: sword
+        triggers:
+          - type: response
+            data:
+              text: It won't fit through the grating.
+
+      - id: put
+        preposition: on
+        indirect: trunk
+        triggers:
+          - type: response
+            data:
+              text: It won't fit through the grating.
+
 navigation:
   - id: north
     triggers:

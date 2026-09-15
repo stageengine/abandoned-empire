@@ -1081,6 +1081,6 @@ export const fullGame: Scenario = {
     "north",
     "west",
     "southwest",
-    "enter",
+    "enter barrow",
   ],
 };

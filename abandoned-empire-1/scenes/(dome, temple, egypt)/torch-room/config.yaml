@@ -8,6 +8,25 @@ presence:
       - type: flag
         data:
           flag: light
+      - type: flag
+        data:
+          flag: dome-flag
+    triggers:
+      - type: response
+        data:
+          text: >-
+            This is a large room with a prominent doorway leading to a down staircase. Above you
+            is a large dome. Up around the edge of the dome (20 feet up) is a wooden railing. In
+            the center of the room sits a white marble pedestal.
+      - type: response
+        data:
+          text: >-
+            A piece of rope descends from the railing above, ending some five feet above your
+            head.
+  - requires:
+      - type: flag
+        data:
+          flag: light
     triggers:
       - type: response
         data:

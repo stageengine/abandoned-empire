@@ -23,7 +23,7 @@ presence:
 start: reservoir
 
 # Half buried in the mud, and so not there at all until the mud is showing.
-tags: [belongings]
+tags: [treasure]
 requires:
   - type: flag
     data:

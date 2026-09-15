@@ -191,6 +191,33 @@ Deno.test('give: "give egg to thief" answers exactly as "give thief the egg" doe
   );
 });
 
+Deno.test('give: every other treasure is accepted by name too, not just the egg', () => {
+  // The egg was the only treasure with its own `give` block until this test
+  // was added - everything else fell through to a generic, ZIL-inaccurate
+  // catch-all that never actually moved the object to the thief. Checked here
+  // against two more treasures reached along the same walkthrough path, one
+  // taken from the troll room fight and one from the treasure room itself.
+  const toTreasureRoom = postThief.commands.slice(0, postThief.commands.indexOf('kill thief with knife'));
+
+  for (const treasure of ['bar', 'jade']) {
+    const state = pinned(source.id, postThief.seed);
+    const prefix = play(source, state, toTreasureRoom);
+    prefix.state.objects.locations[treasure] = 'inventory';
+
+    const played = play(source, prefix.state, [`give ${treasure} to thief`]);
+
+    assert(
+      played.turns[0].messages.some((line) => line.includes('stops to admire its beauty')),
+      `expected ${treasure} to be accepted, got: ${played.turns[0].messages.join(' | ')}`,
+    );
+    assertEquals(
+      played.state.objects.locations[treasure],
+      'held:thief',
+      `expected ${treasure} to actually move to the thief, matching ROBBER-FUNCTION's <MOVE ,PRSO ,THIEF>`,
+    );
+  }
+});
+
 Deno.test('chalice: banks in the trophy case instead of refusing every "put chalice in" sentence', () => {
   // Taken and banked the moment the treasure room is reached, before the
   // thief fight even starts - he is still alive and wandering the rest of
@@ -253,6 +280,29 @@ Deno.test('fullGame: a clean playthrough reaches all 350 points', () => {
   assert(
     transcript(played).some((line) => line.includes('Your score is 350')),
     'expected a full run of the walkthrough to bank every point, lower-shaft bonus included',
+  );
+});
+
+Deno.test('barrow: winning shows the score/rank line and actually ends the game', () => {
+  // ZIL's `FINISH` (`gverbs.zil`) opens on `V-SCORE` before anything else, so
+  // the win moment is always "Your score is 350 ... rank of Master
+  // Adventurer" - missing here until this fix, since `STONE-BARROW-FCN`'s own
+  // `end-game` trigger carried no text of its own. No `adjust-measure` on the
+  // way in either: ZIL awards zero points for the walk itself, all 350
+  // already spent on treasures and the rooms `every-turn.yaml` scores.
+  const played = play(source, pinned(source.id, fullGame.seed), fullGame.commands);
+
+  assert(played.state.finished, 'expected walking into the barrow to end the game');
+  assertEquals(played.state.scene, 'stone-barrow', 'expected the winning move to actually be the walk into the barrow');
+
+  const lines = transcript(played);
+  assert(
+    lines.some((line) => line.includes('mastered the first part of the ZORK trilogy')),
+    'expected the sign text on the bridge',
+  );
+  assert(
+    lines.some((line) => line.includes('Your score is 350 (total of 350 points)') && line.includes('Master Adventurer')),
+    'expected the win to open on the same score/rank line the score command gives at 350',
   );
 });
 
@@ -521,11 +571,19 @@ Deno.test('death: scatters what was carried, treasures underground and belonging
   );
 });
 
-Deno.test('exorcise: "exorcise ghosts" reaches the ghosts\' own answer, not a bare-verb refusal', () => {
+Deno.test('exorcise: "exorcise ghosts" reaches the ceremony hint, not a bare-verb refusal', () => {
   // `exorcise` was mistakenly marked intransitive alongside the game's real
   // bare verbs earlier this session: ZIL's `GHOSTS-F` branches on whether the
   // indirect object is the ghosts themselves, so this one genuinely needs an
   // ordinary target, the same road `attack ghosts` already takes there.
+  //
+  // The answer itself was wrong until this same pass caught it, too: ZIL's
+  // `LLD-ROOM` answers every `EXORCISE` at M-BEG, before the ghosts object is
+  // ever reached, so "exorcise ghosts" gets the same equipment-gated ceremony
+  // hint a bare `exorcise` does, not `GHOSTS-F`'s own "Only the ceremony
+  // itself has any effect." - that line only stands a chance once the
+  // spirits are already banished, and the ghosts object is removed the
+  // moment that happens.
   const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
   state.scene = 'entrance-to-hades';
   state.objects.locations['torch'] = 'inventory';
@@ -533,7 +591,166 @@ Deno.test('exorcise: "exorcise ghosts" reaches the ghosts\' own answer, not a ba
 
   const played = play(source, state, ['exorcise ghosts']);
 
-  assertEquals(played.turns[0].messages, ['Only the ceremony itself has any effect.']);
+  assertEquals(played.turns[0].messages, ["You aren't equipped for an exorcism."]);
+});
+
+Deno.test('exorcise: bare "exorcise" gives the same ceremony hint the named form does', () => {
+  // The gap this closes: a bare `exorcise` with no object fell through to the
+  // engine's generic "What do you want to exorcise?" instead of ZIL's
+  // `LLD-ROOM` M-BEG hint, which answers a bare `EXORCISE` exactly the way it
+  // answers `EXORCISE GHOSTS` - checked here in both the equipped and
+  // unequipped cases.
+  const unequipped = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  unequipped.scene = 'entrance-to-hades';
+  unequipped.objects.locations['torch'] = 'inventory';
+  unequipped.objects.locations['ghosts'] = 'entrance-to-hades';
+
+  const withoutGear = play(source, unequipped, ['exorcise']);
+  assertEquals(withoutGear.turns[0].messages, ["You aren't equipped for an exorcism."]);
+
+  const equipped = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  equipped.scene = 'entrance-to-hades';
+  equipped.objects.locations['torch'] = 'inventory';
+  equipped.objects.locations['ghosts'] = 'entrance-to-hades';
+  equipped.objects.locations['bell'] = 'inventory';
+  equipped.objects.locations['book'] = 'inventory';
+  equipped.objects.locations['candles'] = 'inventory';
+
+  const withGear = play(source, equipped, ['exorcise']);
+  assertEquals(withGear.turns[0].messages, ['You must perform the ceremony.']);
+});
+
+Deno.test('grate: refuses the handful of objects ZIL genuinely sizes too large for it', () => {
+  // ZIL's `GRATE-FUNCTION` lets `<VERB? PUT> <EQUAL? ,PRSI ,GRATE>` through
+  // for anything under `SIZE` 20, and only six objects in the whole game
+  // (`1dungeon.zil`) are declared larger: axe, timbers, coffin, leaves, sword
+  // and trunk. Checked from both rooms the grate answers from, since it is
+  // two separately-declared scenery objects, one per side.
+  for (const scene of ['grating-room', 'grating-clearing']) {
+    const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+    state.scene = scene;
+    state.objects.locations['torch'] = 'inventory';
+    state.objects.locations['sword'] = 'inventory';
+    state.flags['grate-unlocked'] = true;
+    state.flags['grate-revealed'] = true;
+    state.flags['grate-open'] = true;
+
+    const played = play(source, state, ['put sword in grate']);
+
+    assertEquals(played.turns[0].messages, ["It won't fit through the grating."]);
+  }
+});
+
+Deno.test('boat: a weapon dropped, put aboard, or attacking it while aboard punctures it', () => {
+  // `RBOAT-FUNCTION`'s M-BEG catches this the same way whether the player
+  // drops a weapon, puts one in the boat, or attacks/mungs the boat with one -
+  // none of it moved before this session, since only boarding with a weapon
+  // already punctured. Checked one way each, not all six weapons: the point
+  // is that the three shapes of the mechanic fire at all, not that every
+  // weapon answers (`knife.object.yaml` and its five siblings repeat the
+  // same two-tier shape `inflated-boat.object.yaml`'s `put`/`attack` blocks
+  // do).
+  const primed = (scene: string) => {
+    const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+    state.scene = scene;
+    state.flags['aboard'] = true;
+    state.objects.locations['inflated-boat'] = scene;
+    state.objects.locations['torch'] = 'inventory';
+    return play(source, state, ['look']).state;
+  };
+
+  const dropped = primed('river-2');
+  dropped.objects.locations['knife'] = 'inventory';
+  const droppedResult = play(source, dropped, ['drop knife']);
+  assert(droppedResult.turns[0].messages.some((line) => line.includes("didn't agree with the boat")));
+
+  const putIn = primed('river-3');
+  putIn.objects.locations['sword'] = 'inventory';
+  const putInResult = play(source, putIn, ['put sword in boat']);
+  assert(putInResult.turns[0].messages.some((line) => line.includes("didn't agree with the boat")));
+
+  const attacked = primed('river-4');
+  attacked.objects.locations['axe'] = 'inventory';
+  const attackedResult = play(source, attacked, ['attack boat with axe']);
+  assert(attackedResult.turns[0].messages.some((line) => line.includes("didn't agree with the boat")));
+});
+
+Deno.test('boat: puncturing it is fatal mid-river but only costs the boat on land', () => {
+  // ZIL only kills the player over a punctured boat when the room is
+  // `NONLANDBIT` (mid-river here); on land - docked at the dam, say - the
+  // same puncture just deflates the boat, matching the `COND` in
+  // `RBOAT-FUNCTION` that gates `JIGS-UP` on `<FSET? ,HERE ,NONLANDBIT>`.
+  const midRiver = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  midRiver.scene = 'river-2';
+  midRiver.flags['aboard'] = true;
+  midRiver.objects.locations['inflated-boat'] = 'river-2';
+  midRiver.objects.locations['knife'] = 'inventory';
+
+  const midRiverResult = play(source, midRiver, ['drop knife']);
+  assert(midRiverResult.turns[0].messages.some((line) => line.includes('carried over a waterfall')));
+
+  const onLand = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  onLand.scene = 'dam-base';
+  onLand.flags['aboard'] = true;
+  onLand.objects.locations['inflated-boat'] = 'dam-base';
+  onLand.objects.locations['knife'] = 'inventory';
+
+  const onLandResult = play(source, onLand, ['drop knife']);
+  assertFalse(onLandResult.turns[0].messages.some((line) => line.includes('carried over a waterfall')));
+  assertEquals(onLandResult.state.flags['aboard'], false);
+  assertEquals(onLandResult.state.objects.locations['punctured-boat'], 'dam-base');
+});
+
+Deno.test('disembark: getting out mid-river refuses instead of killing the player', () => {
+  // Used to fire the puncture's own drowning line and set `player-died` -
+  // ZIL's `V-DISEMBARK` only ever refuses a non-land room with "You realize
+  // that getting out here would be fatal." and an `RFATAL`, which ends the
+  // turn's dispatch rather than the player's life. The only real deaths out
+  // here are the puncture itself and the current carrying the boat over the
+  // falls.
+  const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  state.scene = 'river-2';
+  state.flags['aboard'] = true;
+  state.objects.locations['inflated-boat'] = 'river-2';
+  state.objects.locations['torch'] = 'inventory';
+
+  const played = play(source, state, ['get out of boat']);
+
+  assertEquals(played.turns[0].messages, ['You realize that getting out here would be fatal.']);
+  assertEquals(played.state.flags['aboard'], true);
+  assertFalse(played.state.flags['player-died']);
+});
+
+Deno.test('loud room: a rising reservoir ejects a player who stays, unless the tide is already low', () => {
+  // `LOUD-ROOM-FCN`'s `M-END` forcibly ejects to one of the room's own three
+  // exits (`LOUD-RUNS`) whenever `GATES-OPEN` and `NOT LOW-TIDE` - the
+  // reservoir physically rising into the room, independent of whether the
+  // echo puzzle is solved. Checked against the dam's real `water` measure,
+  // not just the derived `low-tide` flag: that flag is itself only ever set
+  // by the measure's own thresholds crossing, so a fresh `low-tide: true`
+  // with the measure still full is not a state real play can reach - the
+  // measure has to actually be drained (water at 0) for it to mean anything.
+  const draining = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  draining.scene = 'loud-room';
+  draining.objects.locations['torch'] = 'inventory';
+  draining.flags['gates-open'] = true;
+
+  const drainingResult = play(source, draining, Array(6).fill('wait'));
+  assert(
+    ['damp-cave', 'round-room', 'deep-canyon'].includes(drainingResult.state.scene),
+    `expected ejection to one of the room's three exits, landed in ${drainingResult.state.scene}`,
+  );
+
+  const drained = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  drained.scene = 'loud-room';
+  drained.objects.locations['torch'] = 'inventory';
+  drained.flags['gates-open'] = true;
+  drained.flags['low-tide'] = true;
+  drained.measures ??= {};
+  drained.measures['dam'] = { water: 0 };
+
+  const drainedResult = play(source, drained, Array(6).fill('wait'));
+  assertEquals(drainedResult.state.scene, 'loud-room');
 });
 
 Deno.test('bell: ringing it while already holding lit candles drops and puts them out', () => {
@@ -549,4 +766,143 @@ Deno.test('bell: ringing it while already holding lit candles drops and puts the
 
   assertEquals(played.state.objects.locations['candles'], 'entrance-to-hades');
   assertEquals(played.state.flags['candles-on'], false);
+});
+
+Deno.test('treasures: painting, skull and trunk carry the treasure tag like every other one', () => {
+  // Found while generalising the give-to-thief fix: these three (and the
+  // broken canary and egg) were missing `tags: [treasure]` entirely, a gap
+  // that predates this session - so they were never swept by the thief's
+  // own theft or death sweeps either, both keyed on the tag. Checked here
+  // through the one mechanic that already exists to read it: death scatters
+  // a treasure underground and anything else above ground.
+  for (const treasure of ['painting', 'skull', 'trunk']) {
+    const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+    state.scene = 'troll-room';
+    state.objects.locations[treasure] = 'inventory';
+    state.flags['player-died'] = true;
+
+    const played = play(source, state, ['look']);
+
+    const underground = ['round-room', 'troll-room', 'cellar', 'maze-1', 'deep-canyon', 'reservoir-south',
+      'dam-room', 'torch-room', 'egypt-room', 'south-temple', 'gallery'];
+
+    assert(
+      underground.includes(played.state.objects.locations[treasure] as string),
+      `expected ${treasure} to scatter underground as a treasure, landed in ${played.state.objects.locations[treasure]}`,
+    );
+  }
+});
+
+Deno.test('torch-room: mentions the dangling rope once it is tied above', () => {
+  const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  state.scene = 'torch-room';
+  state.objects.locations['torch'] = 'inventory';
+  state.flags['dome-flag'] = true;
+
+  const played = play(source, state, ['look', 'look']);
+
+  assert(played.turns[1].messages[0].includes('A piece of rope descends from the railing above'));
+});
+
+Deno.test('dam: "plug with X" answers differently from a bare "plug dam"', () => {
+  // ZIL's `DAM-FUNCTION` distinguishes hands (or nothing named) from
+  // anything else named after "with" - this port has no "hands" object to
+  // name the first case explicitly, so a bare `plug dam` stands in for it.
+  const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  state.scene = 'dam-room';
+  state.objects.locations['torch'] = 'inventory';
+  state.objects.locations['screwdriver'] = 'inventory';
+
+  assertEquals(
+    play(source, state, ['plug dam']).turns[0].messages,
+    ['Are you the little Dutch boy, then? Sorry, this is a big dam.'],
+  );
+  assertEquals(
+    play(source, state, ['plug dam with screwdriver']).turns[0].messages,
+    ['Do you know how big this dam is? You could only stop a tiny leak with that.'],
+  );
+});
+
+Deno.test('rope: dropped untied in the Dome Room, it falls out of reach into the Torch Room', () => {
+  // ZIL's `ROPE-FUNCTION` sends an untied rope through the hole rather than
+  // leaving it where it fell - the one way to lose it for good, since
+  // nothing ever climbs back up to fetch it. Reproduced rather than
+  // softened, per the audit that found this gap.
+  const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  state.scene = 'dome-room';
+  state.objects.locations['torch'] = 'inventory';
+  state.objects.locations['rope'] = 'inventory';
+
+  const played = play(source, state, ['drop rope']);
+
+  assertEquals(played.turns[0].messages, ['The rope drops gently to the floor below.']);
+  assertEquals(played.state.objects.locations['rope'], 'torch-room');
+});
+
+Deno.test('rope: tied to the railing, it refuses to be taken back rather than quietly detaching', () => {
+  const base = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  base.scene = 'dome-room';
+  base.objects.locations['torch'] = 'inventory';
+  base.objects.locations['rope'] = 'dome-room';
+  base.flags['dome-flag'] = true;
+  const state = play(source, base, ['look']).state;
+
+  const played = play(source, state, ['take rope']);
+
+  assertEquals(played.turns[0].messages, ['The rope is tied to the railing.']);
+  assertEquals(played.state.objects.locations['rope'], 'dome-room');
+});
+
+Deno.test('thief: robs a treasure lying in the room before ever touching the player\'s own hands', () => {
+  // `<ROB ,HERE ,THIEF 100>` before `<ROB ,WINNER ,THIEF>` in ZIL's
+  // `THIEF-VS-ADVENTURER` - the port's own `thief-robbery` roll only ever
+  // reached into the player's inventory until this fix, never a treasure
+  // merely lying in the same room he wandered into.
+  // `light` set directly rather than primed with a turn: a priming turn in
+  // the thief's own room runs the very `thief-walk` every-turn rule this
+  // test would otherwise be at the mercy of, which for this seed moves him
+  // elsewhere before the command under test ever runs.
+  const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  state.scene = 'round-room';
+  state.flags['light'] = true;
+  state.objects.locations['thief'] = 'round-room';
+  state.objects.locations['bar'] = 'round-room';
+
+  const played = play(source, state, ['wait']);
+
+  assertEquals(played.state.objects.locations['bar'], 'held:thief');
+});
+
+Deno.test('thief: "listen" and "take thief" get their own lines instead of a generic refusal', () => {
+  const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  state.scene = 'round-room';
+  state.flags['light'] = true;
+  state.objects.locations['thief'] = 'round-room';
+
+  assertEquals(
+    play(source, state, ['listen to thief']).turns[0].messages,
+    ['The thief says nothing, as you have not been formally introduced.'],
+  );
+  assertEquals(
+    play(source, state, ['take thief']).turns[0].messages,
+    ['Once you got him, what would you do with him?'],
+  );
+});
+
+Deno.test('thief: throwing the knife at him before he is fighting angers rather than kills him', () => {
+  // ZIL's `ROBBER-FUNCTION` answers `THROW KNIFE AT THIEF` separately from
+  // `ATTACK ... WITH KNIFE` - only the deterministic nine-in-ten "missed and
+  // angered him" branch is reproduced (see the comment on this action in
+  // `thief.character.yaml` for why the other one-in-ten is out of scope).
+  const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  state.scene = 'round-room';
+  state.flags['light'] = true;
+  state.objects.locations['thief'] = 'round-room';
+  state.objects.locations['knife'] = 'inventory';
+
+  const played = play(source, state, ['throw knife at thief']);
+
+  assert(played.turns[0].messages.some((line) => line.includes('You missed')));
+  assertEquals(played.state.objects.locations['knife'], 'round-room');
+  assertEquals(played.state.flags['thief-fighting'], true);
 });

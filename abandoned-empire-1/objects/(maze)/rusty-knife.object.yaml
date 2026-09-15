@@ -36,6 +36,53 @@ presence:
 start: maze-5
 
 actions:
+  # ZIL punctures the boat the instant a weapon like this one is dropped while
+  # aboard - RBOAT-FUNCTION's own M-BEG answers `DROP` before this object's
+  # ordinary drop ever runs, so the weapon stays in hand rather than actually
+  # landing anywhere. Written above the plain drop for the same reason the
+  # boat's own boarding-puncture is. See `inflated-boat.object.yaml` for the
+  # matching `put ... in` and `attack ... with` shapes of the same fix.
+  - id: drop
+    requires:
+      - type: flag
+        data: { flag: aboard }
+      - type: scene
+        data: { tag: river }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            It seems that the rusty knife didn't agree with the boat, as evidenced by the loud hissing
+            noise issuing therefrom. With a pathetic sputter, the boat deflates, leaving you without.
+      - type: move-object
+        data: { object: inflated-boat, to: offstage }
+      - type: move-object
+        data: { object: punctured-boat, to: here }
+      - type: response
+        data:
+          text: >-
+            In other words, fighting the fierce currents of the Frigid River. You manage to hold your own
+            for a bit, but then you are carried over a waterfall and into some nasty rocks. Ouch!
+      - type: set-flag
+        data: { flag: player-died, value: true }
+
+  - id: drop
+    requires:
+      - type: flag
+        data: { flag: aboard }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            It seems that the rusty knife didn't agree with the boat, as evidenced by the loud hissing
+            noise issuing therefrom. With a pathetic sputter, the boat deflates, leaving you without.
+      - type: move-object
+        data: { object: inflated-boat, to: offstage }
+      - type: move-object
+        data: { object: punctured-boat, to: here }
+      - type: set-flag
+        data: { flag: aboard, value: false }
+
   - id: get
     triggers:
       - type: response

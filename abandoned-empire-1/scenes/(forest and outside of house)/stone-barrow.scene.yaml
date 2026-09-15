@@ -34,9 +34,14 @@ objects:
             data:
               text: The wall is a wall, and gives nothing away.
 navigation:
-  # The way in, and the end of the game. The last ten of the three hundred and
-  # fifty are for walking through the door, which is the only ending Zork has that
-  # is not a death.
+  # The way in, and the end of the game - the only ending Zork has that is not
+  # a death. No points here: all three hundred and fifty are already spent by
+  # the time a player reaches this door, sixty-five of them for the rooms
+  # `every-turn.yaml` scores and the rest for treasures banked, which is why
+  # `FINISH` (`gverbs.zil`) opens on `V-SCORE` rather than a fresh tally of its
+  # own - reproduced below as the same line the `score` command gives at 350,
+  # since this engine has nothing that calls one action's response from
+  # another's.
   - id: west
     synonyms: [barrow, tomb, door]
     triggers:
@@ -52,12 +57,19 @@ navigation:
           text: >-
             Above the bridge, floating in the air, is a large sign. It reads: All ye who stand
             before this bridge have completed a great and perilous adventure which has tested
-            your wit and courage. You have mastered the first part of the ZORK trilogy.
-      - type: adjust-measure
+            your wit and courage. You have mastered the first part of the ZORK trilogy. Those
+            who pass over this bridge must be prepared to undertake an even greater adventure
+            that will severely test your skill and bravery!
+      - type: response
         data:
-          subject: player
-          measure: score
-          by: 10
+          text: >-
+            The ZORK trilogy continues with "ZORK II: The Wizard of Frobozz" and is completed in
+            "ZORK III: The Dungeon Master."
+      - type: response
+        data:
+          text: >-
+            Your score is <player:score> (total of 350 points), in <player:moves> moves. This
+            gives you the rank of Master Adventurer.
       - type: end-game
         data:
           journal: walked into the barrow, having mastered the Great Underground Empire

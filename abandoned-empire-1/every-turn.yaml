@@ -248,6 +248,82 @@ every-turn:
           measure: flood
           by: 1
 
+  # The Loud Room, once the gates are open and the reservoir hasn't finished
+  # draining: `LOUD-ROOM-FCN`'s `M-END` forcibly ejects a player who stays
+  # there, to one of the room's own three exits at random (`LOUD-RUNS`). Not
+  # gated on `loud-flag`: ZIL's own check is only `GATES-OPEN` and `NOT
+  # LOW-TIDE`, with no exemption for having already solved the echo puzzle -
+  # this is the reservoir physically rising into the room, not the acoustics
+  # the puzzle answers, so solving `echo` does not make it safe to linger.
+  - requires:
+      - type: scene
+        data:
+          id: loud-room
+      - type: flag
+        data:
+          flag: gates-open
+      - type: flag
+        negate: true
+        data:
+          flag: low-tide
+      - type: chance
+        data: { name: loud-room-flood, of: 3, index: 1 }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            It is unbearably loud here, with an ear-splitting roar seeming to come from all around
+            you. There is a pounding in your head which won't stop. With a tremendous effort, you
+            scramble out of the room.
+      - type: change-scene
+        data: { scene: damp-cave }
+
+  - requires:
+      - type: scene
+        data:
+          id: loud-room
+      - type: flag
+        data:
+          flag: gates-open
+      - type: flag
+        negate: true
+        data:
+          flag: low-tide
+      - type: chance
+        data: { name: loud-room-flood, of: 3, index: 2 }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            It is unbearably loud here, with an ear-splitting roar seeming to come from all around
+            you. There is a pounding in your head which won't stop. With a tremendous effort, you
+            scramble out of the room.
+      - type: change-scene
+        data: { scene: round-room }
+
+  - requires:
+      - type: scene
+        data:
+          id: loud-room
+      - type: flag
+        data:
+          flag: gates-open
+      - type: flag
+        negate: true
+        data:
+          flag: low-tide
+      - type: chance
+        data: { name: loud-room-flood, of: 3, index: 3 }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            It is unbearably loud here, with an ear-splitting roar seeming to come from all around
+            you. There is a pounding in your head which won't stop. With a tremendous effort, you
+            scramble out of the room.
+      - type: change-scene
+        data: { scene: deep-canyon }
+
   # The candles burning down, and the match with them. Both say their own piece
   # through their thresholds.
   - requires:
@@ -1122,12 +1198,25 @@ every-turn:
   # of which one index robs and the other eight only look. Zork's own words for it:
   # he is gone before you notice.
 
+  # ZIL robs the room he is standing in before it ever touches the player's
+  # own hands (`<ROB ,HERE ,THIEF 100>`, falling back to `<ROB ,WINNER
+  # ,THIEF>` only when the room held nothing). One rule rather than two -
+  # the build refuses two rules claiming the same `chance` index, even when
+  # they are made mutually exclusive by their own `requires` - so both pools
+  # are swept in the one firing instead: room first in the trigger order,
+  # inventory besides only on the rare turn a treasure sits in both at once,
+  # which real play essentially never lines up.
   - requires:
       - type: character-here
         data:
           character: thief
-      - type: tagged
-        data: { tag: treasure, location: inventory }
+      - type: any-of
+        data:
+          conditions:
+            - type: tagged
+              data: { tag: treasure, location: here }
+            - type: tagged
+              data: { tag: treasure, location: inventory }
       - type: chance
         data: { name: thief-robbery, of: 9, index: 1 }
     triggers:
@@ -1135,7 +1224,9 @@ every-turn:
         data:
           text: >-
             The thief just left, still carrying his large bag. You may not have
-            noticed that he robbed you blind first.
+            noticed that he made off with something of value first.
+      - type: move-tagged
+        data: { tag: treasure, from: here, to: held:thief }
       - type: move-tagged
         data: { tag: treasure, from: inventory, to: held:thief }
       - type: move-object
@@ -1147,8 +1238,13 @@ every-turn:
       - type: character-here
         data:
           character: thief
-      - type: tagged
-        data: { tag: treasure, location: inventory }
+      - type: any-of
+        data:
+          conditions:
+            - type: tagged
+              data: { tag: treasure, location: here }
+            - type: tagged
+              data: { tag: treasure, location: inventory }
       - type: chance
         data: { name: thief-robbery, of: 9, index: [2..9] }
     triggers:

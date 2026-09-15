@@ -205,6 +205,110 @@ objects:
               flag: grate-open
               value: false
 
+      # ZIL's `GRATE-FUNCTION` lets anything under a certain size through the
+      # grate to fall here, moved rather than merely dropped. Scoped to only the
+      # handful of objects real ZIL actually sizes too large for it (`SIZE` over
+      # 20 in `1dungeon.zil`) rather than every portable object in the game: this
+      # engine has no placeholder standing for whatever object a sentence like
+      # this named, the way ZIL's `D ,PRSO` prints it live, so a generic "and it
+      # actually moves" answer for anything else would need one block per
+      # portable object in the game rather than one block per exception.
+      - id: put
+        preposition: in
+        indirect: axe
+        triggers:
+          - type: response
+            data:
+              text: It won't fit through the grating.
+
+      - id: put
+        preposition: in
+        indirect: timbers
+        triggers:
+          - type: response
+            data:
+              text: It won't fit through the grating.
+
+      - id: put
+        preposition: in
+        indirect: coffin
+        triggers:
+          - type: response
+            data:
+              text: It won't fit through the grating.
+
+      - id: put
+        preposition: in
+        indirect: leaves
+        triggers:
+          - type: response
+            data:
+              text: It won't fit through the grating.
+
+      - id: put
+        preposition: in
+        indirect: sword
+        triggers:
+          - type: response
+            data:
+              text: It won't fit through the grating.
+
+      - id: put
+        preposition: in
+        indirect: trunk
+        triggers:
+          - type: response
+            data:
+              text: It won't fit through the grating.
+
+      - id: put
+        preposition: on
+        indirect: axe
+        triggers:
+          - type: response
+            data:
+              text: It won't fit through the grating.
+
+      - id: put
+        preposition: on
+        indirect: timbers
+        triggers:
+          - type: response
+            data:
+              text: It won't fit through the grating.
+
+      - id: put
+        preposition: on
+        indirect: coffin
+        triggers:
+          - type: response
+            data:
+              text: It won't fit through the grating.
+
+      - id: put
+        preposition: on
+        indirect: leaves
+        triggers:
+          - type: response
+            data:
+              text: It won't fit through the grating.
+
+      - id: put
+        preposition: on
+        indirect: sword
+        triggers:
+          - type: response
+            data:
+              text: It won't fit through the grating.
+
+      - id: put
+        preposition: on
+        indirect: trunk
+        triggers:
+          - type: response
+            data:
+              text: It won't fit through the grating.
+
 navigation:
   - id: southwest
     triggers:
