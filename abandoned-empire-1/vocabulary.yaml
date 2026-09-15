@@ -4,8 +4,10 @@ verbs:
   # writable at all, and before it a score that moved 350 points was invisible.
   - id: score
     synonyms: []
+    intransitive: true
   - id: diagnose
     synonyms: [health]
+    intransitive: true
 
   - id: look
     synonyms: [examine, read, inspect, study, watch, describe, x, l]
@@ -110,49 +112,76 @@ verbs:
   - id: search
     synonyms: [rummage]
   - id: pray
+    intransitive: true
 
   # Verbs that act on nothing, answered by the game's own `actions.yaml` and, for
   # `pray` above, by South Temple, and for `odysseus` below, by the Cyclops Room
-  # as well. Synonyms as ZIL declares them in `gsyntax.zil`.
+  # as well. Synonyms as ZIL declares them in `gsyntax.zil`. Marked `intransitive`
+  # throughout: without it, a sentence naming the thing these verbs are about
+  # anyway - `get out of the boat`, say - reads the filler `of` as splitting a
+  # direct object from an indirect one the way it would for a verb that takes
+  # one, and the noun after it becomes the verb's own target instead of staying
+  # decorative. That sends the bare action looking for one on the thing named,
+  # which none of these ever answer, rather than the bare action itself.
   - id: wait
     synonyms: [z]
+    intransitive: true
   - id: verbose
+    intransitive: true
   # No object: ZIL's `V-LAUNCH` takes none either, since there is only ever
   # one thing a player standing in a boat could mean by it. A transitive
   # verb here left `launch` with nothing to answer a bare command with,
   # asking "What do you want to launch?" of a sentence Zork just answers.
   - id: launch
     synonyms: [set sail]
+    intransitive: true
   # Bare for the same reason `launch` is: ZIL's `V-DISEMBARK` names no object
   # either, and asking a player "What do you want to get out?" is not an
   # answer their own sentence ever needed.
   - id: disembark
     synonyms: [get out, get off]
+    intransitive: true
   - id: odysseus
     synonyms: [ulysses]
+    intransitive: true
   - id: xyzzy
     synonyms: [plugh]
+    intransitive: true
   - id: hello
     synonyms: [hi]
+    intransitive: true
   - id: yell
     synonyms: [scream, shout]
+    intransitive: true
   - id: zork
+    intransitive: true
   - id: frobozz
+    intransitive: true
   - id: win
     synonyms: [winnage]
+    intransitive: true
   - id: mumble
     synonyms: [sigh]
+    intransitive: true
   - id: chomp
     synonyms: [lose, barf]
+    intransitive: true
+  # Not `intransitive`: unlike the bare verbs above, `brush` also answers for
+  # "brush teeth" wherever a room's own `teeth` object declares the joke.
   - id: brush
     synonyms: [clean]
   - id: repent
+    intransitive: true
   - id: exorcise
     synonyms: [banish, lay to rest]
+    intransitive: true
+  # Not `intransitive`: `ring` also answers "ring bell" in the Land of the Dead.
   - id: ring
     synonyms: [toll]
   - id: wish
+    intransitive: true
   - id: echo
+    intransitive: true
   - id: ask
     synonyms: [question, enquire, inquire, quiz]
     conversational: true

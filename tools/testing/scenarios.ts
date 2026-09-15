@@ -1049,7 +1049,7 @@ export const fullGame: Scenario = {
     "wait",
     "take buoy",
     "east",
-    "get out",
+    "get out of boat",
     "open buoy",
     "take emerald",
     "drop buoy",
