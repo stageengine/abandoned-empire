@@ -53,6 +53,39 @@ measures:
     max: 2
 
 actions:
+  # ZIL's `MATCH-FUNCTION` decrements the count before it ever checks where
+  # the player is standing, so a match struck in one of these two drafty
+  # coal-mine rooms is spent for nothing - written above the ordinary light
+  # for the same reason lighting-while-out-of-matches is checked first.
+  - id: burn
+    requires:
+      - type: measure
+        data:
+          subject: match
+          measure: left
+          min: 1
+        failure:
+          triggers:
+            - type: response
+              data:
+                text: I'm afraid that you have run out of matches.
+      - type: any-of
+        data:
+          conditions:
+            - type: scene
+              data: { id: lower-shaft }
+            - type: scene
+              data: { id: timber-room }
+    triggers:
+      - type: response
+        data:
+          text: This room is drafty, and the match goes out instantly.
+      - type: adjust-measure
+        data:
+          subject: match
+          measure: left
+          by: -1
+
   - id: burn
     requires:
       - type: measure

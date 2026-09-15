@@ -1131,3 +1131,33 @@ Deno.test('cyclops: throwing something at him provokes the same as attacking, an
     ['You can hear his stomach rumbling.'],
   );
 });
+
+Deno.test('match: two drafty coal-mine rooms waste it instantly instead of lighting', () => {
+  // ZIL's `MATCH-FUNCTION` decrements the match count before it ever checks
+  // where the player is standing, so lighting one in the Lower Shaft or
+  // Timber Room spends it for nothing - the port previously lit it there
+  // exactly as anywhere else.
+  for (const scene of ['lower-shaft', 'timber-room']) {
+    const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+    state.scene = scene;
+    state.objects.locations['lamp'] = 'inventory';
+    state.flags['lamp-on'] = true;
+    state.objects.locations['match'] = 'inventory';
+
+    const played = play(source, state, ['burn match']);
+
+    assertEquals(played.turns[0].messages, ['This room is drafty, and the match goes out instantly.']);
+    assertFalse(played.state.flags['match-on']);
+  }
+
+  const elsewhere = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  elsewhere.scene = 'gas-room';
+  elsewhere.objects.locations['lamp'] = 'inventory';
+  elsewhere.flags['lamp-on'] = true;
+  elsewhere.objects.locations['match'] = 'inventory';
+
+  const lit = play(source, elsewhere, ['burn match']);
+
+  assertEquals(lit.turns[0].messages, ['One of the matches starts to burn.']);
+  assertEquals(lit.state.flags['match-on'], true);
+});
