@@ -232,8 +232,15 @@ actions:
     requires:
       - type: flag
         data: { flag: aboard }
-      - type: scene
-        data: { tag: river }
+      - type: any-of
+        data:
+          conditions:
+            - type: scene
+              data: { tag: river }
+            - type: scene
+              data: { id: reservoir }
+            - type: scene
+              data: { id: in-stream }
     triggers:
       - type: response
         data:

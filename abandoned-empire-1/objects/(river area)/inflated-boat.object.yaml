@@ -129,6 +129,36 @@ actions:
     requires:
       - type: flag
         data: { flag: aboard }
+      - type: any-of
+        data:
+          conditions:
+            - type: scene
+              data: { id: reservoir }
+            - type: scene
+              data: { id: in-stream }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            It seems that the sceptre didn't agree with the boat, as evidenced by the loud hissing noise
+            issuing therefrom. With a pathetic sputter, the boat deflates, leaving you without.
+      - type: move-object
+        data: { object: inflated-boat, to: offstage }
+      - type: move-object
+        data: { object: punctured-boat, to: here }
+      - type: response
+        data:
+          text: >-
+            Another pathetic sputter, this time from you, heralds your drowning.
+      - type: set-flag
+        data: { flag: player-died, value: true }
+
+  - id: put
+    preposition: in
+    indirect: sceptre
+    requires:
+      - type: flag
+        data: { flag: aboard }
       - type: scene
         data: { tag: river }
     triggers:
@@ -174,6 +204,36 @@ actions:
     requires:
       - type: flag
         data: { flag: aboard }
+      - type: any-of
+        data:
+          conditions:
+            - type: scene
+              data: { id: reservoir }
+            - type: scene
+              data: { id: in-stream }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            It seems that the nasty knife didn't agree with the boat, as evidenced by the loud hissing
+            noise issuing therefrom. With a pathetic sputter, the boat deflates, leaving you without.
+      - type: move-object
+        data: { object: inflated-boat, to: offstage }
+      - type: move-object
+        data: { object: punctured-boat, to: here }
+      - type: response
+        data:
+          text: >-
+            Another pathetic sputter, this time from you, heralds your drowning.
+      - type: set-flag
+        data: { flag: player-died, value: true }
+
+  - id: put
+    preposition: in
+    indirect: knife
+    requires:
+      - type: flag
+        data: { flag: aboard }
       - type: scene
         data: { tag: river }
     triggers:
@@ -219,6 +279,36 @@ actions:
     requires:
       - type: flag
         data: { flag: aboard }
+      - type: any-of
+        data:
+          conditions:
+            - type: scene
+              data: { id: reservoir }
+            - type: scene
+              data: { id: in-stream }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            It seems that the sword didn't agree with the boat, as evidenced by the loud hissing noise
+            issuing therefrom. With a pathetic sputter, the boat deflates, leaving you without.
+      - type: move-object
+        data: { object: inflated-boat, to: offstage }
+      - type: move-object
+        data: { object: punctured-boat, to: here }
+      - type: response
+        data:
+          text: >-
+            Another pathetic sputter, this time from you, heralds your drowning.
+      - type: set-flag
+        data: { flag: player-died, value: true }
+
+  - id: put
+    preposition: in
+    indirect: sword
+    requires:
+      - type: flag
+        data: { flag: aboard }
       - type: scene
         data: { tag: river }
     triggers:
@@ -264,6 +354,36 @@ actions:
     requires:
       - type: flag
         data: { flag: aboard }
+      - type: any-of
+        data:
+          conditions:
+            - type: scene
+              data: { id: reservoir }
+            - type: scene
+              data: { id: in-stream }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            It seems that the rusty knife didn't agree with the boat, as evidenced by the loud hissing
+            noise issuing therefrom. With a pathetic sputter, the boat deflates, leaving you without.
+      - type: move-object
+        data: { object: inflated-boat, to: offstage }
+      - type: move-object
+        data: { object: punctured-boat, to: here }
+      - type: response
+        data:
+          text: >-
+            Another pathetic sputter, this time from you, heralds your drowning.
+      - type: set-flag
+        data: { flag: player-died, value: true }
+
+  - id: put
+    preposition: in
+    indirect: rusty-knife
+    requires:
+      - type: flag
+        data: { flag: aboard }
       - type: scene
         data: { tag: river }
     triggers:
@@ -302,6 +422,36 @@ actions:
         data: { object: punctured-boat, to: here }
       - type: set-flag
         data: { flag: aboard, value: false }
+
+  - id: put
+    preposition: in
+    indirect: axe
+    requires:
+      - type: flag
+        data: { flag: aboard }
+      - type: any-of
+        data:
+          conditions:
+            - type: scene
+              data: { id: reservoir }
+            - type: scene
+              data: { id: in-stream }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            It seems that the bloody axe didn't agree with the boat, as evidenced by the loud hissing
+            noise issuing therefrom. With a pathetic sputter, the boat deflates, leaving you without.
+      - type: move-object
+        data: { object: inflated-boat, to: offstage }
+      - type: move-object
+        data: { object: punctured-boat, to: here }
+      - type: response
+        data:
+          text: >-
+            Another pathetic sputter, this time from you, heralds your drowning.
+      - type: set-flag
+        data: { flag: player-died, value: true }
 
   - id: put
     preposition: in
@@ -354,6 +504,36 @@ actions:
     requires:
       - type: flag
         data: { flag: aboard }
+      - type: any-of
+        data:
+          conditions:
+            - type: scene
+              data: { id: reservoir }
+            - type: scene
+              data: { id: in-stream }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            It seems that the stiletto didn't agree with the boat, as evidenced by the loud hissing noise
+            issuing therefrom. With a pathetic sputter, the boat deflates, leaving you without.
+      - type: move-object
+        data: { object: inflated-boat, to: offstage }
+      - type: move-object
+        data: { object: punctured-boat, to: here }
+      - type: response
+        data:
+          text: >-
+            Another pathetic sputter, this time from you, heralds your drowning.
+      - type: set-flag
+        data: { flag: player-died, value: true }
+
+  - id: put
+    preposition: in
+    indirect: stiletto
+    requires:
+      - type: flag
+        data: { flag: aboard }
       - type: scene
         data: { tag: river }
     triggers:
@@ -399,6 +579,36 @@ actions:
     requires:
       - type: flag
         data: { flag: aboard }
+      - type: any-of
+        data:
+          conditions:
+            - type: scene
+              data: { id: reservoir }
+            - type: scene
+              data: { id: in-stream }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            It seems that the sceptre didn't agree with the boat, as evidenced by the loud hissing noise
+            issuing therefrom. With a pathetic sputter, the boat deflates, leaving you without.
+      - type: move-object
+        data: { object: inflated-boat, to: offstage }
+      - type: move-object
+        data: { object: punctured-boat, to: here }
+      - type: response
+        data:
+          text: >-
+            Another pathetic sputter, this time from you, heralds your drowning.
+      - type: set-flag
+        data: { flag: player-died, value: true }
+
+  - id: attack
+    preposition: with
+    indirect: sceptre
+    requires:
+      - type: flag
+        data: { flag: aboard }
       - type: scene
         data: { tag: river }
     triggers:
@@ -444,6 +654,36 @@ actions:
     requires:
       - type: flag
         data: { flag: aboard }
+      - type: any-of
+        data:
+          conditions:
+            - type: scene
+              data: { id: reservoir }
+            - type: scene
+              data: { id: in-stream }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            It seems that the nasty knife didn't agree with the boat, as evidenced by the loud hissing
+            noise issuing therefrom. With a pathetic sputter, the boat deflates, leaving you without.
+      - type: move-object
+        data: { object: inflated-boat, to: offstage }
+      - type: move-object
+        data: { object: punctured-boat, to: here }
+      - type: response
+        data:
+          text: >-
+            Another pathetic sputter, this time from you, heralds your drowning.
+      - type: set-flag
+        data: { flag: player-died, value: true }
+
+  - id: attack
+    preposition: with
+    indirect: knife
+    requires:
+      - type: flag
+        data: { flag: aboard }
       - type: scene
         data: { tag: river }
     triggers:
@@ -489,6 +729,36 @@ actions:
     requires:
       - type: flag
         data: { flag: aboard }
+      - type: any-of
+        data:
+          conditions:
+            - type: scene
+              data: { id: reservoir }
+            - type: scene
+              data: { id: in-stream }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            It seems that the sword didn't agree with the boat, as evidenced by the loud hissing noise
+            issuing therefrom. With a pathetic sputter, the boat deflates, leaving you without.
+      - type: move-object
+        data: { object: inflated-boat, to: offstage }
+      - type: move-object
+        data: { object: punctured-boat, to: here }
+      - type: response
+        data:
+          text: >-
+            Another pathetic sputter, this time from you, heralds your drowning.
+      - type: set-flag
+        data: { flag: player-died, value: true }
+
+  - id: attack
+    preposition: with
+    indirect: sword
+    requires:
+      - type: flag
+        data: { flag: aboard }
       - type: scene
         data: { tag: river }
     triggers:
@@ -534,6 +804,36 @@ actions:
     requires:
       - type: flag
         data: { flag: aboard }
+      - type: any-of
+        data:
+          conditions:
+            - type: scene
+              data: { id: reservoir }
+            - type: scene
+              data: { id: in-stream }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            It seems that the rusty knife didn't agree with the boat, as evidenced by the loud hissing
+            noise issuing therefrom. With a pathetic sputter, the boat deflates, leaving you without.
+      - type: move-object
+        data: { object: inflated-boat, to: offstage }
+      - type: move-object
+        data: { object: punctured-boat, to: here }
+      - type: response
+        data:
+          text: >-
+            Another pathetic sputter, this time from you, heralds your drowning.
+      - type: set-flag
+        data: { flag: player-died, value: true }
+
+  - id: attack
+    preposition: with
+    indirect: rusty-knife
+    requires:
+      - type: flag
+        data: { flag: aboard }
       - type: scene
         data: { tag: river }
     triggers:
@@ -579,6 +879,36 @@ actions:
     requires:
       - type: flag
         data: { flag: aboard }
+      - type: any-of
+        data:
+          conditions:
+            - type: scene
+              data: { id: reservoir }
+            - type: scene
+              data: { id: in-stream }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            It seems that the bloody axe didn't agree with the boat, as evidenced by the loud hissing
+            noise issuing therefrom. With a pathetic sputter, the boat deflates, leaving you without.
+      - type: move-object
+        data: { object: inflated-boat, to: offstage }
+      - type: move-object
+        data: { object: punctured-boat, to: here }
+      - type: response
+        data:
+          text: >-
+            Another pathetic sputter, this time from you, heralds your drowning.
+      - type: set-flag
+        data: { flag: player-died, value: true }
+
+  - id: attack
+    preposition: with
+    indirect: axe
+    requires:
+      - type: flag
+        data: { flag: aboard }
       - type: scene
         data: { tag: river }
     triggers:
@@ -617,6 +947,36 @@ actions:
         data: { object: punctured-boat, to: here }
       - type: set-flag
         data: { flag: aboard, value: false }
+
+  - id: attack
+    preposition: with
+    indirect: stiletto
+    requires:
+      - type: flag
+        data: { flag: aboard }
+      - type: any-of
+        data:
+          conditions:
+            - type: scene
+              data: { id: reservoir }
+            - type: scene
+              data: { id: in-stream }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            It seems that the stiletto didn't agree with the boat, as evidenced by the loud hissing noise
+            issuing therefrom. With a pathetic sputter, the boat deflates, leaving you without.
+      - type: move-object
+        data: { object: inflated-boat, to: offstage }
+      - type: move-object
+        data: { object: punctured-boat, to: here }
+      - type: response
+        data:
+          text: >-
+            Another pathetic sputter, this time from you, heralds your drowning.
+      - type: set-flag
+        data: { flag: player-died, value: true }
 
   - id: attack
     preposition: with

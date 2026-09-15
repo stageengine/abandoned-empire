@@ -70,6 +70,34 @@ actions:
     requires:
       - type: flag
         data: { flag: aboard }
+      - type: any-of
+        data:
+          conditions:
+            - type: scene
+              data: { id: reservoir }
+            - type: scene
+              data: { id: in-stream }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            It seems that the sceptre didn't agree with the boat, as evidenced by the loud hissing noise
+            issuing therefrom. With a pathetic sputter, the boat deflates, leaving you without.
+      - type: move-object
+        data: { object: inflated-boat, to: offstage }
+      - type: move-object
+        data: { object: punctured-boat, to: here }
+      - type: response
+        data:
+          text: >-
+            Another pathetic sputter, this time from you, heralds your drowning.
+      - type: set-flag
+        data: { flag: player-died, value: true }
+
+  - id: drop
+    requires:
+      - type: flag
+        data: { flag: aboard }
       - type: scene
         data: { tag: river }
     triggers:

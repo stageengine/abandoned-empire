@@ -906,3 +906,98 @@ Deno.test('thief: throwing the knife at him before he is fighting angers rather 
   assertEquals(played.state.objects.locations['knife'], 'round-room');
   assertEquals(played.state.flags['thief-fighting'], true);
 });
+
+Deno.test('gas room: a held flame ignites the coal gas, whichever of the three it is', () => {
+  // `BOOM-ROOM` was entirely unported - a classic Zork death that simply
+  // never happened here. `HELD?` in ZIL, not `object-here`: only a flame the
+  // player is personally carrying ignites the gas, checked below against a
+  // torch merely lying in the room to confirm that distinction survived too.
+  for (
+    const setup of [
+      (s: ReturnType<typeof pinned>) => {
+        s.objects.locations['torch'] = 'inventory';
+      },
+      (s: ReturnType<typeof pinned>) => {
+        s.objects.locations['candles'] = 'inventory';
+        s.flags['candles-on'] = true;
+      },
+      (s: ReturnType<typeof pinned>) => {
+        s.objects.locations['match'] = 'inventory';
+        s.flags['match-on'] = true;
+      },
+    ]
+  ) {
+    const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+    state.scene = 'gas-room';
+    setup(state);
+
+    const played = play(source, state, ['wait']);
+
+    assert(
+      (played.turns[0].passing ?? []).some((line) => line.includes('BOOOOOOOOOOOM')),
+      `expected a held flame to ignite the gas: ${JSON.stringify(played.turns[0])}`,
+    );
+  }
+
+  const safe = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  safe.scene = 'gas-room';
+  safe.objects.locations['torch'] = 'gas-room';
+
+  const safePlayed = play(source, safe, ['wait']);
+
+  assertFalse(
+    (safePlayed.turns[0].passing ?? []).some((line) => line.includes('BOOOOOOOOOOOM')),
+    'a lit torch merely lying in the room should not ignite the gas',
+  );
+});
+
+Deno.test('boat: puncturing it in the reservoir or in-stream drowns rather than costing just the boat', () => {
+  // The mid-boat puncture handler in ZIL specifically distinguishes
+  // RESERVOIR/IN-STREAM (drowning) from the rest of the river (carried over
+  // the falls) - scoped separately from the `river` tag on purpose, since
+  // that tag also drives the every-turn current and reservoir/in-stream are
+  // not part of it.
+  for (const scene of ['reservoir', 'in-stream']) {
+    const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+    state.scene = scene;
+    state.flags['aboard'] = true;
+    state.objects.locations['inflated-boat'] = scene;
+    state.objects.locations['torch'] = 'inventory';
+    state.objects.locations['knife'] = 'inventory';
+    const primed = play(source, state, ['look']).state;
+
+    const played = play(source, primed, ['drop knife']);
+
+    assert(
+      played.turns[0].messages.some((line) => line.includes('heralds your drowning')),
+      `expected a puncture in ${scene} to drown the player, got: ${played.turns[0].messages.join(' | ')}`,
+    );
+  }
+});
+
+Deno.test('disembark: getting out in the reservoir or in-stream also refuses rather than killing', () => {
+  for (const scene of ['reservoir', 'in-stream']) {
+    const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+    state.scene = scene;
+    state.flags['aboard'] = true;
+    state.objects.locations['inflated-boat'] = scene;
+    state.objects.locations['torch'] = 'inventory';
+    const primed = play(source, state, ['look']).state;
+
+    const played = play(source, primed, ['get out of boat']);
+
+    assertEquals(played.turns[0].messages, ['You realize that getting out here would be fatal.']);
+    assertEquals(played.state.flags['aboard'], true);
+  }
+});
+
+Deno.test('reservoir: the lake answers "cross"/"swim" differently once it has drained', () => {
+  const state = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  state.scene = 'reservoir-north';
+  state.objects.locations['torch'] = 'inventory';
+  state.flags['low-tide'] = true;
+  const primed = play(source, state, ['look']).state;
+
+  assertEquals(play(source, primed, ['cross lake']).turns[0].messages, ["There's not much lake left...."]);
+  assertEquals(play(source, primed, ['swim lake']).turns[0].messages, ["There's not much lake left...."]);
+});

@@ -324,6 +324,55 @@ every-turn:
       - type: change-scene
         data: { scene: deep-canyon }
 
+  # The Gas Room. ZIL's `BOOM-ROOM` checks at the end of every turn spent
+  # there whether the player is holding a lit candle, torch, or match -
+  # `HELD?`, not `object-here`, so it is specifically what is in their hands
+  # that ignites the gas, not merely a light source left lying nearby. One
+  # message rather than ZIL's two: the "how sad... light a match" wording is
+  # only for the exact turn the flame was lit, and telling that turn apart
+  # from one spent just standing there already burning is not worth a shadow
+  # flag for a line that ends the same way either time.
+  - requires:
+      - type: scene
+        data:
+          id: gas-room
+      - type: any-of
+        data:
+          conditions:
+            - type: all-of
+              data:
+                conditions:
+                  - type: has-item
+                    data: { object: candles }
+                  - type: flag
+                    data: { flag: candles-on }
+            - type: has-item
+              data: { object: torch }
+            - type: all-of
+              data:
+                conditions:
+                  - type: has-item
+                    data: { object: match }
+                  - type: flag
+                    data: { flag: match-on }
+      - type: flag
+        negate: true
+        data:
+          flag: player-died
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Oh dear. It appears that the smell coming from this room was coal gas. I would have
+            thought twice about carrying flaming objects in here.
+      - type: response
+        data:
+          text: "** BOOOOOOOOOOOM **"
+      - type: set-flag
+        data:
+          flag: player-died
+          value: true
+
   # The candles burning down, and the match with them. Both say their own piece
   # through their thresholds.
   - requires:
