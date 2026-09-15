@@ -82,6 +82,12 @@ objects:
             data:
               text: >-
                 A rainbow, and no way to reach it from here.
+      - id: look
+        preposition: under
+        triggers:
+          - type: response
+            data:
+              text: The Frigid River flows under the rainbow.
 navigation:
   - id: south
     triggers:

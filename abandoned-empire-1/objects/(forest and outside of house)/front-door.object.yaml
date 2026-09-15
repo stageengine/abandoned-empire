@@ -19,3 +19,9 @@ actions:
     triggers:
       - type: response
         data: { text: You can't seem to damage the door. }
+
+  - id: look
+    preposition: behind
+    triggers:
+      - type: response
+        data: { text: It won't open. }

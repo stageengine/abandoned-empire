@@ -127,3 +127,12 @@ actions:
       - type: response
         data:
           text: You seem unable to interact with these spirits.
+
+  # ZIL's `V-HELLO` answers any `ACTORBIT` object addressed by name this same
+  # way, regardless of which one - reworded for the plural noun this file
+  # already uses everywhere else ("The spirits jeer...", not "jeers").
+  - id: hello
+    triggers:
+      - type: response
+        data:
+          text: The ghosts bow their heads to you in greeting.

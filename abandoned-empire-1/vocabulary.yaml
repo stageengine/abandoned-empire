@@ -147,9 +147,6 @@ verbs:
   - id: xyzzy
     synonyms: [plugh]
     intransitive: true
-  - id: hello
-    synonyms: [hi]
-    intransitive: true
   - id: yell
     synonyms: [scream, shout]
     intransitive: true
@@ -180,6 +177,13 @@ verbs:
   # takes there.
   - id: exorcise
     synonyms: [banish, lay to rest]
+  # Not `intransitive`, moved out of the bare-verb block above it used to
+  # share with `xyzzy`: ZIL's own `V-HELLO` branches on `PRSO` too - "hello
+  # troll" answers differently from the bare form, by way of an ordinary
+  # target on the character addressed, the same road `exorcise`/`attack`
+  # already take to a character's own file.
+  - id: hello
+    synonyms: [hi]
   # Not `intransitive`: `ring` also answers "ring bell" in the Land of the Dead.
   - id: ring
     synonyms: [toll]

@@ -1260,3 +1260,38 @@ Deno.test('sword: glows faintly for a fixed villain one room over, not just in t
   assertEquals(trollDeadPlayed.turns[0].passing, undefined);
   assertEquals(trollDeadPlayed.state.measures?.['sword']?.['glow'], 0);
 });
+
+Deno.test('hello: greeting a character by name reaches their own answer, not the bare-verb one', () => {
+  // `hello` was marked `intransitive` alongside the game's real bare verbs,
+  // the same mistake `exorcise` made earlier this session: ZIL's own
+  // `V-HELLO` branches on `PRSO`, answering "hello troll" with "The troll
+  // bows his head to you in greeting." rather than the plain, targetless
+  // pick of Hello/Good day/etc. A bare "hello" still needs to reach that
+  // untargeted pick, checked here alongside the targeted form.
+  const bare = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  bare.scene = 'living-room';
+
+  assert(
+    ['Hello.', 'Good day.', "Nice weather we've been having, don't you think?", 'Goodbye.'].includes(
+      play(source, bare, ['hello']).turns[0].messages[0],
+    ),
+  );
+
+  const troll = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  troll.scene = 'troll-room';
+  troll.flags['light'] = true;
+
+  assertEquals(
+    play(source, troll, ['hello troll']).turns[0].messages,
+    ['The troll bows his head to you in greeting.'],
+  );
+
+  const ghosts = pinned(source.id, '2020-01-01T00:00:00.000Z');
+  ghosts.scene = 'entrance-to-hades';
+  ghosts.flags['light'] = true;
+
+  assertEquals(
+    play(source, ghosts, ['hello ghosts']).turns[0].messages,
+    ['The ghosts bow their heads to you in greeting.'],
+  );
+});

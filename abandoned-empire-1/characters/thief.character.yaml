@@ -779,3 +779,14 @@ actions:
           text: >-
             Trying to attack the thief with your bare hands is suicidal - he is armed and you
             are not.
+
+  # ZIL's `V-HELLO` answers any `ACTORBIT` object addressed by name this same
+  # way, regardless of which one. His own unconscious variant ("being
+  # temporarily incapacitated, is unable to acknowledge your greeting") is
+  # out of scope: this port's thief has no knocked-out state distinct from
+  # alive or dead, an accepted simplification from an earlier audit pass.
+  - id: hello
+    triggers:
+      - type: response
+        data:
+          text: The thief bows his head to you in greeting.
