@@ -16,6 +16,8 @@ metadata:
     cover: assets/cover.png
   genres: [Adventure, Fantasy, Puzzle]
 
+gui: gui/
+
 player:
   # How much you can hold at once. Zork keeps this apart from the strength that
   # settles a fight, and moves it separately: a wound takes it down and does not

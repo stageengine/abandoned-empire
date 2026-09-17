@@ -152,6 +152,7 @@ navigation:
         data:
           scene: attic
   - id: down
+    synonyms: [chimney]
     triggers:
       - type: response
         data:

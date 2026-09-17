@@ -92,6 +92,7 @@ navigation:
   # own line in ZIL, checked first here for the same reason: `has-item lamp`
   # alone would answer it with the generic overloaded message instead.
   - id: up
+    synonyms: [chimney]
     requires:
       - type: carrying
         negate: true

@@ -1,0 +1,123 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: #030a03;
+  overflow: hidden;
+}
+
+#screen {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The classic reverse-video status line, one row, always the top of the
+   screen. Filled in from `turn.reply.scene`/`measures` in script.js. */
+#bar {
+  box-sizing: border-box;
+  padding: 0.4rem 0;
+  background: #ffffff;
+  color: #030a03;
+  font-family: "SF Mono", "Menlo", "Courier New", monospace;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+
+#bar-inner {
+  box-sizing: border-box;
+  flex: none;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 58rem;
+  padding: 0 2rem;
+  width: 100%;
+}
+
+#bar-stats span + span {
+  margin-left: 1.5rem;
+}
+
+#scrollback {
+  flex: 1;
+  min-height: 0;
+  margin: 0 auto;
+  max-width: 58rem;
+  width: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 1.5rem 2rem 0;
+  font-family: "SF Mono", "Menlo", "Courier New", monospace;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: #ffffff;
+  white-space: pre-wrap;
+}
+
+/* The terminal's own input line - purely a picture of what Stage's own real,
+   invisible field holds (see `Stage.gui.onTyping` in script.js), not an
+   input of its own. Typing still happens in that real field; this only
+   draws it. A tap anywhere here asks for it to be focused instead of
+   focusing anything of this document's own - see `Stage.gui.focus()`. */
+#prompt {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 0.15ch;
+  box-sizing: border-box;
+  padding: 1rem 2rem 1.5rem;
+  font-family: "SF Mono", "Menlo", "Courier New", monospace;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: #ffffff;
+  cursor: text;
+  max-width: 58rem;
+  margin: 0 auto;
+
+  width: 100%;
+}
+
+#prompt-caret {
+  margin-right: 0.45ch;
+}
+
+#typed {
+  white-space: pre;
+}
+
+#cursor {
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+#prompt.ended {
+  opacity: 0.6;
+  cursor: default;
+}
+
+#prompt.ended #cursor {
+  display: none;
+}
+
+.line-player {
+  color: #ffffff;
+  opacity: 0.95;
+}
+
+.line-player::before {
+  content: "> ";
+}
+
+.line-stage {
+  color: #ffffff;
+  font-style: italic;
+}
