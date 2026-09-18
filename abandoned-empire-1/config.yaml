@@ -16,7 +16,13 @@ metadata:
     cover: assets/cover.png
   genres: [Adventure, Fantasy, Puzzle]
 
-gui: gui/
+gui: gui-dist/
+
+# Proving the mechanism against a real game before building anything visible
+# on top of it - the same order the GUI itself was proven in.
+trace:
+  conditions: true
+  triggers: true
 
 player:
   # How much you can hold at once. Zork keeps this apart from the strength that
