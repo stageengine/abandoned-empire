@@ -1,11 +1,11 @@
 const PARAGRAPHS = /\n[ \t]*\n/;
 
-const scrollback = document.getElementById('scrollback');
-const prompt = document.getElementById('prompt');
 const typed = document.getElementById('typed');
-const barLocation = document.getElementById('bar-location');
+const prompt = document.getElementById('prompt');
 const barScore = document.getElementById('bar-score');
 const barMoves = document.getElementById('bar-moves');
+const scrollback = document.getElementById('scrollback');
+const barLocation = document.getElementById('bar-location');
 
 // One of the player's own measures, by id - `undefined` where a game
 // declares none of them, which config.yaml's own comments say is most games,

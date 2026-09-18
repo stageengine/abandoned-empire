@@ -111,6 +111,7 @@ body {
 .line-player {
   color: #ffffff;
   opacity: 0.95;
+  margin: 1rem 0;
 }
 
 .line-player::before {
