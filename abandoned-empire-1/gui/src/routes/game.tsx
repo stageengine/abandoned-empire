@@ -1,6 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-import { stage, type Measure, type Turn } from '../stage';
+import { useNavigate } from 'react-router-dom';
+
+import { useCrt } from '../crt';
+import GameMenu from '../menu';
+import { type Measure, reason, stage, type Turn } from '../stage';
 
 const PARAGRAPHS = /\n[ \t]*\n/;
 
@@ -51,15 +55,20 @@ const paragraphsOf = (turn: Turn | null): Array<Paragraph> => {
  * already called `Stage.gui.begin()`, so there is nothing here to gate.
  *
  * Ports the vanilla GUI's status bar, scrollback and prompt line as they
- * stood in the original `script.js`: `onTurn` redraws the bar and the
- * scrollback, `ownsPrompt()`/`onTyping` draw this screen's own picture of
+ * stood in the original `script.js`: `turnChanged` redraws the bar and the
+ * scrollback, `ownsPrompt()`/`typedChanged` draw this screen's own picture of
  * Stage's real, invisible field, a click focuses or blurs it depending on
- * where it landed, and `onTrace` keeps logging to the console exactly as
+ * where it landed, and `traced` keeps logging to the console exactly as
  * before - nothing new, this is a faithful port.
  */
 const Game = () => {
+  const navigate = useNavigate();
+  const { crt } = useCrt();
+
   const [turn, setTurn] = useState<Turn | null>(null);
   const [typed, setTyped] = useState('');
+  const [menu, setMenu] = useState(false);
+  const [problem, setProblem] = useState<string | null>(null);
 
   const scrollbackRef = useRef<HTMLPreElement>(null);
   const promptRef = useRef<HTMLDivElement>(null);
@@ -71,25 +80,34 @@ const Game = () => {
   endedRef.current = ended;
 
   useEffect(() => {
-    stage.onTurn(setTurn);
-    stage.onTyping(setTyped);
+    // How things already stand, then what changes - the runtime holds the first
+    // for a screen that mounts after it arrived, which this one always does.
+    setTurn(stage.turn);
+    setTyped(stage.typed);
 
-    // Proving the bridge end to end against a real game, not drawing
-    // anything with it yet - this game's own config.yaml turns both trace
-    // categories on for exactly that reason. A visible use of this (a
-    // journal overlay, effects tied to a specific trigger) is separate work
-    // once the mechanism itself is confirmed working live.
-    stage.onTrace((trace) => {
-      console.log('stage:trace', trace);
-    });
+    const stops = [
+      stage.on('turnChanged', setTurn),
+      stage.on('typedChanged', setTyped),
+
+      // Proving the bridge end to end against a real game, not drawing
+      // anything with it yet - this game's own config.yaml turns both trace
+      // categories on for exactly that reason. A visible use of this (a
+      // journal overlay, effects tied to a specific trigger) is separate work
+      // once the mechanism itself is confirmed working live.
+      stage.on('traced', (trace) => {
+        console.log('stage:trace', trace);
+      }),
+    ];
 
     // This screen's own prompt line takes over the *look* of Stage's fixed
     // one - see `OwnsPromptMessage`. Told once, as early as this runs; there
     // is no going back to Stage's own look for the rest of this GUI's
     // lifetime. The real field a player types into stays Stage's own
-    // regardless - see `onTyping`/`focus` below - this document never gets
+    // regardless - see `typed`/`focus` below - this document never gets
     // an `<input>` of its own to draw a look around.
     stage.ownsPrompt();
+
+    return () => stops.forEach((stop) => stop());
   }, []);
 
   // A tap on the prompt line itself is where a player means to type - asking
@@ -158,19 +176,29 @@ const Game = () => {
   const score = turn?.reply ? `Score: ${measureValue(turn.reply.measures, 'score')}` : '';
   const moves = turn?.reply ? `Moves: ${measureValue(turn.reply.measures, 'moves')}` : '';
 
+  const startAgain = () => {
+    setProblem(null);
+
+    stage.restart().catch((error) => setProblem(reason(error)));
+  };
+
   return (
-    <div id="screen">
+    <div id="screen" className={crt ? 'crt' : undefined}>
       <div id="bar">
         <div id="bar-inner">
           <span id="bar-location">{location}</span>
           <span id="bar-stats">
             <span id="bar-score">{score}</span>
             <span id="bar-moves">{moves}</span>
+
+            <button id="bar-menu" type="button" onClick={() => setMenu(true)}>
+              MENU
+            </button>
           </span>
         </div>
       </div>
 
-      <div id="crt"></div>
+      {crt && <div id="crt"></div>}
 
       <pre id="scrollback" ref={scrollbackRef}>
         {paragraphs.map((paragraph) => (
@@ -180,11 +208,34 @@ const Game = () => {
         ))}
       </pre>
 
+      {/* Where the prompt stops being any use: the game is over, so what is left to do
+          is begin another, come back to a save, or leave. The same three calls the menu
+          makes, without its warning - there is nothing left to lose. */}
+      {ended && (
+        <div id="ended">
+          <button type="button" className="btn" onClick={startAgain}>
+            START AGAIN
+          </button>
+
+          <button type="button" className="btn" onClick={() => navigate('/load')}>
+            LOAD GAME
+          </button>
+
+          <button type="button" className="btn btn-quiet" onClick={() => stage.quit()}>
+            QUIT
+          </button>
+
+          {problem && <p className="problem">{problem}</p>}
+        </div>
+      )}
+
       <div id="prompt" ref={promptRef} className={ended ? 'ended' : undefined}>
         <span id="prompt-caret">&gt;</span>
         <span id="typed">{typed}</span>
         <span id="cursor">|</span>
       </div>
+
+      {menu && <GameMenu onClose={() => setMenu(false)} />}
     </div>
   );
 };

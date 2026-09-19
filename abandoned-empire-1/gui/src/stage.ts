@@ -1,75 +1,18 @@
 /**
- * The shape of `window.Stage.gui`, as `app/src/gui-host/runtime.ts` injects it
- * into every GUI's document before that GUI's own script runs - see
- * `app/src/interfaces/bridge.ts` for the messages behind each call.
+ * `window.Stage.gui`, typed by `stage-gui.d.ts`.
  *
- * Typed here rather than imported: this project builds standalone (Stage's
- * own `engine`/`app` repos are out of scope to touch, and gui-src's build
- * never crosses into them), so this is a local mirror of just the surface
- * this GUI actually calls, the same way `app/src/interfaces/gui.ts` mirrors
- * the engine's own build output rather than importing across that seam.
+ * That file is the one Stage publishes for exactly this - copy it in, point the
+ * editor at it, and everything a GUI can call and be told is there, along with the
+ * real shape of a reply. It is not written by hand here: `deno task gui-types` in
+ * the app repo puts the same file in every project that uses it, and a test there
+ * holds it against the bridge itself, so what it says is what `Stage.gui` does.
  */
+import type { StageGui } from './stage-gui';
 
-export type Voice = 'player' | 'game' | 'stage';
+export type { Measure, Preferences, SaveEntry, Turn } from './stage-gui';
 
-export interface Line {
-  voice: Voice;
-  text: string;
-}
-
-export interface Scene {
-  id: string;
-  title: string | null;
-}
-
-export interface Measure {
-  id: string;
-  value: number;
-  min: number;
-  max: number;
-}
-
-export interface Reply {
-  scene: Scene;
-  measures: ReadonlyArray<Measure>;
-  finished: boolean;
-}
-
-export interface Turn {
-  lines: ReadonlyArray<Line>;
-  reply: Reply | null;
-}
-
-export interface ConditionTrace {
-  [key: string]: unknown;
-}
-
-export interface TriggerTrace {
-  [key: string]: unknown;
-}
-
-export interface Trace {
-  conditions?: ReadonlyArray<ConditionTrace>;
-  triggers?: ReadonlyArray<TriggerTrace>;
-}
-
-export interface StageGui {
-  onTurn(fn: (turn: Turn) => void): void;
-  onTrace(fn: (trace: Trace) => void): void;
-  onTyping(fn: (text: string) => void): void;
-  ownsPrompt(): void;
-  focus(): void;
-  blur(): void;
-  begin(): void;
-}
-
-declare global {
-  interface Window {
-    Stage: { gui: StageGui };
-  }
-}
-
-/** `window.Stage.gui` - guaranteed to exist by the time this GUI's script
- *  runs at all, since `assemble.ts` places the bridge's own `<script>`
- *  ahead of this GUI's in the document (see the note in `runtime.ts`). */
+/** `window.Stage.gui` - there by the time this script runs, since Stage's bridge is placed ahead of it. */
 export const stage: StageGui = window.Stage.gui;
+
+/** Why something failed, for a line on the screen: what a rejected call says, else what it was. */
+export const reason = (error: unknown): string => error instanceof Error ? error.message : String(error);

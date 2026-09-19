@@ -52,6 +52,18 @@ body {
   padding: 0 2rem;
 }
 
+/* Capped by the window's height as well as its width, so a short window
+   shrinks the picture rather than pushing the button off the bottom of a
+   fixed, unscrollable splash. */
+#splash-banner {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 30vh;
+  margin: 0 auto 1.5rem;
+}
+
 #splash h1 {
   margin: 0 0 0.5rem;
   font-size: 1.8rem;
@@ -72,7 +84,23 @@ body {
   opacity: 0.55;
 }
 
-#splash-play {
+/* Holds the buttons' place before Stage has said whether there is a save to
+   continue, so nothing shifts when they arrive - hidden rather than absent,
+   which also keeps them out of the tab order until then. */
+#splash-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+#splash-actions.pending {
+  visibility: hidden;
+}
+
+#splash-play,
+#splash-again {
   appearance: none;
   background: none;
   border: 1px solid #ffffff;
@@ -84,11 +112,22 @@ body {
   padding: 0.7rem 2.5rem;
 }
 
+/* Beside Continue and quieter than it: starting over is the smaller of the
+   two things somebody might mean. */
+#splash-again {
+  font-size: 0.85rem;
+  opacity: 0.65;
+  padding: 0.7rem 1.5rem;
+}
+
 #splash-play:hover,
-#splash-play:focus-visible {
+#splash-play:focus-visible,
+#splash-again:hover,
+#splash-again:focus-visible {
   background: #ffffff;
   color: #030a03;
   outline: none;
+  opacity: 1;
 }
 
 #splash-hint {
@@ -141,7 +180,7 @@ body {
 }
 
 /* The terminal's own input line - purely a picture of what Stage's own real,
-   invisible field holds (see `onTyping` in Game.tsx), not an input of its
+   invisible field holds (see `typedChanged` in Game.tsx), not an input of its
    own. Typing still happens in that real field; this only draws it. A tap
    anywhere here asks for it to be focused instead of focusing anything of
    this document's own - see `Stage.gui.focus()`. */
@@ -203,4 +242,241 @@ body {
 .line-stage {
   color: #ffffff;
   font-style: italic;
+}
+
+/* The CRT effect, when the player has it on - Game.tsx draws no #crt at all
+   otherwise. Scanlines, a soft vignette, and a faint glow on the type. Over
+   everything on the game screen and never in the way of it: it takes no
+   clicks. Below the menu, which is a screen of its own. */
+#crt {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0,
+      rgba(0, 0, 0, 0) 2px,
+      rgba(0, 0, 0, 0.18) 3px,
+      rgba(0, 0, 0, 0) 4px
+    ),
+    radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.45) 100%);
+}
+
+#screen.crt #scrollback,
+#screen.crt #prompt {
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+}
+
+/* Buttons, wherever they are wanted outside the splash - the same outlined,
+   spaced-out look as Play, in the size a list or a menu wants. */
+.btn {
+  appearance: none;
+  background: none;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+  padding: 0.6rem 1.6rem;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  background: #ffffff;
+  color: #030a03;
+  outline: none;
+}
+
+.btn[disabled] {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.btn[disabled]:hover {
+  background: none;
+  color: #ffffff;
+}
+
+.btn-quiet {
+  font-size: 0.85rem;
+  opacity: 0.65;
+  padding: 0.6rem 1.2rem;
+}
+
+.btn-quiet:hover,
+.btn-quiet:focus-visible {
+  opacity: 1;
+}
+
+.problem {
+  margin: 0;
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* Under the splash's own buttons: the two other places to go. Held out of sight
+   until Stage has said how things stand, for the reason the buttons above are. */
+#splash-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1.75rem;
+}
+
+#splash-links.pending {
+  visibility: hidden;
+}
+
+.link {
+  appearance: none;
+  background: none;
+  border: 0;
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  opacity: 0.6;
+  text-decoration: underline;
+}
+
+.link:hover,
+.link:focus-visible {
+  opacity: 1;
+  outline: none;
+}
+
+/* The menu button in the status line: reverse video, like everything on it. */
+#bar-menu {
+  appearance: none;
+  background: none;
+  border: 1px solid #030a03;
+  color: #030a03;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  margin-left: 1.5rem;
+  padding: 0 0.6rem;
+}
+
+#bar-menu:hover,
+#bar-menu:focus-visible {
+  background: #030a03;
+  color: #ffffff;
+  outline: none;
+}
+
+/* The menu over the game screen, and what the game screen offers when it is over. */
+#menu {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(3, 10, 3, 0.9);
+  color: #ffffff;
+  font-family: "SF Mono", "Menlo", "Courier New", monospace;
+}
+
+#menu-inner {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  max-width: 24rem;
+  min-width: 16rem;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+#menu-inner p {
+  margin: 0 0 0.5rem;
+}
+
+#ended {
+  box-sizing: border-box;
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 58rem;
+  padding: 1rem 2rem 0;
+  width: 100%;
+}
+
+/* Load and Settings: a full screen, the splash's own colours, and a way back. */
+.panel {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  overflow-y: auto;
+  background: #030a03;
+  color: #ffffff;
+  font-family: "SF Mono", "Menlo", "Courier New", monospace;
+}
+
+/* Auto margins rather than centring on the panel itself, so a list taller than the
+   window scrolls from its top instead of being cut off above it. */
+.panel-inner {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: auto;
+  max-width: 34rem;
+  padding: 2rem;
+  width: 100%;
+}
+
+.panel h2 {
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  margin: 0 0 0.5rem;
+  text-align: center;
+}
+
+.panel-note {
+  margin: 0;
+  opacity: 0.7;
+  text-align: center;
+}
+
+.setting {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  letter-spacing: 0.1em;
+}
+
+.save-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  list-style: none;
+  margin: 0;
+  max-height: 55vh;
+  overflow-y: auto;
+  padding: 0;
+}
+
+.save-row {
+  letter-spacing: 0.04em;
+  text-align: left;
+  width: 100%;
+}
+
+.save-when {
+  display: block;
+  font-size: 0.8rem;
+  margin-top: 0.2rem;
+  opacity: 0.65;
 }
