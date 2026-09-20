@@ -235,9 +235,6 @@ export interface Turn {
 
 /** The player's own preferences. The app's to keep, so you can read them and not change them. */
 export interface Preferences {
-  /** What colour speech is drawn in, as CSS, or `inherit` when the player wants none. */
-  speech: string;
-
   /** How large the prose is, as CSS, like `18px`. */
   size: string;
 
@@ -255,7 +252,7 @@ export interface Preferences {
 }
 
 /** Where this GUI is running. */
-export type Platform = 'ios' | 'macos' | 'windows' | 'linux';
+export type Platform = 'macos' | 'windows' | 'linux';
 
 /** One of the game's saves. `id` is opaque: only ever hand it back to `load`. */
 export interface SaveEntry {
