@@ -1,5 +1,5 @@
 /**
- * Everything a game's own GUI can call and be told: `window.Stage.gui`.
+ * Everything a game's own GUI can call and be told: `window.Engine.gui`.
  *
  * Copy this file into your GUI's project and point your editor at it. It has no
  * imports, so it needs nothing else. The same file is published at
@@ -8,7 +8,7 @@
  * ```ts
  * import type { StageGui } from './stage-gui';
  *
- * const stage: StageGui = window.Stage.gui;
+ * const stage: StageGui = window.Engine.gui;
  *
  * await stage.ready;                            // Stage has said how things stand
  * draw(stage.turn);                             // so read it,
@@ -266,7 +266,6 @@ export interface SaveEntry {
 export type StageEvent =
   | 'turnChanged'
   | 'preferencesChanged'
-  | 'typedChanged'
   | 'resumableChanged'
   | 'traced';
 
@@ -285,9 +284,6 @@ export interface StageGui {
   /** The player's preferences. `null` only before `ready`. */
   readonly preferences: Preferences | null;
 
-  /** What Stage's own (invisible) prompt field holds. Only meaningful after `ownsPrompt()`. */
-  readonly typed: string;
-
   /** Whether the window was opened to come back to a save. */
   readonly isResumable: boolean;
 
@@ -303,7 +299,6 @@ export interface StageGui {
    */
   on(event: 'turnChanged', fn: (turn: Turn) => void): () => void;
   on(event: 'preferencesChanged', fn: (preferences: Preferences) => void): () => void;
-  on(event: 'typedChanged', fn: (typed: string) => void): () => void;
   on(event: 'resumableChanged', fn: (isResumable: boolean) => void): () => void;
 
   /** How the turn just played was resolved. A one-off, not something you can read later. */
@@ -338,12 +333,6 @@ export interface StageGui {
   /** Play one line, exactly as if it had been typed and entered. */
   submit(text: string): void;
 
-  /**
-   * Say that you draw the prompt's own look. Stage's visible prompt comes down
-   * for good, and `typed` and `focus()` are what you draw your own with.
-   */
-  ownsPrompt(): void;
-
   /** Focus Stage's own (invisible) prompt field, when your own prompt is tapped. */
   focus(): void;
 
@@ -370,6 +359,6 @@ export interface StageGui {
 
 declare global {
   interface Window {
-    Stage: { gui: StageGui };
+    Engine: { gui: StageGui };
   }
 }

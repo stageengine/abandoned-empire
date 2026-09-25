@@ -4,19 +4,35 @@ start: west-of-house
 metadata:
   title: Abandoned Empire I
   version: 0.1.4
+  copyright: |-
+    Abandoned Empire I: a port of Zork I, by Infocom
+    Copyright (c) 1981, 1982, 1983 Infocom, Inc. All rights reserved.
+
+store:
   description: >-
     The Great Underground Empire, ported to Stage from Infocom's own ZIL source. A white house,
     a trap door, and three hundred and fifty points of treasure between you and the rank of
     Master Adventurer.
-  copyright: |-
-    Abandoned Empire I: a port of Zork I, by Infocom
-    Copyright (c) 1981, 1982, 1983 Infocom, Inc. All rights reserved.
   assets:
-    icon: assets/icon.png
-    cover: assets/cover.png
+    tile: assets/icon.png
+    banner: assets/cover.png
   genres: [Adventure, Fantasy, Puzzle]
 
 gui: gui-dist/
+
+# What this game is when somebody is handed it as a program of its own. The identifier is what a
+# desktop knows it by for ever, so it is chosen rather than derived; the icons are the same art the
+# shelf uses, in the format each platform wants.
+export:
+  bundle-id: com.sgail.abandoned-empire-1
+  platforms:
+    macos: [arm64, x86_64]
+    linux: [x86_64, arm64]
+    windows: [x86_64]
+  icons:
+    macos: assets/icon.icns
+    windows: assets/icon.ico
+    linux: assets/icon.png
 
 # Proving the mechanism against a real game before building anything visible
 # on top of it - the same order the GUI itself was proven in.

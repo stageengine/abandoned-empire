@@ -8,7 +8,7 @@ import { stage } from '../stage';
  *
  * A faithful port of the original `#splash` markup and its `begin()` in the
  * vanilla `script.js`: a click on Play, or Enter/Space anywhere, calls
- * `Stage.gui.begin()` once and moves on to `/game`. Where the window was
+ * `Engine.gui.begin()` once and moves on to `/game`. Where the window was
  * opened to come back to a save, Play reads Continue and Start again sits
  * beside it - the one thing here that is not a port, since the vanilla GUI
  * had no way to be told. Enter and Space only ever mean the first: a stray

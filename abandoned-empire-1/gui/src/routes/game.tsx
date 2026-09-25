@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import type { KeyboardEvent } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -52,14 +53,20 @@ const paragraphsOf = (turn: Turn | null): Array<Paragraph> => {
 
 /**
  * The actual playthrough screen - `/game`. Reached only once `Splash` has
- * already called `Stage.gui.begin()`, so there is nothing here to gate.
+ * already called `Engine.gui.begin()`, so there is nothing here to gate.
  *
  * Ports the vanilla GUI's status bar, scrollback and prompt line as they
  * stood in the original `script.js`: `turnChanged` redraws the bar and the
- * scrollback, `ownsPrompt()`/`typedChanged` draw this screen's own picture of
- * Stage's real, invisible field, a click focuses or blurs it depending on
- * where it landed, and `traced` keeps logging to the console exactly as
- * before - nothing new, this is a faithful port.
+ * scrollback, and `traced` keeps logging to the console exactly as before.
+ *
+ * The prompt is this screen's own, and is a real field. It used to be a
+ * drawing of one: Stage kept the field a player actually typed into, invisible,
+ * and this screen mirrored it through `typed` and `typedChanged` after calling
+ * `ownsPrompt()`. There is no such field any more, and no host chrome to take
+ * over, so there is one prompt and this owns it. `submit` is what sends a line,
+ * which Stage's own field used to do; `focus` and `blur` are still told to the
+ * host, because they now say where keyboard attention sits rather than moving
+ * it, so a host with shortcuts of its own does not swallow a key meant here.
  */
 const Game = () => {
   const navigate = useNavigate();
@@ -72,6 +79,7 @@ const Game = () => {
 
   const scrollbackRef = useRef<HTMLPreElement>(null);
   const promptRef = useRef<HTMLDivElement>(null);
+  const typedRef = useRef<HTMLInputElement>(null);
   const endedRef = useRef(false);
 
   const paragraphs = useMemo(() => paragraphsOf(turn), [turn]);
@@ -83,11 +91,9 @@ const Game = () => {
     // How things already stand, then what changes - the runtime holds the first
     // for a screen that mounts after it arrived, which this one always does.
     setTurn(stage.turn);
-    setTyped(stage.typed);
 
     const stops = [
       stage.on('turnChanged', setTurn),
-      stage.on('typedChanged', setTyped),
 
       // Proving the bridge end to end against a real game, not drawing
       // anything with it yet - this game's own config.yaml turns both trace
@@ -99,13 +105,9 @@ const Game = () => {
       }),
     ];
 
-    // This screen's own prompt line takes over the *look* of Stage's fixed
-    // one - see `OwnsPromptMessage`. Told once, as early as this runs; there
-    // is no going back to Stage's own look for the rest of this GUI's
-    // lifetime. The real field a player types into stays Stage's own
-    // regardless - see `typed`/`focus` below - this document never gets
-    // an `<input>` of its own to draw a look around.
-    stage.ownsPrompt();
+    // Ready to type the moment the game is on screen, the way the old host's
+    // own field was focused for a player without their having to ask.
+    typedRef.current?.focus();
 
     return () => stops.forEach((stop) => stop());
   }, []);
@@ -116,7 +118,7 @@ const Game = () => {
   // the opposite: it should be possible to put the keyboard away by tapping
   // away from typing, the same as tapping outside any real `<input>` would
   // have done without being asked. Both go through Stage, since the field
-  // lives outside this document either way - see `Stage.gui.focus`/`blur`.
+  // lives outside this document either way - see `Engine.gui.focus`/`blur`.
   //
   // The vanilla version guarded this with `if (!begun || ended) return;`,
   // where `!begun` was there only because a click dismissing the splash
@@ -132,11 +134,13 @@ const Game = () => {
       }
 
       if (promptRef.current?.contains(event.target as Node)) {
+        typedRef.current?.focus();
         stage.focus();
 
         return;
       }
 
+      typedRef.current?.blur();
       stage.blur();
     };
 
@@ -175,6 +179,25 @@ const Game = () => {
   const location = turn?.reply ? turn.reply.scene.title ?? turn.reply.scene.id : '';
   const score = turn?.reply ? `Score: ${measureValue(turn.reply.measures, 'score')}` : '';
   const moves = turn?.reply ? `Moves: ${measureValue(turn.reply.measures, 'moves')}` : '';
+
+  // What Stage's own field used to do. Nothing is sent for a line with nothing
+  // in it, the same as pressing return at an empty prompt always did.
+  const send = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key !== 'Enter') {
+      return;
+    }
+
+    event.preventDefault();
+
+    const said = typed.trim();
+
+    if (said === '') {
+      return;
+    }
+
+    stage.submit(said);
+    setTyped('');
+  };
 
   const startAgain = () => {
     setProblem(null);
@@ -231,8 +254,21 @@ const Game = () => {
 
       <div id="prompt" ref={promptRef} className={ended ? 'ended' : undefined}>
         <span id="prompt-caret">&gt;</span>
-        <span id="typed">{typed}</span>
-        <span id="cursor">|</span>
+
+        <input
+          id="typed"
+          ref={typedRef}
+          type="text"
+          value={typed}
+          disabled={ended}
+          onChange={(event) => setTyped(event.target.value)}
+          onKeyDown={send}
+          autoComplete="off"
+          autoCapitalize="none"
+          autoCorrect="off"
+          spellCheck={false}
+          aria-label="What you do next"
+        />
       </div>
 
       {menu && <GameMenu onClose={() => setMenu(false)} />}

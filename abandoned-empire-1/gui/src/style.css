@@ -27,7 +27,7 @@ body {
 
 /* Shown before the playthrough has begun - see Stage's own "Gated Start" -
    and gone for good once `#splash-play` or Enter/Space calls
-   `Stage.gui.begin()` in script.js. Opaque and above everything else, so
+   `Engine.gui.begin()` in script.js. Opaque and above everything else, so
    `#screen` sitting underneath (empty at this point regardless) never has
    to be hidden of its own accord. */
 #splash {
@@ -183,7 +183,7 @@ body {
    invisible field holds (see `typedChanged` in Game.tsx), not an input of its
    own. Typing still happens in that real field; this only draws it. A tap
    anywhere here asks for it to be focused instead of focusing anything of
-   this document's own - see `Stage.gui.focus()`. */
+   this document's own - see `Engine.gui.focus()`. */
 #prompt {
   flex: none;
   display: flex;
@@ -206,12 +206,20 @@ body {
   margin-right: 0.45ch;
 }
 
+/* A real field, dressed as the text it used to be drawn as: no chrome of its
+   own, the screen's own font and colour, and the browser's own caret doing the
+   blinking the old drawn one did. */
 #typed {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font: inherit;
+  color: inherit;
   white-space: pre;
-}
-
-#cursor {
-  animation: blink 1s steps(1) infinite;
 }
 
 @keyframes blink {
@@ -225,8 +233,8 @@ body {
   cursor: default;
 }
 
-#prompt.ended #cursor {
-  display: none;
+#prompt.ended #typed {
+  opacity: 0.6;
 }
 
 .line-player {
