@@ -1,24 +1,4 @@
 #!/usr/bin/env python3
-"""
-Play the original and the port through one script, and print where they differ.
-
-The original is `source/zork1/COMPILED/zork1.z3` under `dfrotz`; the port is a built
-`.stg` under `stage play`. Both read one command per line from a script file and
-their replies are lined up turn for turn.
-
-Only noise is stripped: dfrotz's status line and loading banner, Infocom's copyright,
-and blank runs. Every word either game says to the player is kept, so a difference in
-wording shows up even where the outcome is the same.
-
-    python3 tools/audit.py script.txt ../engine/abandoned-empire-1.stg
-
-A line of the form `@checkpoint name` in the script is not sent to either game - it
-marks a place both interpreters save at once they first reach it, so a later run can
-drop straight into that state instead of replaying everything before it, including
-whichever way a fight happened to go. See `arch/0011` for why this exists and how it
-is meant to be used: place one right after a fight resolves, not mid-fight, since
-what a checkpoint buys is a clean floor to stand on afterward, not synchronised dice.
-"""
 import re
 import subprocess
 import sys
@@ -38,9 +18,6 @@ STATUS = re.compile(r'\s{2,}Score: -?\d+\s+Moves: \d+\s*$')
 
 CHECKPOINT_LINE = re.compile(r'^@checkpoint\s+(\S+)$')
 
-# Every room's title, which dfrotz prints on entering and the port does not print at
-# all. One systematic difference rather than a hundred, so it is taken out here and
-# reported once - the port holds the titles in `meta.title` and shows them nowhere.
 TITLES = set((Path(__file__).resolve().parent / 'titles.txt').read_text().split('\n'))
 
 
@@ -56,15 +33,6 @@ def tidy(chunk):
 
 
 def segments(script):
-    """
-    Split a script on `@checkpoint name` lines.
-
-    Yields `(commands, resume_from, capture_as)` in order: `resume_from` is the
-    checkpoint the segment needs loaded before it can run at all, `capture_as` is
-    the checkpoint it leaves behind for the segment after it - either may be
-    `None`, for the first segment in a script with no marker before it, or the
-    last segment in one with no marker after it.
-    """
     held = []
     resume_from = None
     for line in script.strip().split('\n'):
@@ -87,9 +55,6 @@ def qzl(name):
 
 
 def port_save(name, game):
-    # Wherever `stage play`'s own save mechanism already puts it: the game's
-    # own directory, named for the game's own id - the same place a real
-    # player's save would land, unmoved and unmirrored.
     return Path(game).resolve().parent / f'{Path(game).stem}.saves' / f'{name}.save.json'
 
 
@@ -98,10 +63,6 @@ def captured(name, game):
 
 
 def forget(name, game):
-    # A stale file from an interrupted capture would make `dfrotz`'s own save
-    # prompt ask to overwrite it, and a script that does not know whether to
-    # answer that is not a script that can be replayed unattended - deleted
-    # first, every time, so the input stream is the same either way.
     qzl(name).unlink(missing_ok=True)
     port_save(name, game).unlink(missing_ok=True)
 
@@ -118,8 +79,6 @@ def original(commands, resume_from, capture_as):
     out = subprocess.run(args, input=script + '\nquit\ny\n', capture_output=True,
                          text=True, timeout=90).stdout
     replies = [tidy(c) for c in out.split('>')]
-    # One extra reply at the front when resuming - the restore's own
-    # confirmation - which has no equivalent line in `commands` to pair it with.
     return replies[1:] if resume_from else replies
 
 
@@ -135,9 +94,6 @@ def port(commands, resume_from, capture_as, game):
         input=script + '\nquit\n', capture_output=True, text=True, timeout=180, cwd=ENGINE).stdout
     out = re.sub(r'^.*?stage\.ts.*?\n', '', out, count=1)
     replies = [tidy(c) for c in out.split('>')]
-    # `load` is a command the runner answers like any other, not a preload the
-    # process starts already inside - so resuming costs two leading replies here,
-    # not the original's one: the opening banner, then `load`'s own reply.
     return replies[2:] if resume_from else replies
 
 
@@ -152,8 +108,6 @@ def report(commands, resume_from, left, right):
             same += 1
             continue
         print(f'\n--- {cmd}')
-        # Where they part, rather than the first 260 characters of each: the
-        # interesting difference is often a clause deep into a room description.
         at = next((i for i, (x, y) in enumerate(zip(a, b)) if x != y), min(len(a), len(b)))
         head = a[max(0, at - 40):at]
         print(f'  shared ...{head}' if head else '  shared <nothing>')
@@ -174,10 +128,6 @@ def main():
     resume_from = None
 
     for commands, segment_resume, capture_as in segments(script):
-        # `segment_resume` is what the script itself declares this segment needs;
-        # `resume_from` is what is actually being carried in, which may be a later
-        # checkpoint than the script's own marker names if an earlier segment's
-        # capture was already sitting on disk and its run was skipped below.
         resume_from = resume_from or segment_resume
 
         if capture_as and captured(capture_as, game):

@@ -1,25 +1,3 @@
-/**
- * Put each thing's own line on the thing, and take it out of the rooms.
- *
- * Stage printed nothing after a room's own words, so the port wrote a thing's
- * line into the room holding it, and wrote it again for every combination of
- * what was still lying there: one `look` per subset, each gated on an
- * `object-in` for everything in it. The living room came to thirty-two
- * descriptions of itself.
- *
- * Stage 0.8.0 gave a thing `here` and `first`, so the line goes on the thing and
- * travels with it. `generate.ts` seeds a game that way now. This does the same to
- * a game already seeded and worked on since, because the port is hand-authored
- * well past its seed and re-seeding it would throw that work away.
- *
- * Careful in both directions. A thing that already says either line is left
- * alone, and the only `look` actions taken out of a room are the ones this port
- * would have written: gated on `object-in` naming that very room. A gate naming
- * a container is a different sentence and stays - the South Temple says "on the
- * altar is a large black book" only while the book is in the altar, and a thing
- * inside a container says no line of its own.
- */
-
 import dungeon from './dungeon.ts';
 
 const [sourceDir = '../source/zork1', gameDir = '../abandoned-empire-1'] = Deno.args;
@@ -28,30 +6,12 @@ const { things } = dungeon(await Deno.readTextFile(`${sourceDir}/1dungeon.zil`))
 
 const thingsById = new Map(things.map((thing) => [thing.id.toLowerCase(), thing]));
 
-/**
- * The line ZIL builds for a thing that gives none of its own.
- *
- * Kept in step with `generate.ts`, which writes the same sentence when it seeds.
- *
- * @param {String} name What the game calls the thing.
- *
- * @returns {String} The sentence.
- */
 const plainly = (name: string): string =>
   `There is ${'aeiou'.includes(name[0]?.toLowerCase()) ? 'an' : 'a'} ${name} here.`;
 
-/**
- * ZIL's `|` is a line break the player sees; every other newline is only where
- * the author's line ran out.
- *
- * @param {String} text
- *
- * @returns {String} One paragraph, or several where ZIL asked for them.
- */
 const prose = (text: string): string =>
   text.split('|').map((part) => part.replace(/\s+/g, ' ').trim()).filter(Boolean).join('\n\n');
 
-/** Write a value as YAML would, folding a long line the way the port does. */
 const scalar = (key: string, text: string): Array<string> => {
   if (!text.includes('\n') && `${key}: ${text}`.length <= 96 && !/^[>|&*#?%@`'"[\]{},]/.test(text)) {
     return [`${key}: ${text}`];
@@ -93,10 +53,6 @@ async function* walk(at: string): AsyncGenerator<string> {
   }
 }
 
-// ---------------------------------------------------------------------------
-// The things
-// ---------------------------------------------------------------------------
-
 let given = 0;
 
 for await (const path of walk(`${gameDir}/objects`)) {
@@ -110,8 +66,6 @@ for await (const path of walk(`${gameDir}/objects`)) {
     continue;
   }
 
-  // Anything already saying either line was written by hand, and this is not the
-  // tool to argue with it.
   if (lines.some((line) => line.startsWith('here:') || line.startsWith('first:'))) {
     continue;
   }
@@ -127,8 +81,6 @@ for await (const path of walk(`${gameDir}/objects`)) {
     ...scalar('here', thing.resting ? prose(thing.resting) : plainly(thing.name)),
   ];
 
-  // Where `generate.ts` puts them: after what the thing is, before where it
-  // begins. A file with no `start` has them at the end of its opening block.
   const at = lines.findIndex((line) => line.startsWith('start:'));
 
   const opening = lines.findIndex((line, index) => index > 0 && line.trim() === '');
@@ -142,21 +94,6 @@ for await (const path of walk(`${gameDir}/objects`)) {
   given += 1;
 }
 
-// ---------------------------------------------------------------------------
-// The rooms
-// ---------------------------------------------------------------------------
-
-/**
- * Whether a `look` action is one the old port wrote to list what was lying about.
- *
- * The signature is an `object-in` naming this room. A gate on anything else is an
- * author saying something about the room itself and is left where it is.
- *
- * @param {String} block The action, as authored.
- * @param {String} room The scene's id.
- *
- * @returns {Boolean} True where the port wrote it and the things now say it.
- */
 const listing = (block: string, room: string): boolean =>
   block.includes('type: object-in') &&
   new RegExp(`^\\s+location: ${room}$`, 'm').test(block);
@@ -194,8 +131,6 @@ for await (const path of walk(`${gameDir}/scenes`)) {
     }
   }
 
-  // Split the list into its items, each running to the next `- id:` at the top
-  // level of the list.
   const items: Array<Array<string>> = [];
 
   for (const line of lines.slice(from + 1, to)) {
@@ -226,8 +161,6 @@ for await (const path of walk(`${gameDir}/scenes`)) {
     continue;
   }
 
-  // Each item keeps its own trailing blank line, so rejoining needs no separator
-  // beyond trimming the tail the last one carries.
   const rebuilt = kept.flat();
 
   while (rebuilt.length && rebuilt[rebuilt.length - 1].trim() === '') {

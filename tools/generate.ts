@@ -1,18 +1,3 @@
-/**
- * Seed a Stage game from a Zork dungeon file.
- *
- * This writes the mechanical half of the port and only the mechanical half: the
- * map, the ways between rooms, the things and what they are called, and the
- * prose exactly as Infocom wrote it. Everything a routine decided - a puzzle, a
- * fight, a description that changes as the world does - is left for a person,
- * and listed in the report so that nothing is left quietly.
- *
- * It is meant to be run once per game, to start the repository off. After that
- * the YAML is the game and this is history: run it again over a game somebody
- * has been writing in and it will write over their work. `--force` says you
- * meant it.
- */
-
 import dungeon, { type Exit, type Room, type Thing } from './dungeon.ts';
 import vocabulary from './vocabulary.ts';
 import lookingProse, { lookingParts } from './routines.ts';
@@ -31,16 +16,10 @@ const { rooms, things } = dungeon(source);
 const roomsById = new Map(rooms.map((room) => [room.id, room]));
 const thingsById = new Map(things.map((thing) => [thing.id, thing]));
 
-/** What an object weighs in ZIL when it does not say: `<PROPDEF SIZE 5>`. */
 const ZIL_SIZE = 5;
 
-/** What the port calls a thing ZIL called `WEST-OF-HOUSE`. */
 const id = (name: string): string => name.toLowerCase();
 
-/**
- * ZIL's `|` is a line break the player sees. Every other newline in a string
- * is only where the author's line ran out, so it folds back into a space.
- */
 const prose = (text: string): string =>
   text
     .split('|')
@@ -49,16 +28,8 @@ const prose = (text: string): string =>
     .replace(/\n{3,}/g, '\n\n')
     .trim();
 
-/** A folder that groups without naming, so a room's id stays the one ZIL gave it. */
 const folder = (region: string): string => `(${region.toLowerCase().replaceAll('#', '').trim()})`;
 
-/**
- * The work queue.
- *
- * Everything the seed could not write is filed under a heading rather than
- * thrown onto one list, because the headings are the phases of the port: all
- * the containers are one problem, all the treasures are another.
- */
 const notes = new Map<string, Set<string>>();
 const note = (section: string, line: string) => {
   notes.set(section, (notes.get(section) ?? new Set()).add(line));
@@ -78,21 +49,8 @@ const SECTIONS = [
   'Words a room knows that name nothing in it',
 ];
 
-// ---------------------------------------------------------------------------
-// Things
-// ---------------------------------------------------------------------------
-
 const BAGS = ['LOCAL-GLOBALS', 'GLOBAL-OBJECTS'];
 
-/**
- * Where the eight things ZIL never places belong.
- *
- * Each of them is made during play - a lamp once it is smashed, a diamond once
- * the machine has been through the coal - so ZIL leaves them nowhere and moves
- * them in when the moment comes. Stage asks every thing which room it belongs
- * to even when it begins offstage, so the port has to answer, and the honest
- * answer is the room where the thing comes into the world.
- */
 const HOMES: Record<string, string> = {
   'HOT-BELL': 'ENTRANCE-TO-HADES',
   'BROKEN-LAMP': 'LIVING-ROOM',
@@ -104,12 +62,6 @@ const HOMES: Record<string, string> = {
   'BAUBLE': 'FOREST-2',
 };
 
-/**
- * The room a thing belongs to, following it up out of whatever it is inside.
- *
- * The garlic is in the sack, the sack is on the kitchen table, and the table is
- * in the kitchen; all three are the kitchen's to list.
- */
 const homeOf = (thing: Thing): string | null => {
   const seen = new Set<string>();
   let at: Thing | undefined = thing;
@@ -121,10 +73,6 @@ const homeOf = (thing: Thing): string | null => {
       return at.location;
     }
 
-    // The chain can run out inside something that is itself made during play -
-    // the label is inside the inflated boat, and the boat is nowhere until it
-    // has been pumped up - so the answer may belong to a link rather than the
-    // thing that started the walk.
     if (!at.location || BAGS.includes(at.location)) {
       return HOMES[at.id] ?? HOMES[thing.id] ?? null;
     }
@@ -135,7 +83,6 @@ const homeOf = (thing: Thing): string | null => {
   return HOMES[thing.id] ?? null;
 };
 
-/** Everything a player might call a thing: its own words, and each of them behind each adjective. */
 const namesFor = (thing: Thing): Array<string> => {
   const words = thing.synonyms.map((one) => one.toLowerCase());
   const adjectives = thing.adjectives.map((one) => one.toLowerCase());
@@ -147,21 +94,6 @@ const namesFor = (thing: Thing): Array<string> => {
   return [...new Set(all)];
 };
 
-/**
- * The line ZIL builds for a thing that gives none of its own.
- *
- * `"There is a " D .OBJ " here."`, written into the game rather than assembled
- * as it is read. Stage refuses to assemble one, on the grounds that a room reads
- * as written or it reads as put together, and one line per thing is what lets a
- * sack say it smells of hot peppers. Written here, it is a sentence an author can
- * see and improve, which is the whole difference.
- *
- * The article is the one liberty taken. ZIL says "a" whatever follows it.
- *
- * @param {String} name What the game calls the thing.
- *
- * @returns {String} The sentence.
- */
 const plainly = (name: string): string =>
   `There is ${'aeiou'.includes(name[0]?.toLowerCase()) ? 'an' : 'a'} ${name} here.`;
 
@@ -181,22 +113,9 @@ const thingYaml = (thing: Thing): Record<string, Value> => {
   if (thing.flags.includes('TAKEBIT')) {
     out.portable = true;
 
-    // What it costs to carry. ZIL's `<PROPDEF SIZE 5>` means an object saying
-    // nothing weighs five, which is why this is written for every takeable
-    // thing rather than only for the forty-two that declare one: Stage's own
-    // default is one, and a game where most things weigh five and the format
-    // assumes one is a game that has to say so.
     out.size = thing.size ?? ZIL_SIZE;
   }
 
-  // What the room says about it lying there. ZIL decides this in
-  // DESCRIBE-OBJECT: the first line while nobody has touched the thing, the
-  // later line once somebody has, and a plain sentence built from the name
-  // where the object gives neither.
-  //
-  // NDESCBIT is the thing a room never lists, because the room's own prose has
-  // already mentioned it. Taking one clears the bit, though, so a takeable one
-  // still needs the later line and never gets to show a first line at all.
   const never = thing.flags.includes('NDESCBIT');
   const listed = !never || thing.flags.includes('TAKEBIT');
 
@@ -208,9 +127,6 @@ const thingYaml = (thing: Thing): Record<string, Value> => {
     out.here = thing.resting ? prose(thing.resting) : plainly(thing.name);
   }
 
-  // Where it starts. A thing lying in a room says so; a thing inside another
-  // thing waits offstage until the port has containers to put it in, and is
-  // listed by the room its container stands in so that it belongs somewhere.
   if (thing.location && roomsById.has(thing.location)) {
     out.start = id(thing.location);
   }
@@ -219,8 +135,6 @@ const thingYaml = (thing: Thing): Record<string, Value> => {
     out.start = 'offstage';
   }
 
-  // What is written on it. Reading is looking as far as Stage is concerned, so
-  // this is the thing's description and needs no verb of its own.
   if (thing.reading) {
     out.actions = [{
       id: 'look',
@@ -252,13 +166,8 @@ const thingYaml = (thing: Thing): Record<string, Value> => {
   return out;
 };
 
-// ---------------------------------------------------------------------------
-// Rooms
-// ---------------------------------------------------------------------------
-
 const DARK = 'It is pitch black. You are likely to be eaten by a grue.';
 
-/** What Zork calls you as the score climbs, read out of `V-SCORE`. */
 const RANKS = [
   { from: 350, rank: 'Master Adventurer' },
   { from: 331, rank: 'Wizard' },
@@ -270,19 +179,6 @@ const RANKS = [
   { from: 0, rank: 'Beginner' },
 ].reverse();
 
-/**
- * A room's description.
- *
- * One, now. This used to be one description per combination of things still
- * where the game put them - every subset, most particular first, each gated on
- * an `object-in` for everything in it - because Stage printed nothing after a
- * room's own words and a thing's line had to be written into the room that held
- * it, and taken out again when it was carried off. The living room came to
- * thirty-two descriptions of itself.
- *
- * Stage 0.8.0 gave a thing `here` and `first`, so its line goes on the thing and
- * moves with it. The room says what it always said and nothing more.
- */
 const describing = (room: Room): Array<Value> => {
   const written = room.description ?? lookingProse(routines, room.action);
 
@@ -295,10 +191,6 @@ const describing = (room: Room): Array<Value> => {
     );
   }
 
-  // The seed took the first thing the routine says, which is the part that
-  // never changes. Anything after it is a fragment the room adds as the world
-  // moves, and the sentence it was part of is left unfinished until somebody
-  // writes the rest as `look` actions of their own.
   if (written && parts > 1 && !room.description) {
     note(
       'Rooms that describe themselves differently as the world changes',
@@ -325,11 +217,9 @@ const describing = (room: Room): Array<Value> => {
   return actions;
 };
 
-/** A way out, as an exit. */
 const wayOut = (room: Room, exit: Exit): Value => {
   const out: Record<string, Value> = { id: exit.direction };
 
-  // A wall with something to say is an exit that speaks and does not move you.
   if (!exit.to) {
     if (exit.routine) {
       note(
@@ -365,13 +255,6 @@ const wayOut = (room: Room, exit: Exit): Value => {
   return out;
 };
 
-/**
- * Scenery a room shares with others.
- *
- * ZIL keeps one white house and lets twelve rooms point at it. A thing in Stage
- * is in one place, so each room gets a copy of its own, written where it stands
- * because that is the only room it will ever be in.
- */
 const sceneryFor = (room: Room): Array<Value> =>
   room.scenery.flatMap((name) => {
     const thing = thingsById.get(name);
@@ -380,8 +263,6 @@ const sceneryFor = (room: Room): Array<Value> =>
       return [];
     }
 
-    // Scenery has no file, so its routine would otherwise go unreported - and
-    // the kitchen window, which is the way into the house, is one of these.
     if (thing.action) {
       note(
         'Things with something to answer for',
@@ -402,10 +283,6 @@ const sceneryFor = (room: Room): Array<Value> =>
 
     return [out as Value];
   });
-
-// ---------------------------------------------------------------------------
-// Writing it all out
-// ---------------------------------------------------------------------------
 
 const written: Array<string> = [];
 
@@ -430,13 +307,6 @@ if (!force) {
   }
 }
 
-// Which things are written as files of their own.
-//
-// Everything except what lives in one of ZIL's scenery bags, which has no room
-// of its own and is copied into each room that names it. A thing that is both -
-// the trap door lies in the living room and is named again by the cellar below
-// it - keeps its file and is copied as well, because Stage cannot have one
-// thing standing in two rooms.
 const named = new Set(rooms.flatMap((room) => room.scenery));
 const filed = things.filter((thing) => !BAGS.includes(thing.location ?? ''));
 
@@ -466,9 +336,6 @@ for (const thing of filed) {
     );
   }
 
-  // Filed under the region of the room it belongs to rather than the one ZIL
-  // defined it in, which is the same block for all of them. A thing sits beside
-  // the rooms it is part of.
   await put(
     `objects/${folder(roomsById.get(home ?? '')?.region ?? thing.region)}/${id(thing.id)}.object.yaml`,
     writeYaml(thingYaml(thing), ['synonyms', 'actions', 'measures']),
@@ -483,8 +350,6 @@ for (const thing of things.filter((one) => BAGS.includes(one.location ?? '') && 
 }
 
 for (const room of rooms) {
-  // Everything the room is answerable for: what is lying in it, and what is
-  // inside something lying in it, which begins offstage but belongs here.
   const here = filed.filter((thing) => homeOf(thing) === room.id).map((thing) => id(thing.id));
 
   const scene: Record<string, Value> = {
@@ -520,10 +385,6 @@ for (const room of rooms) {
   );
 }
 
-// Light. Stage has no notion of it, and `requires` can only say "and", so the
-// question "is anything lighting the way" is answered once a turn into a flag:
-// cleared first, then set by whatever is burning. Every rule is tested against
-// the world as the turn ended and only then fires, so the order is safe.
 const lights = things.filter((thing) => thing.flags.includes('LIGHTBIT'));
 
 await put(
@@ -549,15 +410,11 @@ for (const thing of lights) {
   );
 }
 
-// The words, which all three games share.
 await put(
   'vocabulary.yaml',
   writeYaml(vocabulary(), ['verbs', 'directions', 'articles', 'prepositions', 'conjunctions']),
 );
 
-// The game itself. Zork keeps one number and calls it the score; the ranks it
-// reads out at the end are the thresholds it passes on the way up, which is the
-// nearest Stage has to a `score` command while a bare verb reaches nothing.
 await put(
   'config.yaml',
   writeYaml(

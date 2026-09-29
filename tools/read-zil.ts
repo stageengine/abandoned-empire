@@ -1,12 +1,3 @@
-/**
- * A reader for ZIL, the language Infocom wrote Zork in.
- *
- * It reads the text into a tree and stops there. Nothing here knows what a room
- * is: working that out is `dungeon.ts`'s job, and keeping the two apart is what
- * lets the same reader be pointed at Zork II and Zork III without being taught
- * anything new.
- */
-
 export type Node =
   | { kind: 'string'; value: string }
   | { kind: 'atom'; value: string }
@@ -18,21 +9,9 @@ const CLOSERS: Record<string, string> = { '<': '>', '(': ')', '[': ']' };
 const SPACE = new Set([' ', '\t', '\n', '\r', '\f']);
 const DELIMITERS = new Set(['<', '>', '(', ')', '[', ']', '"', ';', ...SPACE]);
 
-/**
- * Read a whole file.
- *
- * @param {String} text The source.
- *
- * @returns {Array} Every top-level datum in it, in the order it was written.
- */
 export const read = (text: string): Array<Node> => {
   let at = 0;
 
-  /**
-   * Step over anything that is not a datum: whitespace, a comment, and the lone
-   * backslash Infocom used as a page break. A comment is a semicolon and the
-   * whole of the datum after it, both of which are thrown away.
-   */
   const skip = () => {
     while (at < text.length) {
       const char = text[at];
@@ -125,9 +104,6 @@ export const read = (text: string): Array<Node> => {
       return grouped(char);
     }
 
-    // `,GLOBAL`, `.LOCAL`, `'QUOTED`, `%<READ-TIME>`, `#TYPE`: the mark says how
-    // the datum after it is meant rather than what it is, and the port reads
-    // through all of them to the datum itself.
     if (char === ',' || char === '.' || char === "'" || char === '%' || char === '#') {
       at += 1;
 
@@ -137,8 +113,6 @@ export const read = (text: string): Array<Node> => {
     const found = word();
 
     if (found === '') {
-      // A closer with nothing open, or something else unexpected. Step over it
-      // rather than looping forever on it.
       at += 1;
 
       return { kind: 'atom', value: '' };
@@ -164,7 +138,6 @@ export const read = (text: string): Array<Node> => {
   }
 };
 
-/** Every node in the tree, depth first, so a form can be looked for anywhere. */
 export const walk = function* (nodes: Array<Node>): Generator<Node> {
   for (const node of nodes) {
     yield node;
@@ -179,7 +152,6 @@ export const walk = function* (nodes: Array<Node>): Generator<Node> {
   }
 };
 
-/** The word a node stands for, reading through any mark on it. */
 export const atom = (node: Node | undefined): string | null => {
   if (!node) {
     return null;
@@ -196,7 +168,6 @@ export const atom = (node: Node | undefined): string | null => {
   return null;
 };
 
-/** The text a node holds, where it holds any. */
 export const text = (node: Node | undefined): string | null => {
   if (!node) {
     return null;

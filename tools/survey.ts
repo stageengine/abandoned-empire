@@ -1,9 +1,3 @@
-/**
- * What the reader made of a dungeon file. Run it after changing anything in
- * `read-zil.ts` or `dungeon.ts`, because the whole port rests on this being
- * right and a misread property is quiet until a room is missing a wall.
- */
-
 import dungeon from './dungeon.ts';
 
 const source = await Deno.readTextFile(Deno.args[0] ?? '../source/zork1/1dungeon.zil');
@@ -47,8 +41,6 @@ for (const region of [...new Set(rooms.map((room) => room.region))]) {
   console.log(`${count(held)}   ${region}`);
 }
 
-// Anything the reader could not make sense of is worth seeing rather than
-// counting, because every one of them is a hole in the map.
 const missing = exits.filter((exit) => !exit.to && !exit.refusal && !exit.routine);
 
 console.log();
