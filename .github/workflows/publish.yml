@@ -185,13 +185,7 @@ jobs:
           set -euo pipefail
 
           {
-            echo "\`$TITLE\` $VERSION, carrying Stage $ENGINE."
-            echo
-            echo 'One program per platform, each with the engine inside it. Nothing to install:'
-            echo 'download the one for your machine and open it.'
-            echo
-            echo 'The macOS downloads are zipped because an application is a folder. Everything'
-            echo 'else is the program itself.'
+            echo "\`$TITLE\` $VERSION, compiled with Stage $ENGINE."
           } > notes.md
 
           gh release create "$TAG" \

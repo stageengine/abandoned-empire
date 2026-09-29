@@ -9,3 +9,6 @@ source/
 tools/checkpoints/
 *.saves/
 tools/__pycache__/
+
+# Architecture Design Records
+arch
