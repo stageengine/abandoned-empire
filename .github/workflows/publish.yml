@@ -21,9 +21,6 @@ env:
 
 jobs:
   publish:
-    # Not `ubuntu-latest`, and the reason is above: an Intel Mac build can only be signed
-    # on a Mac, and a runner that could make four of the five would publish a game that is
-    # missing one platform without saying so.
     runs-on: macos-latest
 
     steps:
@@ -52,10 +49,6 @@ jobs:
 
           echo "game=$game" >> "$GITHUB_OUTPUT"
 
-      # Every published Stage, and the list of sums published beside them. `export` reads
-      # both: the sums are what tell it a download arrived whole and came from the release
-      # it claims to, which matters more than usual here because a game is about to be
-      # written into each one and handed to somebody.
       - name: Fetch the Stages to write into
         run: |
           set -euo pipefail
@@ -148,12 +141,6 @@ jobs:
 
           ./stage export game.stg --output exports --templates templates
 
-      # A macOS game is a bundle, which is a directory, and an address serves one file.
-      # Zipped with `ditto` rather than `zip`, because a bundle carries resource forks and
-      # an extended attribute saying it is signed, and `zip` drops both - what comes out
-      # the other end would be a bundle macOS refuses to open.
-      #
-      # Everything else is already one file and is left alone.
       - name: Name every program for the release
         env:
           ID: ${{ steps.built.outputs.id }}
