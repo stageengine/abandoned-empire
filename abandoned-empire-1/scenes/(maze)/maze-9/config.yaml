@@ -43,8 +43,6 @@ navigation:
       - type: change-scene
         data:
           scene: maze-9
-  # A one-way tunnel. ZIL worked the destination out in code because the same
-  # routine served four rooms; here each room says where its own drop goes.
   - id: down
     triggers:
       - type: response

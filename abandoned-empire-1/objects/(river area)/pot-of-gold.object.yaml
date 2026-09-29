@@ -9,9 +9,6 @@ measures:
     max: 15
 tags: [treasure]
 requires:
-  # Whether the player can see. Seventy times, which is what
-  # ROADMAP.md's "whether the player can see" is about: one block on the game
-  # would say this once and reach a thing carried in and dropped besides.
   - type: any-of
     data:
       conditions:
@@ -20,11 +17,6 @@ requires:
           data: { tag: dark }
         - type: flag
           data: { flag: light }
-  # ZIL starts the pot `INVISIBLE` and only `FCLEAR`s it the moment the
-  # sceptre solidifies the rainbow from either end - reached here without
-  # ever waving it (the boat lands at the end of the rainbow directly), the
-  # pot should not be visible or takeable at all yet. `sceptre.object.yaml`
-  # is what raises this flag.
   - type: flag
     data: { flag: rainbow-flag }
 presence:

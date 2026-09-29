@@ -17,11 +17,14 @@ permissions:
   contents: write
 
 env:
-  STAGE: ${{ inputs.engine || '0.13.0' }}
+  STAGE: ${{ inputs.engine || '0.15.0' }}
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
+    # Not `ubuntu-latest`, and the reason is above: an Intel Mac build can only be signed
+    # on a Mac, and a runner that could make four of the five would publish a game that is
+    # missing one platform without saying so.
+    runs-on: macos-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -49,14 +52,34 @@ jobs:
 
           echo "game=$game" >> "$GITHUB_OUTPUT"
 
-      - name: Fetch Stage
+      # Every published Stage, and the list of sums published beside them. `export` reads
+      # both: the sums are what tell it a download arrived whole and came from the release
+      # it claims to, which matters more than usual here because a game is about to be
+      # written into each one and handed to somebody.
+      - name: Fetch the Stages to write into
         run: |
           set -euo pipefail
 
-          curl -fsSL -o stage \
-            "https://github.com/stageengine/releases/releases/download/v${STAGE}/stage-linux-x86_64"
+          mkdir -p templates
 
-          chmod +x stage
+          for asset in \
+            checksums.txt \
+            stage-macos-arm64 \
+            stage-macos-x86_64 \
+            stage-linux-arm64 \
+            stage-linux-x86_64 \
+            stage-windows-x86_64.exe
+          do
+            curl -fsSL -o "templates/$asset" \
+              "https://engine.sgail.com/download/engine@${STAGE}/$asset"
+          done
+
+          chmod +x templates/stage-macos-arm64
+
+          # The one this runner can actually execute, which is also the one that does the
+          # exporting. Its own version has to match the templates', which is the whole
+          # reason there is a single `STAGE` above rather than one per asset.
+          cp templates/stage-macos-arm64 stage
 
           ./stage --version
 
@@ -70,7 +93,7 @@ jobs:
           # near-miss vocabulary check (northeast/northwest/southeast/southwest
           # are all within its edit-distance threshold of each other), which
           # would block every build regardless of real content mistakes.
-          ./stage build "$GAME" --output game.stg
+          ./stage compile "$GAME" --output game.stg
 
       - name: Read what was built
         id: built
@@ -79,7 +102,7 @@ jobs:
 
           python3 - <<'PY' >> "$GITHUB_OUTPUT"
 
-          import gzip, hashlib, json, os
+          import gzip, json
 
           raw = open('game.stg', 'rb').read()
 
@@ -94,8 +117,6 @@ jobs:
               ('title', about.get('title', '')),
               ('version', about.get('version', '')),
               ('engine', built.get('engine', '')),
-              ('bytes', len(raw)),
-              ('hash', hashlib.sha256(raw).hexdigest()),
           ):
               print(f'{name}={value}')
           PY
@@ -121,74 +142,72 @@ jobs:
             exit 1
           fi
 
-      - name: Name it for the release
+      - name: Export a program for every platform
+        run: |
+          set -euo pipefail
+
+          ./stage export game.stg --output exports --templates templates
+
+      # A macOS game is a bundle, which is a directory, and an address serves one file.
+      # Zipped with `ditto` rather than `zip`, because a bundle carries resource forks and
+      # an extended attribute saying it is signed, and `zip` drops both - what comes out
+      # the other end would be a bundle macOS refuses to open.
+      #
+      # Everything else is already one file and is left alone.
+      - name: Name every program for the release
         env:
           ID: ${{ steps.built.outputs.id }}
           VERSION: ${{ steps.built.outputs.version }}
         run: |
           set -euo pipefail
 
-          mv game.stg "${ID}-${VERSION}.stg"
+          mkdir -p release
 
-          sha256sum "${ID}-${VERSION}.stg" > checksums.txt
+          for platform in exports/*/; do
+            name="$(basename "$platform")"
+
+            app="$(find "$platform" -maxdepth 1 -name '*.app' -print -quit)"
+
+            if [ -n "$app" ]; then
+              ditto -c -k --sequesterRsrc --keepParent "$app" "release/${ID}-${VERSION}-${name}.zip"
+              continue
+            fi
+
+            program="$(find "$platform" -maxdepth 1 -type f -print -quit)"
+            suffix=''
+
+            case "$name" in
+              windows-*) suffix='.exe' ;;
+            esac
+
+            cp "$program" "release/${ID}-${VERSION}-${name}${suffix}"
+          done
+
+          cd release && shasum -a 256 * > checksums.txt
+
+          ls -la
 
       - name: Release
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ inputs.tag || github.ref_name }}
-          ID: ${{ steps.built.outputs.id }}
           TITLE: ${{ steps.built.outputs.title }}
           VERSION: ${{ steps.built.outputs.version }}
           ENGINE: ${{ steps.built.outputs.engine }}
-          BYTES: ${{ steps.built.outputs.bytes }}
-          HASH: ${{ steps.built.outputs.hash }}
         run: |
           set -euo pipefail
 
-          file="${ID}-${VERSION}.stg"
-
           {
-            echo "\`$TITLE\` $VERSION, built by Stage $ENGINE."
+            echo "\`$TITLE\` $VERSION, carrying Stage $ENGINE."
             echo
-            echo '| | |'
-            echo '| --- | --- |'
-            echo "| game | \`$ID\` |"
-            echo "| version | \`$VERSION\` |"
-            echo "| engine | \`$ENGINE\` |"
-            echo "| bytes | \`$BYTES\` |"
-            echo "| sha256 | \`$HASH\` |"
+            echo 'One program per platform, each with the engine inside it. Nothing to install:'
+            echo 'download the one for your machine and open it.'
             echo
-            echo "Download: \`https://github.com/${GITHUB_REPOSITORY}/releases/download/${TAG}/${file}\`"
-            echo
-            echo 'The versioned address above is the one to point anything at. A build is'
-            echo 'reproducible for a given engine, so that file and that hash go together'
-            echo 'for good; the `latest` address does not.'
+            echo 'The macOS downloads are zipped because an application is a folder. Everything'
+            echo 'else is the program itself.'
           } > notes.md
 
-          if gh release view "$TAG" >/dev/null 2>&1; then
-            gh release upload "$TAG" "$file" checksums.txt --clobber
-            gh release edit "$TAG" --notes-file notes.md
-          else
-            gh release create "$TAG" "$file" checksums.txt \
-              --title "$TITLE $VERSION" \
-              --notes-file notes.md \
-              --verify-tag
-          fi
-
-      - name: Summary
-        env:
-          HASH: ${{ steps.built.outputs.hash }}
-          BYTES: ${{ steps.built.outputs.bytes }}
-          TAG: ${{ inputs.tag || github.ref_name }}
-          ID: ${{ steps.built.outputs.id }}
-          VERSION: ${{ steps.built.outputs.version }}
-        run: |
-          {
-            echo "### Published"
-            echo
-            echo "| | |"
-            echo "| --- | --- |"
-            echo "| url | \`https://github.com/${GITHUB_REPOSITORY}/releases/download/${TAG}/${ID}-${VERSION}.stg\` |"
-            echo "| hash | \`${HASH}\` |"
-            echo "| bytes | \`${BYTES}\` |"
-          } >> "$GITHUB_STEP_SUMMARY"
+          gh release create "$TAG" \
+            --title "$TITLE $VERSION" \
+            --notes-file notes.md \
+            release/*

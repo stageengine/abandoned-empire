@@ -115,9 +115,6 @@ objects:
           - type: response
             data:
               text: The wall is a wall, and gives nothing away.
-  # ZIL's `LAKE-PSEUDO` checks `LOW-TIDE` before it ever asks which verb was
-  # used, so once the reservoir has drained this answers `cross` and `swim`
-  # alike.
   - id: reservoir-north.lake
     name: lake
     synonyms: [lake]

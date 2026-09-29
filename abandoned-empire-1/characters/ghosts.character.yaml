@@ -17,10 +17,6 @@ synonyms:
   - evil force
 start: entrance-to-hades
 
-# The ceremony's two windows. Zork queues them as interrupts: six turns from the
-# bell to the lit candles, then three from the candles to the prayer. Here they
-# are numbers that only move while their flag is set, and the room's own rules
-# move them - the ceremony is a thing that happens at this gate and nowhere else.
 measures:
   - id: patience
     max: 6
@@ -67,12 +63,6 @@ actions:
         data:
           text: The spirits jeer loudly and ignore you.
 
-  # ZIL's `LLD-ROOM` answers every `EXORCISE`, named object or none, at M-BEG -
-  # before the ceremony is done this is what actually answers "exorcise
-  # ghosts" too, not the plain line below, which only stands a chance once
-  # the spirits are already banished (`lld-flag` set) and naming them at all
-  # is closer to moot. Ordered the same way LLD-ROOM checks it: the
-  # fully-equipped case, then the general one.
   - id: exorcise
     requires:
       - type: flag
@@ -128,9 +118,6 @@ actions:
         data:
           text: You seem unable to interact with these spirits.
 
-  # ZIL's `V-HELLO` answers any `ACTORBIT` object addressed by name this same
-  # way, regardless of which one - reworded for the plural noun this file
-  # already uses everywhere else ("The spirits jeer...", not "jeers").
   - id: hello
     triggers:
       - type: response

@@ -22,14 +22,12 @@ presence:
           text: There is an old trunk here, bulging with assorted jewels.
 start: reservoir
 
-# Half buried in the mud, and so not there at all until the mud is showing.
 tags: [treasure]
 requires:
   - type: flag
     data:
       flag: low-tide
 
-  # Whether the player can see, as above and everywhere else.
   - type: any-of
     data:
       conditions:

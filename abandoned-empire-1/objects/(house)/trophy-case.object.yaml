@@ -12,29 +12,6 @@ actions:
         data:
           text: The trophy case is securely fastened to the wall.
 
-  # One of these per treasure, and the reason is not the one this comment used to
-  # give. Stage has containers now - `put the coin in the sack` works without
-  # anybody writing it - but the built-in only moves a thing, and each treasure
-  # here is worth a different number of points. A trigger names a fixed object and
-  # a fixed amount, so there is no way to write "score whatever they just put in
-  # by whatever it is worth" once. That is the engine's own test failing, and it
-  # is on the roadmap as a trigger that cannot act on a thing chosen during play.
-  #
-  # Sent offstage rather than into the case, which is also not the old reason. A
-  # thing may be `in:trophy-case` now, and putting one there would be worse: the
-  # room cannot recite a container's contents, so the treasure would be invisible
-  # and still reachable, and `take the coffin` would quietly undo the score. Until
-  # a room lists what is in a container standing in it, offstage is the honest
-  # place for a thing the player has finished with.
-  #
-  # No gate on any of them, and that is worth saying because two were tried. A
-  # `has-item` requirement cannot be heard when it fails: the catch-all below
-  # carries no requirements, so it answers whenever a particular one does not, and
-  # the particular's own words are dead on the page. A `once` cannot be reached
-  # either, for a different reason - the treasure is offstage the moment it is
-  # deposited, so a second attempt names nothing and the catch-all answers that
-  # too. What is left is the honest shape: no gate, because there is no second
-  # time to gate against.
 
   - id: put
     preposition: in
@@ -393,8 +370,6 @@ actions:
           measure: score
           by: 5
 
-  # Anything that is not one of the twenty-one. Below them all, and carrying no
-  # requirements, so it answers for everything they do not.
   - id: put
     preposition: in
     triggers:
@@ -409,13 +384,6 @@ actions:
           text: >-
             A glass-fronted case, securely fastened to the wall, and empty of everything but
             dust and the promise of what might go in it.
-  # ZIL never gives the case its own words for `open` at all - "Opened." is the
-  # engine's ordinary answer for any container, every time, win or not. The map
-  # is real ZIL content (1dungeon.zil's MAP object, invisible until the score
-  # reaches 350) that a room here has no way to recite on its own - Stage does
-  # not yet read what is inside a container standing in it, the roadmap's own
-  # *nested description* - so this line exists to say what the room cannot,
-  # and has to wait for the same flag the map itself waits for.
   - id: open
     requires:
       - type: flag

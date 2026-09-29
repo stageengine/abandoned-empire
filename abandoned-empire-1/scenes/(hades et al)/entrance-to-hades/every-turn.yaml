@@ -1,9 +1,5 @@
-# The ceremony, which happens at this gate and nowhere else - so it can only be
-# written here, in the room's own rules.
 
 every-turn:
-  # Lit candles held while the wraiths are still facing you. This is the middle
-  # of it, and it opens the three turns in which the prayer will work.
   - requires:
       - type: flag
         data:
@@ -34,9 +30,6 @@ every-turn:
           measure: awe
           to: 3
 
-  # The two windows closing. Their own thresholds say what happens at the end of
-  # each; these only walk them down, and only while the player is still here -
-  # which is a kindness ZIL does not do, since its clocks run wherever you go.
   - requires:
       - type: flag
         data:

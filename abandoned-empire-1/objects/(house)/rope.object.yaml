@@ -8,9 +8,6 @@ measures:
     max: 10
 tags: [belongings]
 requires:
-  # Whether the player can see. Seventy times, which is what
-  # ROADMAP.md's "whether the player can see" is about: one block on the game
-  # would say this once and reach a thing carried in and dropped besides.
   - type: any-of
     data:
       conditions:
@@ -35,11 +32,6 @@ presence:
 start: attic
 
 actions:
-  # `to` is a filler preposition - it has to be, because `at` is a synonym of it
-  # and `look at the fire` would otherwise need declaring on every description in
-  # the game - and a filler throws away the second object before the action is
-  # chosen. So `tie the rope to the railing` arrives as a bare `tie the rope`,
-  # and the railing has to be found by asking whether it is in the room.
   - id: tie
     requires:
       - type: object-here
@@ -92,8 +84,6 @@ actions:
           flag: dome-flag
           value: false
 
-  # Take it back while it is still tied and ZIL refuses outright, rather than
-  # quietly detaching it the way a plain `get` would.
   - id: get
     requires:
       - type: flag
@@ -104,12 +94,6 @@ actions:
         data:
           text: The rope is tied to the railing.
 
-  # Dropped untied in the Dome Room, ZIL's own `ROPE-FUNCTION` sends it
-  # through the hole to the Torch Room floor below rather than leaving it
-  # where it fell - the one way to lose the rope for good, since nothing ever
-  # climbs back up to fetch it. Faithfully reproduced rather than softened:
-  # `arch` favors matching a real risk over inventing a safety net ZIL itself
-  # does not have.
   - id: drop
     requires:
       - type: scene

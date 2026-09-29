@@ -1,15 +1,5 @@
-# What the world does while the player is doing something else.
-#
-# Two of the three things here are bookkeeping for something the engine does not
-# have a word for yet, and both work the same way: a flag is cleared at the top
-# of the pass and set again by whatever ought to set it. Every rule is tested
-# against the world as the turn ended and only then fires, in the order written,
-# so a rule cannot see what a rule above it did and the clearing cannot undo the
-# setting.
 
 every-turn:
-  # One more move, every turn, whatever the player did with it. First in the pass
-  # so that a rule below reading the count reads this turn's.
   - triggers:
       - type: adjust-measure
         data:
@@ -17,10 +7,6 @@ every-turn:
           measure: moves
           by: 1
 
-  # Zork brings the allowance back on its own once a fight is over: `1actions.zil`
-  # adds 10 back each turn until it reaches `LOAD-MAX` again. `laden` already
-  # reads the measure as it stands, so recovery was the one piece missing - a
-  # wound left the player permanently under-strength otherwise.
   - requires:
       - type: measure
         data: { subject: player, measure: allowance, max: 99 }
@@ -31,14 +17,6 @@ every-turn:
           measure: allowance
           by: 10
 
-  # Is anything lighting the way? One question now that `any-of` exists, asked
-  # once a turn into a flag so that every dark room can ask one thing rather
-  # than the whole list. It is an or of ands - a lamp is not a light unless it
-  # is lit - which is why the alternatives are `all-of` blocks.
-  #
-  # An action that lights or douses something sets `light` itself as well, since
-  # this pass runs after the turn and a player who lights the lamp should not be
-  # told it is pitch black in the same breath.
   - triggers:
       - type: set-flag
         data:
@@ -49,16 +27,6 @@ every-turn:
       - type: any-of
         data:
           conditions:
-            # `object-here`, not `has-item`, on all three of these too: ZIL's
-            # `LIT?` reads whatever is in the current room for `ONBIT`, not
-            # whatever the player's hands hold - a lit lamp left behind still
-            # lights the room it was dropped in. Confirmed directly against
-            # the compiled game: drop a lit lamp, walk away, walk back, and
-            # the room you left it in was never dark. The mine's own basket
-            # puzzle depends on the very next condition having this already,
-            # and the crawlway either side of it depends on this one having
-            # it too - `drop all` there leaves a lit lamp exactly where a
-            # player will need it again once they are back within reach.
             - type: all-of
               data:
                 conditions:
@@ -89,18 +57,10 @@ every-turn:
                     data:
                       flag: match-on
 
-            # ZIL's torch carries `ONBIT` fixed
-            # forever on, so it lights whatever room it is sitting in exactly as
-            # readily as one the player is holding - the mine's basket puzzle
-            # depends on this, lowering the torch down the shaft ahead of a
-            # player who has to cross a passage too narrow to carry anything
-            # through, and finding it still burning at the bottom.
             - type: object-here
               data:
                 object: torch
 
-            # Not an object at all, unlike the four above it: sunlight through
-            # the open grating, which is what lit the Grating Room in Zork too.
             - type: all-of
               data:
                 conditions:
@@ -116,8 +76,6 @@ every-turn:
           flag: light
           value: true
 
-  # The lamp burning down. Its own thresholds do the talking, and the last of
-  # them puts the light out.
   - requires:
       - type: flag
         data:
@@ -133,30 +91,12 @@ every-turn:
           measure: life
           by: -1
 
-  # Whether the last turn was spent in the dark, which is what tells a grue it
-  # has had time to find you. Cleared here and set again below if the room the
-  # player is standing in is still a dark one.
   - triggers:
       - type: set-flag
         data:
           flag: was-dark
           value: false
 
-  # The grue. One rule for all seventy-seven dark rooms, because a room says
-  # what kind of room it is and a condition can ask. This used to be the same
-  # thirty lines in seventy-seven folders, written by a tool.
-  #
-  # `player-died` rather than `end-game` directly: ZIL's own `JIGS-UP` is one
-  # routine called for every death in the game, grue included, and gives every
-  # one of them the same two resurrections before the third is final. Calling
-  # `end-game` here instead would make this one death always final on the
-  # first turn, when it is the single most common way to die in the game.
-  #
-  # `player-died` negated too: resurrection reads it a pass later than this
-  # rule writes it, the same one-turn lag every every-turn rule reads every
-  # other's writes from, and the room is still dark on that later turn - so
-  # without this, the grue devours the player a second time while the first
-  # death is still waiting to be resolved.
   - requires:
       - type: scene
         data:
@@ -200,9 +140,6 @@ every-turn:
           flag: was-dark
           value: true
 
-  # Flood Control Dam #3. The gates decide which way the reservoir walks, and
-  # the dam's own thresholds set `low-tide` when it reaches either end. Eight
-  # turns each way, which is what ZIL queues.
   - requires:
       - type: flag
         data:
@@ -236,7 +173,6 @@ every-turn:
           measure: water
           by: 1
 
-  # The leak the blue button opens, rising a notch a turn until it is stopped.
   - requires:
       - type: flag
         data:
@@ -248,13 +184,6 @@ every-turn:
           measure: flood
           by: 1
 
-  # The Loud Room, once the gates are open and the reservoir hasn't finished
-  # draining: `LOUD-ROOM-FCN`'s `M-END` forcibly ejects a player who stays
-  # there, to one of the room's own three exits at random (`LOUD-RUNS`). Not
-  # gated on `loud-flag`: ZIL's own check is only `GATES-OPEN` and `NOT
-  # LOW-TIDE`, with no exemption for having already solved the echo puzzle -
-  # this is the reservoir physically rising into the room, not the acoustics
-  # the puzzle answers, so solving `echo` does not make it safe to linger.
   - requires:
       - type: scene
         data:
@@ -324,14 +253,6 @@ every-turn:
       - type: change-scene
         data: { scene: deep-canyon }
 
-  # The Gas Room. ZIL's `BOOM-ROOM` checks at the end of every turn spent
-  # there whether the player is holding a lit candle, torch, or match -
-  # `HELD?`, not `object-here`, so it is specifically what is in their hands
-  # that ignites the gas, not merely a light source left lying nearby. One
-  # message rather than ZIL's two: the "how sad... light a match" wording is
-  # only for the exact turn the flame was lit, and telling that turn apart
-  # from one spent just standing there already burning is not worth a shadow
-  # flag for a line that ends the same way either time.
   - requires:
       - type: scene
         data:
@@ -373,8 +294,6 @@ every-turn:
           flag: player-died
           value: true
 
-  # The candles burning down, and the match with them. Both say their own piece
-  # through their thresholds.
   - requires:
       - type: flag
         data:
@@ -401,7 +320,6 @@ every-turn:
           measure: flame
           by: -1
 
-  # The bell cooling, twenty turns after it was rung.
   - requires:
       - type: flag
         data:
@@ -413,9 +331,6 @@ every-turn:
           measure: heat
           by: -1
 
-  # Somewhere out in the trees. Zork queues this the moment you first set foot in
-  # a forest room and turns it off again the moment you leave; a tag asked once a
-  # turn comes to the same thing and needs no queue.
   - requires:
       - type: scene
         data:
@@ -430,17 +345,6 @@ every-turn:
         data:
           text: You hear in the distance the chirping of a song bird.
 
-  # What a treasure is worth for being found, which Zork scores the moment it is
-  # first held and never again. Zork's own VALUE for each, rather than a table
-  # copied out of the report, which had three of them missing and the rest right.
-  #
-  # One rule each, and the repetition is the engine's own gap rather than a choice:
-  # `has-item` names a fixed object and `adjust-measure` a fixed amount, so "score
-  # whatever they are holding by whatever it is worth" cannot be written once.
-  #
-  # Here rather than on each treasure's `get`, because a treasure can be come by
-  # without being taken - the canary comes out of the egg - and a rule asking what
-  # is in the player's hands catches every route.
 
   - requires:
       - type: has-item
@@ -784,26 +688,6 @@ every-turn:
           measure: score
           by: 15
 
-  # The thief walks the dungeon. One roll a turn, `thief-walk`, over the rooms
-  # ZIL lets him into - everything below ground except the maze and the rooms
-  # it flags sacred - and one rule per room, each claiming one index of the
-  # thirty-three, so exactly one of them fires and that is where he goes.
-  #
-  # Silent once he is dead, too. ZIL drives every thief behaviour off one queued
-  # interrupt and disables it in full on death (`<DISABLE <INT I-THIEF>>`,
-  # ROBBER-FUNCTION's F-DEAD branch) rather than checking aliveness in each one.
-  # `remove-object` already parks a dead thief in `bin`, which is a fact this can
-  # read directly - no flag of its own, since one already exists to ask.
-  #
-  # He is silent about it. Zork announces him arriving and leaving where the player
-  # can see; the room says he is there when it describes itself, which is the half
-  # that reads without a rule per room.
-  #
-  # Silent about standing still, too. `I-THIEF` only reaches this wander at all
-  # once it already knows `<NOT <EQUAL? .RM ,HERE>>` - he does not roll to leave
-  # a room he shares with the player, which is what makes an ambush he was just
-  # placed into (`cyclops-room/config.yaml`'s `up`) stand there rather than
-  # scatter to a random room on the very turn he arrives.
   - requires:
       - type: character-here
         negate: true
@@ -1233,28 +1117,7 @@ every-turn:
       - type: move-object
         data: { object: thief, to: round-room }
 
-  # And what he is for, now written once. `tagged` asks whether anything
-  # tagged `treasure` is in the player's hands, and `move-tagged` takes
-  # every treasure that answers in a single firing - what sixteen rules
-  # against `has-item`/`remove-from-inventory` used to approximate one
-  # object at a time, and got wrong besides: `remove-from-inventory` sent
-  # what it took to the room the theft happened in, not to the thief, so a
-  # stolen treasure never actually travelled with him. See `arch/0026` in
-  # the engine.
-  #
-  # Only where he is standing, and only sometimes, so a player who meets him keeps
-  # most of what they are carrying most of the time: one roll of nine, `thief-robbery`,
-  # of which one index robs and the other eight only look. Zork's own words for it:
-  # he is gone before you notice.
 
-  # ZIL robs the room he is standing in before it ever touches the player's
-  # own hands (`<ROB ,HERE ,THIEF 100>`, falling back to `<ROB ,WINNER
-  # ,THIEF>` only when the room held nothing). One rule rather than two -
-  # the build refuses two rules claiming the same `chance` index, even when
-  # they are made mutually exclusive by their own `requires` - so both pools
-  # are swept in the one firing instead: room first in the trigger order,
-  # inventory besides only on the rare turn a treasure sits in both at once,
-  # which real play essentially never lines up.
   - requires:
       - type: character-here
         data:
@@ -1300,18 +1163,6 @@ every-turn:
       - type: response
         data: { text: The thief is taking an unhealthy interest in your possessions. }
 
-  # The egg, opened undamaged, but only by his death. See `arch/0013`: ZIL's
-  # `DEPOSIT-BOOTY` moves every treasure the thief was holding to the room he
-  # dies in and, for the egg alone among them, also sets its open bit -
-  # `<FSET ,EGG ,OPENBIT>`. `move-tagged` above already does the moving; this
-  # is the one-line exception `move-tagged` cannot itself express, since it
-  # sweeps every match the same way and does not ask which object each one is.
-  #
-  # `thief-just-died` is a one-turn pulse the death threshold raises and this
-  # pass always lowers again, the same shape `was-dark` already uses above -
-  # read once, acted on if it applies, gone by the next turn regardless, so an
-  # unrelated closed egg lying on some later floor can never be mistaken for
-  # this one.
   - requires:
       - type: flag
         data: { flag: thief-just-died }
@@ -1328,15 +1179,6 @@ every-turn:
       - type: set-flag
         data: { flag: thief-just-died, value: false }
 
-  # His own counter-swing, wherever he currently is: he wanders, so this cannot
-  # live in one room's own `every-turn.yaml` the way the troll's does. Silent
-  # until `attack` sets `thief-fighting` - he is a thief before he is a fighter,
-  # and does not start a fight just for being in the room with you. Same 5:2:2:2
-  # weighting as the troll's, which is ZIL's own `DEF3A` table read the same way:
-  # one roll of eleven, `thief-blow`, sliced between the rules below, and the
-  # miss - the commonest of the four - a second roll of four, `thief-miss`, to
-  # pick a line. Repeating, unlike the troll's: ZIL picks the thief's lines
-  # with no memory between blows.
   - requires:
       - type: character-here
         data:
@@ -1465,9 +1307,6 @@ every-turn:
           measure: allowance
           by: -20
 
-  # The encounter ends when either of you leaves, not only when he dies -
-  # otherwise a fight broken off by walking away would resume the moment he
-  # next wanders back into whatever room the player is standing in.
   - requires:
       - type: character-here
         negate: true
@@ -1482,26 +1321,6 @@ every-turn:
           flag: thief-fighting
           value: false
 
-  # The sword's own warning, said without being asked - which is most of what
-  # it is for. `sword.object.yaml`'s `look` answers the same question if
-  # asked, reading the same `glow` measure these rules set; its own
-  # thresholds say the words the moment it actually changes, matching ZIL's
-  # own change-only announcement.
-  #
-  # ZIL's `INFESTED?` is not troll/thief/cyclops specifically - it is any
-  # object with `ACTORBIT` set and `INVISIBLE` clear, which in this game
-  # means five: those three plus the bat and the ghosts. `object-in` reads
-  # true villain state (fled, dead, not yet spawned) the same way
-  # `character-here` already does for "in this room", so neither list needs
-  # its own separate fled/dead handling.
-  #
-  # The faint tier - a villain one room over - only covers the four fixed
-  # guardians (troll, cyclops, ghosts, bat), each with a short, genuinely
-  # fixed list of neighbors read straight off their own room's exits. The
-  # thief is the one ZIL villain this omits: he is the only one that
-  # actually wanders, so "faintly warn of the thief" would need an
-  # adjacency check against every room in the game rather than a handful of
-  # fixed ones - a proportionality call, not an oversight.
   - requires:
       - type: has-item
         data:
@@ -1723,15 +1542,6 @@ every-turn:
           measure: glow
           to: 0
 
-  # Resurrection. ZIL's `JIGS-UP` reads this off `DEATHS` at the moment of death;
-  # here the health threshold only raises `player-died`, and these two rules read
-  # the running count to decide which of Zork's two answers this death gets.
-  # Simplified in one way: every resurrection uses the ordinary Forest branch
-  # rather than ZIL's alternate ghost-in-Hades one for a death after the Temple
-  # has been visited.
-  # Ahead of the rule below and reading the same, still-unset `player-died`,
-  # because that rule clears it - ZIL's own special case, and one of two things
-  # returned rather than scattered with everything else a player was carrying.
   - requires:
       - type: flag
         data:
@@ -1750,8 +1560,6 @@ every-turn:
           object: lamp
           to: living-room
 
-  # ZIL's other special case: `RANDOMIZE-OBJECTS` names the coffin by itself,
-  # the same way it names the lamp, ahead of the generic sweep below.
   - requires:
       - type: flag
         data:
@@ -1770,26 +1578,6 @@ every-turn:
           object: coffin
           to: egypt-room
 
-  # Everything else a player was carrying, scattered together - and split the
-  # way `RANDOMIZE-OBJECTS` (1actions.zil:4101-4123) actually splits it, which
-  # an earlier pass of this fix had backwards. ZIL's `ELSE` branch - anything
-  # that is *not* a treasure (`P?TVALUE` zero, which it forces the sword's own
-  # to be first) - drops straight into one of the eleven named `ABOVE-GROUND`
-  # rooms, picked uniformly; a real treasure instead rolls once per treasure
-  # against *every* room in the game with `RLANDBIT` set and `ONBIT` clear
-  # (50% a try, cycling until one hits) - the ordinary, mostly-dark dungeon,
-  # explicitly excluding the lit house-and-outdoors set `ABOVE-GROUND` names.
-  # This engine's `move-tagged` acts on everything a tag currently marks in
-  # one trigger rather than one roll per item, so everything a tag marks
-  # answers the one roll below together rather than each finding its own
-  # room - the `belongings` tag (every portable non-treasure except the lamp,
-  # already special-cased above) gets `ABOVE-GROUND`'s own eleven exactly;
-  # the `treasure` tag gets a second, differently-named roll of eleven
-  # against a representative sample of ordinary dungeon rooms instead, since
-  # asking a random condition about literally every room in the game is not
-  # a question this engine's `chance` can put. Not the same room either one
-  # would fetch on its own die, but the same shape - dropped outside the
-  # player's own hands, and nowhere they left it.
   - requires:
       - type: flag
         data: { flag: player-died }
@@ -2090,10 +1878,6 @@ every-turn:
         data:
           journal: died once too often
 
-  # Zork scores four rooms for being reached at all, which is the last sixty-five of
-  # the three hundred and fifty and the part the port had none of. `visited` asks
-  # the question directly, so this is one rule each and the flag is what makes it
-  # happen once.
 
   - requires:
       - type: visited
@@ -2167,19 +1951,6 @@ every-turn:
           measure: score
           by: 5
 
-  # A fifth room-reached bonus, and the one the four above were named for
-  # without being: ZIL's `NO-OBJS` checks this on every room entry, not only
-  # this one, but the `AND` inside it only ever holds at the Drafty Room -
-  # thirteen points, once, the moment the player gets here lit and carrying
-  # nothing heavier than four (`LIGHT-SHAFT`, zeroed the instant it pays out).
-  # No line is printed for it in ZIL either; the only way a player learns it
-  # happened is `score` reading higher than the treasures alone explain. The
-  # `east` exit out of here already asks the nearest true version of the same
-  # question - `carrying: max: 4` in place of ZIL's true per-item check - and
-  # this asks it again rather than reuse that exit's own passing as a proxy,
-  # since arriving lit and light enough is the whole of ZIL's condition and
-  # this may be read on the very turn the player walks in, before they have
-  # tried to leave at all.
   - requires:
       - type: scene
         data:
@@ -2204,16 +1975,6 @@ every-turn:
           measure: score
           by: 13
 
-  # The bat, carried out. `BATS-ROOM` checks this on every `M-ENTER` (not
-  # gated on light, unlike almost everything else in this file) and flies the
-  # player to one of eight rooms the instant they arrive without garlic
-  # (`LOC ,GARLIC` reading either the player's own hands or the floor here) -
-  # a per-turn `scene: bat-room` check comes to the same thing, since the turn
-  # this fires is always the turn of arrival: nothing else moves the player
-  # out of the room first, garlic dropped after arriving is still garlic
-  # `object-here` can see, and there is no later turn to differ on once they
-  # are already gone. One `chance` of eight and one block per destination,
-  # `BAT-DROPS`' own table, in its own order.
   - requires:
       - type: scene
         data:
@@ -2366,10 +2127,6 @@ every-turn:
       - type: change-scene
         data: { scene: mine-entrance }
 
-  # The cyclops's own wrath, ticking. See `cyclops.character.yaml`'s own
-  # comment above its `wrath` measure for what escalates and what stops it -
-  # this rule is only the ticking itself, gated on the two things ZIL's
-  # `DISABLE` answers for: being elsewhere, and being asleep.
   - requires:
       - type: scene
         data: { id: cyclops-room }
@@ -2385,8 +2142,6 @@ every-turn:
           measure: wrath
           by: 1
 
-  # The skeleton's curse, carried out. One rule per treasure and then the flag is
-  # put down again, so it happens on the turn the ghost appears and no other.
 
   - requires:
       - type: flag
@@ -2671,22 +2426,6 @@ every-turn:
           flag: cursed
           value: false
 
-  # The Frigid River's current. `river-timer` counts down while the player is
-  # aboard and on the river; the room they are in when it reaches zero decides
-  # where it carries them, which is what `RIVER-NEXT`/`RIVER-SPEEDS` did in ZIL
-  # with a table instead of five rules. River Five has no next room in that
-  # table either - past it is the waterfall.
-  #
-  # Each transition below reads `max: 1`, not `max: 0`: every rule in a pass
-  # sees the same snapshot from before any of them fired (this file's own
-  # habit, and the reason a patrol written as one rule per leg does not
-  # silently walk its whole circuit in a single turn), so the plain decrement
-  # above and a transition checking the *already-decremented* value can never
-  # both fire on the turn the count actually reaches zero - the transition
-  # would not see zero until the turn after, one tick later than ZIL's own
-  # `I-RIVER`, which re-queues itself for exactly the speed a room names, not
-  # that plus one. Reading the count as it stood before this tick's decrement
-  # - due to hit zero *by* this tick - is what makes the two turns line up.
   - requires:
       - type: flag
         data:

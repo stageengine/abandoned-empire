@@ -1,8 +1,2 @@
-# What this room does, and only this room.
-#
-# The trap door shutting behind you used to be here, because ZIL hangs it on
-# entering the room. An every-turn rule runs after the turn, so it read after the
-# room description where Zork reads it before - so it sits on the way down out of
-# the living room now, which is the only way in while the door is still open.
 
 every-turn: []

@@ -20,9 +20,6 @@ measures:
     max: 10
 tags: [belongings]
 requires:
-  # Whether the player can see. Seventy times, which is what
-  # ROADMAP.md's "whether the player can see" is about: one block on the game
-  # would say this once and reach a thing carried in and dropped besides.
   - type: any-of
     data:
       conditions:
@@ -47,9 +44,6 @@ presence:
 start: in:altar
 
 actions:
-  # Read at the gate with the candles burning and the spirits cowering, this is
-  # the whole of the exorcism. Written above the plain reading, because the
-  # first requirement that holds decides which action this is.
   - id: look
     requires:
       - type: flag
@@ -114,9 +108,6 @@ actions:
           text: >-
             A booming voice says "Wrong, cretin!" and you notice that you have turned into a pile
             of dust. How, I can't imagine.
-      # `player-died` rather than `end-game`: every death in ZIL goes through
-      # one routine, `JIGS-UP`, which gives every one of them the same two
-      # resurrections before the third is final - this one included.
       - type: set-flag
         data:
           flag: player-died

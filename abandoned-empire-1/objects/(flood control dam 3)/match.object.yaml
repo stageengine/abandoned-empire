@@ -7,9 +7,6 @@ portable: true
 size: weight
 tags: [belongings]
 requires:
-  # Whether the player can see. Seventy times, which is what
-  # ROADMAP.md's "whether the player can see" is about: one block on the game
-  # would say this once and reach a thing carried in and dropped besides.
   - type: any-of
     data:
       conditions:
@@ -25,8 +22,6 @@ presence:
           text: There is a matchbook whose cover says "Visit Beautiful FCD#3" here.
 start: dam-lobby
 
-# Six matches, and two turns of burning apiece. `left` is how many are in the
-# book; `flame` is how long the one in your hand has.
 measures:
   - id: left
     max: 6
@@ -53,10 +48,6 @@ measures:
     max: 2
 
 actions:
-  # ZIL's `MATCH-FUNCTION` decrements the count before it ever checks where
-  # the player is standing, so a match struck in one of these two drafty
-  # coal-mine rooms is spent for nothing - written above the ordinary light
-  # for the same reason lighting-while-out-of-matches is checked first.
   - id: burn
     requires:
       - type: measure

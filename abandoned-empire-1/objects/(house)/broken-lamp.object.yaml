@@ -1,10 +1,6 @@
 id: broken-lamp
 name: broken lantern
 
-# The same words the working lamp answers to, which is what ZIL gives both of
-# them. Safe since Stage 0.8.0: where a word matches two things and only one is
-# within reach, the one in the room is what the player meant, so `take the lamp`
-# reaches whichever of these is actually there.
 synonyms: [lamp, lantern, broken lamp, broken lantern, smashed lamp, smashed lantern]
 portable: true
 size: weight
@@ -13,9 +9,6 @@ measures:
     max: 5
 tags: [belongings]
 requires:
-  # Whether the player can see. Seventy times, which is what
-  # ROADMAP.md's "whether the player can see" is about: one block on the game
-  # would say this once and reach a thing carried in and dropped besides.
   - type: any-of
     data:
       conditions:

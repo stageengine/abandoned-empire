@@ -17,21 +17,12 @@ synonyms:
   - dusty cover
 start: living-room
 
-# Under the rug until the rug is moved. ZIL says this with an INVISIBLE flag it
-# clears; here it is a condition asked afresh every turn, which comes to the
-# same thing and needs nothing written on the rug to remember it.
 requires:
   - type: flag
     data:
       flag: rug-moved
 
 actions:
-  # ZIL answers "open" or "close" on a door already in that state with
-  # `<PICK-ONE ,DUMMY>` - one roll shared by every object that pulls from the
-  # same generic table, rather than a line of its own for each. Three blocks
-  # per verb, gated on the same roll, are that table here: the last carries no
-  # `chance` of its own, since one roll of three has nothing left to be but
-  # the third once the first two have missed.
   - id: open
     requires:
       - type: flag

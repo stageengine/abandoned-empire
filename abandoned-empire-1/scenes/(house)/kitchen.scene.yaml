@@ -49,8 +49,6 @@ objects:
   - water
   - lunch
   - kitchen-table
-  # The bottle before the sack, which is the order Zork reads them in. A room lists
-  # its things in the order it names them, so the order here is the prose.
   - bottle
   - sandwich-bag
   - garlic

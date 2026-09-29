@@ -25,9 +25,6 @@ measures:
     max: 8
 tags: [treasure]
 requires:
-  # Whether the player can see. Seventy times, which is what
-  # ROADMAP.md's "whether the player can see" is about: one block on the game
-  # would say this once and reach a thing carried in and dropped besides.
   - type: any-of
     data:
       conditions:
@@ -37,8 +34,6 @@ requires:
         - type: flag
           data: { flag: light }
 
-  # Buried until somebody digs it out of the sand, which is three turns with the
-  # shovel and one turn too many kills you.
   - type: flag
     data: { flag: scarab-found }
 presence:

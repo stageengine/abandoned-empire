@@ -44,11 +44,6 @@ objects:
   - lowered-basket
   - id: lower-shaft.chain
     name: chain
-    # `basket` too, listed after the real `lowered-basket` so declaration
-    # order gives that object first claim on the word whenever it is
-    # actually present - this only answers for `basket` when neither basket
-    # object is here to, which is exactly when the basket has been raised
-    # and there is nothing else in this room the word could mean.
     synonyms: [chain, basket, cage, dumbwaiter]
     actions:
       - id: get
@@ -66,11 +61,6 @@ objects:
           - type: response
             data:
               text: "Perhaps you should do that to the basket."
-      # The same gap `shaft-room/config.yaml`'s own `raise` closes, mirrored:
-      # once the basket is up, neither basket object is reachable from down
-      # here to be lowered again, `raised-basket` living at the other end and
-      # `lowered-basket` sitting offstage until it is. Not a crossing the
-      # walkthrough happens to need, but the same fact either direction.
       - id: lower
         requires:
           - type: object-in
@@ -104,12 +94,6 @@ navigation:
           scene: machine-room
   - id: east
     requires:
-      # ZIL asks whether every single thing you are carrying weighs four or less,
-      # which is not a question Stage can put: `carrying` reads the total. This
-      # asks that the total is four or less, which is stricter - two small things
-      # pass in Zork and are refused here - and it is the nearest true thing.
-      # Before there was a limit at all this was a flag nothing ever set, so the
-      # passage was shut for good and the Drafty Room could not be reached.
       - type: carrying
         data: { max: 4 }
         failure:

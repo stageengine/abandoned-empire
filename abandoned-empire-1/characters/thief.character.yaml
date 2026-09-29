@@ -17,9 +17,6 @@ synonyms:
   - seedy man
   - seedy person
 requires:
-  # Whether the player can see. Seventy times, which is what
-  # ROADMAP.md's "whether the player can see" is about: one block on the game
-  # would say this once and reach a thing carried in and dropped besides.
   - type: any-of
     data:
       conditions:
@@ -37,17 +34,8 @@ presence:
             armed with a deadly stiletto.
 start: round-room
 
-# In their hands rather than inside them. A thing somebody is holding is not
-# in the room, cannot be taken, and changes hands through an action they own -
-# which is what these two were always meant to be and could not be said before.
 holds: [large-bag, stiletto]
 
-# Zork gives him a strength of five against the troll's two - the toughest fixed
-# fight in the game - and settles each blow against a table keyed on both
-# fighters' relative strength. Stage has one flat roll per action, the same
-# simplification `troll.character.yaml` already makes, so the number moves but
-# the shape does not: a strength that only goes down, and a miss/wound pair of
-# actions rather than nine outcomes.
 measures:
   - id: strength
     max: 5
@@ -63,12 +51,6 @@ measures:
           - type: remove-object
             data:
               object: thief
-          # His bag and blade stay behind, and so does everything he took: the
-          # thief's own death is what makes killing him worth it, and
-          # `move-tagged` is what makes that literally true rather than a
-          # story the bag told about itself. ZIL's `DEPOSIT-BOOTY` drops
-          # everything he is holding in the one room he dies in, which is
-          # exactly this.
           - type: move-object
             data:
               object: large-bag
@@ -86,20 +68,12 @@ measures:
             data:
               flag: thief-fighting
               value: false
-          # A one-turn pulse `every-turn.yaml` reads to open the egg, if it was
-          # among what he dropped just now. See `arch/0013`: `DEPOSIT-BOOTY`
-          # special-cases the egg among everything else it deposits, and a
-          # threshold's own triggers cannot branch on which object this is.
           - type: set-flag
             data:
               flag: thief-just-died
               value: true
       - from: 1
 
-# What he says when spoken to, looked at, fought and given things. What he *does* -
-# wandering the map and taking whatever you are carrying - is not here: he wanders,
-# so it lives in `every-turn.yaml` rather than in one room's own, and stealing is a
-# `tagged`/`move-tagged` pair there rather than one rule per stealable thing.
 actions:
   - id: look
     triggers:
@@ -129,21 +103,6 @@ actions:
         data:
           text: Once you got him, what would you do with him?
 
-  # `arch/0013` verified this action's text against ROBBER-FUNCTION and missed
-  # the line right above the message it read: real ZIL moves whatever is given
-  # straight into the thief's own holdings (`<MOVE ,PRSO ,THIEF>`) before ever
-  # choosing which line to print, unconditionally - and a gift worth points
-  # (`P?TVALUE` above zero) gets "taken aback... stops to admire its beauty"
-  # rather than the plain line below, which is ZIL's answer for something
-  # worthless instead. First found from the egg specifically - giving it away
-  # is the walkthrough's whole reason to give anything at all, and without the
-  # move its weight, and the canary's nested inside it, never actually left
-  # the player's own hands the way real Zork's does - but the same is true of
-  # every other treasure in the game, not the egg alone: one block below per
-  # treasure this port declares, `indirect` naming each and the message
-  # naming it back, since this engine has no placeholder standing for
-  # whatever a trigger's own object turned out to be, the way ZIL's `D ,PRSO`
-  # prints it live.
   - id: give
     indirect: egg
     triggers:
@@ -417,9 +376,6 @@ actions:
           object: trunk
           to: held:thief
 
-  # Zork lets a treasure buy you a moment's grace, and takes the rest of the fight
-  # off a strength that grows with your score. Neither is written: what is written
-  # is that he takes it, which is the half a player can see.
   - id: give
     triggers:
       - type: response
@@ -427,10 +383,6 @@ actions:
           text: >-
             The thief places the gift in his bag and thanks you politely.
 
-  # ZIL's own villain table names the knife as his one weakness (a sword or bare
-  # hands answer through the block below instead) - written above the other
-  # because the first requirement that holds decides which action this is, and a
-  # nearly-beaten thief is the particular case.
   - id: attack
     preposition: with
     indirect: knife
@@ -506,14 +458,6 @@ actions:
           flag: thief-fighting
           value: true
 
-  # Throwing rather than swinging the knife at a thief not yet fighting -
-  # ZIL's `ROBBER-FUNCTION` answers this one separately from `V-ATTACK`, and
-  # a tenth of the time frightens him into fleeing with everything he is
-  # holding spilling to the floor. That branch needs a state this port's
-  # thief does not have - alive and fighting or dead, nothing between - so
-  # only the nine-in-ten "missed and angered him" outcome is reproduced here,
-  # the same scope the audit that found this gap already accepted for the
-  # thief's missing unconscious state.
   - id: throw
     indirect: knife
     requires:
@@ -536,17 +480,6 @@ actions:
           flag: thief-fighting
           value: true
 
-  # ZIL's `FIND-WEAPON` answers to any of five blades, not the knife alone -
-  # `V-ATTACK` only asks `WEAPONBIT`, and `VILLAIN-STRENGTH` only singles the
-  # knife out for a further -1 to the thief's own effective strength
-  # (`V-BEST-ADV`), lower being easier to land a killing blow against.
-  # Without the knife this port's `attack` only had the bare-hands block
-  # below to fall to - no `preposition` field there to match `with` anything,
-  # so a real fight never started. Fixed the same three more times over, at a
-  # flat percentage fifteen points under the knife's own - the same
-  # approximation `troll.character.yaml` makes for its own off-weapon fights,
-  # and for the same reason: this port's one-roll-per-swing model has no
-  # nine-outcome table to be fifteen points apart from in the first place.
   - id: attack
     preposition: with
     indirect: sword
@@ -780,11 +713,6 @@ actions:
             Trying to attack the thief with your bare hands is suicidal - he is armed and you
             are not.
 
-  # ZIL's `V-HELLO` answers any `ACTORBIT` object addressed by name this same
-  # way, regardless of which one. His own unconscious variant ("being
-  # temporarily incapacitated, is unable to acknowledge your greeting") is
-  # out of scope: this port's thief has no knocked-out state distinct from
-  # alive or dead, an accepted simplification from an earlier audit pass.
   - id: hello
     triggers:
       - type: response

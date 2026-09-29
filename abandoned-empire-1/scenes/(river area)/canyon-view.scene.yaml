@@ -121,9 +121,6 @@ actions:
       - type: response
         data:
           text: "Nice view, lousy place to jump."
-      # `player-died` rather than `end-game`: every death in ZIL goes through
-      # one routine, `JIGS-UP`, which gives every one of them the same two
-      # resurrections before the third is final - this jump included.
       - type: set-flag
         data:
           flag: player-died

@@ -8,9 +8,6 @@ measures:
     max: 10
 tags: [belongings]
 requires:
-  # Whether the player can see. Seventy times, which is what
-  # ROADMAP.md's "whether the player can see" is about: one block on the game
-  # would say this once and reach a thing carried in and dropped besides.
   - type: any-of
     data:
       conditions:
@@ -26,12 +23,6 @@ presence:
           text: There is a stiletto here.
 
 actions:
-  # ZIL punctures the boat the instant a weapon like this one is dropped while
-  # aboard - RBOAT-FUNCTION's own M-BEG answers `DROP` before this object's
-  # ordinary drop ever runs, so the weapon stays in hand rather than actually
-  # landing anywhere. Written above the plain drop for the same reason the
-  # boat's own boarding-puncture is. See `inflated-boat.object.yaml` for the
-  # matching `put ... in` and `attack ... with` shapes of the same fix.
   - id: drop
     requires:
       - type: flag

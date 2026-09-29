@@ -8,12 +8,6 @@ body {
   overflow: hidden;
 }
 
-/* The vanilla GUI had #screen as a direct child of <body>, both carrying
-   height: 100% in an unbroken chain from the viewport. React mounts into
-   #root instead, a wrapper that didn't exist before - without its own
-   height: 100%, #screen's own height: 100% resolves against nothing, and
-   the flex column below it (scrollback flexing to fill what's left,
-   prompt pinned under it) has no bounded height to work within at all. */
 #root {
   height: 100%;
 }
@@ -25,11 +19,6 @@ body {
   flex-direction: column;
 }
 
-/* Shown before the playthrough has begun - see Stage's own "Gated Start" -
-   and gone for good once `#splash-play` or Enter/Space calls
-   `Engine.gui.begin()` in script.js. Opaque and above everything else, so
-   `#screen` sitting underneath (empty at this point regardless) never has
-   to be hidden of its own accord. */
 #splash {
   position: fixed;
   inset: 0;
@@ -52,9 +41,6 @@ body {
   padding: 0 2rem;
 }
 
-/* Capped by the window's height as well as its width, so a short window
-   shrinks the picture rather than pushing the button off the bottom of a
-   fixed, unscrollable splash. */
 #splash-banner {
   display: block;
   width: auto;
@@ -84,9 +70,6 @@ body {
   opacity: 0.55;
 }
 
-/* Holds the buttons' place before Stage has said whether there is a save to
-   continue, so nothing shifts when they arrive - hidden rather than absent,
-   which also keeps them out of the tab order until then. */
 #splash-actions {
   display: flex;
   flex-wrap: wrap;
@@ -112,8 +95,6 @@ body {
   padding: 0.7rem 2.5rem;
 }
 
-/* Beside Continue and quieter than it: starting over is the smaller of the
-   two things somebody might mean. */
 #splash-again {
   font-size: 0.85rem;
   opacity: 0.65;
@@ -136,8 +117,6 @@ body {
   opacity: 0.5;
 }
 
-/* The classic reverse-video status line, one row, always the top of the
-   screen. Filled in from `turn.reply.scene`/`measures` in Game.tsx. */
 #bar {
   box-sizing: border-box;
   padding: 0.4rem 0;
@@ -179,11 +158,6 @@ body {
   white-space: pre-wrap;
 }
 
-/* The terminal's own input line - purely a picture of what Stage's own real,
-   invisible field holds (see `typedChanged` in Game.tsx), not an input of its
-   own. Typing still happens in that real field; this only draws it. A tap
-   anywhere here asks for it to be focused instead of focusing anything of
-   this document's own - see `Engine.gui.focus()`. */
 #prompt {
   flex: none;
   display: flex;
@@ -206,9 +180,6 @@ body {
   margin-right: 0.45ch;
 }
 
-/* A real field, dressed as the text it used to be drawn as: no chrome of its
-   own, the screen's own font and colour, and the browser's own caret doing the
-   blinking the old drawn one did. */
 #typed {
   flex: 1;
   min-width: 0;
@@ -252,10 +223,6 @@ body {
   font-style: italic;
 }
 
-/* The CRT effect, when the player has it on - Game.tsx draws no #crt at all
-   otherwise. Scanlines, a soft vignette, and a faint glow on the type. Over
-   everything on the game screen and never in the way of it: it takes no
-   clicks. Below the menu, which is a screen of its own. */
 #crt {
   position: absolute;
   inset: 0;
@@ -277,8 +244,6 @@ body {
   text-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
 }
 
-/* Buttons, wherever they are wanted outside the splash - the same outlined,
-   spaced-out look as Play, in the size a list or a menu wants. */
 .btn {
   appearance: none;
   background: none;
@@ -325,8 +290,6 @@ body {
   font-style: italic;
 }
 
-/* Under the splash's own buttons: the two other places to go. Held out of sight
-   until Stage has said how things stand, for the reason the buttons above are. */
 #splash-links {
   display: flex;
   justify-content: center;
@@ -357,7 +320,6 @@ body {
   outline: none;
 }
 
-/* The menu button in the status line: reverse video, like everything on it. */
 #bar-menu {
   appearance: none;
   background: none;
@@ -378,7 +340,6 @@ body {
   outline: none;
 }
 
-/* The menu over the game screen, and what the game screen offers when it is over. */
 #menu {
   position: fixed;
   inset: 0;
@@ -419,7 +380,6 @@ body {
   width: 100%;
 }
 
-/* Load and Settings: a full screen, the splash's own colours, and a way back. */
 .panel {
   position: fixed;
   inset: 0;
@@ -431,8 +391,6 @@ body {
   font-family: "SF Mono", "Menlo", "Courier New", monospace;
 }
 
-/* Auto margins rather than centring on the panel itself, so a list taller than the
-   window scrolls from its top instead of being cut off above it. */
 .panel-inner {
   box-sizing: border-box;
   display: flex;

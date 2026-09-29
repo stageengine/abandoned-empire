@@ -1,10 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
 import type { KeyboardEvent } from 'react';
-
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
-import { useCrt } from '../crt';
 import GameMenu from '../menu';
+import { useCrt } from '../crt';
 import { type Measure, reason, stage, type Turn } from '../stage';
 
 const PARAGRAPHS = /\n[ \t]*\n/;
@@ -15,31 +14,44 @@ interface Paragraph {
   text: string;
 }
 
-// One of the player's own measures, by id - `undefined` where a game
-// declares none of them, which config.yaml's own comments say is most games,
-// just not this one: `score`/`moves` are kept there on purpose so prose (and
-// this bar) can read them without asking the engine for its own turn count.
+interface Echo {
+  at: number;
+  text: string;
+}
+
+const woven = (turn: Turn | null, echoes: ReadonlyArray<Echo>): Array<{ voice: string; text: string }> => {
+  const lines = turn?.lines ?? [];
+
+  const result: Array<{ voice: string; text: string }> = [];
+
+  let next = 0;
+
+  lines.forEach((line, at) => {
+    while (next < echoes.length && echoes[next].at === at) {
+      result.push({ voice: 'player', text: echoes[next].text });
+
+      next += 1;
+    }
+
+    result.push(line);
+  });
+
+  while (next < echoes.length) {
+    result.push({ voice: 'player', text: echoes[next].text });
+
+    next += 1;
+  }
+
+  return result;
+};
+
 const measureValue = (measures: ReadonlyArray<Measure>, id: string): number =>
   measures.find((one) => one.id === id)?.value ?? 0;
 
-/**
- * Every line in a turn's transcript, split into the same per-voice
- * paragraphs the vanilla `script.js` built by hand with `document.append` -
- * on blank lines, the same way that version did, each becoming its own
- * `.line-<voice>` block. `turn.lines` is the whole transcript so far, oldest
- * first and append-only (see `TurnMessage`), so this recomputes over all of
- * it each time rather than tracking a separate "already drawn" cursor: React
- * reconciles the unchanged prefix away on its own, which is what the
- * original's own `drawn` counter was hand-rolling.
- */
-const paragraphsOf = (turn: Turn | null): Array<Paragraph> => {
-  if (!turn) {
-    return [];
-  }
-
+const paragraphsOf = (lines: ReadonlyArray<{ voice: string; text: string }>): Array<Paragraph> => {
   const paragraphs: Array<Paragraph> = [];
 
-  turn.lines.forEach((line, lineAt) => {
+  lines.forEach((line, lineAt) => {
     line.text
       .split(PARAGRAPHS)
       .filter((part) => part.trim())
@@ -51,28 +63,12 @@ const paragraphsOf = (turn: Turn | null): Array<Paragraph> => {
   return paragraphs;
 };
 
-/**
- * The actual playthrough screen - `/game`. Reached only once `Splash` has
- * already called `Engine.gui.begin()`, so there is nothing here to gate.
- *
- * Ports the vanilla GUI's status bar, scrollback and prompt line as they
- * stood in the original `script.js`: `turnChanged` redraws the bar and the
- * scrollback, and `traced` keeps logging to the console exactly as before.
- *
- * The prompt is this screen's own, and is a real field. It used to be a
- * drawing of one: Stage kept the field a player actually typed into, invisible,
- * and this screen mirrored it through `typed` and `typedChanged` after calling
- * `ownsPrompt()`. There is no such field any more, and no host chrome to take
- * over, so there is one prompt and this owns it. `submit` is what sends a line,
- * which Stage's own field used to do; `focus` and `blur` are still told to the
- * host, because they now say where keyboard attention sits rather than moving
- * it, so a host with shortcuts of its own does not swallow a key meant here.
- */
 const Game = () => {
   const navigate = useNavigate();
   const { crt } = useCrt();
 
   const [turn, setTurn] = useState<Turn | null>(null);
+  const [echoes, setEchoes] = useState<Array<Echo>>([]);
   const [typed, setTyped] = useState('');
   const [menu, setMenu] = useState(false);
   const [problem, setProblem] = useState<string | null>(null);
@@ -82,51 +78,41 @@ const Game = () => {
   const typedRef = useRef<HTMLInputElement>(null);
   const endedRef = useRef(false);
 
-  const paragraphs = useMemo(() => paragraphsOf(turn), [turn]);
+  const sessionRef = useRef<string | null>(null);
+
+  const paragraphs = useMemo(() => paragraphsOf(woven(turn, echoes)), [turn, echoes]);
+
   const ended = Boolean(turn?.reply?.finished);
 
   endedRef.current = ended;
 
   useEffect(() => {
-    // How things already stand, then what changes - the runtime holds the first
-    // for a screen that mounts after it arrived, which this one always does.
     setTurn(stage.turn);
+    sessionRef.current = stage.turn?.reply?.session.id ?? null;
 
     const stops = [
-      stage.on('turnChanged', setTurn),
+      stage.on('turnChanged', (next) => {
+        const sessionId = next.reply?.session.id ?? null;
 
-      // Proving the bridge end to end against a real game, not drawing
-      // anything with it yet - this game's own config.yaml turns both trace
-      // categories on for exactly that reason. A visible use of this (a
-      // journal overlay, effects tied to a specific trigger) is separate work
-      // once the mechanism itself is confirmed working live.
+        if (sessionId !== sessionRef.current) {
+          sessionRef.current = sessionId;
+
+          setEchoes([]);
+        }
+
+        setTurn(next);
+      }),
+
       stage.on('traced', (trace) => {
         console.log('stage:trace', trace);
       }),
     ];
 
-    // Ready to type the moment the game is on screen, the way the old host's
-    // own field was focused for a player without their having to ask.
     typedRef.current?.focus();
 
     return () => stops.forEach((stop) => stop());
   }, []);
 
-  // A tap on the prompt line itself is where a player means to type - asking
-  // Stage to focus its own field, since there is nothing of this document's
-  // own to focus. A tap anywhere else - the scrollback, reading back - is
-  // the opposite: it should be possible to put the keyboard away by tapping
-  // away from typing, the same as tapping outside any real `<input>` would
-  // have done without being asked. Both go through Stage, since the field
-  // lives outside this document either way - see `Engine.gui.focus`/`blur`.
-  //
-  // The vanilla version guarded this with `if (!begun || ended) return;`,
-  // where `!begun` was there only because a click dismissing the splash
-  // bubbles up into this same listener in the same tick, reaching it before
-  // `begun` was set - see the note on this in Splash.tsx. That cannot happen
-  // here: `/` and `/game` are different mounted components, so a click on
-  // the Play button has nothing of this screen's to bubble into. `ended`
-  // alone is what is left to guard.
   useEffect(() => {
     const onClick = (event: MouseEvent) => {
       if (endedRef.current) {
@@ -135,12 +121,14 @@ const Game = () => {
 
       if (promptRef.current?.contains(event.target as Node)) {
         typedRef.current?.focus();
+
         stage.focus();
 
         return;
       }
 
       typedRef.current?.blur();
+
       stage.blur();
     };
 
@@ -149,13 +137,6 @@ const Game = () => {
     return () => document.removeEventListener('click', onClick);
   }, []);
 
-  // Stays pinned to the bottom whenever a new turn arrives, and whenever the
-  // screen itself changes size - not only on a new turn - on iOS, focusing
-  // the prompt shrinks the webview's own frame to clear the keyboard (see
-  // `keyboard_tracking` in `prompt_bar.rs`), which moves nothing here on its
-  // own: the scrollback was already scrolled to what used to be its own
-  // bottom, and the keyboard opening does not re-ask for that to still be
-  // true under the new, shorter height.
   useEffect(() => {
     const pin = () => {
       const el = scrollbackRef.current;
@@ -172,16 +153,10 @@ const Game = () => {
     return () => removeEventListener('resize', pin);
   }, [paragraphs]);
 
-  // The classic Zork status line - a room's own name, falling back to its id
-  // the same way Stage's own default bar does for one nobody titled, and the
-  // game's own `score`/`moves` measures rather than the engine's own turn
-  // count, since those are what config.yaml declares for exactly this.
   const location = turn?.reply ? turn.reply.scene.title ?? turn.reply.scene.id : '';
   const score = turn?.reply ? `Score: ${measureValue(turn.reply.measures, 'score')}` : '';
   const moves = turn?.reply ? `Moves: ${measureValue(turn.reply.measures, 'moves')}` : '';
 
-  // What Stage's own field used to do. Nothing is sent for a line with nothing
-  // in it, the same as pressing return at an empty prompt always did.
   const send = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key !== 'Enter') {
       return;
@@ -195,7 +170,10 @@ const Game = () => {
       return;
     }
 
+    setEchoes((already) => [...already, { at: turn?.lines.length ?? 0, text: said }]);
+
     stage.submit(said);
+
     setTyped('');
   };
 
@@ -231,9 +209,6 @@ const Game = () => {
         ))}
       </pre>
 
-      {/* Where the prompt stops being any use: the game is over, so what is left to do
-          is begin another, come back to a save, or leave. The same three calls the menu
-          makes, without its warning - there is nothing left to lose. */}
       {ended && (
         <div id="ended">
           <button type="button" className="btn" onClick={startAgain}>

@@ -3,16 +3,11 @@ id: leak
 synonyms: [drip, pipe]
 start: maintenance-room
 
-# Not there until the blue button has been pressed, and gone again once it has
-# been stopped.
 requires:
   - type: flag
     data:
       flag: leak-open
 
-# How high the water has got, in turns. Fourteen is the top of the room. The
-# room's own rules do the talking, because a threshold speaks wherever the
-# player happens to be standing and this one should only be heard in here.
 measures:
   - id: flood
     max: 14

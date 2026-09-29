@@ -4,8 +4,6 @@ tags: [dark]
 name: Loud Room
 
 presence:
-  # Quiet, once the echo has been called for. ZIL also quietens it at low tide with
-  # the gates shut, which the port has no tide for.
   - requires:
       - type: all-of
         data:
@@ -38,8 +36,6 @@ presence:
         data:
           text: It is pitch black. You are likely to be eaten by a grue.
 
-# The whole of the puzzle: the room is too loud to take anything in until somebody
-# says the word back at it.
 actions:
   - id: echo
     requires:

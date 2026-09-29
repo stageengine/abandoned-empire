@@ -1,25 +1,6 @@
-# What this room does, and only this room.
 
 every-turn:
 
-  # The troll, who blocks both ways on and does not wait to be asked.
-  #
-  # One roll a turn, `troll-blow`, and more than two answers to it. ZIL settles
-  # each blow against a table indexed on both fighters' strength and drawn from
-  # nine times over, and does the weighting by repeating entries inside a
-  # sliding window: `DEF3A` is five MISSED, two STAGGER, two LIGHT-WOUND and two
-  # SERIOUS-WOUND, and a stronger attacker's window drops misses off the front.
-  # Those counts are the slices below: a roll of eleven, of which one through
-  # five miss, six and seven stagger, eight and nine wound lightly, and ten and
-  # eleven wound seriously. Every rule below asks the same roll, and the slices
-  # never overlap, so at most one of them fires a turn.
-  #
-  # The wording is Zork's own, from `TROLL-MELEE`. Where it offers several lines
-  # for one outcome it picks between them without repeating until it has used
-  # them all, so the miss, which is the one the player sees most, is four rules
-  # sharing a second roll of their own, `troll-miss`, marked `no-repeat`: each
-  # line comes up once before any repeats, and the draw advances only when a
-  # miss rule fires - a stagger does not spend one.
   - requires:
       - type: object-here
         data:
@@ -72,7 +53,6 @@ every-turn:
         data:
           text: The axe crashes against the rock, throwing sparks!
 
-  # A stagger costs the turn and no blood, which is what it costs in Zork.
   - requires:
       - type: object-here
         data:

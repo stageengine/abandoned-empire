@@ -1,7 +1,4 @@
 verbs:
-  # Zork's two questions about the player rather than about the world. Both are
-  # sentences the engine fills in: a measure named in prose is what makes them
-  # writable at all, and before it a score that moved 350 points was invisible.
   - id: score
     synonyms: []
     intransitive: true
@@ -21,13 +18,6 @@ verbs:
   - id: climb
     synonyms: [scale, ascend, clamber]
     navigational: true
-  # One verb rather than two: ZIL answers `enter the window` and `board the
-  # boat` with the same routine, and the split here meant `enter boat` fell
-  # through to a plain scene-exit lookup that a portable object's own `board`
-  # action was never going to be found by - confirmed directly, since nothing
-  # in this game names a scene exit `enter` or defines an action by that id;
-  # every `enter <room-entrance>` here was already answered by the same
-  # generic navigational handling `board` gets, just under the other name.
   - id: board
     synonyms: [embark, get in, get into, sit in, enter, go in, walk in]
     navigational: true
@@ -114,30 +104,14 @@ verbs:
   - id: pray
     intransitive: true
 
-  # Verbs that act on nothing, answered by the game's own `actions.yaml` and, for
-  # `pray` above, by South Temple, and for `odysseus` below, by the Cyclops Room
-  # as well. Synonyms as ZIL declares them in `gsyntax.zil`. Marked `intransitive`
-  # throughout: without it, a sentence naming the thing these verbs are about
-  # anyway - `get out of the boat`, say - reads the filler `of` as splitting a
-  # direct object from an indirect one the way it would for a verb that takes
-  # one, and the noun after it becomes the verb's own target instead of staying
-  # decorative. That sends the bare action looking for one on the thing named,
-  # which none of these ever answer, rather than the bare action itself.
   - id: wait
     synonyms: [z]
     intransitive: true
   - id: verbose
     intransitive: true
-  # No object: ZIL's `V-LAUNCH` takes none either, since there is only ever
-  # one thing a player standing in a boat could mean by it. A transitive
-  # verb here left `launch` with nothing to answer a bare command with,
-  # asking "What do you want to launch?" of a sentence Zork just answers.
   - id: launch
     synonyms: [set sail]
     intransitive: true
-  # Bare for the same reason `launch` is: ZIL's `V-DISEMBARK` names no object
-  # either, and asking a player "What do you want to get out?" is not an
-  # answer their own sentence ever needed.
   - id: disembark
     synonyms: [get out, get off]
     intransitive: true
@@ -163,28 +137,14 @@ verbs:
   - id: chomp
     synonyms: [lose, barf]
     intransitive: true
-  # Not `intransitive`: unlike the bare verbs above, `brush` also answers for
-  # "brush teeth" wherever a room's own `teeth` object declares the joke.
   - id: brush
     synonyms: [clean]
   - id: repent
     intransitive: true
-  # Not `intransitive`, unlike its neighbours here: ZIL's own `GHOSTS-F`
-  # branches on whether `PRSI` is the ghosts themselves (`exorcise ghosts`
-  # answers differently from the bare form the Land of the Dead's own room
-  # handler reads), so this is really `ghosts.character.yaml`'s to answer
-  # by way of an ordinary target, the same road `attack ghosts` already
-  # takes there.
   - id: exorcise
     synonyms: [banish, lay to rest]
-  # Not `intransitive`, moved out of the bare-verb block above it used to
-  # share with `xyzzy`: ZIL's own `V-HELLO` branches on `PRSO` too - "hello
-  # troll" answers differently from the bare form, by way of an ordinary
-  # target on the character addressed, the same road `exorcise`/`attack`
-  # already take to a character's own file.
   - id: hello
     synonyms: [hi]
-  # Not `intransitive`: `ring` also answers "ring bell" in the Land of the Dead.
   - id: ring
     synonyms: [toll]
   - id: wish
@@ -245,10 +205,6 @@ prepositions:
       synonyms: [out of]
     - id: for
       synonyms: []
-    # `disembark` claims the two words of `get out` for itself as one verb
-    # synonym, which leaves `of` standing alone in `get out of the boat` -
-    # nowhere near the `out of` above, since that pairing only exists to be
-    # read as `from` when `out` was not already spent on the verb.
     - id: of
       synonyms: []
   significant:
@@ -275,9 +231,6 @@ conjunctions:
   coordinating: [and, then]
   subordinating: []
 
-# Zork players type `take all` constantly, and it is how the endgame is played.
-# Declared rather than shipped, because `all` is English and this engine ships
-# none: a game in another language writes its own word here.
 quantifiers:
   - id: all
     synonyms: [everything, every]

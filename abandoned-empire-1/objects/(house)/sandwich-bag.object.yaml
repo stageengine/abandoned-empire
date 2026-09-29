@@ -17,9 +17,6 @@ measures:
 contains: true
 tags: [belongings]
 requires:
-  # Whether the player can see. Seventy times, which is what
-  # ROADMAP.md's "whether the player can see" is about: one block on the game
-  # would say this once and reach a thing carried in and dropped besides.
   - type: any-of
     data:
       conditions:
@@ -41,10 +38,6 @@ presence:
       - type: response
         data:
           text: There is a brown sack here.
-# In the kitchen rather than inside the table. The line below already says it is
-# sitting on the table, and a room lists what is standing in it rather than what is
-# inside a container standing in it - so filed here, the prose reads as Zork's and
-# the thing is where the player can see it.
 start: kitchen
 
 actions:

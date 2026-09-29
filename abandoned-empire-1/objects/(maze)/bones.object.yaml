@@ -4,9 +4,6 @@ name: skeleton
 synonyms: [bones, body]
 start: maze-5
 
-# Disturbing a fellow adventurer's remains. The words are here; the curse itself is
-# in `every-turn.yaml`, because banishing "your valuables" means naming each of them
-# and a rule per treasure is the only way to say it.
 actions:
   - id: get
     triggers:

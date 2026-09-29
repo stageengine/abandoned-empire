@@ -140,9 +140,6 @@ objects:
           - type: response
             data:
               text: "It's too far to jump, and there's no bridge."
-  # ZIL's `LAKE-PSEUDO` checks `LOW-TIDE` before it ever asks which verb was
-  # used, so once the reservoir has drained this answers `cross` and `swim`
-  # alike.
   - id: reservoir-south.lake
     name: lake
     synonyms: [lake]

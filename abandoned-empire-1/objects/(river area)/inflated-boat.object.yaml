@@ -19,9 +19,6 @@ measures:
 contains: true
 tags: [belongings]
 requires:
-  # Whether the player can see. Seventy times, which is what
-  # ROADMAP.md's "whether the player can see" is about: one block on the game
-  # would say this once and reach a thing carried in and dropped besides.
   - type: any-of
     data:
       conditions:
@@ -62,8 +59,6 @@ actions:
           text: >-
             Closed.
 
-  # The narrow paths at the White Cliffs read `deflate` rather than the boat's own
-  # state, exactly as ZIL's global does - so re-inflating below clears it again.
   - id: deflate
     triggers:
       - type: response
@@ -75,9 +70,6 @@ actions:
       - type: set-flag
         data: { flag: deflate, value: true }
 
-  # ZIL punctures the boat the moment anything sharp comes aboard in your hands -
-  # written above the plain boarding because the first requirement that holds
-  # decides which of the two this is.
   - id: board
     requires:
       - type: any-of
@@ -113,16 +105,6 @@ actions:
       - type: set-flag
         data: { flag: aboard, value: true }
 
-  # ZIL punctures the boat the same way while already aboard: dropping a
-  # weapon, putting one in the boat, or attacking/mung-ing the boat with one.
-  # `RBOAT-FUNCTION`'s own M-BEG intercepts all three before any of their
-  # ordinary handling runs, so none of them actually move or damage anything
-  # except the boat itself - the weapon named stays exactly where it was.
-  # Mid-river (`scene: { tag: river }`, ZIL's `NONLANDBIT`) this is fatal, the
-  # same "carried over a waterfall" death the current's own timer ends in;
-  # elsewhere (docked on land) it just costs the boat. `drop` lives on each
-  # weapon's own file instead of here, since a bare `drop` names no second
-  # object for this file's own `indirect` to answer.
   - id: put
     preposition: in
     indirect: sceptre
@@ -1023,11 +1005,3 @@ actions:
       - type: set-flag
         data: { flag: aboard, value: false }
 
-  # Every room the current runs through is water with nothing to stand on, so
-  # climbing out mid-river is the same fate as launching from nowhere is not -
-  # written above the plain disembark for the same reason boarding's puncture is.
-  # `launch` and `disembark` moved to `actions.yaml`: neither takes an object
-  # in ZIL, so both have to be bare verbs to be typed the way the walkthrough
-  # types them, and a bare verb's actions live in the game's own list, not on
-  # the thing it happens to act on. See them there for the comments this used
-  # to carry.

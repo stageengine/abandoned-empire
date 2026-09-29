@@ -29,9 +29,6 @@ presence:
             probably could not get back up it.
 
 actions:
-  # The one room in Zork I that answers a bare verb its own way. Everywhere else
-  # `pray` is the game's flat line; here it puts you out in the forest, which is
-  # the only way out of the temple that does not need the coffin left behind.
   - id: pray
     triggers:
       - type: change-scene

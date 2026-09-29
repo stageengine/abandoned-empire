@@ -3,12 +3,6 @@ id: dam
 synonyms: [gate, gates, fcd#3]
 start: dam-room
 
-# The reservoir behind it, counted in turns. Zork queues the emptying and the
-# filling for eight turns apiece; here it is one number that walks between its
-# ends, and the two flags the rest of the region reads hang off its thresholds.
-#
-# The top range is where the dam starts and says nothing, which is what gives
-# the range below it something to be entered from.
 measures:
   - id: water
     max: 8
@@ -41,13 +35,6 @@ actions:
         data:
           text: Sounds reasonable, but this isn't how.
 
-  # ZIL's own `PLUG` syntax requires a `WITH OBJECT` always, and answers hands
-  # and everything else differently (`D ,PRSI` echoing whatever was named) -
-  # this port has no "hands" object to name the first case with, so the
-  # distinction collapses to bare `plug dam` (the natural reading of "with
-  # hands", and also what a `plug dam` ZIL itself could never parse falls back
-  # to here) against `plug dam with <anything>`, which drops the "With a
-  # <thing>?" opening this engine has no placeholder to fill in.
   - id: plug
     preposition: with
     triggers:

@@ -3,16 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { reason, stage } from './stage';
 
-/**
- * The menu over the game screen: back to it, load another save, the settings, start
- * again, or leave.
- *
- * Start again asks first. It leaves whatever was saved exactly where it is, but what
- * has happened since the last save is not something to lose to one stray press. Load
- * is already a choice of one particular save from a list, and Quit is what the
- * window's own close button does, which does not ask either. Every call here can be
- * refused, and says why in the menu rather than closing it as if it had worked.
- */
 const GameMenu = ({ onClose }: { onClose: () => void }) => {
   const navigate = useNavigate();
 

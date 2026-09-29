@@ -1,14 +1,5 @@
-# What Zork answers to a verb typed on its own, wherever you are standing.
-#
-# ZIL keeps these as routines that take no object: `V-WAIT`, `V-PRAY`, `V-YELL`
-# and a dozen one-line jokes. A room may answer one of them instead, and is
-# asked first - South Temple's `pray` is the only one in Zork I that does.
 
 actions:
-  # Zork runs its clock three more times inside this one command, and breaks off
-  # early if anything interesting fires. Stage has no trigger that moves the
-  # clock, so this is one turn with Zork's own words on it: the world still does
-  # what a turn passing does, and does it once.
   - id: score
     requires:
       - type: measure
@@ -101,19 +92,10 @@ actions:
       - type: response
         data:
           text: Time passes...
-      # ZIL's `V-WAIT` runs the clock three times for this one typed command,
-      # not once - confirmed against the compiled game: a lit lamp measurably
-      # burns faster through a run of waits than a naive one-tick `wait` would
-      # drain it. `1actions.zil`/`gverbs.zil`'s `V-WAIT` is the source of this.
       - type: turn
         data:
           count: 3
 
-  # `V-VERBOSE` also sets `SUPER-BRIEF` false and `VERBOSE` true - both moot
-  # here, since the port only ever writes the long description, the behavior
-  # those flags ask for. Recognising the word is what was missing, not a mode
-  # to switch: `brief`/`superbrief` would need the engine to withhold a room's
-  # long description on a later visit, which nothing here does yet.
   - id: verbose
     triggers:
       - type: response
@@ -126,16 +108,6 @@ actions:
         data:
           text: If you pray enough, your prayers may be answered.
 
-  # `RIVER-LAUNCH` sends a launch from other landings straight into a later river
-  # room, at that room's own `RIVER-SPEEDS` rather than River One's four turns -
-  # four landings on the Frigid River side of the table, each its own block so
-  # the destination and the timer it starts at differ per site the way ZIL's
-  # table entry did. Reservoir and Stream View entries in the same ZIL global
-  # belong to the separate reservoir crossing, not this boat. A bare verb
-  # rather than the boat's own, since `launch` takes no object in ZIL and a
-  # transitive verb here left a bare `launch` asking what to launch instead
-  # of answering it, exactly as `wait`/`pray` above it would if they were not
-  # bare too.
   - id: launch
     requires:
       - type: flag
@@ -216,18 +188,6 @@ actions:
       - type: response
         data: { text: You can't launch it here. }
 
-  # Every room the current runs through is water with nothing to stand on, so
-  # climbing out mid-river refuses rather than succeeding - written above the
-  # plain disembark for the same reason boarding's puncture is. Bare for the
-  # same reason `launch` above it is: ZIL's `V-DISEMBARK` names no object either.
-  #
-  # A refusal, not a death: this used to fire the puncture's own drowning line
-  # and kill the player, but ZIL's `V-DISEMBARK` only ever answers a non-land
-  # room with "You realize that getting out here would be fatal." and an
-  # `RFATAL` - a macro that ends the turn's dispatch, not the player's life.
-  # The only way to actually die out here is the puncture itself (see
-  # `inflated-boat.object.yaml`) or the current carrying the boat over the
-  # falls (`every-turn.yaml`).
   - id: disembark
     requires:
       - type: flag
@@ -260,25 +220,18 @@ actions:
       - type: set-flag
         data: { flag: aboard, value: false }
 
-  # The Cyclops Room answers this one for itself while the cyclops is there to
-  # hear it; everywhere else, and once he is gone, it is just a name.
   - id: odysseus
     triggers:
       - type: response
         data:
           text: Wasn't he a sailor?
 
-  # Zork's own joke at a different game's expense - XYZZY and PLUGH teleport in
-  # Adventure, and are just a word here too.
   - id: xyzzy
     triggers:
       - type: response
         data:
           text: A hollow voice says "Fool."
 
-  # ZIL picks one of four lines with no memory between calls: one roll of four
-  # a turn, and four answers to the verb each claiming one index of it. The
-  # first whose requirements hold is the one that speaks.
   - id: hello
     requires:
       - type: chance

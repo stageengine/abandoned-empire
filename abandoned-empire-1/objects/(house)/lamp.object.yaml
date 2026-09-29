@@ -5,9 +5,6 @@ synonyms: [lamp, lantern, light, brass lamp, brass light]
 portable: true
 size: weight
 requires:
-  # Whether the player can see. Seventy times, which is what
-  # ROADMAP.md's "whether the player can see" is about: one block on the game
-  # would say this once and reach a thing carried in and dropped besides.
   - type: any-of
     data:
       conditions:
@@ -31,20 +28,6 @@ presence:
           text: There is a brass lantern (battery-powered) here.
 start: living-room
 
-# How long it burns, in turns. ZIL keeps the same number in a table of four
-# entries counted down by an interrupt: a word at a hundred turns, another at a
-# hundred and seventy, a third at a hundred and eighty-five, and then dark - but
-# that table is read once the interrupt is already ticking, and enabling it
-# spends a first hundred turns of its own before the table's own count starts.
-# Measured directly against the compiled game rather than trusted from the
-# comment alone (see the same habit `arch/0012` names): a fresh lamp, left on
-# and never touched again, gets its first word at 207 turns, its second at 307,
-# its third at 377, and goes dark at 392 - the table's own gaps of 100, 70 and
-# 15 exactly, just starting a hundred turns later than the comment alone would
-# suggest.
-#
-# The top range says nothing and is the one the lamp starts in, which is what
-# gives the range below it something to be entered from.
 measures:
   - id: life
     max: 392
@@ -87,9 +70,6 @@ measures:
     max: 15
 
 actions:
-  # Turning it on. `light` is set here as well as in `every-turn.yaml`, because
-  # the pass that keeps that flag runs after the turn and a player who lights
-  # the lamp and looks in the same breath should not be told it is pitch black.
   - id: turn
     preposition: 'on'
     requires:
@@ -148,7 +128,6 @@ actions:
           flag: light
           value: false
 
-  # `light the lamp` is the same act said another way, and Zork answers to both.
   - id: burn
     requires:
       - type: flag

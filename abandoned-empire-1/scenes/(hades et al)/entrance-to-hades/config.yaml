@@ -3,7 +3,6 @@ id: entrance-to-hades
 name: Entrance to Hades
 
 presence:
-  # Once the spirits are gone the gate stops saying they are in the way.
   - requires:
       - type: flag
         data:
@@ -39,11 +38,6 @@ presence:
 
 characters: [ghosts]
 
-# ZIL's `LLD-ROOM` answers a bare `EXORCISE` the same way it answers
-# `EXORCISE GHOSTS`, both at M-BEG before either name reaches an object - the
-# character file's own copy of this handles the named form, and this one
-# answers the sentence typed with no object at all, which otherwise falls
-# through to the engine's generic "What do you want to exorcise?".
 actions:
   - id: exorcise
     requires:

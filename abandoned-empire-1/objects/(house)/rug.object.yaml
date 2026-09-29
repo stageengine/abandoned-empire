@@ -5,7 +5,6 @@ synonyms: [rug, carpet, large rug, large carpet, oriental rug, oriental carpet]
 start: living-room
 
 actions:
-  # Moving it is the whole of what it is for, and it only happens once.
   - id: move
     requires:
       - type: flag

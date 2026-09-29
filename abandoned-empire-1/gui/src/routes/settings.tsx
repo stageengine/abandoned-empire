@@ -1,12 +1,6 @@
 import { useCrt } from '../crt';
 import Panel from '../panel';
 
-/**
- * What this game lets a player change about how it looks - `/settings`.
- *
- * Only the CRT effect, which is this GUI's own to keep: the player's reading
- * preferences belong to Stage, and are the app's to offer rather than this screen's.
- */
 const Settings = () => {
   const { crt, setCrt } = useCrt();
 

@@ -17,9 +17,6 @@ measures:
     max: 20
 tags: [treasure]
 requires:
-  # Whether the player can see. Seventy times, which is what
-  # ROADMAP.md's "whether the player can see" is about: one block on the game
-  # would say this once and reach a thing carried in and dropped besides.
   - type: any-of
     data:
       conditions:
@@ -35,8 +32,6 @@ presence:
           text: On the ground is a large platinum bar.
 start: loud-room
 
-# Zork keeps the bar sacred until the echo is called for, which is what stops a
-# player carrying it out of a room they cannot think in.
 actions:
   - id: get
     requires:

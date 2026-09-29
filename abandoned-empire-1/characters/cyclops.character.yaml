@@ -11,16 +11,6 @@ synonyms:
   - giant eye
 start: cyclops-room
 
-# ZIL's `I-CYCLOPS` is a queued interrupt: once `give lunch` or `attack` (or
-# `throw`/`mung`, neither of which this port answers on him at all) first
-# enables it, it runs every turn the player spends here with him awake,
-# escalating `CYCLOWRATH` by one and reading `CYCLOMAD`'s own line for
-# whatever it just became - six of them, and a seventh that grabs the player
-# for good rather than talking. `DISABLE`s itself while the player is
-# elsewhere or he is asleep, which a `measure`'s own thresholds do nothing to
-# imitate on their own; `every-turn.yaml`'s own rule gates the ticking on
-# both, so the count sits wherever it was left rather than resetting, exactly
-# as a global that nothing but this touches would.
 measures:
   - id: wrath
     max: 10
@@ -84,16 +74,6 @@ presence:
         data:
           text: A hungry cyclops is standing at the foot of the stairs.
 
-# ZIL runs the whole of this off one wrath counter: the peppers push it one way,
-# the water the other, and the passage opens when he sleeps. Two flags here, for
-# the two states a player can tell apart, and the order below is the order the
-# first requirement that holds decides between.
-#
-# `cyclops-room/config.yaml`'s stairs read a third flag, `cyclops-flag`, which is
-# ZIL's own name for the one thing it keeps in a single global: asleep, fled, or
-# neither. Kept in step here rather than merged into `cyclops-asleep`, because the
-# stairs also open when he flees for good (`odysseus`), which is not sleep and
-# has no waking-up half.
 actions:
   - id: look
     requires:
@@ -110,8 +90,6 @@ actions:
         data:
           text: A hungry cyclops is standing at the foot of the stairs.
 
-  # The peppers make him thirsty, which is the whole of the puzzle: nothing else
-  # will persuade him to drink.
   - id: give
     indirect: lunch
     triggers:
@@ -133,10 +111,6 @@ actions:
           flag: cyclops-provoked
           value: true
 
-  # Two blocks rather than one with a refusal written into its requirement. A
-  # `failure` here could never be heard: the catch-all below carries no requirements
-  # of its own, so it answers whenever a particular one does not, and the
-  # particular's words would be dead on the page. The trophy case taught this.
   - id: give
     indirect: bottle
     requires:
@@ -214,11 +188,6 @@ actions:
           flag: cyclops-provoked
           value: true
 
-  # ZIL answers THROW the same way as ATTACK here, one shared branch
-  # (`<VERB? THROW ATTACK MUNG>`) that starts the same agitation timer -
-  # only MUNG gets its own line. Not reproduced: ZIL also drops the thrown
-  # object to the floor (`<MOVE ,PRSO ,HERE>`), which this block cannot do
-  # for an object it has no way to name generically.
   - id: throw
     triggers:
       - type: response
@@ -274,8 +243,6 @@ actions:
         data:
           text: The cyclops prefers eating to making conversation.
 
-  # ZIL's `V-HELLO` answers any `ACTORBIT` object addressed by name this same
-  # way, regardless of which one.
   - id: hello
     triggers:
       - type: response

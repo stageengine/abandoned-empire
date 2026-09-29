@@ -1,8 +1,6 @@
 id: red-button
 name: red button
 
-# Not `button` or `switch` on their own: all four answer to those and the parser
-# picks by declaration order rather than by asking which one was meant.
 synonyms: [red switch]
 start: maintenance-room
 

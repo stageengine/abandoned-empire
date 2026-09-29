@@ -10,9 +10,6 @@ measures:
 contains: true
 tags: [belongings]
 requires:
-  # Whether the player can see. Seventy times, which is what
-  # ROADMAP.md's "whether the player can see" is about: one block on the game
-  # would say this once and reach a thing carried in and dropped besides.
   - type: any-of
     data:
       conditions:
@@ -22,7 +19,6 @@ requires:
         - type: flag
           data: { flag: light }
 presence:
-  # Untouched, and with the egg still in it: the nest first, then what is in it.
   - requires:
       - type: handled
         negate: true
@@ -50,7 +46,6 @@ presence:
       - type: response
         data:
           text: Beside you on the branch is a small bird's nest.
-  # Carried off the branch and put down somewhere, and still saying what is in it.
   - requires:
       - type: object-in
         data:
@@ -88,8 +83,6 @@ actions:
         data:
           text: >-
             The nest falls to the ground, and the egg spills out of it, seriously damaged.
-      # The action stands in for the drop, so it has to do the dropping. Zork
-      # leaves the nest up here even though it says otherwise.
       - type: move-object
         data:
           object: nest

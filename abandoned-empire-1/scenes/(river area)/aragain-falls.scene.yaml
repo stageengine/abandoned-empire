@@ -3,8 +3,6 @@ id: aragain-falls
 name: Aragain Falls
 
 presence:
-  # Once the sceptre has been waved, the rainbow is something you can walk on, and
-  # the room says so.
   - requires:
       - type: flag
         data: { flag: rainbow-flag }

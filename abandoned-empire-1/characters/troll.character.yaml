@@ -2,9 +2,6 @@ id: troll
 
 synonyms: [nasty troll]
 requires:
-  # Whether the player can see. Seventy times, which is what
-  # ROADMAP.md's "whether the player can see" is about: one block on the game
-  # would say this once and reach a thing carried in and dropped besides.
   - type: any-of
     data:
       conditions:
@@ -20,16 +17,8 @@ presence:
           text: A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.
 start: troll-room
 
-# In his hands rather than inside him, which is what he was written as before
-# characters were used here: a thing in somebody's hands is not in the room, cannot
-# be taken, and changes hands through an action they own. His does it when he dies.
 holds: [axe]
 
-# Zork gives the troll a strength of two and settles each blow against a table
-# of nine outcomes weighted by how the fight is going. Stage has one roll per
-# action, so the port spends the variety differently: the troll's strength picks
-# which blow this is, and the roll decides whether it lands. Two strengths, two
-# actions, and the fight still reads as a fight.
 measures:
   - id: strength
     max: 2
@@ -45,8 +34,6 @@ measures:
           - type: remove-object
             data:
               object: troll
-          # He drops what he was holding, which is the only way into this room's
-          # other exits being worth anything to you.
           - type: move-object
             data:
               object: axe
@@ -58,8 +45,6 @@ measures:
       - from: 1
 
 actions:
-  # The killing blow. Written above the other because the first requirement that
-  # holds decides which action this is, and a wounded troll is the particular case.
   - id: attack
     preposition: with
     indirect: sword
@@ -131,22 +116,6 @@ actions:
           measure: strength
           by: -1
 
-  # ZIL's `FIND-WEAPON` answers to any of five blades - stiletto, axe, sword,
-  # knife, rusty knife - not the sword alone: `V-ATTACK` only asks
-  # `WEAPONBIT`, and `VILLAIN-STRENGTH` only singles the sword out for a
-  # further -1 to the troll's own effective strength (`V-BEST-ADV`, the
-  # `VILLAINS` table's third field), lower being easier to land a killing
-  # blow against. Without a sword this port's `attack` only had the bare-hands
-  # block below to fall to - no `preposition` field there to match `with`
-  # anything, so `resolve.ts`'s own dispatch (`select`, then `acted`'s
-  # fallback to the other object) found nothing at all and answered with the
-  # engine's generic refusal instead of a fight. Fixed the same way the sword
-  # already was, three more times over, at a flat percentage fifteen points
-  # under the sword's own: the nearest true thing this port's one-roll-per-
-  # swing model has to a defense strength that is a point higher without the
-  # bonus, not a claim that ZIL's own nine-outcome table comes out fifteen
-  # points apart - it does not read that way at all, and porting it exactly
-  # would mean porting the table, not the fight.
   - id: attack
     preposition: with
     indirect: axe
@@ -437,14 +406,6 @@ actions:
         data:
           text: Trying to attack the troll with your bare hands is suicidal.
 
-  # ZIL's give/throw handling for the troll, in the same order it checks: a
-  # blade specifically has a one-in-five chance of being eaten and killing
-  # him outright (a second, non-combat way to win the room), and otherwise
-  # gets thrown back at you, hostile. Anything else is just eaten -
-  # `REMOVE-CAREFULLY` in ZIL, gone for good. His own axe is not among these:
-  # he holds it (`holds: [axe]`) for as long as he is alive, so there is no
-  # way to be carrying it to give or throw back in the first place - ZIL's
-  # own re-arming branch for that case is accordingly unreachable here too.
   - id: give
     indirect: knife
     requires:
@@ -527,11 +488,6 @@ actions:
           object: sword
           to: here
 
-  # ZIL removes the gift here too (`REMOVE-CAREFULLY ,PRSO`) - not reproduced,
-  # since this catch-all is the one place this file cannot name what it is
-  # answering: no placeholder stands for whichever object a sentence like
-  # this named, the way ZIL's own `D ,PRSO` prints it live, and destroying an
-  # object this block cannot name is worse than leaving it be.
   - id: give
     triggers:
       - type: response
@@ -662,11 +618,6 @@ actions:
           text: >-
             A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.
 
-  # ZIL's `V-HELLO` answers any `ACTORBIT` object addressed by name this same
-  # way, regardless of which one. His own dead-and-deaf variant
-  # ("Unfortunately, the troll can't hear you.") is moot here: a dead troll
-  # is `remove-object`'d outright, so there is no addressable troll left to
-  # say it to.
   - id: hello
     triggers:
       - type: response

@@ -39,7 +39,6 @@ requires:
     data:
       flag: egg-open
 
-  # Whether the player can see, as above and everywhere else.
   - type: any-of
     data:
       conditions:

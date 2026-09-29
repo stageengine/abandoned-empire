@@ -50,11 +50,6 @@ navigation:
           scene: ladder-bottom
   - id: west
     requires:
-      # ZIL asks whether every single thing you are carrying weighs four or
-      # less, counting what is inside it - `carrying`'s `of: largest` is
-      # exactly that question. Before there was a limit at all this was a flag
-      # nothing ever set, so the passage was shut for good and the Drafty Room
-      # could not be reached.
       - type: carrying
         data: { of: largest, max: 4 }
         failure:

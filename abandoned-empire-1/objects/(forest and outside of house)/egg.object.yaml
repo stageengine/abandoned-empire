@@ -18,9 +18,6 @@ measures:
 contains: true
 tags: [treasure]
 requires:
-  # Whether the player can see. Seventy times, which is what
-  # ROADMAP.md's "whether the player can see" is about: one block on the game
-  # would say this once and reach a thing carried in and dropped besides.
   - type: any-of
     data:
       conditions:
@@ -55,7 +52,6 @@ actions:
         data:
           text: You have neither the tools nor the expertise.
 
-  # Held, so what is left of it stays in your hands.
   - id: break
     requires:
       - type: has-item
@@ -114,7 +110,6 @@ actions:
           object: broken-egg
           to: here
 
-  # Throwing it is the same ruin by a different route, and it lands where you are.
   - id: throw
     triggers:
       - type: response
@@ -142,8 +137,6 @@ actions:
           object: broken-egg
           to: here
 
-  # Ten feet is enough. It opens on the path below, and what is inside does not
-  # survive the landing either.
   - id: drop
     requires:
       - type: scene

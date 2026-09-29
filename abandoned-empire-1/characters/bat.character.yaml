@@ -2,9 +2,6 @@ id: bat
 
 synonyms: [vampire, vampire bat, vampire vampire, deranged bat, deranged vampire]
 requires:
-  # Whether the player can see. Seventy times, which is what
-  # ROADMAP.md's "whether the player can see" is about: one block on the game
-  # would say this once and reach a thing carried in and dropped besides.
   - type: any-of
     data:
       conditions:
@@ -23,12 +20,6 @@ presence:
 
 start: bat-room
 
-# ZIL sends the player flying to a random room in the mine unless they are carrying
-# garlic (or it is lying loose in the room). The flight itself - one `chance` of
-# eight over `BAT-DROPS`' own table - lives in `every-turn.yaml`, gated on
-# `scene: bat-room` rather than a room-entry event this engine has no other name
-# for; what is written here is why he leaves you alone, which is the part a
-# player has to work out.
 actions:
   - id: look
     triggers:
@@ -38,9 +29,6 @@ actions:
             A large vampire bat, hanging from the ceiling, holding his nose against the smell
             of what you are carrying.
 
-  # Gated on the case being refused, with the refusal in its own triggers, so the
-  # ordinary answer below is reached rather than gated past. Written the other way
-  # round the build says so, which is how this came to be written this way.
   - id: get
     requires:
       - type: has-item
@@ -57,9 +45,6 @@ actions:
         data:
           text: You can't reach him; he's on the ceiling.
 
-  # Gated on the case being refused, with the refusal in its own triggers, so the
-  # ordinary answer below is reached rather than gated past. Written the other way
-  # round the build says so, which is how this came to be written this way.
   - id: attack
     requires:
       - type: has-item
@@ -82,8 +67,6 @@ actions:
         data:
           text: "    Fweep!\n    Fweep!\n    Fweep!"
 
-  # ZIL's `V-HELLO` answers any `ACTORBIT` object addressed by name this same
-  # way, regardless of which one - the bat included.
   - id: hello
     triggers:
       - type: response

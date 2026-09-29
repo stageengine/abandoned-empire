@@ -8,9 +8,6 @@ measures:
     max: 15
 tags: [treasure]
 requires:
-  # Whether the player can see. Seventy times, which is what
-  # ROADMAP.md's "whether the player can see" is about: one block on the game
-  # would say this once and reach a thing carried in and dropped besides.
   - type: any-of
     data:
       conditions:
@@ -37,10 +34,6 @@ presence:
 start: gallery
 
 actions:
-  # Zork scores a treasure twice: once for getting it out of wherever it was,
-  # and again for putting it in the case. The first of those has to be written
-  # as an action of its own, because the engine's own taking cannot be hooked -
-  # so `once` does the scoring and its failure does the plain taking ever after.
 
   - id: break
     once:

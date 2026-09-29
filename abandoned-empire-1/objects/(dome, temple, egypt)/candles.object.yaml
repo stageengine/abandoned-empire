@@ -7,9 +7,6 @@ portable: true
 size: weight
 tags: [belongings]
 requires:
-  # Whether the player can see. Seventy times, which is what
-  # ROADMAP.md's "whether the player can see" is about: one block on the game
-  # would say this once and reach a thing carried in and dropped besides.
   - type: any-of
     data:
       conditions:
@@ -33,7 +30,6 @@ presence:
           text: There is a pair of candles here.
 start: south-temple
 
-# Thirty-five turns of burning, in the three stages Zork's candle table names.
 measures:
   - id: life
     max: 36

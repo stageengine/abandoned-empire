@@ -3,9 +3,6 @@ tags: [dark]
 
 name: Grating Room
 
-# Four descriptions, most particular first. The open grating is the only one that
-# does not ask for a light, because an open grating is where the light is coming
-# from - see the daylight rule in `every-turn.yaml`.
 presence:
   - requires:
       - type: flag
@@ -81,8 +78,6 @@ objects:
   - id: grating-room.grate
     name: grating
     synonyms: [grate]
-    # This side is the working side. The lock only answers to the keys and only
-    # from down here, and the grating only opens once it has.
     actions:
       - id: unlock
         requires:
@@ -113,8 +108,6 @@ objects:
             data:
               text: The grate is locked.
 
-      # Opening it the first time brings the pile of leaves down with it, which
-      # is the game telling you where you have come out before you have looked.
       - id: open
         requires:
           - type: flag
@@ -205,14 +198,6 @@ objects:
               flag: grate-open
               value: false
 
-      # ZIL's `GRATE-FUNCTION` lets anything under a certain size through the
-      # grate to fall here, moved rather than merely dropped. Scoped to only the
-      # handful of objects real ZIL actually sizes too large for it (`SIZE` over
-      # 20 in `1dungeon.zil`) rather than every portable object in the game: this
-      # engine has no placeholder standing for whatever object a sentence like
-      # this named, the way ZIL's `D ,PRSO` prints it live, so a generic "and it
-      # actually moves" answer for anything else would need one block per
-      # portable object in the game rather than one block per exception.
       - id: put
         preposition: in
         indirect: axe

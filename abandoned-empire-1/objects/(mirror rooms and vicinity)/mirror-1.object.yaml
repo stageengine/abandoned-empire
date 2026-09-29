@@ -10,10 +10,6 @@ actions:
       - type: response
         data: { text: The mirror is many times your size. Give up. }
 
-  # ZIL answers `MUNG`/`THROW`/`ATTACK` alike with the same break, `mung`
-  # already one of `break`'s own synonyms - `attack`/`throw` are separate
-  # verbs here, so each needs its own copy of the same one-shot gate the
-  # trap door already uses: the first go breaks it, and only it says so.
   - id: break
     requires:
       - type: flag
@@ -84,12 +80,6 @@ actions:
       - type: response
         data: { text: There is an ugly person staring back at you. }
 
-  # ZIL only reads this as the reciprocal of a bare hand: rubbed with
-  # something held instead, the mirror answers with a tingle and nothing
-  # moves - no `indirect` named, so this one block catches whatever the
-  # something was. ZIL says which ("transmitted through the <D ,PRSI>"); this
-  # engine has no placeholder for the tool a sentence named, only for a
-  # measure, so it says the same thing without naming it back.
   - id: touch
     preposition: with
     triggers:
@@ -97,12 +87,6 @@ actions:
         data:
           text: You feel a faint tingling transmitted through it.
 
-  # The whole of the mirror puzzle: touching one puts you in the other room, and
-  # ZIL swaps the contents of the two so that it reads as one mirror rather than two.
-  # The rooms are the same size and hold the same nothing, so the move is the half
-  # that matters. Broken glass reflects nothing to fall into - the same one-shot
-  # shape as the mirror's own gate above, its own failure silent since ZIL simply
-  # answers a broken mirror's `RUB` as no verb it knows at all.
   - id: touch
     requires:
       - type: flag

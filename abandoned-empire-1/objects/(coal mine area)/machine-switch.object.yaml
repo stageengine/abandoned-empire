@@ -3,11 +3,6 @@ name: switch
 start: machine-room
 
 actions:
-  # ZIL only does anything with the lid closed - open, it "doesn't seem to want
-  # to do anything" - and only coal becomes the diamond: whatever else is
-  # inside, or nothing at all, comes out as gunk instead. Two blocks rather
-  # than one, since a trigger cannot branch on what it finds: the first claims
-  # the coal-to-diamond turn and the second is every other turn of the switch.
   - id: turn
     preposition: with
     indirect: screwdriver

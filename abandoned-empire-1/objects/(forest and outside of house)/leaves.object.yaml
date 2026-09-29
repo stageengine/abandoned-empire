@@ -9,9 +9,6 @@ measures:
     max: 25
 tags: [belongings]
 requires:
-  # Whether the player can see. Seventy times, which is what
-  # ROADMAP.md's "whether the player can see" is about: one block on the game
-  # would say this once and reach a thing carried in and dropped besides.
   - type: any-of
     data:
       conditions:
@@ -27,10 +24,6 @@ presence:
           text: On the ground is a pile of leaves.
 start: grating-clearing
 
-# Everything that disturbs the leaves reveals the grating, which is `grate-revealed`
-# throughout: the grate's own `requires` reads it, so does the clearing's
-# description, and so does the way down. ZIL keeps the same flag and calls it the
-# same thing.
 actions:
   - id: count
     triggers:
@@ -38,9 +31,6 @@ actions:
         data:
           text: There are 69,105 leaves here.
 
-  # Burning them in your hands is one of Zork's quieter deaths. Written above the
-  # ordinary burn, because the first requirement that holds decides which action
-  # this is and being on fire is the particular case.
   - id: burn
     requires:
       - type: has-item
@@ -50,9 +40,6 @@ actions:
       - type: response
         data:
           text: The leaves burn, and so do you.
-      # `player-died` rather than `end-game`: every death in ZIL goes through
-      # one routine, `JIGS-UP`, which gives every one of them the same two
-      # resurrections before the third is final - this one included.
       - type: set-flag
         data:
           flag: player-died
@@ -81,9 +68,6 @@ actions:
           flag: grate-revealed
           value: true
 
-  # Moving them and taking them both reveal it, and each says so its own way.
-  # Once it is revealed neither says anything further, which is what ZIL's
-  # `LEAVES-APPEAR` guards with the same flag.
   - id: move
     requires:
       - type: flag
@@ -127,8 +111,6 @@ actions:
           object: leaves
           announce: true
 
-  # Looking under them shows the grating and then hides it again, which is the one
-  # way of finding it that leaves you no better off.
   - id: look
     preposition: under
     requires:
@@ -143,8 +125,6 @@ actions:
             Underneath the pile of leaves is a grating. As you release the leaves, the grating
             is once again concealed from view.
 
-  # Once it has been found there is nothing under them, and Zork's own words for
-  # nothing-under-there are these.
   - id: look
     preposition: under
     triggers:

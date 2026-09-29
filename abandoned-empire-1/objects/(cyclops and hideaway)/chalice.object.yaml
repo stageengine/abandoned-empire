@@ -19,9 +19,6 @@ measures:
     max: 10
 tags: [treasure]
 requires:
-  # Whether the player can see. Seventy times, which is what
-  # ROADMAP.md's "whether the player can see" is about: one block on the game
-  # would say this once and reach a thing carried in and dropped besides.
   - type: any-of
     data:
       conditions:
@@ -37,16 +34,3 @@ presence:
           text: There is a silver chalice, intricately engraved, here.
 start: treasure-room
 
-# ZIL's CHALICE-FCN answers this only when the chalice is `PRSI` - the
-# indirect object, something being put *in* it ("put water in chalice") - and
-# falls through to ordinary handling otherwise, `DUMB-CONTAINER` included. This
-# engine has no way to tell a block "only match when I'm the indirect object,
-# not the direct one": `put chalice in case` and `put water in chalice` reach
-# the chalice's own actions the same way, through the same shape, so a block
-# written for the second sentence answered the first as well - unconditionally,
-# since it named no `indirect` to narrow it - and silently ate every attempt to
-# bank the chalice before `trophy-case.yaml`'s own `indirect: chalice` block
-# ever got a turn. Nothing in this walkthrough, or in ordinary play, ever tries
-# to put something in the chalice, so the honest fix is not writing a rule this
-# engine cannot shape correctly, rather than one that answers a sentence nobody
-# typed at the cost of the one everybody does.

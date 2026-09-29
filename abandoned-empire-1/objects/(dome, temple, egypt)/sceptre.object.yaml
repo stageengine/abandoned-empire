@@ -22,9 +22,6 @@ measures:
     max: 3
 tags: [treasure]
 requires:
-  # Whether the player can see. Seventy times, which is what
-  # ROADMAP.md's "whether the player can see" is about: one block on the game
-  # would say this once and reach a thing carried in and dropped besides.
   - type: any-of
     data:
       conditions:
@@ -50,22 +47,7 @@ presence:
           text: An ornamented sceptre, tapering to a sharp point, is here.
 start: in:coffin
 
-# ZIL answers `WAVE`/`RAISE` identically, by where the player is standing and
-# whether the rainbow is already solid - four shapes, not one: solidifying it
-# from either end (the end of the rainbow's own block also announcing the pot
-# appearing, since only that one has it to see), dissolving it again from
-# either end once it already is solid, a fatal wave while standing on the
-# thing itself, and a flavour line answering the sceptre from anywhere else.
-# The port had only the first shape, unconditionally, which is also what let
-# the pot of gold answer for itself before this ever ran - see the flag this
-# sets and `pot-of-gold.object.yaml`'s own new requirement on it.
 actions:
-  # ZIL punctures the boat the instant a weapon like this one is dropped while
-  # aboard - RBOAT-FUNCTION's own M-BEG answers `DROP` before this object's
-  # ordinary drop ever runs, so the weapon stays in hand rather than actually
-  # landing anywhere. Written above the plain drop for the same reason the
-  # boat's own boarding-puncture is. See `inflated-boat.object.yaml` for the
-  # matching `put ... in` and `attack ... with` shapes of the same fix.
   - id: drop
     requires:
       - type: flag
@@ -241,8 +223,6 @@ actions:
       - type: set-flag
         data: { flag: rainbow-flag, value: false }
 
-  # Standing on the thing you have just asked to stop being solid, ZIL does not
-  # let a player survive to see it happen.
   - id: wave
     requires:
       - type: scene

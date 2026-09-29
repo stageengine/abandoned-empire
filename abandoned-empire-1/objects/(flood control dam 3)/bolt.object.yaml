@@ -4,8 +4,6 @@ synonyms: [nut, metal bolt, metal nut, large bolt, large nut]
 start: dam-room
 
 actions:
-  # Closing the gates. Written above the opening because the first requirement
-  # that holds decides which action this is.
   - id: turn
     preposition: with
     indirect: wrench

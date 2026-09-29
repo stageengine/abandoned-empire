@@ -1,15 +1,6 @@
-# What this room does, and only this room.
 
 every-turn:
 
-  # Drowning, once the water has closed over the room. ZIL only kills you if you
-  # are standing in it, which is the whole reason this rule lives here rather
-  # than on the measure's own threshold.
-  #
-  # `player-died` negated too: resurrection reads it a pass later than this
-  # writes it, and the room is still flooded on that later turn - so without
-  # this, the water drowns the player a second time while the first is still
-  # waiting to be resolved.
   - requires:
       - type: flag
         data:
@@ -22,9 +13,6 @@ every-turn:
       - type: response
         data:
           text: I'm afraid you have done drowned yourself.
-      # `player-died` rather than `end-game`: every death in ZIL goes through
-      # one routine, `JIGS-UP`, which gives every one of them the same two
-      # resurrections before the third is final - drowning included.
       - type: set-flag
         data:
           flag: player-died

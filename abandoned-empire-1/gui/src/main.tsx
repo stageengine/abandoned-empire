@@ -5,10 +5,6 @@ import App from './app';
 
 import './style.css';
 
-// `#root` is guaranteed to already be in the DOM by the time this runs -
-// `assemble.ts` places gui-dist/index.html's own body (this element,
-// verbatim) ahead of this script in the assembled document. See
-// gui/public/index.html for the element itself.
 const root = document.getElementById('root');
 
 if (!root) {

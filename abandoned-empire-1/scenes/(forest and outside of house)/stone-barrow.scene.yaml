@@ -34,14 +34,6 @@ objects:
             data:
               text: The wall is a wall, and gives nothing away.
 navigation:
-  # The way in, and the end of the game - the only ending Zork has that is not
-  # a death. No points here: all three hundred and fifty are already spent by
-  # the time a player reaches this door, sixty-five of them for the rooms
-  # `every-turn.yaml` scores and the rest for treasures banked, which is why
-  # `FINISH` (`gverbs.zil`) opens on `V-SCORE` rather than a fresh tally of its
-  # own - reproduced below as the same line the `score` command gives at 350,
-  # since this engine has nothing that calls one action's response from
-  # another's.
   - id: west
     synonyms: [barrow, tomb, door]
     triggers:

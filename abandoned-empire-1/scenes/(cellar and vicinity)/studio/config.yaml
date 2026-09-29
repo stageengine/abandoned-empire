@@ -84,13 +84,6 @@ navigation:
       - type: change-scene
         data:
           scene: gallery
-  # The chimney. ZIL lets you up with the lamp and one other thing at most, a
-  # count of things rather than a weight of them: the lamp and the coffin are
-  # two things and go up together, though they weigh seventy between them.
-  # `carrying`'s `of: count` asks exactly that, so a size bound never has to be
-  # written and the coffin Zork allows is still allowed. Empty-handed gets its
-  # own line in ZIL, checked first here for the same reason: `has-item lamp`
-  # alone would answer it with the generic overloaded message instead.
   - id: up
     synonyms: [chimney]
     requires:

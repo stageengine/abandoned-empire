@@ -1,8 +1,6 @@
 id: sand
 start: sandy-cave
 
-# Zork counts the digs and collapses the hole on the fourth. A measure is what a
-# number that moves during play is, and its threshold is where the scarab comes up.
 measures:
   - id: digs
     max: 4
@@ -20,9 +18,6 @@ measures:
           - type: response
             data:
               text: The hole collapses, smothering you.
-          # `player-died` rather than `end-game`: every death in ZIL goes
-          # through one routine, `JIGS-UP`, which gives every one of them the
-          # same two resurrections before the third is final - this one too.
           - type: set-flag
             data: { flag: player-died, value: true }
 

@@ -2,8 +2,6 @@ id: grating-clearing
 
 name: Clearing
 
-# Three descriptions, and the most particular goes first: the grating open, the
-# grating merely found, and the clearing before anybody has disturbed the leaves.
 presence:
   - requires:
       - type: flag
@@ -86,9 +84,6 @@ objects:
       - type: flag
         data:
           flag: grate-revealed
-    # The wrong side of the lock. It opens up here once somebody has unlocked it
-    # from below, and never before - which is the whole reason the maze is on the
-    # way to the clearing rather than the other way round.
     actions:
       - id: open
         requires:
@@ -149,9 +144,6 @@ objects:
             data:
               text: You can't lock it from this side.
 
-      # See `grating-room.grate`'s copy of this same block for why it is scoped
-      # to only the handful of objects real ZIL sizes too large for the grate,
-      # rather than every portable object in the game.
       - id: put
         preposition: in
         indirect: axe
@@ -269,8 +261,6 @@ navigation:
       - type: change-scene
         data:
           scene: forest-1
-  # Three answers, and the middle one is the point of the puzzle: knowing the
-  # grating is there and not being able to open it from this side.
   - id: down
     requires:
       - type: flag
