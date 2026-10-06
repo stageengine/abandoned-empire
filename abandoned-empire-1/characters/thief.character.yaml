@@ -51,6 +51,8 @@ measures:
           - type: remove-object
             data:
               object: thief
+          - type: achievement
+            data: { id: caught-the-thief }
           - type: move-object
             data:
               object: large-bag

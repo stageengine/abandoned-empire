@@ -71,6 +71,8 @@ actions:
         data:
           flag: lld-flag
           value: true
+      - type: achievement
+        data: { id: begone-fiends }
       - type: set-flag
         data:
           flag: ceremony

@@ -29,6 +29,10 @@ actions:
           subject: player
           measure: score
           by: 5
+      - type: achievement
+        data: { id: treasure-bag-of-coins }
+      - type: adjust-measure
+        data: { subject: player, measure: treasures, by: 1 }
 
   - id: put
     preposition: in
@@ -46,6 +50,10 @@ actions:
           subject: player
           measure: score
           by: 5
+      - type: achievement
+        data: { id: treasure-bar }
+      - type: adjust-measure
+        data: { subject: player, measure: treasures, by: 1 }
 
   - id: put
     preposition: in
@@ -63,6 +71,10 @@ actions:
           subject: player
           measure: score
           by: 1
+      - type: achievement
+        data: { id: treasure-bauble }
+      - type: adjust-measure
+        data: { subject: player, measure: treasures, by: 1 }
 
   - id: put
     preposition: in
@@ -80,6 +92,10 @@ actions:
           subject: player
           measure: score
           by: 5
+      - type: achievement
+        data: { id: treasure-bracelet }
+      - type: adjust-measure
+        data: { subject: player, measure: treasures, by: 1 }
 
   - id: put
     preposition: in
@@ -97,6 +113,10 @@ actions:
           subject: player
           measure: score
           by: 1
+      - type: achievement
+        data: { id: treasure-canary }
+      - type: adjust-measure
+        data: { subject: player, measure: treasures, by: 1 }
 
   - id: put
     preposition: in
@@ -114,6 +134,10 @@ actions:
           subject: player
           measure: score
           by: 2
+      - type: achievement
+        data: { id: treasure-egg }
+      - type: adjust-measure
+        data: { subject: player, measure: treasures, by: 1 }
 
   - id: put
     preposition: in
@@ -131,6 +155,10 @@ actions:
           subject: player
           measure: score
           by: 4
+      - type: achievement
+        data: { id: treasure-canary }
+      - type: adjust-measure
+        data: { subject: player, measure: treasures, by: 1 }
 
   - id: put
     preposition: in
@@ -148,6 +176,10 @@ actions:
           subject: player
           measure: score
           by: 5
+      - type: achievement
+        data: { id: treasure-chalice }
+      - type: adjust-measure
+        data: { subject: player, measure: treasures, by: 1 }
 
   - id: put
     preposition: in
@@ -165,6 +197,10 @@ actions:
           subject: player
           measure: score
           by: 15
+      - type: achievement
+        data: { id: treasure-coffin }
+      - type: adjust-measure
+        data: { subject: player, measure: treasures, by: 1 }
 
   - id: put
     preposition: in
@@ -182,6 +218,10 @@ actions:
           subject: player
           measure: score
           by: 10
+      - type: achievement
+        data: { id: treasure-diamond }
+      - type: adjust-measure
+        data: { subject: player, measure: treasures, by: 1 }
 
   - id: put
     preposition: in
@@ -199,6 +239,10 @@ actions:
           subject: player
           measure: score
           by: 5
+      - type: achievement
+        data: { id: treasure-egg }
+      - type: adjust-measure
+        data: { subject: player, measure: treasures, by: 1 }
 
   - id: put
     preposition: in
@@ -216,6 +260,10 @@ actions:
           subject: player
           measure: score
           by: 10
+      - type: achievement
+        data: { id: treasure-emerald }
+      - type: adjust-measure
+        data: { subject: player, measure: treasures, by: 1 }
 
   - id: put
     preposition: in
@@ -233,6 +281,10 @@ actions:
           subject: player
           measure: score
           by: 5
+      - type: achievement
+        data: { id: treasure-jade }
+      - type: adjust-measure
+        data: { subject: player, measure: treasures, by: 1 }
 
   - id: put
     preposition: in
@@ -250,6 +302,10 @@ actions:
           subject: player
           measure: score
           by: 6
+      - type: achievement
+        data: { id: treasure-painting }
+      - type: adjust-measure
+        data: { subject: player, measure: treasures, by: 1 }
 
   - id: put
     preposition: in
@@ -267,6 +323,10 @@ actions:
           subject: player
           measure: score
           by: 10
+      - type: achievement
+        data: { id: treasure-pot-of-gold }
+      - type: adjust-measure
+        data: { subject: player, measure: treasures, by: 1 }
 
   - id: put
     preposition: in
@@ -284,6 +344,10 @@ actions:
           subject: player
           measure: score
           by: 5
+      - type: achievement
+        data: { id: treasure-scarab }
+      - type: adjust-measure
+        data: { subject: player, measure: treasures, by: 1 }
 
   - id: put
     preposition: in
@@ -301,6 +365,10 @@ actions:
           subject: player
           measure: score
           by: 6
+      - type: achievement
+        data: { id: treasure-sceptre }
+      - type: adjust-measure
+        data: { subject: player, measure: treasures, by: 1 }
 
   - id: put
     preposition: in
@@ -318,6 +386,10 @@ actions:
           subject: player
           measure: score
           by: 10
+      - type: achievement
+        data: { id: treasure-skull }
+      - type: adjust-measure
+        data: { subject: player, measure: treasures, by: 1 }
 
   - id: put
     preposition: in
@@ -335,6 +407,10 @@ actions:
           subject: player
           measure: score
           by: 6
+      - type: achievement
+        data: { id: treasure-torch }
+      - type: adjust-measure
+        data: { subject: player, measure: treasures, by: 1 }
 
   - id: put
     preposition: in
@@ -352,6 +428,10 @@ actions:
           subject: player
           measure: score
           by: 11
+      - type: achievement
+        data: { id: treasure-trident }
+      - type: adjust-measure
+        data: { subject: player, measure: treasures, by: 1 }
 
   - id: put
     preposition: in
@@ -369,6 +449,10 @@ actions:
           subject: player
           measure: score
           by: 5
+      - type: achievement
+        data: { id: treasure-trunk }
+      - type: adjust-measure
+        data: { subject: player, measure: treasures, by: 1 }
 
   - id: put
     preposition: in

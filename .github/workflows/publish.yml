@@ -17,7 +17,7 @@ permissions:
   contents: write
 
 env:
-  STAGE: ${{ inputs.engine || '0.15.0' }}
+  STAGE: ${{ inputs.engine || '0.16.0' }}
 
 jobs:
   publish:
@@ -97,12 +97,20 @@ jobs:
 
           import gzip, json
 
-          raw = open('game.stg', 'rb').read()
+          # Format 2 is the magic, a format byte, the compressed part's length as eight bytes
+          # least significant first, then the part, then every file the game carries, raw.
+          # Only the part is read: the files after it are the game's sounds and pictures.
+          with open('game.stg', 'rb') as stg:
+              if stg.read(4) != b'STG\x00':
+                  raise SystemExit('game.stg does not begin like a Stage game')
 
-          if raw[:4] != b'STG\x00':
-              raise SystemExit('game.stg does not begin like a Stage game')
+              format = stg.read(1)[0]
 
-          built = json.loads(gzip.decompress(raw[5:]))
+              if format != 2:
+                  raise SystemExit(f'game.stg is format {format}, and this reads format 2')
+
+              length = int.from_bytes(stg.read(8), 'little')
+              built = json.loads(gzip.decompress(stg.read(length)))
           about = built['game'].get('metadata') or {}
 
           for name, value in (

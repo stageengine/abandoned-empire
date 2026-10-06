@@ -121,6 +121,8 @@ every-turn:
       - type: response
         data:
           text: Oh, no! A lurking grue slithered into the room and devoured you!
+      - type: achievement
+        data: { id: eaten-by-a-grue }
       - type: set-flag
         data:
           flag: player-died

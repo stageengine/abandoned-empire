@@ -62,6 +62,8 @@ navigation:
           text: >-
             Your score is <player:score> (total of 350 points), in <player:moves> moves. This
             gives you the rank of Master Adventurer.
+      - type: achievement
+        data: { id: master-adventurer }
       - type: end-game
         data:
           journal: walked into the barrow, having mastered the Great Underground Empire

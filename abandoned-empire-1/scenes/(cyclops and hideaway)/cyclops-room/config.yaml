@@ -41,6 +41,8 @@ actions:
         data:
           flag: cyclops-flag
           value: true
+      - type: achievement
+        data: { id: odysseus }
       - type: set-flag
         data:
           flag: magic-flag
