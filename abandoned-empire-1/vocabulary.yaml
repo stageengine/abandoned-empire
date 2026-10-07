@@ -145,6 +145,7 @@ verbs:
     synonyms: [banish, lay to rest]
   - id: hello
     synonyms: [hi]
+    conversational: true
   - id: ring
     synonyms: [toll]
   - id: wish

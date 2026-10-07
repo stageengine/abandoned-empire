@@ -699,6 +699,30 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 1 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: cellar }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: cellar }
+            - type: response
+              data:
+                text: &thief-arrives >-
+                  Someone carrying a large bag is casually leaning against one of the walls
+                  here. He does not speak, but it is clear from his aspect that the bag will be
+                  taken only over his dead body.
     triggers:
       - type: move-object
         data: { object: thief, to: cellar }
@@ -712,6 +736,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 2 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: east-of-chasm }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: east-of-chasm }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: east-of-chasm }
@@ -725,6 +769,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 3 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: gallery }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: gallery }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: gallery }
@@ -738,6 +802,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 4 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: studio }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: studio }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: studio }
@@ -751,6 +835,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 5 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: troll-room }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: troll-room }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: troll-room }
@@ -764,6 +868,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 6 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: dome-room }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: dome-room }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: dome-room }
@@ -777,6 +901,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 7 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: egypt-room }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: egypt-room }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: egypt-room }
@@ -790,6 +934,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 8 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: engravings-cave }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: engravings-cave }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: engravings-cave }
@@ -803,6 +967,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 9 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: north-temple }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: north-temple }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: north-temple }
@@ -816,6 +1000,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 10 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: south-temple }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: south-temple }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: south-temple }
@@ -829,6 +1033,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 11 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: torch-room }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: torch-room }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: torch-room }
@@ -842,6 +1066,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 12 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: entrance-to-hades }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: entrance-to-hades }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: entrance-to-hades }
@@ -855,6 +1099,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 13 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: land-of-living-dead }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: land-of-living-dead }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: land-of-living-dead }
@@ -868,6 +1132,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 14 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: atlantis-room }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: atlantis-room }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: atlantis-room }
@@ -881,6 +1165,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 15 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: cold-passage }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: cold-passage }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: cold-passage }
@@ -894,6 +1198,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 16 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: mirror-room-1 }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: mirror-room-1 }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: mirror-room-1 }
@@ -907,6 +1231,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 17 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: mirror-room-2 }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: mirror-room-2 }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: mirror-room-2 }
@@ -920,6 +1264,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 18 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: narrow-passage }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: narrow-passage }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: narrow-passage }
@@ -933,6 +1297,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 19 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: small-cave }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: small-cave }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: small-cave }
@@ -946,6 +1330,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 20 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: tiny-cave }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: tiny-cave }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: tiny-cave }
@@ -959,6 +1363,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 21 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: twisting-passage }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: twisting-passage }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: twisting-passage }
@@ -972,6 +1396,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 22 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: winding-passage }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: winding-passage }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: winding-passage }
@@ -985,6 +1429,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 23 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: reservoir }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: reservoir }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: reservoir }
@@ -998,6 +1462,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 24 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: reservoir-north }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: reservoir-north }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: reservoir-north }
@@ -1011,6 +1495,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 25 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: reservoir-south }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: reservoir-south }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: reservoir-south }
@@ -1024,6 +1528,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 26 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: stream-view }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: stream-view }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: stream-view }
@@ -1037,6 +1561,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 27 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: chasm-room }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: chasm-room }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: chasm-room }
@@ -1050,6 +1594,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 28 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: damp-cave }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: damp-cave }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: damp-cave }
@@ -1063,6 +1627,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 29 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: deep-canyon }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: deep-canyon }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: deep-canyon }
@@ -1076,6 +1660,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 30 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: ew-passage }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: ew-passage }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: ew-passage }
@@ -1089,6 +1693,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 31 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: loud-room }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: loud-room }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: loud-room }
@@ -1102,6 +1726,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 32 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: ns-passage }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: ns-passage }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: ns-passage }
@@ -1115,6 +1759,26 @@ every-turn:
         data: { object: thief, location: bin }
       - type: chance
         data: { name: thief-walk, of: 33, index: 33 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: round-room }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: round-room }
+            - type: response
+              data: { text: *thief-arrives }
     triggers:
       - type: move-object
         data: { object: thief, to: round-room }
