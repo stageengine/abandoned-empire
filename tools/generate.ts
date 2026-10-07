@@ -1,7 +1,7 @@
 import dungeon, { type Exit, type Room, type Thing } from './dungeon.ts';
 import vocabulary from './vocabulary.ts';
 import lookingProse, { lookingParts } from './routines.ts';
-import writeYaml, { type Value } from './write-yaml.ts';
+import writeYaml, { type Value, writeYamlList } from './write-yaml.ts';
 
 const [sourceDir = '../source/zork1', outputDir = '../abandoned-empire-1'] = Deno.args.filter((one) =>
   !one.startsWith('--')
@@ -389,8 +389,8 @@ const lights = things.filter((thing) => thing.flags.includes('LIGHTBIT'));
 
 await put(
   'every-turn.yaml',
-  writeYaml({
-    'every-turn': [
+  writeYamlList(
+    [
       { triggers: [{ type: 'set-flag', data: { flag: 'light', value: false } }] },
       ...lights.map((thing) => ({
         requires: [
@@ -400,7 +400,7 @@ await put(
         triggers: [{ type: 'set-flag', data: { flag: 'light', value: true } }],
       })),
     ] as Array<Value>,
-  }),
+  ),
 );
 
 for (const thing of lights) {
@@ -430,26 +430,29 @@ await put(
           'between you and the rank of Master Adventurer.',
         genres: ['Adventure', 'Fantasy', 'Puzzle'],
       },
-
-      player: {
-        measures: [{
-          id: 'score',
-          max: 350,
-          start: 0,
-          thresholds: RANKS.map(({ from, rank }) =>
-            from === 0 ? { from } : {
-              from,
-              triggers: [{
-                type: 'response',
-                data: { text: `You have earned the rank of ${rank}.` },
-              }],
-            }
-          ),
-        }],
-      },
     } as Record<string, Value>,
-    ['metadata', 'player'],
+    ['metadata'],
   ),
+);
+
+await put(
+  'player.yaml',
+  writeYaml({
+    measures: [{
+      id: 'score',
+      max: 350,
+      start: 0,
+      thresholds: RANKS.map(({ from, rank }) =>
+        from === 0 ? { from } : {
+          from,
+          triggers: [{
+            type: 'response',
+            data: { text: `You have earned the rank of ${rank}.` },
+          }],
+        }
+      ),
+    }],
+  } as Record<string, Value>),
 );
 
 await put(

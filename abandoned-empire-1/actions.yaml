@@ -1,317 +1,315 @@
-
-actions:
-  - id: score
-    requires:
-      - type: measure
-        data: { subject: player, measure: score, min: 350 }
-    triggers:
-      - type: response
-        data:
-          text: >-
-            Your score is <player:score> (total of 350 points), in <player:moves> moves. This
-            gives you the rank of Master Adventurer.
-  - id: score
-    requires:
-      - type: measure
-        data: { subject: player, measure: score, min: 331 }
-    triggers:
-      - type: response
-        data:
-          text: >-
-            Your score is <player:score> (total of 350 points), in <player:moves> moves. This
-            gives you the rank of Wizard.
-  - id: score
-    requires:
-      - type: measure
-        data: { subject: player, measure: score, min: 301 }
-    triggers:
-      - type: response
-        data:
-          text: >-
-            Your score is <player:score> (total of 350 points), in <player:moves> moves. This
-            gives you the rank of Master.
-  - id: score
-    requires:
-      - type: measure
-        data: { subject: player, measure: score, min: 201 }
-    triggers:
-      - type: response
-        data:
-          text: >-
-            Your score is <player:score> (total of 350 points), in <player:moves> moves. This
-            gives you the rank of Adventurer.
-  - id: score
-    requires:
-      - type: measure
-        data: { subject: player, measure: score, min: 101 }
-    triggers:
-      - type: response
-        data:
-          text: >-
-            Your score is <player:score> (total of 350 points), in <player:moves> moves. This
-            gives you the rank of Junior Adventurer.
-  - id: score
-    requires:
-      - type: measure
-        data: { subject: player, measure: score, min: 51 }
-    triggers:
-      - type: response
-        data:
-          text: >-
-            Your score is <player:score> (total of 350 points), in <player:moves> moves. This
-            gives you the rank of Novice Adventurer.
-  - id: score
-    requires:
-      - type: measure
-        data: { subject: player, measure: score, min: 26 }
-    triggers:
-      - type: response
-        data:
-          text: >-
-            Your score is <player:score> (total of 350 points), in <player:moves> moves. This
-            gives you the rank of Amateur Adventurer.
-  - id: score
-    triggers:
-      - type: response
-        data:
-          text: >-
-            Your score is <player:score> (total of 350 points), in <player:moves> moves. This
-            gives you the rank of Beginner.
+- id: score
+  requires:
+    - type: measure
+      data: { subject: player, measure: score, min: 350 }
+  triggers:
+    - type: response
+      data:
+        text: >-
+          Your score is <player:score> (total of 350 points), in <player:moves> moves. This
+          gives you the rank of Master Adventurer.
+- id: score
+  requires:
+    - type: measure
+      data: { subject: player, measure: score, min: 331 }
+  triggers:
+    - type: response
+      data:
+        text: >-
+          Your score is <player:score> (total of 350 points), in <player:moves> moves. This
+          gives you the rank of Wizard.
+- id: score
+  requires:
+    - type: measure
+      data: { subject: player, measure: score, min: 301 }
+  triggers:
+    - type: response
+      data:
+        text: >-
+          Your score is <player:score> (total of 350 points), in <player:moves> moves. This
+          gives you the rank of Master.
+- id: score
+  requires:
+    - type: measure
+      data: { subject: player, measure: score, min: 201 }
+  triggers:
+    - type: response
+      data:
+        text: >-
+          Your score is <player:score> (total of 350 points), in <player:moves> moves. This
+          gives you the rank of Adventurer.
+- id: score
+  requires:
+    - type: measure
+      data: { subject: player, measure: score, min: 101 }
+  triggers:
+    - type: response
+      data:
+        text: >-
+          Your score is <player:score> (total of 350 points), in <player:moves> moves. This
+          gives you the rank of Junior Adventurer.
+- id: score
+  requires:
+    - type: measure
+      data: { subject: player, measure: score, min: 51 }
+  triggers:
+    - type: response
+      data:
+        text: >-
+          Your score is <player:score> (total of 350 points), in <player:moves> moves. This
+          gives you the rank of Novice Adventurer.
+- id: score
+  requires:
+    - type: measure
+      data: { subject: player, measure: score, min: 26 }
+  triggers:
+    - type: response
+      data:
+        text: >-
+          Your score is <player:score> (total of 350 points), in <player:moves> moves. This
+          gives you the rank of Amateur Adventurer.
+- id: score
+  triggers:
+    - type: response
+      data:
+        text: >-
+          Your score is <player:score> (total of 350 points), in <player:moves> moves. This
+          gives you the rank of Beginner.
 
 
-  - id: diagnose
-    triggers:
-      - type: response
-        data:
-          text: >-
-            You have <player:health> of four wounds' worth of life in you, and can carry
-            <player:allowance>.
+- id: diagnose
+  triggers:
+    - type: response
+      data:
+        text: >-
+          You have <player:health> of four wounds' worth of life in you, and can carry
+          <player:allowance>.
 
-  - id: wait
-    triggers:
-      - type: response
-        data:
-          text: Time passes...
-      - type: turn
-        data:
-          count: 3
+- id: wait
+  triggers:
+    - type: response
+      data:
+        text: Time passes...
+    - type: turn
+      data:
+        count: 3
 
-  - id: verbose
-    triggers:
-      - type: response
-        data:
-          text: Maximum verbosity.
+- id: verbose
+  triggers:
+    - type: response
+      data:
+        text: Maximum verbosity.
 
-  - id: pray
-    triggers:
-      - type: response
-        data:
-          text: If you pray enough, your prayers may be answered.
+- id: pray
+  triggers:
+    - type: response
+      data:
+        text: If you pray enough, your prayers may be answered.
 
-  - id: launch
-    requires:
-      - type: flag
-        data: { flag: aboard }
-      - type: scene
-        data: { id: dam-base }
-    triggers:
-      - type: response
-        data: { text: The boat is moving in the current. }
-      - type: change-scene
-        data: { scene: river-1 }
-      - type: adjust-measure
-        data:
-          subject: player
-          measure: river-timer
-          to: 4
+- id: launch
+  requires:
+    - type: flag
+      data: { flag: aboard }
+    - type: scene
+      data: { id: dam-base }
+  triggers:
+    - type: response
+      data: { text: The boat is moving in the current. }
+    - type: change-scene
+      data: { scene: river-1 }
+    - type: adjust-measure
+      data:
+        subject: player
+        measure: river-timer
+        to: 4
 
-  - id: launch
-    requires:
-      - type: flag
-        data: { flag: aboard }
-      - type: scene
-        data: { id: white-cliffs-north }
-    triggers:
-      - type: response
-        data: { text: The boat is moving in the current. }
-      - type: change-scene
-        data: { scene: river-3 }
-      - type: adjust-measure
-        data:
-          subject: player
-          measure: river-timer
-          to: 3
+- id: launch
+  requires:
+    - type: flag
+      data: { flag: aboard }
+    - type: scene
+      data: { id: white-cliffs-north }
+  triggers:
+    - type: response
+      data: { text: The boat is moving in the current. }
+    - type: change-scene
+      data: { scene: river-3 }
+    - type: adjust-measure
+      data:
+        subject: player
+        measure: river-timer
+        to: 3
 
-  - id: launch
-    requires:
-      - type: flag
-        data: { flag: aboard }
-      - type: scene
-        data: { id: white-cliffs-south }
-    triggers:
-      - type: response
-        data: { text: The boat is moving in the current. }
-      - type: change-scene
-        data: { scene: river-4 }
-      - type: adjust-measure
-        data:
-          subject: player
-          measure: river-timer
-          to: 2
+- id: launch
+  requires:
+    - type: flag
+      data: { flag: aboard }
+    - type: scene
+      data: { id: white-cliffs-south }
+  triggers:
+    - type: response
+      data: { text: The boat is moving in the current. }
+    - type: change-scene
+      data: { scene: river-4 }
+    - type: adjust-measure
+      data:
+        subject: player
+        measure: river-timer
+        to: 2
 
-  - id: launch
-    requires:
-      - type: flag
-        data: { flag: aboard }
-      - type: scene
-        data: { id: sandy-beach }
-    triggers:
-      - type: response
-        data: { text: The boat is moving in the current. }
-      - type: change-scene
-        data: { scene: river-4 }
-      - type: adjust-measure
-        data:
-          subject: player
-          measure: river-timer
-          to: 2
+- id: launch
+  requires:
+    - type: flag
+      data: { flag: aboard }
+    - type: scene
+      data: { id: sandy-beach }
+  triggers:
+    - type: response
+      data: { text: The boat is moving in the current. }
+    - type: change-scene
+      data: { scene: river-4 }
+    - type: adjust-measure
+      data:
+        subject: player
+        measure: river-timer
+        to: 2
 
-  - id: launch
-    requires:
-      - type: flag
-        data: { flag: aboard }
-        failure:
-          triggers:
-            - type: response
-              data: { text: You're not in the boat! }
-    triggers:
-      - type: response
-        data: { text: You can't launch it here. }
+- id: launch
+  requires:
+    - type: flag
+      data: { flag: aboard }
+      failure:
+        triggers:
+          - type: response
+            data: { text: You're not in the boat! }
+  triggers:
+    - type: response
+      data: { text: You can't launch it here. }
 
-  - id: disembark
-    requires:
-      - type: flag
-        data: { flag: aboard }
-      - type: any-of
-        data:
-          conditions:
-            - type: scene
-              data: { tag: river }
-            - type: scene
-              data: { id: reservoir }
-            - type: scene
-              data: { id: in-stream }
-    triggers:
-      - type: response
-        data:
-          text: You realize that getting out here would be fatal.
+- id: disembark
+  requires:
+    - type: flag
+      data: { flag: aboard }
+    - type: any-of
+      data:
+        conditions:
+          - type: scene
+            data: { tag: river }
+          - type: scene
+            data: { id: reservoir }
+          - type: scene
+            data: { id: in-stream }
+  triggers:
+    - type: response
+      data:
+        text: You realize that getting out here would be fatal.
 
-  - id: disembark
-    requires:
-      - type: flag
-        data: { flag: aboard }
-        failure:
-          triggers:
-            - type: response
-              data: { text: You're not in the boat! }
-    triggers:
-      - type: response
-        data: { text: You are no longer in the magic boat. }
-      - type: set-flag
-        data: { flag: aboard, value: false }
+- id: disembark
+  requires:
+    - type: flag
+      data: { flag: aboard }
+      failure:
+        triggers:
+          - type: response
+            data: { text: You're not in the boat! }
+  triggers:
+    - type: response
+      data: { text: You are no longer in the magic boat. }
+    - type: set-flag
+      data: { flag: aboard, value: false }
 
-  - id: odysseus
-    triggers:
-      - type: response
-        data:
-          text: Wasn't he a sailor?
+- id: odysseus
+  triggers:
+    - type: response
+      data:
+        text: Wasn't he a sailor?
 
-  - id: xyzzy
-    triggers:
-      - type: response
-        data:
-          text: A hollow voice says "Fool."
+- id: xyzzy
+  triggers:
+    - type: response
+      data:
+        text: A hollow voice says "Fool."
 
-  - id: hello
-    requires:
-      - type: chance
-        data: { name: hello, of: 4, index: 1 }
-    triggers:
-      - type: response
-        data:
-          text: Hello.
+- id: hello
+  requires:
+    - type: chance
+      data: { name: hello, of: 4, index: 1 }
+  triggers:
+    - type: response
+      data:
+        text: Hello.
 
-  - id: hello
-    requires:
-      - type: chance
-        data: { name: hello, of: 4, index: 2 }
-    triggers:
-      - type: response
-        data:
-          text: Good day.
+- id: hello
+  requires:
+    - type: chance
+      data: { name: hello, of: 4, index: 2 }
+  triggers:
+    - type: response
+      data:
+        text: Good day.
 
-  - id: hello
-    requires:
-      - type: chance
-        data: { name: hello, of: 4, index: 3 }
-    triggers:
-      - type: response
-        data:
-          text: Nice weather we've been having lately.
+- id: hello
+  requires:
+    - type: chance
+      data: { name: hello, of: 4, index: 3 }
+  triggers:
+    - type: response
+      data:
+        text: Nice weather we've been having lately.
 
-  - id: hello
-    requires:
-      - type: chance
-        data: { name: hello, of: 4, index: 4 }
-    triggers:
-      - type: response
-        data:
-          text: Goodbye.
+- id: hello
+  requires:
+    - type: chance
+      data: { name: hello, of: 4, index: 4 }
+  triggers:
+    - type: response
+      data:
+        text: Goodbye.
 
-  - id: yell
-    triggers:
-      - type: response
-        data:
-          text: Aaaarrrrgggghhhh!
+- id: yell
+  triggers:
+    - type: response
+      data:
+        text: Aaaarrrrgggghhhh!
 
-  - id: zork
-    triggers:
-      - type: response
-        data:
-          text: At your service!
+- id: zork
+  triggers:
+    - type: response
+      data:
+        text: At your service!
 
-  - id: frobozz
-    triggers:
-      - type: response
-        data:
-          text: The FROBOZZ Corporation created, owns, and operates this dungeon.
+- id: frobozz
+  triggers:
+    - type: response
+      data:
+        text: The FROBOZZ Corporation created, owns, and operates this dungeon.
 
-  - id: win
-    triggers:
-      - type: response
-        data:
-          text: Naturally!
+- id: win
+  triggers:
+    - type: response
+      data:
+        text: Naturally!
 
-  - id: mumble
-    triggers:
-      - type: response
-        data:
-          text: You'll have to speak up if you expect me to hear you!
+- id: mumble
+  triggers:
+    - type: response
+      data:
+        text: You'll have to speak up if you expect me to hear you!
 
-  - id: chomp
-    triggers:
-      - type: response
-        data:
-          text: Preposterous!
+- id: chomp
+  triggers:
+    - type: response
+      data:
+        text: Preposterous!
 
-  - id: repent
-    triggers:
-      - type: response
-        data:
-          text: It could very well be too late!
+- id: repent
+  triggers:
+    - type: response
+      data:
+        text: It could very well be too late!
 
-  - id: wish
-    triggers:
-      - type: response
-        data:
-          text: With luck, your wish will come true.
+- id: wish
+  triggers:
+    - type: response
+      data:
+        text: With luck, your wish will come true.

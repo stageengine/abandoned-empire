@@ -1,37 +1,34 @@
+- requires:
+    - type: flag
+      negate: true
+      data:
+        flag: low-tide
+    - type: flag
+      negate: true
+      data:
+        flag: player-died
+  triggers:
+    - type: response
+      data:
+        text: >-
+          The water level here has risen over your head, and the currents take you off your
+          feet and away.
+    - type: set-flag
+      data:
+        flag: player-died
+        value: true
 
-every-turn:
-  - requires:
-      - type: flag
-        negate: true
-        data:
-          flag: low-tide
-      - type: flag
-        negate: true
-        data:
-          flag: player-died
-    triggers:
-      - type: response
-        data:
-          text: >-
-            The water level here has risen over your head, and the currents take you off your
-            feet and away.
-      - type: set-flag
-        data:
-          flag: player-died
-          value: true
-
-  - requires:
-      - type: flag
-        negate: true
-        data:
-          flag: gates-open
-      - type: flag
-        data:
-          flag: low-tide
-    triggers:
-      - type: response
-        data:
-          text: >-
-            You notice that the water level here is rising rapidly. The currents are also
-            becoming stronger. Staying here seems quite perilous!
-
+- requires:
+    - type: flag
+      negate: true
+      data:
+        flag: gates-open
+    - type: flag
+      data:
+        flag: low-tide
+  triggers:
+    - type: response
+      data:
+        text: >-
+          You notice that the water level here is rising rapidly. The currents are also
+          becoming stronger. Staying here seems quite perilous!

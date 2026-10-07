@@ -1,30 +1,28 @@
+get.done: Taken.
+get.already: You already have that!
+get.fixed: You can't be serious.
+get.laden: Your load is too heavy.
+gained.done: Taken.
+drop.done: Dropped.
+drop.empty-handed: You're not carrying <thing>.
 
-messages:
-  get.done: Taken.
-  get.already: You already have that!
-  get.fixed: You can't be serious.
-  get.laden: Your load is too heavy.
-  gained.done: Taken.
-  drop.done: Dropped.
-  drop.empty-handed: You're not carrying <thing>.
+look.nothing: There's nothing special about <thing>.
 
-  look.nothing: There's nothing special about <thing>.
+thing.absent: You can't see any <named> here.
 
-  thing.absent: You can't see any <named> here.
+all.nothing: There's nothing here you can <verb>.
+input.unknown: I don't know that word.
+input.unknown-part: I don't know the word <words>.
+input.leftover: I don't know what to do with <words>.
+input.pronoun: I don't know what you're referring to.
+input.verb-alone: What do you want to <verb>?
 
-  all.nothing: There's nothing here you can <verb>.
-  input.unknown: I don't know that word.
-  input.unknown-part: I don't know the word <words>.
-  input.leftover: I don't know what to do with <words>.
-  input.pronoun: I don't know what you're referring to.
-  input.verb-alone: What do you want to <verb>?
+action.refused: You can't do that.
+action.blocked: You can't do that yet.
+action.exhausted: You've already done that.
 
-  action.refused: You can't do that.
-  action.blocked: You can't do that yet.
-  action.exhausted: You've already done that.
+exit.missing: You can't go that way.
+exit.blocked: You can't go that way.
 
-  exit.missing: You can't go that way.
-  exit.blocked: You can't go that way.
-
-  screen.carrying: 'You are carrying: <words>'
-  screen.empty-handed: You are empty-handed.
+screen.carrying: 'You are carrying: <words>'
+screen.empty-handed: You are empty-handed.

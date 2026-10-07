@@ -144,4 +144,12 @@ export const writeYaml = (value: { [key: string]: Value }, spaced: Array<string>
   return `${out.join('\n')}\n`;
 };
 
+/** A file that is a list, such as `every-turn.yaml`: Stage reads its name as what each entry is. */
+export const writeYamlList = (value: Array<Value>): string => {
+  const rendered = render(value, '');
+  const lines = rendered.inline === null ? rendered.block : [rendered.inline];
+
+  return `${lines.join('\n')}\n`;
+};
+
 export default writeYaml;
