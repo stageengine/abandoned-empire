@@ -3,7 +3,7 @@ start: west-of-house
 
 metadata:
   title: Abandoned Empire I
-  version: 0.1.7
+  version: 0.1.8
   copyright: |-
     Abandoned Empire I: a port of Zork I, by Infocom
     Copyright (c) 1981, 1982, 1983 Infocom, Inc. All rights reserved.

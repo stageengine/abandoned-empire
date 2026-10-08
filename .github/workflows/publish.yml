@@ -17,7 +17,7 @@ permissions:
   contents: write
 
 env:
-  STAGE: ${{ inputs.engine || '0.16.1' }}
+  STAGE: ${{ inputs.engine || '0.17.0' }}
 
 jobs:
   publish:
