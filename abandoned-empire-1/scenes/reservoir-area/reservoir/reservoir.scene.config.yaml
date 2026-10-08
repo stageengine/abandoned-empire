@@ -4,7 +4,7 @@ tags: [dark]
 name: Reservoir
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light
@@ -17,7 +17,7 @@ presence:
           text: >-
             You are on what used to be a large lake, but which is now a large mud pile. There
             are "shores" to the north and south.
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light

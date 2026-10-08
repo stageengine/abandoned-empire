@@ -8,7 +8,7 @@ measures:
   - id: weight
     max: 4
 tags: [belongings]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:

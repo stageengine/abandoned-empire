@@ -8,7 +8,7 @@ measures:
   - id: weight
     max: 25
 tags: [belongings]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:
@@ -32,7 +32,7 @@ actions:
           text: There are 69,105 leaves here.
 
   - id: burn
-    requires:
+    conditions:
       - type: has-item
         data:
           object: leaves
@@ -69,7 +69,7 @@ actions:
           value: true
 
   - id: move
-    requires:
+    conditions:
       - type: flag
         negate: true
         data:
@@ -93,7 +93,7 @@ actions:
           text: 'Done.'
 
   - id: get
-    requires:
+    conditions:
       - type: flag
         negate: true
         data:
@@ -113,7 +113,7 @@ actions:
 
   - id: look
     preposition: under
-    requires:
+    conditions:
       - type: flag
         negate: true
         data:

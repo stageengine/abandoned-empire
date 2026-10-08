@@ -6,7 +6,7 @@ actions:
   - id: turn
     preposition: with
     indirect: screwdriver
-    requires:
+    conditions:
       - type: has-item
         data: { object: screwdriver }
       - type: flag
@@ -33,7 +33,7 @@ actions:
   - id: turn
     preposition: with
     indirect: screwdriver
-    requires:
+    conditions:
       - type: has-item
         data: { object: screwdriver }
       - type: flag

@@ -3,7 +3,7 @@ name: basket
 
 synonyms: [cage, dumbwaiter, lowered cage, lowered dumbwaiter, lowered basket]
 contains: true
-requires:
+conditions:
   - type: any-of
     data:
       conditions:

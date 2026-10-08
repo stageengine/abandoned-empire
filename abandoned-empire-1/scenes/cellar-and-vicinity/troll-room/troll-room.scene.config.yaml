@@ -4,7 +4,7 @@ tags: [dark]
 name: The Troll Room
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light
@@ -50,7 +50,7 @@ navigation:
         data:
           scene: cellar
   - id: east
-    requires:
+    conditions:
       - type: flag
         data:
           flag: troll-flag
@@ -64,7 +64,7 @@ navigation:
         data:
           scene: ew-passage
   - id: west
-    requires:
+    conditions:
       - type: flag
         data:
           flag: troll-flag

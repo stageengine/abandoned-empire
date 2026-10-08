@@ -4,7 +4,7 @@ tags: [dark]
 name: Dome Room
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light
@@ -24,7 +24,7 @@ presence:
             Hanging down from the railing is a rope which ends about ten feet from the floor
             below.
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light
@@ -79,7 +79,7 @@ navigation:
         data:
           scene: engravings-cave
   - id: down
-    requires:
+    conditions:
       - type: flag
         data:
           flag: dome-flag

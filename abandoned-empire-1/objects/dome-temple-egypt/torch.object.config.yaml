@@ -15,7 +15,7 @@ measures:
   - id: weight
     max: 20
 tags: [treasure, basket-cargo]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:
@@ -25,7 +25,7 @@ requires:
         - type: flag
           data: { flag: light }
 presence:
-  - requires:
+  - conditions:
       - type: handled
         negate: true
         data: { object: torch }

@@ -25,7 +25,7 @@ actions:
   - id: dig
     preposition: with
     indirect: shovel
-    requires:
+    conditions:
       - type: has-item
         data: { object: shovel }
     triggers:

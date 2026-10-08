@@ -1,5 +1,5 @@
 every:
-  - requires:
+  - conditions:
       - type: object-here
         data:
           object: troll
@@ -12,7 +12,7 @@ every:
         data:
           text: The troll swings his axe, but it misses.
 
-  - requires:
+  - conditions:
       - type: object-here
         data:
           object: troll
@@ -25,7 +25,7 @@ every:
         data:
           text: The troll's axe barely misses your ear.
 
-  - requires:
+  - conditions:
       - type: object-here
         data:
           object: troll
@@ -38,7 +38,7 @@ every:
         data:
           text: The axe sweeps past as you jump aside.
 
-  - requires:
+  - conditions:
       - type: object-here
         data:
           object: troll
@@ -51,7 +51,7 @@ every:
         data:
           text: The axe crashes against the rock, throwing sparks!
 
-  - requires:
+  - conditions:
       - type: object-here
         data:
           object: troll
@@ -62,7 +62,7 @@ every:
         data:
           text: You stagger back under a hail of axe strokes.
 
-  - requires:
+  - conditions:
       - type: object-here
         data:
           object: troll
@@ -83,7 +83,7 @@ every:
           measure: allowance
           by: -10
 
-  - requires:
+  - conditions:
       - type: object-here
         data:
           object: troll

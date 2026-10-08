@@ -16,7 +16,7 @@ measures:
   - id: weight
     max: 20
 tags: [treasure]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:
@@ -34,7 +34,7 @@ start: loud-room
 
 actions:
   - id: get
-    requires:
+    conditions:
       - type: flag
         negate: true
         data: { flag: loud-flag }

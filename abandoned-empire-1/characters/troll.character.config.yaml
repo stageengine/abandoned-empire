@@ -1,7 +1,7 @@
 id: troll
 
 synonyms: [nasty troll]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:
@@ -50,7 +50,7 @@ actions:
   - id: attack
     preposition: with
     indirect: sword
-    requires:
+    conditions:
       - type: has-item
         data:
           object: sword
@@ -88,7 +88,7 @@ actions:
   - id: attack
     preposition: with
     indirect: sword
-    requires:
+    conditions:
       - type: has-item
         data:
           object: sword
@@ -121,7 +121,7 @@ actions:
   - id: attack
     preposition: with
     indirect: axe
-    requires:
+    conditions:
       - type: has-item
         data:
           object: axe
@@ -159,7 +159,7 @@ actions:
   - id: attack
     preposition: with
     indirect: axe
-    requires:
+    conditions:
       - type: has-item
         data:
           object: axe
@@ -192,7 +192,7 @@ actions:
   - id: attack
     preposition: with
     indirect: knife
-    requires:
+    conditions:
       - type: has-item
         data:
           object: knife
@@ -230,7 +230,7 @@ actions:
   - id: attack
     preposition: with
     indirect: knife
-    requires:
+    conditions:
       - type: has-item
         data:
           object: knife
@@ -263,7 +263,7 @@ actions:
   - id: attack
     preposition: with
     indirect: rusty-knife
-    requires:
+    conditions:
       - type: has-item
         data:
           object: rusty-knife
@@ -301,7 +301,7 @@ actions:
   - id: attack
     preposition: with
     indirect: rusty-knife
-    requires:
+    conditions:
       - type: has-item
         data:
           object: rusty-knife
@@ -334,7 +334,7 @@ actions:
   - id: attack
     preposition: with
     indirect: stiletto
-    requires:
+    conditions:
       - type: has-item
         data:
           object: stiletto
@@ -372,7 +372,7 @@ actions:
   - id: attack
     preposition: with
     indirect: stiletto
-    requires:
+    conditions:
       - type: has-item
         data:
           object: stiletto
@@ -410,7 +410,7 @@ actions:
 
   - id: give
     indirect: knife
-    requires:
+    conditions:
       - type: chance
         data: { name: troll-fed-weapon-knife-give, of: 5, index: 1 }
     triggers:
@@ -453,7 +453,7 @@ actions:
 
   - id: give
     indirect: sword
-    requires:
+    conditions:
       - type: chance
         data: { name: troll-fed-weapon-sword-give, of: 5, index: 1 }
     triggers:
@@ -504,7 +504,7 @@ actions:
 
   - id: throw
     indirect: knife
-    requires:
+    conditions:
       - type: chance
         data: { name: troll-fed-weapon-knife-throw, of: 5, index: 1 }
     triggers:
@@ -547,7 +547,7 @@ actions:
 
   - id: throw
     indirect: sword
-    requires:
+    conditions:
       - type: chance
         data: { name: troll-fed-weapon-sword-throw, of: 5, index: 1 }
     triggers:

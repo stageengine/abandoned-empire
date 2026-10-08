@@ -4,7 +4,7 @@ tags: [dark]
 name: Cyclops Room
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light
@@ -22,7 +22,7 @@ characters: [cyclops]
 
 actions:
   - id: odysseus
-    requires:
+    conditions:
       - type: character-here
         data: { character: cyclops }
       - type: flag
@@ -50,7 +50,7 @@ actions:
 
 navigation:
   - id: east
-    requires:
+    conditions:
       - type: flag
         data:
           flag: magic-flag
@@ -69,7 +69,7 @@ navigation:
         data:
           scene: maze-15
   - id: up
-    requires:
+    conditions:
       - type: flag
         data:
           flag: cyclops-flag

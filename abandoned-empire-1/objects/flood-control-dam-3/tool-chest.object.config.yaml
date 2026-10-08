@@ -3,7 +3,7 @@ name: group of tool chests
 
 noun: plural
 synonyms: [chest, chests, group, toolchests, tool chest, tool chests]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:

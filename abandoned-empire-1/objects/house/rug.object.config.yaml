@@ -6,7 +6,7 @@ start: living-room
 
 actions:
   - id: move
-    requires:
+    conditions:
       - type: flag
         negate: true
         data:
@@ -29,7 +29,7 @@ actions:
           value: true
 
   - id: raise
-    requires:
+    conditions:
       - type: flag
         data:
           flag: rug-moved
@@ -54,7 +54,7 @@ actions:
 
   - id: look
     preposition: under
-    requires:
+    conditions:
       - type: flag
         negate: true
         data:

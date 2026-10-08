@@ -1,5 +1,5 @@
 every:
-  - requires:
+  - conditions:
       - type: flag
         negate: true
         data:
@@ -19,7 +19,7 @@ every:
           flag: player-died
           value: true
 
-  - requires:
+  - conditions:
       - type: flag
         negate: true
         data:

@@ -5,7 +5,7 @@ start: south-temple
 actions:
   - id: look
     preposition: 'on'
-    requires:
+    conditions:
       - type: object-in
         data:
           object: book

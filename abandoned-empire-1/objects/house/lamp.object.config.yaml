@@ -4,7 +4,7 @@ name: brass lantern
 synonyms: [lamp, lantern, light, brass lamp, brass light]
 portable: true
 size: weight
-requires:
+conditions:
   - type: any-of
     data:
       conditions:
@@ -14,7 +14,7 @@ requires:
         - type: flag
           data: { flag: light }
 presence:
-  - requires:
+  - conditions:
       - type: handled
         negate: true
         data: { object: lamp }
@@ -72,7 +72,7 @@ measures:
 actions:
   - id: turn
     preposition: 'on'
-    requires:
+    conditions:
       - type: flag
         negate: true
         data:
@@ -106,7 +106,7 @@ actions:
 
   - id: turn
     preposition: 'off'
-    requires:
+    conditions:
       - type: flag
         data:
           flag: lamp-on
@@ -129,7 +129,7 @@ actions:
           value: false
 
   - id: burn
-    requires:
+    conditions:
       - type: flag
         negate: true
         data:
@@ -162,7 +162,7 @@ actions:
           value: true
 
   - id: extinguish
-    requires:
+    conditions:
       - type: flag
         data:
           flag: lamp-on
@@ -185,7 +185,7 @@ actions:
           value: false
 
   - id: look
-    requires:
+    conditions:
       - type: flag
         data:
           flag: lamp-burned-out
@@ -195,7 +195,7 @@ actions:
           text: The lamp has burned out.
 
   - id: look
-    requires:
+    conditions:
       - type: flag
         data:
           flag: lamp-on

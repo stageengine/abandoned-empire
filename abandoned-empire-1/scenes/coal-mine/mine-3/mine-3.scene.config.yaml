@@ -4,7 +4,7 @@ tags: [dark]
 name: Coal Mine
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light

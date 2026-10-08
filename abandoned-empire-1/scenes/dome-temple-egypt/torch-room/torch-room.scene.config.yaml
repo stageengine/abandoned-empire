@@ -4,7 +4,7 @@ tags: [dark]
 name: Torch Room
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light
@@ -23,7 +23,7 @@ presence:
           text: >-
             A piece of rope descends from the railing above, ending some five feet above your
             head.
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light

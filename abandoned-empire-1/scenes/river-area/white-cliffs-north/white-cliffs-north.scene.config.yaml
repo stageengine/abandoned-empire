@@ -4,7 +4,7 @@ tags: [dark]
 name: White Cliffs Beach
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light
@@ -87,7 +87,7 @@ objects:
                 You should get in the boat then launch it.
 navigation:
   - id: south
-    requires:
+    conditions:
       - type: flag
         data:
           flag: deflate
@@ -101,7 +101,7 @@ navigation:
         data:
           scene: white-cliffs-south
   - id: west
-    requires:
+    conditions:
       - type: flag
         data:
           flag: deflate

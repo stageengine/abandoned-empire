@@ -85,7 +85,7 @@ objects:
                 You should get in the boat then launch it.
 navigation:
   - id: east
-    requires:
+    conditions:
       - type: flag
         data:
           flag: rainbow-flag
@@ -94,7 +94,7 @@ navigation:
         data:
           scene: on-rainbow
   - id: northeast
-    requires:
+    conditions:
       - type: flag
         data:
           flag: rainbow-flag
@@ -108,7 +108,7 @@ navigation:
         data:
           scene: canyon-bottom
   - id: up
-    requires:
+    conditions:
       - type: flag
         data:
           flag: rainbow-flag

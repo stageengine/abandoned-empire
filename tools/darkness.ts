@@ -59,7 +59,7 @@ for (const room of rooms.filter((one) => !one.lit)) {
 
   if (
     held !== null && held.includes(WAS) && !held.includes('# The ceremony') &&
-    held.split('- requires:').length === 3
+    held.split('- conditions:').length === 3
   ) {
     await Deno.remove(rules as string);
     swept += 1;

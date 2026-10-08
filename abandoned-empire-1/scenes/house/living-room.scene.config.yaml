@@ -3,7 +3,7 @@ id: living-room
 name: Living Room
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: magic-flag
@@ -21,7 +21,7 @@ presence:
             cyclops-shaped opening in an old wooden door, above which is some strange gothic
             lettering, a trophy case, and a rug lying beside an open trap door.
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: magic-flag
@@ -36,7 +36,7 @@ presence:
             cyclops-shaped opening in an old wooden door, above which is some strange gothic
             lettering, a trophy case, and a closed trap door at your feet.
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: magic-flag
@@ -51,7 +51,7 @@ presence:
             cyclops-shaped opening in an old wooden door, above which is some strange gothic
             lettering, a trophy case, and an open trap door at your feet.
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: magic-flag
@@ -63,7 +63,7 @@ presence:
             cyclops-shaped opening in an old wooden door, above which is some strange gothic
             lettering, a trophy case, and a large oriental rug in the center of the room.
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: rug-moved
@@ -78,7 +78,7 @@ presence:
             gothic lettering to the west, which appears to be nailed shut, a trophy case, and a
             rug lying beside an open trap door.
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: rug-moved
@@ -90,7 +90,7 @@ presence:
             gothic lettering to the west, which appears to be nailed shut, a trophy case, and a
             closed trap door at your feet.
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: trap-door-open
@@ -156,7 +156,7 @@ navigation:
         data:
           scene: kitchen
   - id: west
-    requires:
+    conditions:
       - type: flag
         data:
           flag: magic-flag
@@ -170,7 +170,7 @@ navigation:
         data:
           scene: strange-passage
   - id: down
-    requires:
+    conditions:
       - type: flag
         data:
           flag: rug-moved

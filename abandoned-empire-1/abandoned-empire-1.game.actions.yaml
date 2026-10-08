@@ -1,5 +1,5 @@
 - id: score
-  requires:
+  conditions:
     - type: measure
       data: { subject: player, measure: score, min: 350 }
   triggers:
@@ -9,7 +9,7 @@
           Your score is <player:score> (total of 350 points), in <player:moves> moves. This
           gives you the rank of Master Adventurer.
 - id: score
-  requires:
+  conditions:
     - type: measure
       data: { subject: player, measure: score, min: 331 }
   triggers:
@@ -19,7 +19,7 @@
           Your score is <player:score> (total of 350 points), in <player:moves> moves. This
           gives you the rank of Wizard.
 - id: score
-  requires:
+  conditions:
     - type: measure
       data: { subject: player, measure: score, min: 301 }
   triggers:
@@ -29,7 +29,7 @@
           Your score is <player:score> (total of 350 points), in <player:moves> moves. This
           gives you the rank of Master.
 - id: score
-  requires:
+  conditions:
     - type: measure
       data: { subject: player, measure: score, min: 201 }
   triggers:
@@ -39,7 +39,7 @@
           Your score is <player:score> (total of 350 points), in <player:moves> moves. This
           gives you the rank of Adventurer.
 - id: score
-  requires:
+  conditions:
     - type: measure
       data: { subject: player, measure: score, min: 101 }
   triggers:
@@ -49,7 +49,7 @@
           Your score is <player:score> (total of 350 points), in <player:moves> moves. This
           gives you the rank of Junior Adventurer.
 - id: score
-  requires:
+  conditions:
     - type: measure
       data: { subject: player, measure: score, min: 51 }
   triggers:
@@ -59,7 +59,7 @@
           Your score is <player:score> (total of 350 points), in <player:moves> moves. This
           gives you the rank of Novice Adventurer.
 - id: score
-  requires:
+  conditions:
     - type: measure
       data: { subject: player, measure: score, min: 26 }
   triggers:
@@ -107,7 +107,7 @@
         text: If you pray enough, your prayers may be answered.
 
 - id: launch
-  requires:
+  conditions:
     - type: flag
       data: { flag: aboard }
     - type: scene
@@ -124,7 +124,7 @@
         to: 4
 
 - id: launch
-  requires:
+  conditions:
     - type: flag
       data: { flag: aboard }
     - type: scene
@@ -141,7 +141,7 @@
         to: 3
 
 - id: launch
-  requires:
+  conditions:
     - type: flag
       data: { flag: aboard }
     - type: scene
@@ -158,7 +158,7 @@
         to: 2
 
 - id: launch
-  requires:
+  conditions:
     - type: flag
       data: { flag: aboard }
     - type: scene
@@ -175,7 +175,7 @@
         to: 2
 
 - id: launch
-  requires:
+  conditions:
     - type: flag
       data: { flag: aboard }
       failure:
@@ -187,7 +187,7 @@
       data: { text: You can't launch it here. }
 
 - id: disembark
-  requires:
+  conditions:
     - type: flag
       data: { flag: aboard }
     - type: any-of
@@ -205,7 +205,7 @@
         text: You realize that getting out here would be fatal.
 
 - id: disembark
-  requires:
+  conditions:
     - type: flag
       data: { flag: aboard }
       failure:
@@ -231,7 +231,7 @@
         text: A hollow voice says "Fool."
 
 - id: hello
-  requires:
+  conditions:
     - type: chance
       data: { name: hello, of: 4, index: 1 }
   triggers:
@@ -240,7 +240,7 @@
         text: Hello.
 
 - id: hello
-  requires:
+  conditions:
     - type: chance
       data: { name: hello, of: 4, index: 2 }
   triggers:
@@ -249,7 +249,7 @@
         text: Good day.
 
 - id: hello
-  requires:
+  conditions:
     - type: chance
       data: { name: hello, of: 4, index: 3 }
   triggers:
@@ -258,7 +258,7 @@
         text: Nice weather we've been having lately.
 
 - id: hello
-  requires:
+  conditions:
     - type: chance
       data: { name: hello, of: 4, index: 4 }
   triggers:

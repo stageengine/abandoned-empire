@@ -469,7 +469,7 @@ actions:
             A glass-fronted case, securely fastened to the wall, and empty of everything but
             dust and the promise of what might go in it.
   - id: open
-    requires:
+    conditions:
       - type: flag
         data: { flag: won-flag }
     triggers:

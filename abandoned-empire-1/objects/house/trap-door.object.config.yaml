@@ -17,14 +17,14 @@ synonyms:
   - dusty cover
 start: living-room
 
-requires:
+conditions:
   - type: flag
     data:
       flag: rug-moved
 
 actions:
   - id: open
-    requires:
+    conditions:
       - type: flag
         data:
           flag: trap-door-open
@@ -40,7 +40,7 @@ actions:
           value: true
 
   - id: open
-    requires:
+    conditions:
       - type: chance
         data: { name: dummy-open, of: 3, index: 1 }
     triggers:
@@ -49,7 +49,7 @@ actions:
           text: Look around.
 
   - id: open
-    requires:
+    conditions:
       - type: chance
         data: { name: dummy-open, of: 3, index: 2 }
     triggers:
@@ -64,7 +64,7 @@ actions:
           text: Have your eyes checked.
 
   - id: close
-    requires:
+    conditions:
       - type: flag
         data:
           flag: trap-door-open
@@ -78,7 +78,7 @@ actions:
           value: false
 
   - id: close
-    requires:
+    conditions:
       - type: chance
         data: { name: dummy-close, of: 3, index: 1 }
     triggers:
@@ -87,7 +87,7 @@ actions:
           text: Look around.
 
   - id: close
-    requires:
+    conditions:
       - type: chance
         data: { name: dummy-close, of: 3, index: 2 }
     triggers:
@@ -103,7 +103,7 @@ actions:
 
   - id: look
     preposition: under
-    requires:
+    conditions:
       - type: flag
         data:
           flag: trap-door-open

@@ -6,7 +6,7 @@ every:
           measure: moves
           by: 1
 
-  - requires:
+  - conditions:
       - type: measure
         data: { subject: player, measure: allowance, max: 99 }
     triggers:
@@ -22,7 +22,7 @@ every:
           flag: light
           value: false
 
-  - requires:
+  - conditions:
       - type: any-of
         data:
           conditions:
@@ -75,7 +75,7 @@ every:
           flag: light
           value: true
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: lamp-on
@@ -96,7 +96,7 @@ every:
           flag: was-dark
           value: false
 
-  - requires:
+  - conditions:
       - type: scene
         data:
           tag: dark
@@ -127,7 +127,7 @@ every:
           flag: player-died
           value: true
 
-  - requires:
+  - conditions:
       - type: scene
         data:
           tag: dark
@@ -141,7 +141,7 @@ every:
           flag: was-dark
           value: true
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: gates-open
@@ -157,7 +157,7 @@ every:
           measure: water
           by: -1
 
-  - requires:
+  - conditions:
       - type: flag
         negate: true
         data:
@@ -174,7 +174,7 @@ every:
           measure: water
           by: 1
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: leak-open
@@ -185,7 +185,7 @@ every:
           measure: flood
           by: 1
 
-  - requires:
+  - conditions:
       - type: scene
         data:
           id: loud-room
@@ -208,7 +208,7 @@ every:
       - type: change-scene
         data: { scene: damp-cave }
 
-  - requires:
+  - conditions:
       - type: scene
         data:
           id: loud-room
@@ -231,7 +231,7 @@ every:
       - type: change-scene
         data: { scene: round-room }
 
-  - requires:
+  - conditions:
       - type: scene
         data:
           id: loud-room
@@ -254,7 +254,7 @@ every:
       - type: change-scene
         data: { scene: deep-canyon }
 
-  - requires:
+  - conditions:
       - type: scene
         data:
           id: gas-room
@@ -295,7 +295,7 @@ every:
           flag: player-died
           value: true
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: candles-on
@@ -310,7 +310,7 @@ every:
           measure: life
           by: -1
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: match-on
@@ -321,7 +321,7 @@ every:
           measure: flame
           by: -1
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: bell-hot
@@ -332,7 +332,7 @@ every:
           measure: heat
           by: -1
 
-  - requires:
+  - conditions:
       - type: scene
         data:
           tag: forest
@@ -347,7 +347,7 @@ every:
           text: You hear in the distance the chirping of a song bird.
 
 
-  - requires:
+  - conditions:
       - type: has-item
         data:
           object: bag-of-coins
@@ -365,7 +365,7 @@ every:
           measure: score
           by: 10
 
-  - requires:
+  - conditions:
       - type: has-item
         data:
           object: bar
@@ -383,7 +383,7 @@ every:
           measure: score
           by: 10
 
-  - requires:
+  - conditions:
       - type: has-item
         data:
           object: bauble
@@ -401,7 +401,7 @@ every:
           measure: score
           by: 1
 
-  - requires:
+  - conditions:
       - type: has-item
         data:
           object: bracelet
@@ -419,7 +419,7 @@ every:
           measure: score
           by: 5
 
-  - requires:
+  - conditions:
       - type: has-item
         data:
           object: canary
@@ -437,7 +437,7 @@ every:
           measure: score
           by: 6
 
-  - requires:
+  - conditions:
       - type: has-item
         data:
           object: chalice
@@ -455,7 +455,7 @@ every:
           measure: score
           by: 10
 
-  - requires:
+  - conditions:
       - type: has-item
         data:
           object: coffin
@@ -473,7 +473,7 @@ every:
           measure: score
           by: 10
 
-  - requires:
+  - conditions:
       - type: has-item
         data:
           object: diamond
@@ -491,7 +491,7 @@ every:
           measure: score
           by: 10
 
-  - requires:
+  - conditions:
       - type: has-item
         data:
           object: egg
@@ -509,7 +509,7 @@ every:
           measure: score
           by: 5
 
-  - requires:
+  - conditions:
       - type: has-item
         data:
           object: emerald
@@ -527,7 +527,7 @@ every:
           measure: score
           by: 5
 
-  - requires:
+  - conditions:
       - type: has-item
         data:
           object: jade
@@ -545,7 +545,7 @@ every:
           measure: score
           by: 5
 
-  - requires:
+  - conditions:
       - type: has-item
         data:
           object: painting
@@ -563,7 +563,7 @@ every:
           measure: score
           by: 4
 
-  - requires:
+  - conditions:
       - type: has-item
         data:
           object: pot-of-gold
@@ -581,7 +581,7 @@ every:
           measure: score
           by: 10
 
-  - requires:
+  - conditions:
       - type: has-item
         data:
           object: scarab
@@ -599,7 +599,7 @@ every:
           measure: score
           by: 5
 
-  - requires:
+  - conditions:
       - type: has-item
         data:
           object: sceptre
@@ -617,7 +617,7 @@ every:
           measure: score
           by: 4
 
-  - requires:
+  - conditions:
       - type: has-item
         data:
           object: skull
@@ -635,7 +635,7 @@ every:
           measure: score
           by: 10
 
-  - requires:
+  - conditions:
       - type: has-item
         data:
           object: torch
@@ -653,7 +653,7 @@ every:
           measure: score
           by: 14
 
-  - requires:
+  - conditions:
       - type: has-item
         data:
           object: trident
@@ -671,7 +671,7 @@ every:
           measure: score
           by: 4
 
-  - requires:
+  - conditions:
       - type: has-item
         data:
           object: trunk
@@ -689,7 +689,7 @@ every:
           measure: score
           by: 15
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -726,7 +726,7 @@ every:
       - type: move-object
         data: { object: thief, to: cellar }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -759,7 +759,7 @@ every:
       - type: move-object
         data: { object: thief, to: east-of-chasm }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -792,7 +792,7 @@ every:
       - type: move-object
         data: { object: thief, to: gallery }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -825,7 +825,7 @@ every:
       - type: move-object
         data: { object: thief, to: studio }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -858,7 +858,7 @@ every:
       - type: move-object
         data: { object: thief, to: troll-room }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -891,7 +891,7 @@ every:
       - type: move-object
         data: { object: thief, to: dome-room }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -924,7 +924,7 @@ every:
       - type: move-object
         data: { object: thief, to: egypt-room }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -957,7 +957,7 @@ every:
       - type: move-object
         data: { object: thief, to: engravings-cave }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -990,7 +990,7 @@ every:
       - type: move-object
         data: { object: thief, to: north-temple }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -1023,7 +1023,7 @@ every:
       - type: move-object
         data: { object: thief, to: south-temple }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -1056,7 +1056,7 @@ every:
       - type: move-object
         data: { object: thief, to: torch-room }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -1089,7 +1089,7 @@ every:
       - type: move-object
         data: { object: thief, to: entrance-to-hades }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -1122,7 +1122,7 @@ every:
       - type: move-object
         data: { object: thief, to: land-of-living-dead }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -1155,7 +1155,7 @@ every:
       - type: move-object
         data: { object: thief, to: atlantis-room }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -1188,7 +1188,7 @@ every:
       - type: move-object
         data: { object: thief, to: cold-passage }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -1221,7 +1221,7 @@ every:
       - type: move-object
         data: { object: thief, to: mirror-room-1 }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -1254,7 +1254,7 @@ every:
       - type: move-object
         data: { object: thief, to: mirror-room-2 }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -1287,7 +1287,7 @@ every:
       - type: move-object
         data: { object: thief, to: narrow-passage }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -1320,7 +1320,7 @@ every:
       - type: move-object
         data: { object: thief, to: small-cave }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -1353,7 +1353,7 @@ every:
       - type: move-object
         data: { object: thief, to: tiny-cave }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -1386,7 +1386,7 @@ every:
       - type: move-object
         data: { object: thief, to: twisting-passage }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -1419,7 +1419,7 @@ every:
       - type: move-object
         data: { object: thief, to: winding-passage }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -1452,7 +1452,7 @@ every:
       - type: move-object
         data: { object: thief, to: reservoir }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -1485,7 +1485,7 @@ every:
       - type: move-object
         data: { object: thief, to: reservoir-north }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -1518,7 +1518,7 @@ every:
       - type: move-object
         data: { object: thief, to: reservoir-south }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -1551,7 +1551,7 @@ every:
       - type: move-object
         data: { object: thief, to: stream-view }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -1584,7 +1584,7 @@ every:
       - type: move-object
         data: { object: thief, to: chasm-room }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -1617,7 +1617,7 @@ every:
       - type: move-object
         data: { object: thief, to: damp-cave }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -1650,7 +1650,7 @@ every:
       - type: move-object
         data: { object: thief, to: deep-canyon }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -1683,7 +1683,7 @@ every:
       - type: move-object
         data: { object: thief, to: ew-passage }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -1716,7 +1716,7 @@ every:
       - type: move-object
         data: { object: thief, to: loud-room }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -1749,7 +1749,7 @@ every:
       - type: move-object
         data: { object: thief, to: ns-passage }
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data: { character: thief }
@@ -1783,7 +1783,7 @@ every:
         data: { object: thief, to: round-room }
 
 
-  - requires:
+  - conditions:
       - type: character-here
         data:
           character: thief
@@ -1811,7 +1811,7 @@ every:
           object: thief
           to: treasure-room
 
-  - requires:
+  - conditions:
       - type: character-here
         data:
           character: thief
@@ -1828,7 +1828,7 @@ every:
       - type: response
         data: { text: The thief is taking an unhealthy interest in your possessions. }
 
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: thief-just-died }
       - type: object-here
@@ -1837,14 +1837,14 @@ every:
       - type: set-flag
         data: { flag: egg-open, value: true }
 
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: thief-just-died }
     triggers:
       - type: set-flag
         data: { flag: thief-just-died, value: false }
 
-  - requires:
+  - conditions:
       - type: character-here
         data:
           character: thief
@@ -1860,7 +1860,7 @@ every:
         data:
           text: The thief stabs nonchalantly with his stiletto and misses.
 
-  - requires:
+  - conditions:
       - type: character-here
         data:
           character: thief
@@ -1876,7 +1876,7 @@ every:
         data:
           text: You dodge as the thief comes in low.
 
-  - requires:
+  - conditions:
       - type: character-here
         data:
           character: thief
@@ -1894,7 +1894,7 @@ every:
             You parry a lightning thrust, and the thief salutes you with a grim
             nod.
 
-  - requires:
+  - conditions:
       - type: character-here
         data:
           character: thief
@@ -1910,7 +1910,7 @@ every:
         data:
           text: The thief tries to sneak past your guard, but you twist away.
 
-  - requires:
+  - conditions:
       - type: character-here
         data:
           character: thief
@@ -1924,7 +1924,7 @@ every:
         data:
           text: The thief attacks, and you fall back desperately.
 
-  - requires:
+  - conditions:
       - type: character-here
         data:
           character: thief
@@ -1948,7 +1948,7 @@ every:
           measure: allowance
           by: -10
 
-  - requires:
+  - conditions:
       - type: character-here
         data:
           character: thief
@@ -1972,7 +1972,7 @@ every:
           measure: allowance
           by: -20
 
-  - requires:
+  - conditions:
       - type: character-here
         negate: true
         data:
@@ -1986,7 +1986,7 @@ every:
           flag: thief-fighting
           value: false
 
-  - requires:
+  - conditions:
       - type: has-item
         data:
           object: sword
@@ -2010,7 +2010,7 @@ every:
           measure: glow
           to: 2
 
-  - requires:
+  - conditions:
       - type: has-item
         data:
           object: sword
@@ -2108,7 +2108,7 @@ every:
           measure: glow
           to: 1
 
-  - requires:
+  - conditions:
       - type: has-item
         data:
           object: sword
@@ -2207,7 +2207,7 @@ every:
           measure: glow
           to: 0
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: player-died
@@ -2225,7 +2225,7 @@ every:
           object: lamp
           to: living-room
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: player-died
@@ -2243,7 +2243,7 @@ every:
           object: coffin
           to: egypt-room
 
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: player-died }
       - type: measure
@@ -2254,7 +2254,7 @@ every:
       - type: move-tagged
         data: { tag: belongings, from: inventory, to: west-of-house }
 
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: player-died }
       - type: measure
@@ -2265,7 +2265,7 @@ every:
       - type: move-tagged
         data: { tag: belongings, from: inventory, to: north-of-house }
 
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: player-died }
       - type: measure
@@ -2276,7 +2276,7 @@ every:
       - type: move-tagged
         data: { tag: belongings, from: inventory, to: east-of-house }
 
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: player-died }
       - type: measure
@@ -2287,7 +2287,7 @@ every:
       - type: move-tagged
         data: { tag: belongings, from: inventory, to: south-of-house }
 
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: player-died }
       - type: measure
@@ -2298,7 +2298,7 @@ every:
       - type: move-tagged
         data: { tag: belongings, from: inventory, to: forest-1 }
 
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: player-died }
       - type: measure
@@ -2309,7 +2309,7 @@ every:
       - type: move-tagged
         data: { tag: belongings, from: inventory, to: forest-2 }
 
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: player-died }
       - type: measure
@@ -2320,7 +2320,7 @@ every:
       - type: move-tagged
         data: { tag: belongings, from: inventory, to: forest-3 }
 
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: player-died }
       - type: measure
@@ -2331,7 +2331,7 @@ every:
       - type: move-tagged
         data: { tag: belongings, from: inventory, to: path }
 
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: player-died }
       - type: measure
@@ -2342,7 +2342,7 @@ every:
       - type: move-tagged
         data: { tag: belongings, from: inventory, to: clearing }
 
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: player-died }
       - type: measure
@@ -2353,7 +2353,7 @@ every:
       - type: move-tagged
         data: { tag: belongings, from: inventory, to: grating-clearing }
 
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: player-died }
       - type: measure
@@ -2364,7 +2364,7 @@ every:
       - type: move-tagged
         data: { tag: belongings, from: inventory, to: canyon-view }
 
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: player-died }
       - type: measure
@@ -2375,7 +2375,7 @@ every:
       - type: move-tagged
         data: { tag: treasure, from: inventory, to: round-room }
 
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: player-died }
       - type: measure
@@ -2386,7 +2386,7 @@ every:
       - type: move-tagged
         data: { tag: treasure, from: inventory, to: troll-room }
 
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: player-died }
       - type: measure
@@ -2397,7 +2397,7 @@ every:
       - type: move-tagged
         data: { tag: treasure, from: inventory, to: cellar }
 
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: player-died }
       - type: measure
@@ -2408,7 +2408,7 @@ every:
       - type: move-tagged
         data: { tag: treasure, from: inventory, to: maze-1 }
 
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: player-died }
       - type: measure
@@ -2419,7 +2419,7 @@ every:
       - type: move-tagged
         data: { tag: treasure, from: inventory, to: deep-canyon }
 
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: player-died }
       - type: measure
@@ -2430,7 +2430,7 @@ every:
       - type: move-tagged
         data: { tag: treasure, from: inventory, to: reservoir-south }
 
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: player-died }
       - type: measure
@@ -2441,7 +2441,7 @@ every:
       - type: move-tagged
         data: { tag: treasure, from: inventory, to: dam-room }
 
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: player-died }
       - type: measure
@@ -2452,7 +2452,7 @@ every:
       - type: move-tagged
         data: { tag: treasure, from: inventory, to: torch-room }
 
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: player-died }
       - type: measure
@@ -2463,7 +2463,7 @@ every:
       - type: move-tagged
         data: { tag: treasure, from: inventory, to: egypt-room }
 
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: player-died }
       - type: measure
@@ -2474,7 +2474,7 @@ every:
       - type: move-tagged
         data: { tag: treasure, from: inventory, to: south-temple }
 
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: player-died }
       - type: measure
@@ -2485,7 +2485,7 @@ every:
       - type: move-tagged
         data: { tag: treasure, from: inventory, to: gallery }
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: player-died
@@ -2523,7 +2523,7 @@ every:
           flag: player-died
           value: false
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: player-died
@@ -2544,7 +2544,7 @@ every:
           journal: died once too often
 
 
-  - requires:
+  - conditions:
       - type: visited
         data:
           scene: kitchen
@@ -2562,7 +2562,7 @@ every:
           measure: score
           by: 10
 
-  - requires:
+  - conditions:
       - type: visited
         data:
           scene: cellar
@@ -2580,7 +2580,7 @@ every:
           measure: score
           by: 25
 
-  - requires:
+  - conditions:
       - type: visited
         data:
           scene: treasure-room
@@ -2598,7 +2598,7 @@ every:
           measure: score
           by: 25
 
-  - requires:
+  - conditions:
       - type: visited
         data:
           scene: ew-passage
@@ -2616,7 +2616,7 @@ every:
           measure: score
           by: 5
 
-  - requires:
+  - conditions:
       - type: scene
         data:
           id: lower-shaft
@@ -2640,7 +2640,7 @@ every:
           measure: score
           by: 13
 
-  - requires:
+  - conditions:
       - type: scene
         data:
           id: bat-room
@@ -2659,7 +2659,7 @@ every:
       - type: change-scene
         data: { scene: mine-1 }
 
-  - requires:
+  - conditions:
       - type: scene
         data:
           id: bat-room
@@ -2678,7 +2678,7 @@ every:
       - type: change-scene
         data: { scene: mine-2 }
 
-  - requires:
+  - conditions:
       - type: scene
         data:
           id: bat-room
@@ -2697,7 +2697,7 @@ every:
       - type: change-scene
         data: { scene: mine-3 }
 
-  - requires:
+  - conditions:
       - type: scene
         data:
           id: bat-room
@@ -2716,7 +2716,7 @@ every:
       - type: change-scene
         data: { scene: mine-4 }
 
-  - requires:
+  - conditions:
       - type: scene
         data:
           id: bat-room
@@ -2735,7 +2735,7 @@ every:
       - type: change-scene
         data: { scene: ladder-top }
 
-  - requires:
+  - conditions:
       - type: scene
         data:
           id: bat-room
@@ -2754,7 +2754,7 @@ every:
       - type: change-scene
         data: { scene: ladder-bottom }
 
-  - requires:
+  - conditions:
       - type: scene
         data:
           id: bat-room
@@ -2773,7 +2773,7 @@ every:
       - type: change-scene
         data: { scene: squeeky-room }
 
-  - requires:
+  - conditions:
       - type: scene
         data:
           id: bat-room
@@ -2792,7 +2792,7 @@ every:
       - type: change-scene
         data: { scene: mine-entrance }
 
-  - requires:
+  - conditions:
       - type: scene
         data: { id: cyclops-room }
       - type: flag
@@ -2808,7 +2808,7 @@ every:
           by: 1
 
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: cursed
@@ -2821,7 +2821,7 @@ every:
           object: bag-of-coins
           to: land-of-living-dead
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: cursed
@@ -2834,7 +2834,7 @@ every:
           object: bar
           to: land-of-living-dead
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: cursed
@@ -2847,7 +2847,7 @@ every:
           object: bauble
           to: land-of-living-dead
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: cursed
@@ -2860,7 +2860,7 @@ every:
           object: bracelet
           to: land-of-living-dead
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: cursed
@@ -2873,7 +2873,7 @@ every:
           object: broken-canary
           to: land-of-living-dead
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: cursed
@@ -2886,7 +2886,7 @@ every:
           object: broken-egg
           to: land-of-living-dead
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: cursed
@@ -2899,7 +2899,7 @@ every:
           object: canary
           to: land-of-living-dead
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: cursed
@@ -2912,7 +2912,7 @@ every:
           object: chalice
           to: land-of-living-dead
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: cursed
@@ -2925,7 +2925,7 @@ every:
           object: coffin
           to: land-of-living-dead
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: cursed
@@ -2938,7 +2938,7 @@ every:
           object: diamond
           to: land-of-living-dead
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: cursed
@@ -2951,7 +2951,7 @@ every:
           object: egg
           to: land-of-living-dead
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: cursed
@@ -2964,7 +2964,7 @@ every:
           object: emerald
           to: land-of-living-dead
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: cursed
@@ -2977,7 +2977,7 @@ every:
           object: jade
           to: land-of-living-dead
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: cursed
@@ -2990,7 +2990,7 @@ every:
           object: painting
           to: land-of-living-dead
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: cursed
@@ -3003,7 +3003,7 @@ every:
           object: pot-of-gold
           to: land-of-living-dead
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: cursed
@@ -3016,7 +3016,7 @@ every:
           object: scarab
           to: land-of-living-dead
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: cursed
@@ -3029,7 +3029,7 @@ every:
           object: sceptre
           to: land-of-living-dead
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: cursed
@@ -3042,7 +3042,7 @@ every:
           object: skull
           to: land-of-living-dead
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: cursed
@@ -3055,7 +3055,7 @@ every:
           object: torch
           to: land-of-living-dead
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: cursed
@@ -3068,7 +3068,7 @@ every:
           object: trident
           to: land-of-living-dead
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: cursed
@@ -3081,7 +3081,7 @@ every:
           object: trunk
           to: land-of-living-dead
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: cursed
@@ -3091,7 +3091,7 @@ every:
           flag: cursed
           value: false
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: aboard
@@ -3105,7 +3105,7 @@ every:
           measure: river-timer
           by: -1
 
-  - requires:
+  - conditions:
       - type: scene
         data:
           id: river-1
@@ -3130,7 +3130,7 @@ every:
           measure: river-timer
           to: 4
 
-  - requires:
+  - conditions:
       - type: scene
         data:
           id: river-2
@@ -3155,7 +3155,7 @@ every:
           measure: river-timer
           to: 3
 
-  - requires:
+  - conditions:
       - type: scene
         data:
           id: river-3
@@ -3180,7 +3180,7 @@ every:
           measure: river-timer
           to: 2
 
-  - requires:
+  - conditions:
       - type: scene
         data:
           id: river-4
@@ -3205,7 +3205,7 @@ every:
           measure: river-timer
           to: 1
 
-  - requires:
+  - conditions:
       - type: scene
         data:
           id: river-5

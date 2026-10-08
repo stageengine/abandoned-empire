@@ -14,7 +14,7 @@ measures:
   - id: weight
     max: 50
 tags: [belongings]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:

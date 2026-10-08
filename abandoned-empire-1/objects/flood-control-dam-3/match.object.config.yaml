@@ -6,7 +6,7 @@ synonyms: [match, matches, matchbook, book of matches]
 portable: true
 size: weight
 tags: [belongings]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:
@@ -49,7 +49,7 @@ measures:
 
 actions:
   - id: burn
-    requires:
+    conditions:
       - type: measure
         data:
           subject: match
@@ -78,7 +78,7 @@ actions:
           by: -1
 
   - id: burn
-    requires:
+    conditions:
       - type: measure
         data:
           subject: match
@@ -109,7 +109,7 @@ actions:
           value: true
 
   - id: extinguish
-    requires:
+    conditions:
       - type: flag
         data:
           flag: match-on

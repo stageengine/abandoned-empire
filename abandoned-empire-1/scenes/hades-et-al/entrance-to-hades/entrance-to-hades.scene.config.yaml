@@ -3,7 +3,7 @@ id: entrance-to-hades
 name: Entrance to Hades
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: lld-flag
@@ -40,7 +40,7 @@ characters: [ghosts]
 
 actions:
   - id: exorcise
-    requires:
+    conditions:
       - type: flag
         negate: true
         data:
@@ -60,7 +60,7 @@ actions:
           text: You must perform the ceremony.
 
   - id: exorcise
-    requires:
+    conditions:
       - type: flag
         negate: true
         data:
@@ -127,7 +127,7 @@ objects:
                 A force keeps you from taking the bodies.
 navigation:
   - id: south
-    requires:
+    conditions:
       - type: flag
         data:
           flag: lld-flag

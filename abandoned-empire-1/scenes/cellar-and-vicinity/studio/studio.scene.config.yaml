@@ -4,7 +4,7 @@ tags: [dark]
 name: Studio
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light
@@ -86,7 +86,7 @@ navigation:
           scene: gallery
   - id: up
     synonyms: [chimney]
-    requires:
+    conditions:
       - type: carrying
         negate: true
         data:

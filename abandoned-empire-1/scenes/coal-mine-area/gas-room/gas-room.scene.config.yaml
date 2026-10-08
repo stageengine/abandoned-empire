@@ -4,7 +4,7 @@ tags: [dark]
 name: Gas Room
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light

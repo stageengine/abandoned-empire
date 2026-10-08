@@ -62,7 +62,7 @@ measures:
               value: true
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: cyclops-asleep }
     triggers:
@@ -76,7 +76,7 @@ presence:
 
 actions:
   - id: look
-    requires:
+    conditions:
       - type: flag
         data: { flag: cyclops-asleep }
     triggers:
@@ -113,7 +113,7 @@ actions:
 
   - id: give
     indirect: bottle
-    requires:
+    conditions:
       - type: flag
         data: { flag: cyclops-thirsty }
     triggers:
@@ -157,7 +157,7 @@ actions:
           text: The cyclops is not so stupid as to eat THAT!
 
   - id: attack
-    requires:
+    conditions:
       - type: flag
         data: { flag: cyclops-asleep }
     triggers:
@@ -229,7 +229,7 @@ actions:
           text: You can hear his stomach rumbling.
 
   - id: tell
-    requires:
+    conditions:
       - type: flag
         data: { flag: cyclops-asleep }
     triggers:

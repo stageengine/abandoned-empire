@@ -5,7 +5,7 @@ synonyms: [bell, small bell, brass bell, hot bell, red hot bell]
 portable: true
 size: weight
 tags: [belongings]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:
@@ -41,7 +41,7 @@ measures:
 
 actions:
   - id: ring
-    requires:
+    conditions:
       - type: object-here
         data:
           object: ghosts
@@ -95,7 +95,7 @@ actions:
           value: false
 
   - id: ring
-    requires:
+    conditions:
       - type: object-here
         data:
           object: ghosts
@@ -138,7 +138,7 @@ actions:
           to: 6
 
   - id: ring
-    requires:
+    conditions:
       - type: flag
         data:
           flag: bell-hot
@@ -154,7 +154,7 @@ actions:
           text: Ding, dong.
 
   - id: get
-    requires:
+    conditions:
       - type: flag
         data:
           flag: bell-hot
@@ -173,7 +173,7 @@ actions:
           object: bell
 
   - id: touch
-    requires:
+    conditions:
       - type: flag
         data:
           flag: bell-hot
@@ -183,7 +183,7 @@ actions:
           text: The bell is too hot to touch.
 
   - id: look
-    requires:
+    conditions:
       - type: flag
         data:
           flag: bell-hot

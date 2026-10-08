@@ -3,7 +3,7 @@ id: west-of-house
 name: West of House
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: won-flag
@@ -126,7 +126,7 @@ navigation:
         data:
           scene: south-of-house
   - id: southwest
-    requires:
+    conditions:
       - type: flag
         data:
           flag: won-flag

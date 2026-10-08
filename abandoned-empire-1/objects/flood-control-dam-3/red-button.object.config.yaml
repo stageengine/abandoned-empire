@@ -6,7 +6,7 @@ start: maintenance-room
 
 actions:
   - id: move
-    requires:
+    conditions:
       - type: flag
         data:
           flag: maintenance-lights

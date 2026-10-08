@@ -6,7 +6,7 @@ synonyms: [candles, pair, burning candles, burning pair]
 portable: true
 size: weight
 tags: [belongings]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:
@@ -16,7 +16,7 @@ requires:
         - type: flag
           data: { flag: light }
 presence:
-  - requires:
+  - conditions:
       - type: handled
         negate: true
         data: { object: candles }
@@ -75,7 +75,7 @@ actions:
   - id: burn
     preposition: with
     indirect: match
-    requires:
+    conditions:
       - type: flag
         negate: true
         data:
@@ -119,7 +119,7 @@ actions:
   - id: burn
     preposition: with
     indirect: torch
-    requires:
+    conditions:
       - type: flag
         negate: true
         data:
@@ -144,7 +144,7 @@ actions:
           text: You should say what to light them with.
 
   - id: extinguish
-    requires:
+    conditions:
       - type: flag
         data:
           flag: candles-on
@@ -173,7 +173,7 @@ actions:
           text: There are two candles here.
 
   - id: look
-    requires:
+    conditions:
       - type: flag
         data:
           flag: candles-on

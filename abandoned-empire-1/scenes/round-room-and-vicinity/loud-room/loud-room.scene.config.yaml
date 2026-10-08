@@ -4,7 +4,7 @@ tags: [dark]
 name: Loud Room
 
 presence:
-  - requires:
+  - conditions:
       - type: all-of
         data:
           conditions:
@@ -19,7 +19,7 @@ presence:
             This is a large room with a ceiling which cannot be detected from the ground. There
             is a narrow passage from east to west and a stone stairway leading upward. The room
             is eerie in its quietness.
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light
@@ -38,7 +38,7 @@ presence:
 
 actions:
   - id: echo
-    requires:
+    conditions:
       - type: flag
         negate: true
         data: { flag: loud-flag }

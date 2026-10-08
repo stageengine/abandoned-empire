@@ -1,7 +1,7 @@
 id: bat
 
 synonyms: [vampire, vampire bat, vampire vampire, deranged bat, deranged vampire]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:
@@ -30,7 +30,7 @@ actions:
             of what you are carrying.
 
   - id: get
-    requires:
+    conditions:
       - type: has-item
         negate: true
         data: { object: garlic }
@@ -46,7 +46,7 @@ actions:
           text: You can't reach him; he's on the ceiling.
 
   - id: attack
-    requires:
+    conditions:
       - type: has-item
         negate: true
         data: { object: garlic }

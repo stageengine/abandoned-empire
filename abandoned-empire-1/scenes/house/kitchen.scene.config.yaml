@@ -3,7 +3,7 @@ id: kitchen
 name: Kitchen
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: kitchen-window-open
@@ -57,7 +57,7 @@ objects:
     synonyms: [window, small window]
     actions:
       - id: open
-        requires:
+        conditions:
           - type: flag
             negate: true
             data:
@@ -77,7 +77,7 @@ objects:
               value: true
 
       - id: close
-        requires:
+        conditions:
           - type: flag
             data:
               flag: kitchen-window-open
@@ -96,7 +96,7 @@ objects:
               value: false
 
       - id: look
-        requires:
+        conditions:
           - type: flag
             data:
               flag: kitchen-window-open
@@ -131,7 +131,7 @@ objects:
                 The chimney leads downward, and looks climbable.
 navigation:
   - id: east
-    requires:
+    conditions:
       - type: flag
         data:
           flag: kitchen-window-open

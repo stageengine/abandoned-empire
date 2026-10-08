@@ -3,7 +3,7 @@ id: aragain-falls
 name: Aragain Falls
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data: { flag: rainbow-flag }
     triggers:
@@ -102,7 +102,7 @@ navigation:
         data:
           scene: shore
   - id: west
-    requires:
+    conditions:
       - type: flag
         data:
           flag: rainbow-flag
@@ -111,7 +111,7 @@ navigation:
         data:
           scene: on-rainbow
   - id: up
-    requires:
+    conditions:
       - type: flag
         data:
           flag: rainbow-flag

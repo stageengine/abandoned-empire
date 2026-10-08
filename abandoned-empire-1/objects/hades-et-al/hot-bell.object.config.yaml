@@ -2,7 +2,7 @@ id: hot-bell
 name: red hot brass bell
 
 synonyms: [red hot brass bell]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:

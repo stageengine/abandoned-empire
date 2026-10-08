@@ -9,7 +9,7 @@ measures:
     max: 5
 contains: true
 tags: [belongings]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:
@@ -19,7 +19,7 @@ requires:
         - type: flag
           data: { flag: light }
 presence:
-  - requires:
+  - conditions:
       - type: handled
         negate: true
         data: { object: bottle }
@@ -30,7 +30,7 @@ presence:
         data:
           text: >-
             A bottle is sitting on the table. The glass bottle contains: A quantity of water
-  - requires:
+  - conditions:
       - type: handled
         negate: true
         data: { object: bottle }

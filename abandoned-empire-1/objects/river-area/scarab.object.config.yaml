@@ -24,7 +24,7 @@ measures:
   - id: weight
     max: 8
 tags: [treasure]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:

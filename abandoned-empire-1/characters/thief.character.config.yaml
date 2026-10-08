@@ -16,7 +16,7 @@ synonyms:
   - seedy robber
   - seedy man
   - seedy person
-requires:
+conditions:
   - type: any-of
     data:
       conditions:
@@ -388,7 +388,7 @@ actions:
   - id: attack
     preposition: with
     indirect: knife
-    requires:
+    conditions:
       - type: has-item
         data:
           object: knife
@@ -426,7 +426,7 @@ actions:
   - id: attack
     preposition: with
     indirect: knife
-    requires:
+    conditions:
       - type: has-item
         data:
           object: knife
@@ -462,7 +462,7 @@ actions:
 
   - id: throw
     indirect: knife
-    requires:
+    conditions:
       - type: flag
         negate: true
         data:
@@ -485,7 +485,7 @@ actions:
   - id: attack
     preposition: with
     indirect: sword
-    requires:
+    conditions:
       - type: has-item
         data:
           object: sword
@@ -523,7 +523,7 @@ actions:
   - id: attack
     preposition: with
     indirect: sword
-    requires:
+    conditions:
       - type: has-item
         data:
           object: sword
@@ -560,7 +560,7 @@ actions:
   - id: attack
     preposition: with
     indirect: axe
-    requires:
+    conditions:
       - type: has-item
         data:
           object: axe
@@ -598,7 +598,7 @@ actions:
   - id: attack
     preposition: with
     indirect: axe
-    requires:
+    conditions:
       - type: has-item
         data:
           object: axe
@@ -635,7 +635,7 @@ actions:
   - id: attack
     preposition: with
     indirect: rusty-knife
-    requires:
+    conditions:
       - type: has-item
         data:
           object: rusty-knife
@@ -673,7 +673,7 @@ actions:
   - id: attack
     preposition: with
     indirect: rusty-knife
-    requires:
+    conditions:
       - type: has-item
         data:
           object: rusty-knife

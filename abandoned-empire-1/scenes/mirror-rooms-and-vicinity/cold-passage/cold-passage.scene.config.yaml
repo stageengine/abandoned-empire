@@ -4,7 +4,7 @@ tags: [dark]
 name: Cold Passage
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light

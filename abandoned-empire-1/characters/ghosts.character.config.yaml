@@ -64,7 +64,7 @@ actions:
           text: The spirits jeer loudly and ignore you.
 
   - id: exorcise
-    requires:
+    conditions:
       - type: flag
         negate: true
         data:
@@ -84,7 +84,7 @@ actions:
           text: You must perform the ceremony.
 
   - id: exorcise
-    requires:
+    conditions:
       - type: flag
         negate: true
         data:

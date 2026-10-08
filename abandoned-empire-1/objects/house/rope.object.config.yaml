@@ -7,7 +7,7 @@ measures:
   - id: weight
     max: 10
 tags: [belongings]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:
@@ -17,7 +17,7 @@ requires:
         - type: flag
           data: { flag: light }
 presence:
-  - requires:
+  - conditions:
       - type: handled
         negate: true
         data: { object: rope }
@@ -33,7 +33,7 @@ start: attic
 
 actions:
   - id: tie
-    requires:
+    conditions:
       - type: object-here
         data:
           object: railing
@@ -66,7 +66,7 @@ actions:
           text: You can't tie the rope to that.
 
   - id: untie
-    requires:
+    conditions:
       - type: flag
         data:
           flag: dome-flag
@@ -85,7 +85,7 @@ actions:
           value: false
 
   - id: get
-    requires:
+    conditions:
       - type: flag
         data:
           flag: dome-flag
@@ -95,7 +95,7 @@ actions:
           text: The rope is tied to the railing.
 
   - id: drop
-    requires:
+    conditions:
       - type: scene
         data:
           id: dome-room
@@ -113,7 +113,7 @@ actions:
           to: torch-room
 
   - id: look
-    requires:
+    conditions:
       - type: flag
         data:
           flag: dome-flag

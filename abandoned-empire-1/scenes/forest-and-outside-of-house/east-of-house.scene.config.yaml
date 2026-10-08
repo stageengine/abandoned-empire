@@ -3,7 +3,7 @@ id: east-of-house
 name: Behind House
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: kitchen-window-open
@@ -64,7 +64,7 @@ objects:
     synonyms: [window, small window]
     actions:
       - id: open
-        requires:
+        conditions:
           - type: flag
             negate: true
             data:
@@ -84,7 +84,7 @@ objects:
               value: true
 
       - id: close
-        requires:
+        conditions:
           - type: flag
             data:
               flag: kitchen-window-open
@@ -103,7 +103,7 @@ objects:
               value: false
 
       - id: look
-        requires:
+        conditions:
           - type: flag
             data:
               flag: kitchen-window-open
@@ -160,7 +160,7 @@ navigation:
           scene: clearing
   - id: west
     synonyms: [window, kitchen, house]
-    requires:
+    conditions:
       - type: flag
         data:
           flag: kitchen-window-open

@@ -11,7 +11,7 @@ actions:
         data: { text: The mirror is many times your size. Give up. }
 
   - id: break
-    requires:
+    conditions:
       - type: flag
         negate: true
         data: { flag: mirror-mung }
@@ -30,7 +30,7 @@ actions:
         data: { flag: mirror-mung, value: true }
 
   - id: attack
-    requires:
+    conditions:
       - type: flag
         negate: true
         data: { flag: mirror-mung }
@@ -49,7 +49,7 @@ actions:
         data: { flag: mirror-mung, value: true }
 
   - id: throw
-    requires:
+    conditions:
       - type: flag
         negate: true
         data: { flag: mirror-mung }
@@ -68,7 +68,7 @@ actions:
         data: { flag: mirror-mung, value: true }
 
   - id: look
-    requires:
+    conditions:
       - type: flag
         data: { flag: mirror-mung }
     triggers:
@@ -88,7 +88,7 @@ actions:
           text: You feel a faint tingling transmitted through it.
 
   - id: touch
-    requires:
+    conditions:
       - type: flag
         negate: true
         data: { flag: mirror-mung }

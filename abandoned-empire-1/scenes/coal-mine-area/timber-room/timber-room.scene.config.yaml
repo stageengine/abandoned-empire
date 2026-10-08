@@ -4,7 +4,7 @@ tags: [dark]
 name: Timber Room
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light
@@ -49,7 +49,7 @@ navigation:
         data:
           scene: ladder-bottom
   - id: west
-    requires:
+    conditions:
       - type: carrying
         data: { of: largest, max: 4 }
         failure:

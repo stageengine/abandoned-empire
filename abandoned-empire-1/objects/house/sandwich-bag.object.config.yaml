@@ -16,7 +16,7 @@ measures:
     max: 9
 contains: true
 tags: [belongings]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:
@@ -26,7 +26,7 @@ requires:
         - type: flag
           data: { flag: light }
 presence:
-  - requires:
+  - conditions:
       - type: handled
         negate: true
         data: { object: sandwich-bag }

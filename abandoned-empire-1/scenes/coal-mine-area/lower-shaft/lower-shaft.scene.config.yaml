@@ -4,7 +4,7 @@ tags: [dark]
 name: Drafty Room
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light
@@ -62,7 +62,7 @@ objects:
             data:
               text: "Perhaps you should do that to the basket."
       - id: lower
-        requires:
+        conditions:
           - type: object-in
             negate: true
             data: { object: lowered-basket, location: lower-shaft }
@@ -93,7 +93,7 @@ navigation:
         data:
           scene: machine-room
   - id: east
-    requires:
+    conditions:
       - type: carrying
         data: { max: 4 }
         failure:

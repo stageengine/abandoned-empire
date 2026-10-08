@@ -12,7 +12,7 @@ presence:
             room.
 
   - also: true
-    requires:
+    conditions:
       - type: flag
         data: { flag: mirror-mung }
     triggers:

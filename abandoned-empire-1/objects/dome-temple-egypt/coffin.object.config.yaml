@@ -17,7 +17,7 @@ measures:
     max: 55
 contains: true
 tags: [treasure]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:

@@ -4,7 +4,7 @@ tags: [dark]
 name: Cellar
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light
@@ -107,7 +107,7 @@ navigation:
           text: >-
             You try to ascend the ramp, but it is impossible, and you slide back down.
   - id: up
-    requires:
+    conditions:
       - type: flag
         data:
           flag: trap-door-open

@@ -1,5 +1,5 @@
 every:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: ceremony
@@ -29,7 +29,7 @@ every:
           measure: awe
           to: 3
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: blessing
@@ -40,7 +40,7 @@ every:
           measure: awe
           by: -1
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: ceremony

@@ -7,7 +7,7 @@ measures:
   - id: weight
     max: 15
 tags: [treasure]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:
@@ -17,7 +17,7 @@ requires:
         - type: flag
           data: { flag: light }
 presence:
-  - requires:
+  - conditions:
       - type: handled
         negate: true
         data: { object: painting }
@@ -54,7 +54,7 @@ actions:
           value: true
 
   - id: look
-    requires:
+    conditions:
       - type: flag
         data:
           flag: painting-ruined

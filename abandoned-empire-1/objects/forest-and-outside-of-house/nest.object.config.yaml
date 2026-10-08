@@ -9,7 +9,7 @@ measures:
     max: 5
 contains: true
 tags: [belongings]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:
@@ -19,7 +19,7 @@ requires:
         - type: flag
           data: { flag: light }
 presence:
-  - requires:
+  - conditions:
       - type: handled
         negate: true
         data: { object: nest }
@@ -38,7 +38,7 @@ presence:
             scavenged by a childless songbird. The egg is covered with fine gold inlay, and
             ornamented in lapis lazuli and mother-of-pearl. Unlike most eggs, this one is hinged
             and closed with a delicate looking clasp. The egg appears extremely fragile.
-  - requires:
+  - conditions:
       - type: handled
         negate: true
         data: { object: nest }
@@ -46,7 +46,7 @@ presence:
       - type: response
         data:
           text: Beside you on the branch is a small bird's nest.
-  - requires:
+  - conditions:
       - type: object-in
         data:
           object: egg
@@ -70,7 +70,7 @@ start: up-a-tree
 
 actions:
   - id: drop
-    requires:
+    conditions:
       - type: scene
         data:
           id: up-a-tree

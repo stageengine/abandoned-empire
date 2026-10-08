@@ -3,7 +3,7 @@ name: small mailbox
 
 synonyms: [mailbox, box, small box]
 contains: true
-requires:
+conditions:
   - type: any-of
     data:
       conditions:

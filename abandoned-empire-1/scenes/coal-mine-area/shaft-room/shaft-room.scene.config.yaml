@@ -4,7 +4,7 @@ tags: [dark]
 name: Shaft Room
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light
@@ -58,7 +58,7 @@ objects:
             data:
               text: "The chain is secure."
       - id: raise
-        requires:
+        conditions:
           - type: object-in
             negate: true
             data: { object: raised-basket, location: shaft-room }

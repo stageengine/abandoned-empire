@@ -11,7 +11,7 @@ synonyms:
   - ancient wall
   - ancient engravings
   - ancient inscription
-requires:
+conditions:
   - type: any-of
     data:
       conditions:

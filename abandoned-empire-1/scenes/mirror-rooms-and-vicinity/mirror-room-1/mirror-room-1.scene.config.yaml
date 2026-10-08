@@ -4,7 +4,7 @@ tags: [dark]
 name: Mirror Room
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light
@@ -21,7 +21,7 @@ presence:
           text: It is pitch black. You are likely to be eaten by a grue.
 
   - also: true
-    requires:
+    conditions:
       - type: flag
         data: { flag: mirror-mung }
       - type: flag

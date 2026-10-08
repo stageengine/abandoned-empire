@@ -4,7 +4,7 @@ tags: [dark]
 name: Deep Canyon
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light

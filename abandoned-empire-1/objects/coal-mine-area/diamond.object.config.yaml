@@ -8,7 +8,7 @@ measures:
   - id: weight
     max: 5
 tags: [treasure, basket-cargo]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:

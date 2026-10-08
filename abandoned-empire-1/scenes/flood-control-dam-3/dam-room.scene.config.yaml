@@ -3,7 +3,7 @@ id: dam-room
 name: Dam
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: gate-flag
@@ -30,7 +30,7 @@ presence:
           text: >-
             There is a control panel here, on which a large metal bolt is mounted. Directly
             above the bolt is a small green plastic bubble which is glowing serenely.
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: gate-flag
@@ -58,7 +58,7 @@ presence:
           text: >-
             There is a control panel here, on which a large metal bolt is mounted. Directly
             above the bolt is a small green plastic bubble which is glowing serenely.
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: gate-flag
@@ -86,7 +86,7 @@ presence:
           text: >-
             There is a control panel here, on which a large metal bolt is mounted. Directly
             above the bolt is a small green plastic bubble which is glowing serenely.
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: gate-flag
@@ -115,7 +115,7 @@ presence:
           text: >-
             There is a control panel here, on which a large metal bolt is mounted. Directly
             above the bolt is a small green plastic bubble which is glowing serenely.
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: gates-open
@@ -139,7 +139,7 @@ presence:
           text: >-
             There is a control panel here, on which a large metal bolt is mounted. Directly
             above the bolt is a small green plastic bubble.
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: gates-open
@@ -164,7 +164,7 @@ presence:
           text: >-
             There is a control panel here, on which a large metal bolt is mounted. Directly
             above the bolt is a small green plastic bubble.
-  - requires:
+  - conditions:
       - type: flag
         negate: true
         data:

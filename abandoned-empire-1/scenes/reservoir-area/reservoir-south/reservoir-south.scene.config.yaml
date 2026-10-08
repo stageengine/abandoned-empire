@@ -4,7 +4,7 @@ tags: [dark]
 name: Reservoir South
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light
@@ -27,7 +27,7 @@ presence:
             There is a path along the stream to the east or west, a steep pathway climbing
             southwest along the edge of a chasm, and a path leading into a canyon to the
             southeast.
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light
@@ -51,7 +51,7 @@ presence:
             There is a path along the stream to the east or west, a steep pathway climbing
             southwest along the edge of a chasm, and a path leading into a canyon to the
             southeast.
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light
@@ -75,7 +75,7 @@ presence:
             There is a path along the stream to the east or west, a steep pathway climbing
             southwest along the edge of a chasm, and a path leading into a canyon to the
             southeast.
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light
@@ -145,7 +145,7 @@ objects:
     synonyms: [lake]
     actions:
       - id: cross
-        requires:
+        conditions:
           - type: flag
             data: { flag: low-tide }
         triggers:
@@ -153,7 +153,7 @@ objects:
             data:
               text: "There's not much lake left...."
       - id: swim
-        requires:
+        conditions:
           - type: flag
             data: { flag: low-tide }
         triggers:
@@ -189,7 +189,7 @@ objects:
                 Thank you very much. I was rather thirsty.
 navigation:
   - id: north
-    requires:
+    conditions:
       - type: flag
         data:
           flag: low-tide

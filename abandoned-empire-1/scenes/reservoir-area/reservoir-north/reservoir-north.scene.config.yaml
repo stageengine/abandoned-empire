@@ -4,7 +4,7 @@ tags: [dark]
 name: Reservoir North
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light
@@ -24,7 +24,7 @@ presence:
         data:
           text: >-
             There is a slimy stairway leaving the room to the north.
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light
@@ -45,7 +45,7 @@ presence:
         data:
           text: >-
             There is a slimy stairway leaving the room to the north.
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light
@@ -67,7 +67,7 @@ presence:
         data:
           text: >-
             There is a slimy stairway leaving the room to the north.
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light
@@ -120,7 +120,7 @@ objects:
     synonyms: [lake]
     actions:
       - id: cross
-        requires:
+        conditions:
           - type: flag
             data: { flag: low-tide }
         triggers:
@@ -128,7 +128,7 @@ objects:
             data:
               text: "There's not much lake left...."
       - id: swim
-        requires:
+        conditions:
           - type: flag
             data: { flag: low-tide }
         triggers:
@@ -170,7 +170,7 @@ navigation:
         data:
           scene: atlantis-room
   - id: south
-    requires:
+    conditions:
       - type: flag
         data:
           flag: low-tide

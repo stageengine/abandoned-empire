@@ -12,7 +12,7 @@ presence:
             You are about 10 feet above the ground nestled among some large branches. The
             nearest branch above you is above your reach.
   - also: true
-    requires:
+    conditions:
       - type: object-in
         data: { object: lamp, location: path }
     triggers:
@@ -20,7 +20,7 @@ presence:
         data:
           text: On the ground below you can see a brass lantern.
   - also: true
-    requires:
+    conditions:
       - type: object-in
         data: { object: rope, location: path }
     triggers:

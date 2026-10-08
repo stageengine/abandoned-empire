@@ -3,7 +3,7 @@ id: grating-clearing
 name: Clearing
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: grate-open
@@ -17,7 +17,7 @@ presence:
         data:
           text: There is an open grating, descending into darkness.
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: grate-revealed
@@ -80,13 +80,13 @@ objects:
   - id: grating-clearing.grate
     name: grating
     synonyms: [grate]
-    requires:
+    conditions:
       - type: flag
         data:
           flag: grate-revealed
     actions:
       - id: open
-        requires:
+        conditions:
           - type: flag
             data:
               flag: grate-unlocked
@@ -114,7 +114,7 @@ objects:
               value: true
 
       - id: close
-        requires:
+        conditions:
           - type: flag
             data:
               flag: grate-open
@@ -262,7 +262,7 @@ navigation:
         data:
           scene: forest-1
   - id: down
-    requires:
+    conditions:
       - type: flag
         data:
           flag: grate-open

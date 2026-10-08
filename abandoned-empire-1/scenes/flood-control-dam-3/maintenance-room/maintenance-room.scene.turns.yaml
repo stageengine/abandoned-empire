@@ -1,5 +1,5 @@
 every:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: maintenance-flooded
@@ -16,7 +16,7 @@ every:
           flag: player-died
           value: true
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: leak-open
@@ -31,7 +31,7 @@ every:
         data:
           text: The water level here is now up to your ankles.
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: leak-open
@@ -46,7 +46,7 @@ every:
         data:
           text: The water level here is now up to your shin.
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: leak-open
@@ -61,7 +61,7 @@ every:
         data:
           text: The water level here is now up to your knees.
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: leak-open
@@ -76,7 +76,7 @@ every:
         data:
           text: The water level here is now up to your hips.
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: leak-open
@@ -91,7 +91,7 @@ every:
         data:
           text: The water level here is now up to your waist.
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: leak-open
@@ -106,7 +106,7 @@ every:
         data:
           text: The water level here is now up to your chest.
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: leak-open
@@ -121,7 +121,7 @@ every:
         data:
           text: The water level here is now up to your neck.
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: leak-open
@@ -136,7 +136,7 @@ every:
         data:
           text: The water level here is now over your head.
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: leak-open

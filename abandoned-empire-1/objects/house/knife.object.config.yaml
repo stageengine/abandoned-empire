@@ -16,7 +16,7 @@ measures:
   - id: weight
     max: 5
 tags: [belongings]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:
@@ -26,7 +26,7 @@ requires:
         - type: flag
           data: { flag: light }
 presence:
-  - requires:
+  - conditions:
       - type: handled
         negate: true
         data: { object: knife }
@@ -42,7 +42,7 @@ start: in:attic-table
 
 actions:
   - id: drop
-    requires:
+    conditions:
       - type: flag
         data: { flag: aboard }
       - type: any-of
@@ -70,7 +70,7 @@ actions:
         data: { flag: player-died, value: true }
 
   - id: drop
-    requires:
+    conditions:
       - type: flag
         data: { flag: aboard }
       - type: scene
@@ -94,7 +94,7 @@ actions:
         data: { flag: player-died, value: true }
 
   - id: drop
-    requires:
+    conditions:
       - type: flag
         data: { flag: aboard }
     triggers:

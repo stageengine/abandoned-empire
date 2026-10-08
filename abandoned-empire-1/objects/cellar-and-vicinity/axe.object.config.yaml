@@ -8,7 +8,7 @@ measures:
   - id: weight
     max: 25
 tags: [belongings]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:
@@ -25,7 +25,7 @@ presence:
 
 actions:
   - id: drop
-    requires:
+    conditions:
       - type: flag
         data: { flag: aboard }
       - type: any-of
@@ -53,7 +53,7 @@ actions:
         data: { flag: player-died, value: true }
 
   - id: drop
-    requires:
+    conditions:
       - type: flag
         data: { flag: aboard }
       - type: scene
@@ -77,7 +77,7 @@ actions:
         data: { flag: player-died, value: true }
 
   - id: drop
-    requires:
+    conditions:
       - type: flag
         data: { flag: aboard }
     triggers:
@@ -94,7 +94,7 @@ actions:
         data: { flag: aboard, value: false }
 
   - id: get
-    requires:
+    conditions:
       - type: flag
         negate: true
         data: { flag: troll-flag }

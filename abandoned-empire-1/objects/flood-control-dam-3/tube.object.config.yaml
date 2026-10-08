@@ -8,7 +8,7 @@ measures:
     max: 5
 contains: true
 tags: [belongings]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:

@@ -4,7 +4,7 @@ tags: [dark]
 name: Grating Room
 
 presence:
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: grate-open
@@ -18,7 +18,7 @@ presence:
         data:
           text: Above you is an open grating with sunlight pouring in.
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light
@@ -35,7 +35,7 @@ presence:
         data:
           text: Above you is a grating.
 
-  - requires:
+  - conditions:
       - type: flag
         data:
           flag: light
@@ -80,7 +80,7 @@ objects:
     synonyms: [grate]
     actions:
       - id: unlock
-        requires:
+        conditions:
           - type: has-item
             data:
               object: keys
@@ -109,7 +109,7 @@ objects:
               text: The grate is locked.
 
       - id: open
-        requires:
+        conditions:
           - type: flag
             data:
               flag: grate-unlocked
@@ -152,7 +152,7 @@ objects:
               value: true
 
       - id: open
-        requires:
+        conditions:
           - type: flag
             data:
               flag: grate-unlocked
@@ -180,7 +180,7 @@ objects:
               value: true
 
       - id: close
-        requires:
+        conditions:
           - type: flag
             data:
               flag: grate-open
@@ -301,7 +301,7 @@ navigation:
         data:
           scene: maze-11
   - id: up
-    requires:
+    conditions:
       - type: flag
         data:
           flag: grate-open

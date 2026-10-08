@@ -8,7 +8,7 @@ measures:
   - id: weight
     max: 15
 tags: [treasure]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:
@@ -20,7 +20,7 @@ requires:
   - type: flag
     data: { flag: rainbow-flag }
 presence:
-  - requires:
+  - conditions:
       - type: handled
         negate: true
         data: { object: pot-of-gold }

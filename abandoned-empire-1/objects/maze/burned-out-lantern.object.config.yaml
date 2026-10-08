@@ -18,7 +18,7 @@ measures:
   - id: weight
     max: 20
 tags: [belongings]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:
@@ -28,7 +28,7 @@ requires:
         - type: flag
           data: { flag: light }
 presence:
-  - requires:
+  - conditions:
       - type: handled
         negate: true
         data: { object: burned-out-lantern }

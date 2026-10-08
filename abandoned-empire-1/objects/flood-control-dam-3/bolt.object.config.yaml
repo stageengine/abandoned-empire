@@ -7,7 +7,7 @@ actions:
   - id: turn
     preposition: with
     indirect: wrench
-    requires:
+    conditions:
       - type: has-item
         data:
           object: wrench
@@ -39,7 +39,7 @@ actions:
   - id: turn
     preposition: with
     indirect: wrench
-    requires:
+    conditions:
       - type: has-item
         data:
           object: wrench

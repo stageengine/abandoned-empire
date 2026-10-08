@@ -17,7 +17,7 @@ measures:
     max: 5
 tags: [treasure]
 presence:
-  - requires:
+  - conditions:
       - type: handled
         negate: true
         data: { object: canary }
@@ -34,7 +34,7 @@ presence:
           text: There is a golden clockwork canary here.
 start: in:egg
 
-requires:
+conditions:
   - type: flag
     data:
       flag: egg-open
@@ -49,7 +49,7 @@ requires:
           data: { flag: light }
 actions:
   - id: turn
-    requires:
+    conditions:
       - type: flag
         data:
           flag: egg-open
@@ -79,7 +79,7 @@ actions:
           to: path
 
   - id: turn
-    requires:
+    conditions:
       - type: flag
         data:
           flag: egg-open
@@ -109,7 +109,7 @@ actions:
           to: here
 
   - id: turn
-    requires:
+    conditions:
       - type: flag
         data:
           flag: egg-open

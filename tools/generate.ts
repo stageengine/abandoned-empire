@@ -149,7 +149,7 @@ const thingYaml = (thing: Thing): Record<string, Value> => {
   if (thing.flags.includes('INVISIBLE')) {
     note(
       'Things that are not there until something reveals them',
-      `- \`${id(thing.id)}\` starts unseen, and needs a \`requires\` saying when it is not.`,
+      `- \`${id(thing.id)}\` starts unseen, and needs \`conditions\` saying when it is not.`,
     );
   }
 
@@ -207,7 +207,7 @@ const describing = (room: Room): Array<Value> => {
   const action: Record<string, Value> = { id: 'look' };
 
   if (!room.lit) {
-    action.requires = [{ type: 'flag', data: { flag: 'light' } }];
+    action.conditions = [{ type: 'flag', data: { flag: 'light' } }];
   }
 
   action.triggers = [{ type: 'response', data: { text: base } }];
@@ -251,7 +251,7 @@ const wayOut = (room: Room, exit: Exit): Value => {
       };
     }
 
-    out.requires = [condition];
+    out.conditions = [condition];
   }
 
   out.triggers = [{ type: 'change-scene', data: { scene: id(exit.to) } }];
@@ -397,7 +397,7 @@ await put(
     every: [
       { triggers: [{ type: 'set-flag', data: { flag: 'light', value: false } }] },
       ...lights.map((thing) => ({
-        requires: [
+        conditions: [
           { type: 'has-item', data: { object: id(thing.id) } },
           ...(thing.flags.includes('ONBIT') ? [] : [{ type: 'flag', data: { flag: `${id(thing.id)}-on` } }]),
         ],

@@ -14,7 +14,7 @@ measures:
   - id: weight
     max: 5
 tags: [basket-cargo, belongings]
-requires:
+conditions:
   - type: any-of
     data:
       conditions:
