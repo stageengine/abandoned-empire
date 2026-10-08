@@ -1,7 +1,10 @@
 import dungeon, { type Exit, type Room, type Thing } from './dungeon.ts';
 import vocabulary from './vocabulary.ts';
 import lookingProse, { lookingParts } from './routines.ts';
-import writeYaml, { type Value, writeYamlList } from './write-yaml.ts';
+import writeYaml, { type Value } from './write-yaml.ts';
+
+/** The game's id, which every one of its own files is named for. */
+const GAME = 'abandoned-empire-1';
 
 const [sourceDir = '../source/zork1', outputDir = '../abandoned-empire-1'] = Deno.args.filter((one) =>
   !one.startsWith('--')
@@ -28,7 +31,8 @@ const prose = (text: string): string =>
     .replace(/\n{3,}/g, '\n\n')
     .trim();
 
-const folder = (region: string): string => `(${region.toLowerCase().replaceAll('#', '').trim()})`;
+const folder = (region: string): string =>
+  region.toLowerCase().replaceAll('#', '').trim().replace(/[\s,]+/g, '-');
 
 const notes = new Map<string, Set<string>>();
 const note = (section: string, line: string) => {
@@ -337,7 +341,7 @@ for (const thing of filed) {
   }
 
   await put(
-    `objects/${folder(roomsById.get(home ?? '')?.region ?? thing.region)}/${id(thing.id)}.object.yaml`,
+    `objects/${folder(roomsById.get(home ?? '')?.region ?? thing.region)}/${id(thing.id)}.object.config.yaml`,
     writeYaml(thingYaml(thing), ['synonyms', 'actions', 'measures']),
   );
 }
@@ -380,7 +384,7 @@ for (const room of rooms) {
   }
 
   await put(
-    `scenes/${folder(room.region)}/${id(room.id)}.scene.yaml`,
+    `scenes/${folder(room.region)}/${id(room.id)}.scene.config.yaml`,
     writeYaml(scene, ['meta', 'actions', 'objects', 'navigation']),
   );
 }
@@ -388,9 +392,9 @@ for (const room of rooms) {
 const lights = things.filter((thing) => thing.flags.includes('LIGHTBIT'));
 
 await put(
-  'every-turn.yaml',
-  writeYamlList(
-    [
+  `${GAME}.game.turns.yaml`,
+  writeYaml({
+    every: [
       { triggers: [{ type: 'set-flag', data: { flag: 'light', value: false } }] },
       ...lights.map((thing) => ({
         requires: [
@@ -400,7 +404,7 @@ await put(
         triggers: [{ type: 'set-flag', data: { flag: 'light', value: true } }],
       })),
     ] as Array<Value>,
-  ),
+  }),
 );
 
 for (const thing of lights) {
@@ -411,15 +415,15 @@ for (const thing of lights) {
 }
 
 await put(
-  'vocabulary.yaml',
+  `${GAME}.game.vocabulary.yaml`,
   writeYaml(vocabulary(), ['verbs', 'directions', 'articles', 'prepositions', 'conjunctions']),
 );
 
 await put(
-  'config.yaml',
+  `${GAME}.game.config.yaml`,
   writeYaml(
     {
-      id: 'abandoned-empire-1',
+      id: GAME,
       start: id(rooms[0].id),
 
       metadata: {
@@ -436,7 +440,7 @@ await put(
 );
 
 await put(
-  'player.yaml',
+  `${GAME}.game.player.yaml`,
   writeYaml({
     measures: [{
       id: 'score',

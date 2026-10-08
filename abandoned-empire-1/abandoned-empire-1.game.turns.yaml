@@ -1,0 +1,3228 @@
+every:
+  - triggers:
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: moves
+          by: 1
+
+  - requires:
+      - type: measure
+        data: { subject: player, measure: allowance, max: 99 }
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: allowance
+          by: 10
+
+  - triggers:
+      - type: set-flag
+        data:
+          flag: light
+          value: false
+
+  - requires:
+      - type: any-of
+        data:
+          conditions:
+            - type: all-of
+              data:
+                conditions:
+                  - type: object-here
+                    data:
+                      object: lamp
+                  - type: flag
+                    data:
+                      flag: lamp-on
+
+            - type: all-of
+              data:
+                conditions:
+                  - type: object-here
+                    data:
+                      object: candles
+                  - type: flag
+                    data:
+                      flag: candles-on
+
+            - type: all-of
+              data:
+                conditions:
+                  - type: object-here
+                    data:
+                      object: match
+                  - type: flag
+                    data:
+                      flag: match-on
+
+            - type: object-here
+              data:
+                object: torch
+
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data:
+                      id: grating-room
+                  - type: flag
+                    data:
+                      flag: grate-open
+    triggers:
+      - type: set-flag
+        data:
+          flag: light
+          value: true
+
+  - requires:
+      - type: flag
+        data:
+          flag: lamp-on
+      - type: flag
+        negate: true
+        data:
+          flag: lamp-burned-out
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: lamp
+          measure: life
+          by: -1
+
+  - triggers:
+      - type: set-flag
+        data:
+          flag: was-dark
+          value: false
+
+  - requires:
+      - type: scene
+        data:
+          tag: dark
+      - type: flag
+        negate: true
+        data:
+          flag: light
+      - type: flag
+        data:
+          flag: was-dark
+      - type: flag
+        negate: true
+        data:
+          flag: player-died
+      - type: chance
+        data:
+          of: 100
+          index: [1..80]
+          name: every-turn-145
+    triggers:
+      - type: response
+        data:
+          text: Oh, no! A lurking grue slithered into the room and devoured you!
+      - type: achievement
+        data: { id: eaten-by-a-grue }
+      - type: set-flag
+        data:
+          flag: player-died
+          value: true
+
+  - requires:
+      - type: scene
+        data:
+          tag: dark
+      - type: flag
+        negate: true
+        data:
+          flag: light
+    triggers:
+      - type: set-flag
+        data:
+          flag: was-dark
+          value: true
+
+  - requires:
+      - type: flag
+        data:
+          flag: gates-open
+      - type: measure
+        data:
+          subject: dam
+          measure: water
+          min: 1
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: dam
+          measure: water
+          by: -1
+
+  - requires:
+      - type: flag
+        negate: true
+        data:
+          flag: gates-open
+      - type: measure
+        data:
+          subject: dam
+          measure: water
+          max: 7
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: dam
+          measure: water
+          by: 1
+
+  - requires:
+      - type: flag
+        data:
+          flag: leak-open
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: leak
+          measure: flood
+          by: 1
+
+  - requires:
+      - type: scene
+        data:
+          id: loud-room
+      - type: flag
+        data:
+          flag: gates-open
+      - type: flag
+        negate: true
+        data:
+          flag: low-tide
+      - type: chance
+        data: { name: loud-room-flood, of: 3, index: 1 }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            It is unbearably loud here, with an ear-splitting roar seeming to come from all around
+            you. There is a pounding in your head which won't stop. With a tremendous effort, you
+            scramble out of the room.
+      - type: change-scene
+        data: { scene: damp-cave }
+
+  - requires:
+      - type: scene
+        data:
+          id: loud-room
+      - type: flag
+        data:
+          flag: gates-open
+      - type: flag
+        negate: true
+        data:
+          flag: low-tide
+      - type: chance
+        data: { name: loud-room-flood, of: 3, index: 2 }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            It is unbearably loud here, with an ear-splitting roar seeming to come from all around
+            you. There is a pounding in your head which won't stop. With a tremendous effort, you
+            scramble out of the room.
+      - type: change-scene
+        data: { scene: round-room }
+
+  - requires:
+      - type: scene
+        data:
+          id: loud-room
+      - type: flag
+        data:
+          flag: gates-open
+      - type: flag
+        negate: true
+        data:
+          flag: low-tide
+      - type: chance
+        data: { name: loud-room-flood, of: 3, index: 3 }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            It is unbearably loud here, with an ear-splitting roar seeming to come from all around
+            you. There is a pounding in your head which won't stop. With a tremendous effort, you
+            scramble out of the room.
+      - type: change-scene
+        data: { scene: deep-canyon }
+
+  - requires:
+      - type: scene
+        data:
+          id: gas-room
+      - type: any-of
+        data:
+          conditions:
+            - type: all-of
+              data:
+                conditions:
+                  - type: has-item
+                    data: { object: candles }
+                  - type: flag
+                    data: { flag: candles-on }
+            - type: has-item
+              data: { object: torch }
+            - type: all-of
+              data:
+                conditions:
+                  - type: has-item
+                    data: { object: match }
+                  - type: flag
+                    data: { flag: match-on }
+      - type: flag
+        negate: true
+        data:
+          flag: player-died
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Oh dear. It appears that the smell coming from this room was coal gas. I would have
+            thought twice about carrying flaming objects in here.
+      - type: response
+        data:
+          text: "** BOOOOOOOOOOOM **"
+      - type: set-flag
+        data:
+          flag: player-died
+          value: true
+
+  - requires:
+      - type: flag
+        data:
+          flag: candles-on
+      - type: flag
+        negate: true
+        data:
+          flag: candles-gone
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: candles
+          measure: life
+          by: -1
+
+  - requires:
+      - type: flag
+        data:
+          flag: match-on
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: match
+          measure: flame
+          by: -1
+
+  - requires:
+      - type: flag
+        data:
+          flag: bell-hot
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: bell
+          measure: heat
+          by: -1
+
+  - requires:
+      - type: scene
+        data:
+          tag: forest
+      - type: chance
+        data:
+          of: 100
+          index: [1..15]
+          name: every-turn-265
+    triggers:
+      - type: response
+        data:
+          text: You hear in the distance the chirping of a song bird.
+
+
+  - requires:
+      - type: has-item
+        data:
+          object: bag-of-coins
+      - type: flag
+        negate: true
+        data:
+          flag: found-bag-of-coins
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-bag-of-coins
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 10
+
+  - requires:
+      - type: has-item
+        data:
+          object: bar
+      - type: flag
+        negate: true
+        data:
+          flag: found-bar
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-bar
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 10
+
+  - requires:
+      - type: has-item
+        data:
+          object: bauble
+      - type: flag
+        negate: true
+        data:
+          flag: found-bauble
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-bauble
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 1
+
+  - requires:
+      - type: has-item
+        data:
+          object: bracelet
+      - type: flag
+        negate: true
+        data:
+          flag: found-bracelet
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-bracelet
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 5
+
+  - requires:
+      - type: has-item
+        data:
+          object: canary
+      - type: flag
+        negate: true
+        data:
+          flag: found-canary
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-canary
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 6
+
+  - requires:
+      - type: has-item
+        data:
+          object: chalice
+      - type: flag
+        negate: true
+        data:
+          flag: found-chalice
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-chalice
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 10
+
+  - requires:
+      - type: has-item
+        data:
+          object: coffin
+      - type: flag
+        negate: true
+        data:
+          flag: found-coffin
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-coffin
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 10
+
+  - requires:
+      - type: has-item
+        data:
+          object: diamond
+      - type: flag
+        negate: true
+        data:
+          flag: found-diamond
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-diamond
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 10
+
+  - requires:
+      - type: has-item
+        data:
+          object: egg
+      - type: flag
+        negate: true
+        data:
+          flag: found-egg
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-egg
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 5
+
+  - requires:
+      - type: has-item
+        data:
+          object: emerald
+      - type: flag
+        negate: true
+        data:
+          flag: found-emerald
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-emerald
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 5
+
+  - requires:
+      - type: has-item
+        data:
+          object: jade
+      - type: flag
+        negate: true
+        data:
+          flag: found-jade
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-jade
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 5
+
+  - requires:
+      - type: has-item
+        data:
+          object: painting
+      - type: flag
+        negate: true
+        data:
+          flag: found-painting
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-painting
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 4
+
+  - requires:
+      - type: has-item
+        data:
+          object: pot-of-gold
+      - type: flag
+        negate: true
+        data:
+          flag: found-pot-of-gold
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-pot-of-gold
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 10
+
+  - requires:
+      - type: has-item
+        data:
+          object: scarab
+      - type: flag
+        negate: true
+        data:
+          flag: found-scarab
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-scarab
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 5
+
+  - requires:
+      - type: has-item
+        data:
+          object: sceptre
+      - type: flag
+        negate: true
+        data:
+          flag: found-sceptre
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-sceptre
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 4
+
+  - requires:
+      - type: has-item
+        data:
+          object: skull
+      - type: flag
+        negate: true
+        data:
+          flag: found-skull
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-skull
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 10
+
+  - requires:
+      - type: has-item
+        data:
+          object: torch
+      - type: flag
+        negate: true
+        data:
+          flag: found-torch
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-torch
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 14
+
+  - requires:
+      - type: has-item
+        data:
+          object: trident
+      - type: flag
+        negate: true
+        data:
+          flag: found-trident
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-trident
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 4
+
+  - requires:
+      - type: has-item
+        data:
+          object: trunk
+      - type: flag
+        negate: true
+        data:
+          flag: found-trunk
+    triggers:
+      - type: set-flag
+        data:
+          flag: found-trunk
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 15
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 1 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: cellar }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: cellar }
+            - type: response
+              data:
+                text: &thief-arrives >-
+                  Someone carrying a large bag is casually leaning against one of the walls
+                  here. He does not speak, but it is clear from his aspect that the bag will be
+                  taken only over his dead body.
+    triggers:
+      - type: move-object
+        data: { object: thief, to: cellar }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 2 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: east-of-chasm }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: east-of-chasm }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: east-of-chasm }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 3 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: gallery }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: gallery }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: gallery }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 4 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: studio }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: studio }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: studio }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 5 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: troll-room }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: troll-room }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: troll-room }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 6 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: dome-room }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: dome-room }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: dome-room }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 7 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: egypt-room }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: egypt-room }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: egypt-room }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 8 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: engravings-cave }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: engravings-cave }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: engravings-cave }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 9 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: north-temple }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: north-temple }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: north-temple }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 10 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: south-temple }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: south-temple }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: south-temple }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 11 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: torch-room }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: torch-room }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: torch-room }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 12 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: entrance-to-hades }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: entrance-to-hades }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: entrance-to-hades }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 13 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: land-of-living-dead }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: land-of-living-dead }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: land-of-living-dead }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 14 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: atlantis-room }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: atlantis-room }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: atlantis-room }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 15 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: cold-passage }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: cold-passage }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: cold-passage }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 16 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: mirror-room-1 }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: mirror-room-1 }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: mirror-room-1 }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 17 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: mirror-room-2 }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: mirror-room-2 }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: mirror-room-2 }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 18 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: narrow-passage }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: narrow-passage }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: narrow-passage }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 19 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: small-cave }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: small-cave }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: small-cave }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 20 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: tiny-cave }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: tiny-cave }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: tiny-cave }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 21 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: twisting-passage }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: twisting-passage }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: twisting-passage }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 22 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: winding-passage }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: winding-passage }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: winding-passage }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 23 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: reservoir }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: reservoir }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: reservoir }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 24 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: reservoir-north }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: reservoir-north }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: reservoir-north }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 25 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: reservoir-south }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: reservoir-south }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: reservoir-south }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 26 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: stream-view }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: stream-view }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: stream-view }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 27 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: chasm-room }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: chasm-room }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: chasm-room }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 28 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: damp-cave }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: damp-cave }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: damp-cave }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 29 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: deep-canyon }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: deep-canyon }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: deep-canyon }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 30 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: ew-passage }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: ew-passage }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: ew-passage }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 31 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: loud-room }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: loud-room }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: loud-room }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 32 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: ns-passage }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: ns-passage }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: ns-passage }
+
+  - requires:
+      - type: character-here
+        negate: true
+        data: { character: thief }
+      - type: object-in
+        negate: true
+        data: { object: thief, location: bin }
+      - type: chance
+        data: { name: thief-walk, of: 33, index: 33 }
+      - type: all-of
+        negate: true
+        data:
+          conditions:
+            - type: scene
+              data: { id: round-room }
+            - type: any-of
+              data:
+                conditions:
+                  - type: scene
+                    negate: true
+                    data: { tag: dark }
+                  - type: flag
+                    data: { flag: light }
+        failure:
+          triggers:
+            - type: move-object
+              data: { object: thief, to: round-room }
+            - type: response
+              data: { text: *thief-arrives }
+    triggers:
+      - type: move-object
+        data: { object: thief, to: round-room }
+
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: any-of
+        data:
+          conditions:
+            - type: tagged
+              data: { tag: treasure, location: here }
+            - type: tagged
+              data: { tag: treasure, location: inventory }
+      - type: chance
+        data: { name: thief-robbery, of: 9, index: 1 }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The thief just left, still carrying his large bag. You may not have
+            noticed that he made off with something of value first.
+      - type: move-tagged
+        data: { tag: treasure, from: here, to: held:thief }
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: held:thief }
+      - type: move-object
+        data:
+          object: thief
+          to: treasure-room
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: any-of
+        data:
+          conditions:
+            - type: tagged
+              data: { tag: treasure, location: here }
+            - type: tagged
+              data: { tag: treasure, location: inventory }
+      - type: chance
+        data: { name: thief-robbery, of: 9, index: [2..9] }
+    triggers:
+      - type: response
+        data: { text: The thief is taking an unhealthy interest in your possessions. }
+
+  - requires:
+      - type: flag
+        data: { flag: thief-just-died }
+      - type: object-here
+        data: { object: egg }
+    triggers:
+      - type: set-flag
+        data: { flag: egg-open, value: true }
+
+  - requires:
+      - type: flag
+        data: { flag: thief-just-died }
+    triggers:
+      - type: set-flag
+        data: { flag: thief-just-died, value: false }
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: flag
+        data:
+          flag: thief-fighting
+      - type: chance
+        data: { name: thief-blow, of: 11, index: [1..5] }
+      - type: chance
+        data: { name: thief-miss, of: 4, index: 1 }
+    triggers:
+      - type: response
+        data:
+          text: The thief stabs nonchalantly with his stiletto and misses.
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: flag
+        data:
+          flag: thief-fighting
+      - type: chance
+        data: { name: thief-blow, of: 11, index: [1..5] }
+      - type: chance
+        data: { name: thief-miss, of: 4, index: 2 }
+    triggers:
+      - type: response
+        data:
+          text: You dodge as the thief comes in low.
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: flag
+        data:
+          flag: thief-fighting
+      - type: chance
+        data: { name: thief-blow, of: 11, index: [1..5] }
+      - type: chance
+        data: { name: thief-miss, of: 4, index: 3 }
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You parry a lightning thrust, and the thief salutes you with a grim
+            nod.
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: flag
+        data:
+          flag: thief-fighting
+      - type: chance
+        data: { name: thief-blow, of: 11, index: [1..5] }
+      - type: chance
+        data: { name: thief-miss, of: 4, index: 4 }
+    triggers:
+      - type: response
+        data:
+          text: The thief tries to sneak past your guard, but you twist away.
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: flag
+        data:
+          flag: thief-fighting
+      - type: chance
+        data: { name: thief-blow, of: 11, index: [6..7] }
+    triggers:
+      - type: response
+        data:
+          text: The thief attacks, and you fall back desperately.
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: flag
+        data:
+          flag: thief-fighting
+      - type: chance
+        data: { name: thief-blow, of: 11, index: [8..9] }
+    triggers:
+      - type: response
+        data:
+          text: A quick thrust pinks your left arm, and blood starts to trickle down.
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: health
+          by: -1
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: allowance
+          by: -10
+
+  - requires:
+      - type: character-here
+        data:
+          character: thief
+      - type: flag
+        data:
+          flag: thief-fighting
+      - type: chance
+        data: { name: thief-blow, of: 11, index: [10..11] }
+    triggers:
+      - type: response
+        data:
+          text: The thief strikes like a snake! The resulting wound is serious.
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: health
+          by: -1
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: allowance
+          by: -20
+
+  - requires:
+      - type: character-here
+        negate: true
+        data:
+          character: thief
+      - type: flag
+        data:
+          flag: thief-fighting
+    triggers:
+      - type: set-flag
+        data:
+          flag: thief-fighting
+          value: false
+
+  - requires:
+      - type: has-item
+        data:
+          object: sword
+      - type: any-of
+        data:
+          conditions:
+            - type: character-here
+              data: { character: troll }
+            - type: character-here
+              data: { character: thief }
+            - type: character-here
+              data: { character: cyclops }
+            - type: character-here
+              data: { character: bat }
+            - type: character-here
+              data: { character: ghosts }
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: sword
+          measure: glow
+          to: 2
+
+  - requires:
+      - type: has-item
+        data:
+          object: sword
+      - type: any-of
+        negate: true
+        data:
+          conditions:
+            - type: character-here
+              data: { character: troll }
+            - type: character-here
+              data: { character: thief }
+            - type: character-here
+              data: { character: cyclops }
+            - type: character-here
+              data: { character: bat }
+            - type: character-here
+              data: { character: ghosts }
+      - type: any-of
+        data:
+          conditions:
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: cellar }
+                  - type: object-in
+                    data: { object: troll, location: troll-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: ew-passage }
+                  - type: object-in
+                    data: { object: troll, location: troll-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: maze-1 }
+                  - type: object-in
+                    data: { object: troll, location: troll-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: strange-passage }
+                  - type: object-in
+                    data: { object: cyclops, location: cyclops-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: maze-15 }
+                  - type: object-in
+                    data: { object: cyclops, location: cyclops-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: treasure-room }
+                  - type: object-in
+                    data: { object: cyclops, location: cyclops-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: land-of-living-dead }
+                  - type: object-in
+                    data: { object: ghosts, location: entrance-to-hades }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: tiny-cave }
+                  - type: object-in
+                    data: { object: ghosts, location: entrance-to-hades }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: squeeky-room }
+                  - type: object-in
+                    data: { object: bat, location: bat-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: shaft-room }
+                  - type: object-in
+                    data: { object: bat, location: bat-room }
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: sword
+          measure: glow
+          to: 1
+
+  - requires:
+      - type: has-item
+        data:
+          object: sword
+      - type: any-of
+        negate: true
+        data:
+          conditions:
+            - type: character-here
+              data: { character: troll }
+            - type: character-here
+              data: { character: thief }
+            - type: character-here
+              data: { character: cyclops }
+            - type: character-here
+              data: { character: bat }
+            - type: character-here
+              data: { character: ghosts }
+      - type: any-of
+        negate: true
+        data:
+          conditions:
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: cellar }
+                  - type: object-in
+                    data: { object: troll, location: troll-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: ew-passage }
+                  - type: object-in
+                    data: { object: troll, location: troll-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: maze-1 }
+                  - type: object-in
+                    data: { object: troll, location: troll-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: strange-passage }
+                  - type: object-in
+                    data: { object: cyclops, location: cyclops-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: maze-15 }
+                  - type: object-in
+                    data: { object: cyclops, location: cyclops-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: treasure-room }
+                  - type: object-in
+                    data: { object: cyclops, location: cyclops-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: land-of-living-dead }
+                  - type: object-in
+                    data: { object: ghosts, location: entrance-to-hades }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: tiny-cave }
+                  - type: object-in
+                    data: { object: ghosts, location: entrance-to-hades }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: squeeky-room }
+                  - type: object-in
+                    data: { object: bat, location: bat-room }
+            - type: all-of
+              data:
+                conditions:
+                  - type: scene
+                    data: { id: shaft-room }
+                  - type: object-in
+                    data: { object: bat, location: bat-room }
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: sword
+          measure: glow
+          to: 0
+
+  - requires:
+      - type: flag
+        data:
+          flag: player-died
+      - type: measure
+        data:
+          subject: player
+          measure: deaths
+          max: 1
+      - type: has-item
+        data:
+          object: lamp
+    triggers:
+      - type: move-object
+        data:
+          object: lamp
+          to: living-room
+
+  - requires:
+      - type: flag
+        data:
+          flag: player-died
+      - type: measure
+        data:
+          subject: player
+          measure: deaths
+          max: 1
+      - type: has-item
+        data:
+          object: coffin
+    triggers:
+      - type: move-object
+        data:
+          object: coffin
+          to: egypt-room
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter, of: 11, index: 1 }
+    triggers:
+      - type: move-tagged
+        data: { tag: belongings, from: inventory, to: west-of-house }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter, of: 11, index: 2 }
+    triggers:
+      - type: move-tagged
+        data: { tag: belongings, from: inventory, to: north-of-house }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter, of: 11, index: 3 }
+    triggers:
+      - type: move-tagged
+        data: { tag: belongings, from: inventory, to: east-of-house }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter, of: 11, index: 4 }
+    triggers:
+      - type: move-tagged
+        data: { tag: belongings, from: inventory, to: south-of-house }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter, of: 11, index: 5 }
+    triggers:
+      - type: move-tagged
+        data: { tag: belongings, from: inventory, to: forest-1 }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter, of: 11, index: 6 }
+    triggers:
+      - type: move-tagged
+        data: { tag: belongings, from: inventory, to: forest-2 }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter, of: 11, index: 7 }
+    triggers:
+      - type: move-tagged
+        data: { tag: belongings, from: inventory, to: forest-3 }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter, of: 11, index: 8 }
+    triggers:
+      - type: move-tagged
+        data: { tag: belongings, from: inventory, to: path }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter, of: 11, index: 9 }
+    triggers:
+      - type: move-tagged
+        data: { tag: belongings, from: inventory, to: clearing }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter, of: 11, index: 10 }
+    triggers:
+      - type: move-tagged
+        data: { tag: belongings, from: inventory, to: grating-clearing }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter, of: 11, index: 11 }
+    triggers:
+      - type: move-tagged
+        data: { tag: belongings, from: inventory, to: canyon-view }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter-underground, of: 11, index: 1 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: round-room }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter-underground, of: 11, index: 2 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: troll-room }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter-underground, of: 11, index: 3 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: cellar }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter-underground, of: 11, index: 4 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: maze-1 }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter-underground, of: 11, index: 5 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: deep-canyon }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter-underground, of: 11, index: 6 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: reservoir-south }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter-underground, of: 11, index: 7 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: dam-room }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter-underground, of: 11, index: 8 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: torch-room }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter-underground, of: 11, index: 9 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: egypt-room }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter-underground, of: 11, index: 10 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: south-temple }
+
+  - requires:
+      - type: flag
+        data: { flag: player-died }
+      - type: measure
+        data: { subject: player, measure: deaths, max: 1 }
+      - type: chance
+        data: { name: death-scatter-underground, of: 11, index: 11 }
+    triggers:
+      - type: move-tagged
+        data: { tag: treasure, from: inventory, to: gallery }
+
+  - requires:
+      - type: flag
+        data:
+          flag: player-died
+      - type: measure
+        data:
+          subject: player
+          measure: deaths
+          max: 1
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Now, let's take a look here... Well, you probably deserve another chance. I can't
+            quite fix you up completely, but you can't have everything.
+      - type: change-scene
+        data:
+          scene: forest-1
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: health
+          to: 4
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: -10
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: deaths
+          by: 1
+      - type: set-flag
+        data:
+          flag: player-died
+          value: false
+
+  - requires:
+      - type: flag
+        data:
+          flag: player-died
+      - type: measure
+        data:
+          subject: player
+          measure: deaths
+          min: 2
+    triggers:
+      - type: response
+        data:
+          text: >-
+            You clearly are a suicidal maniac. We don't allow psychotics in the cave, since they
+            may harm other adventurers. Your remains will be installed in the Land of the Living
+            Dead, where your fellow adventurers may gloat over them.
+      - type: end-game
+        data:
+          journal: died once too often
+
+
+  - requires:
+      - type: visited
+        data:
+          scene: kitchen
+      - type: flag
+        negate: true
+        data:
+          flag: reached-kitchen
+    triggers:
+      - type: set-flag
+        data:
+          flag: reached-kitchen
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 10
+
+  - requires:
+      - type: visited
+        data:
+          scene: cellar
+      - type: flag
+        negate: true
+        data:
+          flag: reached-cellar
+    triggers:
+      - type: set-flag
+        data:
+          flag: reached-cellar
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 25
+
+  - requires:
+      - type: visited
+        data:
+          scene: treasure-room
+      - type: flag
+        negate: true
+        data:
+          flag: reached-treasure-room
+    triggers:
+      - type: set-flag
+        data:
+          flag: reached-treasure-room
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 25
+
+  - requires:
+      - type: visited
+        data:
+          scene: ew-passage
+      - type: flag
+        negate: true
+        data:
+          flag: reached-ew-passage
+    triggers:
+      - type: set-flag
+        data:
+          flag: reached-ew-passage
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 5
+
+  - requires:
+      - type: scene
+        data:
+          id: lower-shaft
+      - type: flag
+        data:
+          flag: light
+      - type: carrying
+        data:
+          max: 4
+      - type: flag
+        negate: true
+        data:
+          flag: reached-lower-shaft-lit
+    triggers:
+      - type: set-flag
+        data:
+          flag: reached-lower-shaft-lit
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: score
+          by: 13
+
+  - requires:
+      - type: scene
+        data:
+          id: bat-room
+      - type: has-item
+        negate: true
+        data: { object: garlic }
+      - type: object-here
+        negate: true
+        data: { object: garlic }
+      - type: chance
+        data: { name: bat-flight, of: 8, index: 1 }
+    triggers:
+      - type: response
+        data:
+          text: The bat grabs you by the scruff of your neck and lifts you away....
+      - type: change-scene
+        data: { scene: mine-1 }
+
+  - requires:
+      - type: scene
+        data:
+          id: bat-room
+      - type: has-item
+        negate: true
+        data: { object: garlic }
+      - type: object-here
+        negate: true
+        data: { object: garlic }
+      - type: chance
+        data: { name: bat-flight, of: 8, index: 2 }
+    triggers:
+      - type: response
+        data:
+          text: The bat grabs you by the scruff of your neck and lifts you away....
+      - type: change-scene
+        data: { scene: mine-2 }
+
+  - requires:
+      - type: scene
+        data:
+          id: bat-room
+      - type: has-item
+        negate: true
+        data: { object: garlic }
+      - type: object-here
+        negate: true
+        data: { object: garlic }
+      - type: chance
+        data: { name: bat-flight, of: 8, index: 3 }
+    triggers:
+      - type: response
+        data:
+          text: The bat grabs you by the scruff of your neck and lifts you away....
+      - type: change-scene
+        data: { scene: mine-3 }
+
+  - requires:
+      - type: scene
+        data:
+          id: bat-room
+      - type: has-item
+        negate: true
+        data: { object: garlic }
+      - type: object-here
+        negate: true
+        data: { object: garlic }
+      - type: chance
+        data: { name: bat-flight, of: 8, index: 4 }
+    triggers:
+      - type: response
+        data:
+          text: The bat grabs you by the scruff of your neck and lifts you away....
+      - type: change-scene
+        data: { scene: mine-4 }
+
+  - requires:
+      - type: scene
+        data:
+          id: bat-room
+      - type: has-item
+        negate: true
+        data: { object: garlic }
+      - type: object-here
+        negate: true
+        data: { object: garlic }
+      - type: chance
+        data: { name: bat-flight, of: 8, index: 5 }
+    triggers:
+      - type: response
+        data:
+          text: The bat grabs you by the scruff of your neck and lifts you away....
+      - type: change-scene
+        data: { scene: ladder-top }
+
+  - requires:
+      - type: scene
+        data:
+          id: bat-room
+      - type: has-item
+        negate: true
+        data: { object: garlic }
+      - type: object-here
+        negate: true
+        data: { object: garlic }
+      - type: chance
+        data: { name: bat-flight, of: 8, index: 6 }
+    triggers:
+      - type: response
+        data:
+          text: The bat grabs you by the scruff of your neck and lifts you away....
+      - type: change-scene
+        data: { scene: ladder-bottom }
+
+  - requires:
+      - type: scene
+        data:
+          id: bat-room
+      - type: has-item
+        negate: true
+        data: { object: garlic }
+      - type: object-here
+        negate: true
+        data: { object: garlic }
+      - type: chance
+        data: { name: bat-flight, of: 8, index: 7 }
+    triggers:
+      - type: response
+        data:
+          text: The bat grabs you by the scruff of your neck and lifts you away....
+      - type: change-scene
+        data: { scene: squeeky-room }
+
+  - requires:
+      - type: scene
+        data:
+          id: bat-room
+      - type: has-item
+        negate: true
+        data: { object: garlic }
+      - type: object-here
+        negate: true
+        data: { object: garlic }
+      - type: chance
+        data: { name: bat-flight, of: 8, index: 8 }
+    triggers:
+      - type: response
+        data:
+          text: The bat grabs you by the scruff of your neck and lifts you away....
+      - type: change-scene
+        data: { scene: mine-entrance }
+
+  - requires:
+      - type: scene
+        data: { id: cyclops-room }
+      - type: flag
+        data: { flag: cyclops-provoked }
+      - type: flag
+        negate: true
+        data: { flag: cyclops-asleep }
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: cyclops
+          measure: wrath
+          by: 1
+
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: bag-of-coins
+    triggers:
+      - type: move-object
+        data:
+          object: bag-of-coins
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: bar
+    triggers:
+      - type: move-object
+        data:
+          object: bar
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: bauble
+    triggers:
+      - type: move-object
+        data:
+          object: bauble
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: bracelet
+    triggers:
+      - type: move-object
+        data:
+          object: bracelet
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: broken-canary
+    triggers:
+      - type: move-object
+        data:
+          object: broken-canary
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: broken-egg
+    triggers:
+      - type: move-object
+        data:
+          object: broken-egg
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: canary
+    triggers:
+      - type: move-object
+        data:
+          object: canary
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: chalice
+    triggers:
+      - type: move-object
+        data:
+          object: chalice
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: coffin
+    triggers:
+      - type: move-object
+        data:
+          object: coffin
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: diamond
+    triggers:
+      - type: move-object
+        data:
+          object: diamond
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: egg
+    triggers:
+      - type: move-object
+        data:
+          object: egg
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: emerald
+    triggers:
+      - type: move-object
+        data:
+          object: emerald
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: jade
+    triggers:
+      - type: move-object
+        data:
+          object: jade
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: painting
+    triggers:
+      - type: move-object
+        data:
+          object: painting
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: pot-of-gold
+    triggers:
+      - type: move-object
+        data:
+          object: pot-of-gold
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: scarab
+    triggers:
+      - type: move-object
+        data:
+          object: scarab
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: sceptre
+    triggers:
+      - type: move-object
+        data:
+          object: sceptre
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: skull
+    triggers:
+      - type: move-object
+        data:
+          object: skull
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: torch
+    triggers:
+      - type: move-object
+        data:
+          object: torch
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: trident
+    triggers:
+      - type: move-object
+        data:
+          object: trident
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+      - type: has-item
+        data:
+          object: trunk
+    triggers:
+      - type: move-object
+        data:
+          object: trunk
+          to: land-of-living-dead
+
+  - requires:
+      - type: flag
+        data:
+          flag: cursed
+    triggers:
+      - type: set-flag
+        data:
+          flag: cursed
+          value: false
+
+  - requires:
+      - type: flag
+        data:
+          flag: aboard
+      - type: scene
+        data:
+          tag: river
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: river-timer
+          by: -1
+
+  - requires:
+      - type: scene
+        data:
+          id: river-1
+      - type: flag
+        data:
+          flag: aboard
+      - type: measure
+        data:
+          subject: player
+          measure: river-timer
+          max: 1
+    triggers:
+      - type: response
+        data:
+          text: The flow of the river carries you downstream.
+      - type: change-scene
+        data:
+          scene: river-2
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: river-timer
+          to: 4
+
+  - requires:
+      - type: scene
+        data:
+          id: river-2
+      - type: flag
+        data:
+          flag: aboard
+      - type: measure
+        data:
+          subject: player
+          measure: river-timer
+          max: 1
+    triggers:
+      - type: response
+        data:
+          text: The flow of the river carries you downstream.
+      - type: change-scene
+        data:
+          scene: river-3
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: river-timer
+          to: 3
+
+  - requires:
+      - type: scene
+        data:
+          id: river-3
+      - type: flag
+        data:
+          flag: aboard
+      - type: measure
+        data:
+          subject: player
+          measure: river-timer
+          max: 1
+    triggers:
+      - type: response
+        data:
+          text: The flow of the river carries you downstream.
+      - type: change-scene
+        data:
+          scene: river-4
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: river-timer
+          to: 2
+
+  - requires:
+      - type: scene
+        data:
+          id: river-4
+      - type: flag
+        data:
+          flag: aboard
+      - type: measure
+        data:
+          subject: player
+          measure: river-timer
+          max: 1
+    triggers:
+      - type: response
+        data:
+          text: The flow of the river carries you downstream.
+      - type: change-scene
+        data:
+          scene: river-5
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: river-timer
+          to: 1
+
+  - requires:
+      - type: scene
+        data:
+          id: river-5
+      - type: flag
+        data:
+          flag: aboard
+      - type: measure
+        data:
+          subject: player
+          measure: river-timer
+          max: 1
+    triggers:
+      - type: response
+        data:
+          text: >-
+            Unfortunately, the magic boat doesn't provide protection from the rocks and boulders
+            one meets at the bottom of waterfalls. Including this one.
+      - type: end-game
+        data:
+          journal: went over the falls in the boat

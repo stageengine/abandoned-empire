@@ -1,0 +1,56 @@
+every:
+  - requires:
+      - type: flag
+        data:
+          flag: ceremony
+      - type: flag
+        negate: true
+        data:
+          flag: blessing
+      - type: has-item
+        data:
+          object: candles
+      - type: flag
+        data:
+          flag: candles-on
+    triggers:
+      - type: response
+        data:
+          text: >-
+            The flames flicker wildly and appear to dance. The earth beneath your feet trembles,
+            and your legs nearly buckle beneath you. The spirits cower at your unearthly power.
+      - type: set-flag
+        data:
+          flag: blessing
+          value: true
+      - type: adjust-measure
+        data:
+          subject: ghosts
+          measure: awe
+          to: 3
+
+  - requires:
+      - type: flag
+        data:
+          flag: blessing
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: ghosts
+          measure: awe
+          by: -1
+
+  - requires:
+      - type: flag
+        data:
+          flag: ceremony
+      - type: flag
+        negate: true
+        data:
+          flag: blessing
+    triggers:
+      - type: adjust-measure
+        data:
+          subject: ghosts
+          measure: patience
+          by: -1

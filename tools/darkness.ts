@@ -23,7 +23,7 @@ async function* walk(at: string): AsyncGenerator<string> {
 
 const findRoom = async (id: string): Promise<string | null> => {
   for await (const found of walk(scenes)) {
-    if (found.endsWith(`/${id}.scene.yaml`) || found.endsWith(`/${id}/config.yaml`)) {
+    if (found.endsWith(`/${id}.scene.config.yaml`)) {
       return found;
     }
   }
@@ -46,11 +46,15 @@ for (const room of rooms.filter((one) => !one.lit)) {
   const source = await Deno.readTextFile(file);
 
   if (!/^tags:/m.test(source)) {
-    await Deno.writeTextFile(file, source.replace(/^id: (.+)$/m, 'id: $1\ntags: [dark]'));
+    const tagged = /^id: /m.test(source)
+      ? source.replace(/^id: (.+)$/m, 'id: $1\ntags: [dark]')
+      : `tags: [dark]\n\n${source}`;
+
+    await Deno.writeTextFile(file, tagged);
     marked += 1;
   }
 
-  const rules = file.endsWith('config.yaml') ? file.replace(/config\.yaml$/, 'every-turn.yaml') : null;
+  const rules = file.replace(/\.scene\.config\.yaml$/, '.scene.turns.yaml');
   const held = rules ? await Deno.readTextFile(rules).catch(() => null) : null;
 
   if (

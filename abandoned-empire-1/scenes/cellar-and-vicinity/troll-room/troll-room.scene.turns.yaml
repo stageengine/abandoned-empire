@@ -1,0 +1,105 @@
+every:
+  - requires:
+      - type: object-here
+        data:
+          object: troll
+      - type: chance
+        data: { name: troll-blow, of: 11, index: [1..5] }
+      - type: chance
+        data: { name: troll-miss, of: 4, index: 1, no-repeat: true }
+    triggers:
+      - type: response
+        data:
+          text: The troll swings his axe, but it misses.
+
+  - requires:
+      - type: object-here
+        data:
+          object: troll
+      - type: chance
+        data: { name: troll-blow, of: 11, index: [1..5] }
+      - type: chance
+        data: { name: troll-miss, of: 4, index: 2, no-repeat: true }
+    triggers:
+      - type: response
+        data:
+          text: The troll's axe barely misses your ear.
+
+  - requires:
+      - type: object-here
+        data:
+          object: troll
+      - type: chance
+        data: { name: troll-blow, of: 11, index: [1..5] }
+      - type: chance
+        data: { name: troll-miss, of: 4, index: 3, no-repeat: true }
+    triggers:
+      - type: response
+        data:
+          text: The axe sweeps past as you jump aside.
+
+  - requires:
+      - type: object-here
+        data:
+          object: troll
+      - type: chance
+        data: { name: troll-blow, of: 11, index: [1..5] }
+      - type: chance
+        data: { name: troll-miss, of: 4, index: 4, no-repeat: true }
+    triggers:
+      - type: response
+        data:
+          text: The axe crashes against the rock, throwing sparks!
+
+  - requires:
+      - type: object-here
+        data:
+          object: troll
+      - type: chance
+        data: { name: troll-blow, of: 11, index: [6..7] }
+    triggers:
+      - type: response
+        data:
+          text: You stagger back under a hail of axe strokes.
+
+  - requires:
+      - type: object-here
+        data:
+          object: troll
+      - type: chance
+        data: { name: troll-blow, of: 11, index: [8..9] }
+    triggers:
+      - type: response
+        data:
+          text: The troll swings his axe, and it nicks your arm as you dodge.
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: health
+          by: -1
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: allowance
+          by: -10
+
+  - requires:
+      - type: object-here
+        data:
+          object: troll
+      - type: chance
+        data: { name: troll-blow, of: 11, index: [10..11] }
+    triggers:
+      - type: response
+        data:
+          text: An axe stroke makes a deep wound in your leg.
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: health
+          by: -1
+      - type: adjust-measure
+        data:
+          subject: player
+          measure: allowance
+          by: -20
